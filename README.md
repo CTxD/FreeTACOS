@@ -23,7 +23,7 @@ $ docker exec -it arinc_circle bash # This will 'go into' the container, allowin
 ```
 
 ### Circle Setup (Only required first time)
-```
+```Bash
 $ docker exec -it circle_arinc bash # This will 'go into' the container
 $ ./makeall clean # Clean all dependencies
 $ ./makeall # Compile all dependencies
