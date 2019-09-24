@@ -23,9 +23,9 @@ CIRCLEHOME ?= ..
 -include $(CIRCLEHOME)/Config.mk
 -include $(CIRCLEHOME)/Config2.mk	# is not overwritten by "configure"
 
-AARCH	 ?= 32
-RASPPI	 ?= 1
-PREFIX	 ?= arm-eabi-
+AARCH	 ?= 64
+RASPPI	 ?= 4
+PREFIX	 ?= arm-eabi-none
 PREFIX64 ?= aarch64-elf-
 
 # see: doc/stdlib-support.txt
@@ -73,12 +73,12 @@ else
 $(error AARCH must be set to 32 or 64)
 endif
 
-ifneq ($(strip $(STDLIB_SUPPORT)),0)
-MAKE_VERSION_MAJOR := $(firstword $(subst ., ,$(MAKE_VERSION)))
-ifneq ($(filter 0 1 2 3,$(MAKE_VERSION_MAJOR)),)
-$(error STDLIB_SUPPORT > 0 requires GNU make 4.0 or newer)
-endif
-endif
+# ifneq ($(strip $(STDLIB_SUPPORT)),0)
+# MAKE_VERSION_MAJOR := $(firstword $(subst ., ,$(MAKE_VERSION)))
+# ifneq ($(filter 0 1 2 3,$(MAKE_VERSION_MAJOR)),)
+# $(error STDLIB_SUPPORT > 0 requires GNU make 4.0 or newer)
+# endif
+# endif
 
 ifeq ($(strip $(STDLIB_SUPPORT)),3)
 LIBSTDCPP != $(CPP) $(ARCH) -print-file-name=libstdc++.a
