@@ -35,5 +35,7 @@ Now you can compile all samples and drag all generated files from the sample and
 
 ## Stop Containers
 ```Bash
-$ docker-sync-stack stop
+# From circle/ root
+$ docker-compose down # Closes the arinc_circle container
+$ docker-sync stop # Closes the docker-sync container
 ```
