@@ -19,11 +19,11 @@ https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html
 ## Start Containers
 ```Bash
 $ docker-sync-stack start # This will start the containers, including the sync
-$ docker exec -it circle_arinc bash # This will 'go into' the container, allowing you to compile the dependencies + project :)
+$ docker exec -it arinc_circle bash # This will 'go into' the container, allowing you to compile the dependencies + project :)
 ```
 
 ### Circle Setup (Only required first time)
-```
+```Bash
 $ docker exec -it circle_arinc bash # This will 'go into' the container
 $ ./makeall clean # Clean all dependencies
 $ ./makeall # Compile all dependencies
@@ -35,5 +35,7 @@ Now you can compile all samples and drag all generated files from the sample and
 
 ## Stop Containers
 ```Bash
-$ docker-sync-stack stop
+# From circle/ root
+$ docker-compose down # Closes the arinc_circle container
+$ docker-sync stop # Closes the docker-sync container
 ```
