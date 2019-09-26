@@ -3,6 +3,7 @@ services:
   circle:
     image: ctxd/circle_raspi4:latest
     container_name: 'arinc_circle'
+    tty: true
     volumes:
       - circle-sync:/circle:nocopy # nocopy is important
 

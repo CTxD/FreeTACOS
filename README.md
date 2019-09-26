@@ -23,6 +23,17 @@ $ docker exec -it arinc_circle bash # This will 'go into' the container, allowin
 ```
 
 ### Circle Setup (Only required first time)
+#### Use Make
+```Bash
+$ make # Compile boot files
+$ make enter # Enter docker container
+$ ./makeall clean # Clear dependencies
+$ ./makeall # Compile dependencies - This must be done within the container
+```
+
+Done :-)
+
+#### OR do this manually
 ```Bash
 $ docker exec -it circle_arinc bash # This will 'go into' the container
 $ ./makeall clean # Clean all dependencies
