@@ -35,7 +35,8 @@ Done :-)
 
 #### OR do this manually
 ```Bash
-$ docker exec -it circle_arinc bash # This will 'go into' the container
+$ docker exec -it arinc_circle bash # This will 'go into' the container
+$ cd circle # Enter the circle root directory
 $ ./makeall clean # Clean all dependencies
 $ ./makeall # Compile all dependencies
 $ cd boot/
@@ -50,3 +51,5 @@ Now you can compile all samples and drag all generated files from the sample and
 $ docker-compose down # Closes the arinc_circle container
 $ docker-sync stop # Closes the docker-sync container
 ```
+OR
+Interrupt CTRL+C the running docker-sync process
