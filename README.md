@@ -1,5 +1,5 @@
-# AAOS
-Awesome Avionics Operating System
+# FreeTACOS
+Free Transparent Arinc Compliant Operating System
 
 # Getting Started
 Follow this guide for setting up Docker, Docker-Compose and Docker-Sync.
