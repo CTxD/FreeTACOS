@@ -1,4 +1,4 @@
-# AAOS
+# FreeTACOS
 Awesome Avionics Operating System
 
 # Getting Started
