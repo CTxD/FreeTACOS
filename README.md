@@ -18,32 +18,21 @@ https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html
 
 ## Start Containers
 ```Bash
-$ docker-sync-stack start # This will start the containers, including the sync
-$ docker exec -it arinc_circle bash # This will 'go into' the container, allowing you to compile the dependencies + project :)
+$ make start # This will start the containers, including the sync (let this run in a terminal by itself - you can not terminate)
+$ make enter # This will 'go into' the container, allowing you to compile the dependencies + project :)
 ```
 
 ### Circle Setup (Only required first time)
 #### Use Make
 ```Bash
-$ make # Compile boot files
+$ make build-boot # Build boot files
 $ make enter # Enter docker container
+$ cd aarch/rasp4 # Navigate to circle library
 $ ./makeall clean # Clear dependencies
 $ ./makeall # Compile dependencies - This must be done within the container
 ```
 
-Done :-)
-
-#### OR do this manually
-```Bash
-$ docker exec -it arinc_circle bash # This will 'go into' the container
-$ cd circle # Enter the circle root directory
-$ ./makeall clean # Clean all dependencies
-$ ./makeall # Compile all dependencies
-$ cd boot/
-$ make # Compile boot dependencies
-```
-
-Now you can compile all samples and drag all generated files from the sample and boot, in order to flash the SDHC Card
+Done.
 
 ## Stop Containers
 ```Bash
