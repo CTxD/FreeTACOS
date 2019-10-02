@@ -1,12 +1,12 @@
 version: "2"
 services:
-  circle:
+  tacos:
     image: ctxd/circle_raspi4:latest
-    container_name: 'arinc_circle'
+    container_name: 'tacos'
     tty: true
     volumes:
-      - circle-sync:/circle:nocopy # nocopy is important
+      - tacos-sync:/FreeTacos:nocopy # nocopy is important
 
 volumes:
-  circle-sync:
+  tacos-sync:
     external: true
