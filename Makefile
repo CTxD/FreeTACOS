@@ -1,12 +1,11 @@
 setup: build-boot
 
 build-boot:
-	docker exec -it arinc_circle /usr/bin/make -C circle/boot clean
-	docker exec -it arinc_circle /usr/bin/make -C circle/boot
+	docker exec -it tacos /usr/bin/make -C app/aarch/rasp4/boot clean
+	docker exec -it tacos /usr/bin/make -C app/aarch/rasp4/boot
 
-enter: 
-	docker exec -it --workdir /circle arinc_circle bash
+enter:
+	docker exec -it --workdir /app tacos bash
 
-sample:
-	docker exec -it arinc_circle /usr/bin/make -C circle/sample/$(dir) clean
-	docker exec -it arinc_circle /usr/bin/make -C circle/sample/$(dir)
+start:
+	docker-sync-stack start
