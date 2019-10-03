@@ -1,0 +1,205 @@
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<MODULE xmlns="http://www.aviation-ia.com/aeec/2015/ARINC653" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aviation-ia.com/aeec/2015/ARINC653 ExampleSchema.xsd" Name="MyModule">
+   <Partitions>
+      <Partition>
+         <PartitionDefinition Name="systemManagement" Identifier="1" />
+         <PartitionPeriodicity Duration="20000000" Period="100000000" />
+         <MemoryRegions>
+            <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
+         </MemoryRegions>
+         <PartitionPorts>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_2Dq" MaxNbMessage="30" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_3Dq" MaxNbMessage="30" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_4Dq" MaxNbMessage="30" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_5Dq" MaxNbMessage="30" Direction="DESTINATION" />
+            </PartitionPort>
+         </PartitionPorts>
+      </Partition>
+      <Partition>
+         <PartitionDefinition Name="flightControls" Identifier="2" />
+         <PartitionPeriodicity Duration="10000000" Period="100000000" />
+         <MemoryRegions>
+            <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
+         </MemoryRegions>
+         <PartitionPorts>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="20" Name="Act_1Ss" Direction="SOURCE" />
+            </PartitionPort>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="20" Name="Act_2Ss" Direction="SOURCE" />
+            </PartitionPort>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="40" Name="Sens_1Ds" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="40" Name="Sens_2Ds" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_2Sq" MaxNbMessage="30" Direction="SOURCE" />
+            </PartitionPort>
+         </PartitionPorts>
+      </Partition>
+      <Partition>
+         <PartitionDefinition Name="flightManagement" Identifier="3" />
+         <PartitionPeriodicity Duration="30000000" Period="100000000" />
+         <MemoryRegions>
+            <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
+         </MemoryRegions>
+         <PartitionPorts>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="40" Name="Sens_2Ds" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_3Sq" MaxNbMessage="30" Direction="SOURCE" />
+            </PartitionPort>
+         </PartitionPorts>
+      </Partition>
+      <Partition>
+         <PartitionDefinition Name="IOProcessing" Identifier="4" />
+         <PartitionPeriodicity Duration="20000000" Period="100000000" />
+         <MemoryRegions>
+            <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
+            <MemoryRegion Type="Input/Ouput" Size="524288" Name="IORegion" AccessRights="READ_WRITE" />
+         </MemoryRegions>
+         <PartitionPorts>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_4Sq" MaxNbMessage="30" Direction="SOURCE" />
+            </PartitionPort>
+         </PartitionPorts>
+      </Partition>
+      <Partition>
+         <PartitionDefinition Name="IHVM " Identifier="5" />
+         <PartitionPeriodicity Duration="20000000" Period="200000000" />
+         <MemoryRegions>
+            <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
+         </MemoryRegions>
+         <PartitionPorts>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="20" Name="Act_1Ds" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <SamplingPort MaxMessageSize="20" Name="Act_2Ds" Direction="DESTINATION" />
+            </PartitionPort>
+            <PartitionPort>
+               <QueuingPort MaxMessageSize="30 " Name="Stat_5Sq" MaxNbMessage="30" Direction="SOURCE" />
+            </PartitionPort>
+         </PartitionPorts>
+      </Partition>
+   </Partitions>
+   <Schedules>
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="systemManagement" Offset="0" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="20000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="flightControl" Offset="30000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="30000000" PartitionNameRef="flightManagement" Offset="40000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="70000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="systemManagement" Offset="100000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="120000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="flightControl" Offset="130000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="30000000" PartitionNameRef="flightManagement" Offset="140000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="170000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="IVHM " Offset="180000000" />
+   </Schedules>
+   <HealthMonitoring>
+      <SystemErrors>
+         <SystemError ErrorIdentifier="1" Description="Configuration Error" />
+         <SystemError ErrorIdentifier="2" Description="Module Config Error" />
+         <SystemError ErrorIdentifier="3" Description="partition config error" />
+         <SystemError ErrorIdentifier="4" Description="partition init error" />
+         <SystemError ErrorIdentifier="5" Description="segmentation error" />
+         <SystemError ErrorIdentifier="6" Description="time duration exceeded" />
+         <SystemError ErrorIdentifier="7" Description="invalid OS call" />
+         <SystemError ErrorIdentifier="8" Description="divide by 0" />
+         <SystemError ErrorIdentifier="9" Description="floating point error" />
+      </SystemErrors>
+      <ModuleHM StateIdentifier="1" Description="module init">
+         <ErrorAction ErrorIdentifierRef="1" ModuleRecoveryAction="SHUTDOWN" />
+         <ErrorAction ErrorIdentifierRef="2" ModuleRecoveryAction="SHUTDOWN" />
+         <ErrorAction ErrorIdentifierRef="5" ModuleRecoveryAction="SHUTDOWN" />
+         <ErrorAction ErrorIdentifierRef="6" ModuleRecoveryAction="IGNORE" />
+         <ErrorAction ErrorIdentifierRef="7" ModuleRecoveryAction="IGNORE" />
+      </ModuleHM>
+      <ModuleHM StateIdentifier="2" Description="system function execution">
+         <ErrorAction ErrorIdentifierRef="5" ModuleRecoveryAction="SHUTDOWN" />
+         <ErrorAction ErrorIdentifierRef="6" ModuleRecoveryAction="IGNORE" />
+         <ErrorAction ErrorIdentifierRef="7" ModuleRecoveryAction="IGNORE" />
+         <ErrorAction ErrorIdentifierRef="8" ModuleRecoveryAction="IGNORE" />
+         <ErrorAction ErrorIdentifierRef="9" ModuleRecoveryAction="IGNORE" />
+      </ModuleHM>
+      <MultiPartitionHM TableName="Avionic partitions HM table">
+         <ErrorAction ErrorIdentifierRef="3" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="4" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="5" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="6" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="7" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="8" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="9" ErrorLevel="PARTITION" />
+      </MultiPartitionHM>
+      <MultiPartitionHM TableName="System partitions HM table">
+         <ErrorAction ErrorIdentifierRef="3" ErrorLevel="MODULE" ModuleRecoveryAction="SHUTDOWN" />
+         <ErrorAction ErrorIdentifierRef="4" ErrorLevel="MODULE" ModuleRecoveryAction="RESET" />
+         <ErrorAction ErrorIdentifierRef="5" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="6" ErrorLevel="MODULE" ModuleRecoveryAction="RESET" />
+         <ErrorAction ErrorIdentifierRef="7" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="8" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="9" ErrorLevel="PARTITION" />
+      </MultiPartitionHM>
+      <PartitionHM MultiPartitionHMTableNameRef="System partitions HM table" TableName="systemManagement HM table">
+         <ErrorAction ErrorIdentifierRef="5" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="MEMORY_VIOLATION" />
+         <ErrorAction ErrorIdentifierRef="7" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="ILLEGAL_REQUEST" />
+         <ErrorAction ErrorIdentifierRef="8" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+         <ErrorAction ErrorIdentifierRef="9" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+      </PartitionHM>
+      <PartitionHM MultiPartitionHMTableNameRef="Avionic partitions HM table" TableName="flightControls HM table">
+         <ErrorAction ErrorIdentifierRef="3" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="4" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="5" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="MEMORY_VIOLATION" />
+         <ErrorAction ErrorIdentifierRef="6" PartitionRecoveryAction="WARM_RESTART" ErrorLevel="PROCESS" ErrorCode="DEADLINE_MISSED" />
+         <ErrorAction ErrorIdentifierRef="7" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="ILLEGAL_REQUEST" />
+         <ErrorAction ErrorIdentifierRef="8" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+         <ErrorAction ErrorIdentifierRef="9" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+      </PartitionHM>
+      <PartitionHM MultiPartitionHMTableNameRef="Avionic partitions HM table" TableName="flightManagement HM table">
+         <ErrorAction ErrorIdentifierRef="3" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="4" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="5" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="MEMORY_VIOLATION" />
+         <ErrorAction ErrorIdentifierRef="6" PartitionRecoveryAction="WARM_RESTART" ErrorLevel="PROCESS" ErrorCode="DEADLINE_MISSED" />
+         <ErrorAction ErrorIdentifierRef="7" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="ILLEGAL_REQUEST" />
+         <ErrorAction ErrorIdentifierRef="8" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+         <ErrorAction ErrorIdentifierRef="9" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="NUMERIC_ERROR" />
+      </PartitionHM>
+      <PartitionHM MultiPartitionHMTableNameRef="Avionic partitions HM table" TableName="IO processing HM table">
+         <ErrorAction ErrorIdentifierRef="3" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="4" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="5" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="MEMORY_VIOLATION" />
+         <ErrorAction ErrorIdentifierRef="6" PartitionRecoveryAction="WARM_RESTART" ErrorLevel="PROCESS" ErrorCode="DEADLINE_MISSED" />
+         <ErrorAction ErrorIdentifierRef="7" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="ILLEGAL_REQUEST" />
+         <ErrorAction ErrorIdentifierRef="8" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="9" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+      </PartitionHM>
+      <PartitionHM MultiPartitionHMTableNameRef="Avionic partitions HM table" TableName="IHVM HM table">
+         <ErrorAction ErrorIdentifierRef="3" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="4" PartitionRecoveryAction="COLD_RESTART" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="5" PartitionRecoveryAction="IDLE" ErrorLevel="PROCESS" ErrorCode="MEMORY_VIOLATION" />
+         <ErrorAction ErrorIdentifierRef="6" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="7" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="8" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+         <ErrorAction ErrorIdentifierRef="9" PartitionRecoveryAction="IDLE" ErrorLevel="PARTITION" />
+      </PartitionHM>
+   </HealthMonitoring>
+</MODULE>
+
+
