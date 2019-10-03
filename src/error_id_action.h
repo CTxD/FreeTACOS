@@ -12,6 +12,6 @@ class ErrorIDAction
 {
     private:
         int ErrorIdentifier;                    /* required */
-        std::optional <NameType> Description;   /* optional */
+        std::optional<NameType> Description;   /* optional */
         ModuleActionType Action;                /* required */
 }

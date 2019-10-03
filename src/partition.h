@@ -17,7 +17,7 @@ class Partition
 {
     private:
         IndentfierValueType partition_identifier;       /* required */
-        std::optional <NameType> partition_name;        /* optional */
+        std::optional<NameType> partition_name;        /* optional */
         CriticalityType criticality = LEVEL_A;
         bool system_partition = false;
         char[MAXLENGTH] entry_point;                    /* required */
