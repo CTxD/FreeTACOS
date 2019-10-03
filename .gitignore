@@ -1,3 +1,4 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+.idea
