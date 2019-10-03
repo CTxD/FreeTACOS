@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 object ScheduleGenerator{
   def main(args: Array[String]): Unit = {
-    val configName : String = "example.xml";
+    val configName : String = "exampleschedule.xml";
 
     try{
       val lines = this.xmlLinesToList(configName);
@@ -20,8 +20,6 @@ object ScheduleGenerator{
         println("Input file not found");
       }
     }
-
-    
   }
 
   def xmlLinesToList(filename : String) : List[Node] = {
