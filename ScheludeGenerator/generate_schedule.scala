@@ -1,18 +1,30 @@
 import scala.io.Source;
 import scala.xml._;
+import java.io.FileNotFoundException;
 
 object ScheduleGenerator{
   def main(args: Array[String]): Unit = {
-    val configName : String = "configuration.xml";
+    val configName : String = "example.xml";
 
-    var lines = this.xmlLinesToList(configName);
+    try{
+      val lines = this.xmlLinesToList(configName);
 
-    for(line <- lines){
-      println(line);
+      for(line <- lines){
+        println(line.toString());
+      }
+    } catch {
+      case err : NoClassDefFoundError => {
+        println("Class Not Found Exception");
+      }
+      case err : FileNotFoundException => {
+        println("Input file not found");
+      }
     }
+
+    
   }
 
   def xmlLinesToList(filename : String) : List[Node] = {
-    XML.loadFile(filename).toList;
+    return XML.loadFile(filename).toList;
   }
 }
