@@ -1,7 +1,7 @@
-#include <general_types.h>
-#include <queuing_port.h>
-#include <sampling_port.h>
 #include <process.h>
+#include <queuing_port.h>
+#include <general_types.h>
+#include <sampling_port.h>
 
 typedef 
     enum CriticalityType

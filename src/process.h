@@ -3,7 +3,7 @@
 class Process
 {
     private:
-        char[MAXLENGTH] name;                           /* required */
+        NameType name;                                 /* required */
         std::optional<DecOrHexValueType> stacks_size;  /* optional */
         Criticality criticality_type = LEVEL_A;
         bool system_partition = false;
