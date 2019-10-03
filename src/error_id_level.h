@@ -1,14 +1,17 @@
-#include <general_types.h>
+#include "general_types.h"
 
-typedef 
+#ifndef ERROR_ID_LEVEL
+#define ERROR_ID_LEVEL
+
+typedef
     enum ErrorLevelType
     {
         MODULE      = 0;
         PARTITION   = 1;
         PROCESS     = 2;
-    }
+    };
 
-typedef 
+typedef
     enum ErrorCodeType
     {
         DEADLINE_MISSED     = 0;
@@ -19,7 +22,7 @@ typedef
         MEMORY_VIOLATION    = 5;
         HARDWARE_FAULT      = 6;
         POWER_FAILURE       = 7;
-    }
+    };
 
 class ErrorIDLevel
 {
@@ -28,4 +31,6 @@ class ErrorIDLevel
         std::optional<NameType> description;       /* optional */
         ErrorLevelType error_level;                 /* required */
         std::optional<ErrorCodeType> error_code;   /* optional */
-}
+};
+
+#endif

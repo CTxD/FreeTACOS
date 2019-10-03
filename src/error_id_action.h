@@ -1,4 +1,7 @@
-#include <general_types.h>
+#include "general_types.h"
+
+#ifndef ERROR_ID_ACTION
+#define ERROR_ID_ACTION
 
 typedef
     enum ModuleActionType
@@ -6,7 +9,7 @@ typedef
         IGNORE      = 0;
         SHUTDOWN    = 1;
         RESET       = 2;
-    }
+    };
 
 class ErrorIDAction
 {
@@ -14,4 +17,6 @@ class ErrorIDAction
         int ErrorIdentifier;                    /* required */
         std::optional<NameType> Description;   /* optional */
         ModuleActionType Action;                /* required */
-}
+};
+
+#endif

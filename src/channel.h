@@ -1,5 +1,8 @@
 #include "general_types.h"
 
+#ifndef CHANNEL
+#define CHANNEL
+
 class Channel
 {
 	private:
@@ -7,4 +10,6 @@ class Channel
 		std::optional<NameType> channelName;						/* optional */
 		PortMappingType source;													/* required */
 		PortMappingType destination[PARTITION_NUMBER];	/* required */
-}
+};
+
+#endif

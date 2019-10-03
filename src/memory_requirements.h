@@ -2,7 +2,10 @@
 
 #include "general_types.h"
 
-public class MemoryRequirements
+#ifndef MEMORY_REQUIREMENTS
+#define MEMORY_REQUIREMENTS
+
+class MemoryRequirements
 {
   private:
     std::optional<NameType> regionName;               /* optional */
@@ -10,4 +13,6 @@ public class MemoryRequirements
     DecOrHexValueType sizeBytes;                      /* required */
     std::optional<DecOrHexValueType> physicalAdress;  /* optional */
     std::string access;                               /* required */
-}
+};
+
+#endif

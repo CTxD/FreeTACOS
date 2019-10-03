@@ -1,4 +1,9 @@
-#include <general_types.h>
+#include <optional>
+
+#include "general_types.h"
+
+#ifndef PROCESS
+#define PROCESS
 
 class Process
 {
@@ -8,4 +13,6 @@ class Process
         Criticality criticality_type = LEVEL_A;
         bool system_partition = false;
         NameType entry_point;                           /* required */
-}
+};
+
+#endif

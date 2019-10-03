@@ -1,7 +1,10 @@
-#include <process.h>
-#include <queuing_port.h>
-#include <general_types.h>
-#include <sampling_port.h>
+#include "process.h"
+#include "queuing_port.h"
+#include "general_types.h"
+#include "sampling_port.h"
+
+#ifndef PARTITION
+#define PARTITION
 
 class PseudoPartition
 {
@@ -9,7 +12,7 @@ class PseudoPartition
     std::optional<NameType> name;                     /* optional */
     std::optional<DecOrHexValueType> physicalAdress;  /* optional */
     std::optional<NameType> procedure;                /* optional */
-}
+};
 
 class StandardPartition
 {
@@ -18,9 +21,9 @@ class StandardPartition
     std::optional<NameType> partitionName;    /* optional */
     NameType portName;                        /* required */
     std::optional<int> physicalAdress;        /* optional */
-}
+};
 
-typedef 
+typedef
     enum CriticalityType
     {
         LEVEL_A = 0,
@@ -28,7 +31,7 @@ typedef
         LEVEL_C = 2,
         LEVEL_D = 3,
         LEVEL_E = 4,
-    }
+    };
 
 class Partition
 {
@@ -41,4 +44,6 @@ class Partition
         SamplingPort sampling_port[MAX_NUMBER_SAMPLING_PORT];
         QueuingPort queuing_port[MAX_NUMBER_QUEUING_PORT];
         Process process[MAX_NUMBER_PROCESS];
-}
+};
+
+#endif

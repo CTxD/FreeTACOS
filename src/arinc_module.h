@@ -6,7 +6,10 @@
 #include "partition_memory.h"
 #include "partition_hm_table.h"
 
-class Arinc
+#ifndef ARINC_MODULE
+#define ARINC_MODULE
+
+class ArincModule
 {
   private:
     std::optional<NameType> moduleName;                   /* optional */
@@ -17,3 +20,5 @@ class Arinc
     ModuleHMTable moduleHMTable;                          /* required */
     PartitionHMTable partitionHMTable[PARTITION_NUMBER];  /* required */
 }
+
+#endif
