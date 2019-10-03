@@ -6,13 +6,14 @@
 #include "partition_memory.h"
 #include "partition_hm_table.h"
 
-class Arinc {
+class Arinc
+{
   private:
-    std::optional<NameType> moduleName;           /* optional */
-    std::optional<NameType> moduleVersion;        /* optional */
-    std::optional<IdentifierValueType> moduleID;  /* optional */
-    Channel connectionTable[CHANNEL_NUMBER];      /* required */
-    SystemHMTable systemHMTable;                  /* required */
-    ModuleHMTable moduleHMTable;                  /* required */
+    std::optional<NameType> moduleName;                   /* optional */
+    std::optional<NameType> moduleVersion;                /* optional */
+    std::optional<IdentifierValueType> moduleID;          /* optional */
+    Channel connectionTable[CHANNEL_NUMBER];              /* required */
+    SystemHMTable systemHMTable;                          /* required */
+    ModuleHMTable moduleHMTable;                          /* required */
     PartitionHMTable partitionHMTable[PARTITION_NUMBER];  /* required */
 }

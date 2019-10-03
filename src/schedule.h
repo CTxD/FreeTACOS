@@ -1,8 +1,7 @@
-#include <vector>
-
 #include "general_types.h"
 
-class WindowSchedule {
+class WindowSchedule
+{
   private:
       IdentifierValueType windowIdentifier; /* required */
       float windowStartSeconds;             /* required */
@@ -10,7 +9,8 @@ class WindowSchedule {
       bool partitionPeriodStart;            /* required */
 }
 
-class PartitionSchedule {
+class PartitionSchedule
+{
   private:
     IdentifierValueType partitionIdentifier;  /* required */
     std::optional<NameType> partitionName;    /* optional */
@@ -19,7 +19,8 @@ class PartitionSchedule {
     WindowSchedule windows[MAX_NUMBER_WINDOWS];      /* required */
 }
 
-class ModuleSchedule {
+class ModuleSchedule
+{
   private:
     PartitionSchedule majorFrameSeconds[WINDOW_NUMBER]; /* required */
 }

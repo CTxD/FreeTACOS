@@ -2,7 +2,8 @@
 
 #include "memory_requirements.h"
 
-class PartitionMemory {
+class PartitionMemory
+{
   private:
     IdentifierValueType partitionIdentifier;  /* required */
     std::optional<NameType> partitionName;    /* optional */

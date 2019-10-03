@@ -1,7 +1,8 @@
 #include "general_types.h"
 #include "system_state_entry.h"
 
-public class PartitionHMTable {
+public class PartitionHMTable
+{
   private:
     IdentifierValueType partitionIdentifier;    /* required */
     std::optional<NameType> partitionName;      /* optional */

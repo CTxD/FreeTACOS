@@ -2,7 +2,8 @@
 
 #include "general_types.h"
 
-public class MemoryRequirements {
+public class MemoryRequirements
+{
   private:
     std::optional<NameType> regionName;               /* optional */
     std::string type;                                 /* required */
