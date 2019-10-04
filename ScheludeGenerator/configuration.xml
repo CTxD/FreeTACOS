@@ -4,7 +4,7 @@
 <MODULE xmlns="http://www.aviation-ia.com/aeec/2015/ARINC653" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aviation-ia.com/aeec/2015/ARINC653ExampleSchema.xsd" Name="MyModule">
    <Partitions>
       <Partition>
-         <PartitionDefinition Name="systemManagement" Identifier="1" />
+         <PartitionDefinition Name="systemManagement" Identifier="1" Affinity="0" />
          <PartitionPeriodicity Duration="20000000" Period="100000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
@@ -26,7 +26,7 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="flightControls" Identifier="2" />
+         <PartitionDefinition Name="flightControls" Identifier="2" Affinity="0" />
          <PartitionPeriodicity Duration="10000000" Period="100000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
@@ -51,7 +51,7 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="flightManagement" Identifier="3" />
+         <PartitionDefinition Name="flightManagement" Identifier="3" Affinity="0" />
          <PartitionPeriodicity Duration="30000000" Period="100000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
@@ -67,7 +67,7 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="IOProcessing" Identifier="4" />
+         <PartitionDefinition Name="IOProcessing" Identifier="4" Affinity="0" />
          <PartitionPeriodicity Duration="20000000" Period="100000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
@@ -81,7 +81,7 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="IHVM " Identifier="5" />
+         <PartitionDefinition Name="IHVM " Identifier="5" Affinity="0" />
          <PartitionPeriodicity Duration="20000000" Period="200000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
