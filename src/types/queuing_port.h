@@ -6,7 +6,7 @@
 class QueuingPort : PortType
 {
     private:
-        int max_nb_messages;      /* required */
+        int maxNbMessages;      /* required */
 };
 
 #endif

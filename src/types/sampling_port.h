@@ -6,7 +6,7 @@
 class SamplingPort : PortType
 {
     private:
-        float refresh_rate_second;
+        float refreshRateSecond;
 };
 
 #endif

@@ -7,8 +7,8 @@
 class ModuleHMTable
 {
     private:
-        std::optional<NameType> ModuleCallback;     /* optional */
-        SystemStateEntry system_state_entry[MAX_NUMBER_SYSTEM_STATE_ENTRY];
+        std::optional<nameType> moduleCallback;     /* optional */
+        SystemStateEntry systemStateEntry[MAX_NUMBER_SYSTEM_STATE_ENTRY];
 };
 
 #endif

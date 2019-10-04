@@ -12,9 +12,9 @@
 class ArincModule
 {
   private:
-    std::optional<NameType> moduleName;                   /* optional */
-    std::optional<NameType> moduleVersion;                /* optional */
-    std::optional<IdentifierValueType> moduleID;          /* optional */
+    std::optional<nameType> moduleName;                   /* optional */
+    std::optional<nameType> moduleVersion;                /* optional */
+    std::optional<identifierValueType> moduleID;          /* optional */
     Channel connectionTable[CHANNEL_NUMBER];              /* required */
     SystemHMTable systemHMTable;                          /* required */
     ModuleHMTable moduleHMTable;                          /* required */

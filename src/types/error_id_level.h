@@ -27,10 +27,10 @@ typedef
 class ErrorIDLevel
 {
     private:
-        int error_identifier;                       /* required */
-        std::optional<NameType> description;       /* optional */
-        ErrorLevelType error_level;                 /* required */
-        std::optional<ErrorCodeType> error_code;   /* optional */
+        int errorIdentifier;                       /* required */
+        std::optional<nameType> description;        /* optional */
+        ErrorLevelType errorLevel;                  /* required */
+        std::optional<ErrorCodeType> errorCode;     /* optional */
 };
 
 #endif

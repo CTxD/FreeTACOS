@@ -8,10 +8,10 @@
 class MemoryRequirements
 {
   private:
-    std::optional<NameType> regionName;               /* optional */
+    std::optional<nameType> regionName;               /* optional */
     std::string type;                                 /* required */
-    DecOrHexValueType sizeBytes;                      /* required */
-    std::optional<DecOrHexValueType> physicalAdress;  /* optional */
+    decOrHexValueType sizeBytes;                      /* required */
+    std::optional<decOrHexValueType> physicalAdress;  /* optional */
     std::string access;                               /* required */
 };
 

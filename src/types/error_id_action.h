@@ -14,9 +14,9 @@ typedef
 class ErrorIDAction
 {
     private:
-        int ErrorIdentifier;                    /* required */
-        std::optional<NameType> Description;   /* optional */
-        ModuleActionType Action;                /* required */
+        int errorIdentifier;                    /* required */
+        std::optional<nameType> description;    /* optional */
+        ModuleActionType action;                /* required */
 };
 
 #endif
