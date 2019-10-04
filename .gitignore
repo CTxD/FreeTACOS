@@ -1,3 +1,14 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+.idea/codeStyles/codeStyleConfig.xml
+.idea/FreeTACOS.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.vs/FreeTACOS/v16/.suo
+.vs/FreeTACOS/v16/Browse.VC.db
+.vs/FreeTACOS/v16/Browse.VC.opendb
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
