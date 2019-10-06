@@ -99,14 +99,11 @@ Partition partitions[10]{
 			0
 		},
 		{/*Process array??*/
-			{/*Process*/
-				"nameType",
-				"stacksSize",
-				{/*Criticality*/},
-				false,
-				"entrypoint"
-			}
-
+			"nameType",
+			"stacksSize",
+			{/*Criticality*/},
+			false,
+			"entrypoint"
 		}
 	}
 };
