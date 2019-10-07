@@ -4,6 +4,13 @@
 #ifndef MODULE_HM_TABLE
 #define MODULE_HM_TABLE
 
-ModuleHMTable module_hm_table[MAX_NUMBER_MODULE_HM_TABLE];
+class SystemHMTable
+{
+  private:
+    ModuleHMTable* moduleHMTable;
+
+  public:
+    SystemHMTable(ModuleHMTable* moduleHM): moduleHMTable(moduleHM) {}
+};
 
 #endif

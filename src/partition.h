@@ -21,6 +21,10 @@ class StandardPartition
     std::optional<NameType> partitionName;    /* optional */
     NameType portName;                        /* required */
     std::optional<int> physicalAdress;        /* optional */
+
+  public:
+    StandardPartition(IdentifierValueType id, NameType name):
+      partitionIdentifier(id), portName(name) {}
 };
 
 typedef
@@ -33,17 +37,35 @@ typedef
         LEVEL_E = 4,
     };
 
+  typedef
+    enum AffinityType
+    {
+      ANY     = 0,
+      CORE_1  = 1,
+      CORE_2  = 2,
+      CORE_3  = 3,
+      CORE_4  = 4,
+    };
+
 class Partition
 {
     private:
-        IndentfierValueType partition_identifier;       /* required */
-        std::optional<NameType> partition_name;        /* optional */
-        CriticalityType criticality = LEVEL_A;
-        bool system_partition = false;
-        char[MAXLENGTH] entry_point;                    /* required */
-        SamplingPort sampling_port[MAX_NUMBER_SAMPLING_PORT];
-        QueuingPort queuing_port[MAX_NUMBER_QUEUING_PORT];
-        Process process[MAX_NUMBER_PROCESS];
+        IndentfierValueType partitionIdentifier;/* required */
+        std::optional<NameType> partitionName;  /* optional */
+        CriticalityType criticality = LEVEL_A;  /* required */
+        bool systemPartition = false;           /* required */
+        char* entryPoint;                       /* required */
+        SamplingPort* samplingPort;             /* required */
+        QueuingPort* queuingPort;               /* required */
+        Process* process;                       /* required */
+
+      public:
+        Partition(IdentifierValueType id, NameType name, CriticalityType critical,
+                  bool systemPartition, char* entry, SamplingPort* sampling,
+                  QueuingPort queuing, Process* process):
+                  partitionIdentifier(id), partitionName(name), criticality(critical),
+                  systemPartition(systemPartition), entryPoint(entry), samplingPort(sampling),
+                  queuingPort(queuing), process(process) {}
 };
 
 #endif

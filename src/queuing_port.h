@@ -3,10 +3,14 @@
 #ifndef QUEUING_PORT
 #define QUEUING_PORT
 
-class QueuingPort : PortType
+class QueuingPort : Port
 {
     private:
-        int max_nb_messages;      /* required */
+        int maxNumMessages;      /* required */
+
+    public:
+      QueuingPort(NameType name, int msgSize, PortMappingType direction, int id, int msgNum):
+        Port(name, msgSize, direction, id), maxNumMessages(msgNum) {}
 };
 
 #endif

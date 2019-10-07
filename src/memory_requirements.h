@@ -13,6 +13,12 @@ class MemoryRequirements
     DecOrHexValueType sizeBytes;                      /* required */
     std::optional<DecOrHexValueType> physicalAdress;  /* optional */
     std::string access;                               /* required */
+
+  public:
+    MemoryRequirements(NameType name, std::string type, DecOrHexValueType size,
+                       DecOrHexValueType address, std::string access):
+      regionName(name), type(type), sizeBytes(size), physicalAdress(address), access(access) {}
+
 };
 
 #endif

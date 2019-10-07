@@ -28,9 +28,13 @@ class ErrorIDLevel
 {
     private:
         int error_identifier;                       /* required */
-        std::optional<NameType> description;       /* optional */
+        std::optional<NameType> description;        /* optional */
         ErrorLevelType error_level;                 /* required */
-        std::optional<ErrorCodeType> error_code;   /* optional */
+        std::optional<ErrorCodeType> error_code;    /* optional */
+
+    public:
+        ErrorIDLevel(int id, NameType description, ErrorLevelType level, ErrorCodeType code):
+          errorIdentifier(id), description(description), error_level(level), error_code(code) {}
 };
 
 #endif

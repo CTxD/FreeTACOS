@@ -3,10 +3,14 @@
 #ifndef SAMPLING_PORT
 #define SAMPLING_PORT
 
-class SamplingPort : PortType
+class SamplingPort : Port
 {
     private:
-        float refresh_rate_second;
+        float refreshRateSecond;
+
+    public:
+        SamplingPort(NameType name, int msgSize, PortMappingType direction, int id, float rate):
+          Port(name, msgSize, direction, id), refreshRateSecond(rate) {}
 };
 
 #endif

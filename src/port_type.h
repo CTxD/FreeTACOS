@@ -4,13 +4,17 @@
 #ifndef PORT_TYPE
 #define PORT_TYPE
 
-class PortType
+class Port
 {
     private:
-        NameType port_name;         /* required */
-        int max_message_size;       /* required */
+        NameType portName;          /* required */
+        int maxMessageSize;         /* required */
         PortMappingType direction;  /* required */
-        int channel_id;             /* required */  /* what type should this be */
+        int channelId;              /* required */  /* what type should this be */
+
+    public:
+        Port(NameType name, int msgSize, PortMappingType dir, int id):
+          portName(name), maxMessageSize(msgSize), direction(dir), channelId(id) {}
 };
 
 #endif
