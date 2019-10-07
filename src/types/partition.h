@@ -23,15 +23,7 @@ class StandardPartition
     std::optional<int> physicalAdress;        /* optional */
 };
 
-typedef
-    enum CriticalityType
-    {
-        LEVEL_A = 0,
-        LEVEL_B = 1,
-        LEVEL_C = 2,
-        LEVEL_D = 3,
-        LEVEL_E = 4,
-    };
+
 
 class Partition
 {

@@ -101,7 +101,7 @@ Partition partitions[10]{
 		{{/*Process array??*/
 			"nameType",
 			"stacksSize",
-			{/*Criticality*/},
+			LEVEL_A,
 			false,
 			"entrypoint"
 		}}
