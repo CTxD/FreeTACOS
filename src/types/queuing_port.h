@@ -9,8 +9,8 @@ class QueuingPort : Port
         int maxNumMessages;      /* required */
 
     public:
-      QueuingPort(NameType name, int msgSize, PortMappingType direction, int id, int msgNum):
-        Port(name, msgSize, direction, id), maxNumMessages(msgNum) {}
+        QueuingPort(NameType name, int msgSize, PortMappingType direction, int id, int msgNum):
+          Port(name, msgSize, direction, id), maxNumMessages(msgNum) {}
 };
 
 #endif
