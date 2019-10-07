@@ -58,7 +58,7 @@ Partition partitions[10]{
 		0,
 		false,
 		"entry point",
-		{/*SamplingPort array??*/
+		{{/*SamplingPort array??*/
 			{/*PortType*/
 				"nameType",
 				10,
@@ -77,8 +77,8 @@ Partition partitions[10]{
 				}
 			},
 			0.0f
-		},
-		{/*QueuingPort array??*/
+		}},
+		{{/*QueuingPort array??*/
 			{/*PortType*/
 				"nameType",
 				10,
@@ -97,13 +97,13 @@ Partition partitions[10]{
 				}
 			},
 			0
-		},
-		{/*Process array??*/
+		}},
+		{{/*Process array??*/
 			"nameType",
 			"stacksSize",
 			{/*Criticality*/},
 			false,
 			"entrypoint"
-		}
+		}}
 	}
 };
