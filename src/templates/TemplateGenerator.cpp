@@ -73,14 +73,15 @@ Partition partitions[10]{
 			0
 		}},
 		{{/*Process array??*/
-			"nameType",
-			"stacksSize",
-			LEVEL_A,
-			false,
-			"entrypoint"
+			"nameType", //name
+			"stacksSize", //<decOrHexValueType> stacksSize
+			LEVEL_A, //Criticality
+			false, //systemPartition
+			"nameType" //entryPoint
 		}}
 	}
 };
+
 
 ModuleSchedule moduleSchedule = {
 	{/*PartitionSchedule*/
