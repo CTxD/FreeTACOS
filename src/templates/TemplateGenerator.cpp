@@ -84,15 +84,15 @@ Partition partitions[10]{
 
 ModuleSchedule moduleSchedule = {
 	{/*PartitionSchedule*/
-		0,
-		"nameType",
-		0.0f,
-		0.0f,
+		0, //identifierValueType partitionIdentifier
+		"nameType", //partitionName
+		0.0f, //periodSeconds
+		0.0f, //periodDurationSeconds
 		{{ /*WindowSchedule*/
-				0,
-				0.0f
-				0.0f
-				true
+				0, //identifierValueType windowIdentifier
+				0.0f //windowStartSeconds
+				0.0f //windowDurationSeconds
+				true //partitionPeriodStart
 		}}
 	}
 }
