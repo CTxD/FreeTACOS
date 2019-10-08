@@ -1,7 +1,7 @@
-#include "partition.h"
-
 #ifndef PORT_MAPPING_TYPE
 #define PORT_MAPPING_TYPE
+
+#include "pseudo_standard_partitions.h"
 
 class PortMappingType
 {
@@ -10,9 +10,9 @@ class PortMappingType
     std::optional<StandardPartition> standardPartition; /* optional */
 
   public:
-    PortMappingType(PseudoPartition pseudoPart): pseudoPartition(pseudoPart) {}
+    PortMappingType(PseudoPartition pseudoPart): pseudoPartition(std::move(pseudoPart)) {}
 
-    PortMappingType(StandardPartition standardPart): standardPart(standardPart) {}
+    PortMappingType(StandardPartition standardPart): standardPartition(std::move(standardPart)) {}
 };
 
 #endif

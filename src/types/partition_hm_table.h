@@ -1,8 +1,7 @@
-#include "general_types.h"
-#include "system_state_entry.h"
-
 #ifndef PARTITION_HM_TABLE
 #define PARTITION_HM_TABLE
+
+#include "system_state_entry.h"
 
 class PartitionHMTable
 {

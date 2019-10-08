@@ -1,7 +1,7 @@
-#include "general_types.h"
-
 #ifndef CHANNEL
 #define CHANNEL
+
+#include "port_mapping.h"
 
 class Channel
 {

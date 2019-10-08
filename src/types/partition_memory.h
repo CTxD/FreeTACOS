@@ -1,9 +1,7 @@
-#include <optional>
-
-#include "memory_requirements.h"
-
 #ifndef PARTITION_MEMORY
 #define PARTITION_MEMORY
+
+#include "memory_requirements.h"
 
 class PartitionMemory
 {

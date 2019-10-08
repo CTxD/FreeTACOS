@@ -1,12 +1,12 @@
-#include "general_types.h"
-
 #ifndef SCHEDULE
 #define SCHEDULE
+
+#include "general_types.h"
 
 class WindowSchedule
 {
   private:
-    identifierValueType windowIdentifier; /* required */
+    IdentifierValueType windowIdentifier; /* required */
     float windowStartSeconds;             /* required */
     float windowDurationSeconds;          /* required */
     bool partitionPeriodStart;            /* required */
@@ -19,8 +19,8 @@ class WindowSchedule
 class PartitionSchedule
 {
   private:
-    identifierValueType partitionIdentifier;    /* required */
-    std::optional<nameType> partitionName;      /* optional */
+    IdentifierValueType partitionIdentifier;    /* required */
+    std::optional<NameType> partitionName;      /* optional */
     float periodSeconds;                        /* required */
     float periodDurationSeconds;                /* required */
     WindowSchedule* windows;                    /* required */

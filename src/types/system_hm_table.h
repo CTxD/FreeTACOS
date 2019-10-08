@@ -1,8 +1,7 @@
-#include "general_types.h"
-#include "module_hm_table.h"
+#ifndef SYSTEM_HM_TABLE
+#define SYSTEM_HM_TABLE
 
-#ifndef MODULE_HM_TABLE
-#define MODULE_HM_TABLE
+#include "module_hm_table.h"
 
 class SystemHMTable
 {

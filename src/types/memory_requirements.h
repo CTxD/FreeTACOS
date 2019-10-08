@@ -1,9 +1,7 @@
-#include <string>
-
-#include "general_types.h"
-
 #ifndef MEMORY_REQUIREMENTS
 #define MEMORY_REQUIREMENTS
+
+#include "general_types.h"
 
 class MemoryRequirements
 {
