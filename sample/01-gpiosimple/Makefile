@@ -2,7 +2,7 @@
 # Makefile
 #
 
-CIRCLEHOME = ../aarch/rasp4
+CIRCLEHOME = ../../aarch/rasp4
 
 OBJS	= main.o kernel.o
 
