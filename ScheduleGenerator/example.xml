@@ -1,0 +1,5 @@
+<Dependency>
+    <groupId>org.scala-lang.modules</groupId>
+    <artifactId>scala-xml_2.13</artifactId>
+    <version>1.2.0</version>
+</Dependency>
