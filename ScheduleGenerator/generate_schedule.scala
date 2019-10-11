@@ -171,7 +171,11 @@ object ScheduleGenerator{
         this.generateModuleHM(moduleHms) +
         this.emit(f"}\n", -1);
         
-
+      var multiPartitions = node.child.filter(child => child.head.label == "MultiPartitionHM");
+      emitString = emitString + 
+        this.emit(f"MultiPartition multi_part[${multiPartitions.size}] {\n") +
+        this.emit("") +
+        this.emit("}\n", -1);
 
       return emitString + this.emit("}\n", -1);
     }
@@ -191,6 +195,18 @@ object ScheduleGenerator{
     case _ => ""
   }
 
+  def generateMultipartitions(nodes : Seq[Node]) : String = nodes match {
+    case x::xs if xs != Nil => {
+      var emitString : String = "";
+      val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
+      
+      return "";
+    }
+    case x::xs if xs == Nil => {
+      ""
+    }
+  }
+
   def generateModuleHM(nodes : Seq[Node]) : String = nodes match {
     // If there are more nodes in the sequence
     case x::xs if xs != Nil => {
@@ -203,7 +219,7 @@ object ScheduleGenerator{
       this.level += 1;
 
       emitString = emitString +
-        this.generateErrorActions(errorActions) +
+        this.generateErrorActions(errorActions, true) +
         this.emit("},\n", -1) +
         this.generateModuleHM(xs);
 
@@ -220,24 +236,24 @@ object ScheduleGenerator{
       this.level += 1;
 
       emitString = emitString +
-        this.generateErrorActions(errorActions) +
+        this.generateErrorActions(errorActions, true) +
         this.emit("}\n", -1);
 
       return emitString;
     }
   }
 
-  def generateErrorActions(nodes : Seq[Node]) : String = nodes match {
+  def generateErrorActions(nodes : Seq[Node], isHM : Boolean = false) : String = nodes match {
     // If there are more nodes in the sequenex
-    case x::xs if xs != Nil => {
+    case x::xs if xs != Nil && isHM=> {
       this.emit("{\n") +
       this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
       this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
       this.emit("},\n", -1) +
-      this.generateErrorActions(xs);
+      this.generateErrorActions(xs, true);
     }
     // If this is the last node in the sequence
-    case x::xs if xs == Nil => {
+    case x::xs if xs == Nil && isHM => {
       this.emit("{\n") +
       this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
       this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
