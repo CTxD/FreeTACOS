@@ -137,24 +137,70 @@ object ScheduleGenerator{
       return emitString;
     }
     // Partition end *** 
-
+    // Schedules begin ***
+    // TODO: Add more schedule configuration options? Maybe never configuration files featuring all possibilities
     case "Schedules" => {
       // Retrieve all Time Windows
       var partitionTimeWindows = node.child.filter(child => this.checkAttributeValidity("PeriodicProcessingStart", child));
       val partitionNum = partitionTimeWindows.size;
 
-      // Emit initial Schedules stuff
+      // Emit initial Schedules code
       var emitString : String = this.emit(f"WindowSchedule window_schedule[$partitionNum] {\n");
       this.level += 1;
 
+      // Emit all the partitionWindows
       emitString = emitString + 
         this.generatePartitionSchedules(partitionTimeWindows) +
         this.emit("}\n", -1);
 
       return emitString;
     }
+
+    // Schedules end ******
+    case "HealthMonitoring" => {
+      // Initial code gen
+      var emitString : String = this.emit("HealthMonitor health_monitor {\n");
+
+      // Generate for all SystemErrors
+      emitString = emitString + this.generate(node.child) +
+      this.emit("}", -1);
+
+      return emitString;
+    }
+    case "SystemErrors" => {
+      // Generate code for systemErrors w/ scoping and indentation
+      val errors = node.child.filter(child => this.checkAttributeValidity("ErrorIdentifier", child));
+      var emitString = this.emit(f"SystemError system_errors[${errors.size}] {\n", 1);
+      this.level += 1;
+
+      emitString = emitString + 
+      this.generateSystemErrors(errors) +
+      this.emit("}\n", -1);
+
+      return emitString;
+    }
+
+    case "ModuleHM" => "Hit ModuleHM!"
     // TODO: Change this to "" when done
     case _ => node.head.label
+  }
+
+  def generateSystemErrors(nodes : Seq[Node]) : String = nodes match {
+    // If we have more nodes in the sequence
+    case x::xs if xs != Nil => {
+      return this.emit("{\n") +
+        this.emit(f"error_identifier = ${x.attribute("ErrorIdentifier").get};\n", 1) +
+        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emit("},\n", -1) +
+        this.generateSystemErrors(xs);
+    }
+    // If we are at the very last element
+    case x::xs if xs == Nil => {
+      return this.emit("{\n") +
+        this.emit(f"error_identifier = ${x.attribute("ErrorIdentifier").get};\n", 1) +
+        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emit("}\n", -1);
+    }
   }
   
   def generatePartitionSchedules(nodes : Seq[Node]) : String = nodes match {
@@ -179,7 +225,6 @@ object ScheduleGenerator{
         this.emit(f"offset = ${head.attribute("Offset").get};\n") +
         this.emit("}\n", -1);
     }
-    case _ => "Ouch!"
   }
 
   //Generates the code for partitionPort
@@ -224,8 +269,6 @@ object ScheduleGenerator{
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
     }
-    // Something went wrong - This shouldn't happen (like, ever)
-    case _ => "Ouch!"
   }
 
   // Recursively generate the memory region code 
