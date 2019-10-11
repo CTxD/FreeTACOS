@@ -7,7 +7,6 @@ object ScheduleGenerator{
   var level : Int = 0;
 
   def main(args: Array[String]): Unit = {
-    // Set indentation level to 0.
     val configName : String = "configuration.xml";
 
     try{
@@ -29,6 +28,7 @@ object ScheduleGenerator{
 
   // Responsible of emitting the string, such that indentation is correct
   def emit(snippet : String, level : Int = 0) : String = {
+    // Increment or decrement based on the level - before emitting
     this.level += level;
 
     // Create indent spacing
@@ -47,6 +47,7 @@ object ScheduleGenerator{
 
   // Handle the node labels, such that code are generated based on the labels of each node (The XML tag)
   def handleNodeLabels(node : Node) : String = node.head.label match {
+    // Initial setup
     case "MODULE" => {
       return (
         this.emit("#include \"a.h\"\n") +
@@ -55,10 +56,12 @@ object ScheduleGenerator{
     }
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {
-      return this.emit(f"Partition partitions[${node.child.filter(child => child.head.label == "Partition").size}] {\n") +
+      val partitionsSize = node.child.filter(child => child.head.label == "Partition").size;
+      return this.emit(f"Partition partitions[$partitionsSize] {\n") +
         this.generate(node.child) +
         this.emit("}\n");
     }
+    // Generation for partitions and scoping rules.
     case "Partition" => {
       var partitionString = "";
       for(region <- node.child){
@@ -66,7 +69,7 @@ object ScheduleGenerator{
 
         if(this.checkAttributeValidity("Identifier", region)){
           partitionString = partitionString + 
-            this.emit("{\n", 1) +
+            this.emit("{\n") +
             this.emit(f"id = ${head.attribute("Identifier").get};\n", 1) +
             this.emit(f"name = ${head.attribute("Name").get};\n") +
             this.emit(f"affinity = ${head.attribute("Affinity").get};\n");
@@ -96,6 +99,7 @@ object ScheduleGenerator{
       // Find all partition ports
       var partitionPorts : Seq[Node] = node.child.filter(child => child.head.label == "PartitionPort");
 
+      // Find all queuingPort and samplingPort tags - put each in their own list
       var queuingPorts : Seq[Node] = Seq();
       var samplingPorts : Seq[Node] = Seq();
       for(child <- partitionPorts) {
@@ -133,10 +137,13 @@ object ScheduleGenerator{
       return emitString;
     }
     // Partition end
+    // TODO: Change this to "" when done
     case _ => node.head.label
   }
 
+  //Generates the code for partitionPort
   def generatePartitionPorts(nodes : Seq[Node], isSampling : Boolean) : String = nodes match {
+    // If queuingPort and the last element of the list
     case x::xs if isSampling == false && xs == Nil => {
       val head = x.head;
       this.emit("{\n") +
@@ -145,6 +152,7 @@ object ScheduleGenerator{
       this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
       this.emit("}\n", -1);
     }
+    // If queuing port and not the last element of the list
     case x::xs if isSampling == false && xs != Nil => {
       val head = x.head;
       this.emit("{\n") +
@@ -154,6 +162,7 @@ object ScheduleGenerator{
       this.emit("},\n", -1) +
       this.generatePartitionPorts(xs, isSampling);
     }
+    // If sampling port and the last element
     case x::xs if isSampling && xs == Nil => {
       val head = x.head;      
       this.emit("{\n") +
@@ -163,6 +172,7 @@ object ScheduleGenerator{
       this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
       this.emit("}\n", -1);
     }
+    // If sampling and not the last element
     case x::xs if isSampling && xs != Nil => {
       val head = x.head;      
       this.emit("{\n") +
@@ -173,6 +183,7 @@ object ScheduleGenerator{
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
     }
+    // Something went wrong - This shouldn't happen (like, ever)
     case _ => "Ouch!"
   }
 
