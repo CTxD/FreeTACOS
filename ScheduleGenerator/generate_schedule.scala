@@ -133,12 +133,53 @@ object ScheduleGenerator{
           this.emit("}\n", -1);
       }
 
-      // Append end tag
+      // Append end tag 
       return emitString;
     }
-    // Partition end
+    // Partition end *** 
+
+    case "Schedules" => {
+      // Retrieve all Time Windows
+      var partitionTimeWindows = node.child.filter(child => this.checkAttributeValidity("PeriodicProcessingStart", child));
+      val partitionNum = partitionTimeWindows.size;
+
+      // Emit initial Schedules stuff
+      var emitString : String = this.emit(f"WindowSchedule window_schedule[$partitionNum] {\n");
+      this.level += 1;
+
+      emitString = emitString + 
+        this.generatePartitionSchedules(partitionTimeWindows) +
+        this.emit("}\n", -1);
+
+      return emitString;
+    }
     // TODO: Change this to "" when done
     case _ => node.head.label
+  }
+  
+  def generatePartitionSchedules(nodes : Seq[Node]) : String = nodes match {
+    // If we have more elements in the list
+    case x::xs if xs != Nil => {
+      val head = x;
+      return this.emit("{\n") +
+        this.emit(f"periodic_processing_start = ${head.attribute("PeriodicProcessingStart").get};\n", 1) +
+        this.emit(f"duration = ${head.attribute("Duration").get};\n") +
+        this.emit(f"partition_name_ref = ${head.attribute("PartitionNameRef").get};\n") +
+        this.emit(f"offset = ${head.attribute("Offset").get};\n") +
+        this.emit("},\n", -1) +
+        this.generatePartitionSchedules(xs);
+    }
+    // If we are at the last element in the list
+    case x::xs if xs == Nil => {
+      val head = x;
+      return this.emit("{\n") +
+        this.emit(f"periodic_processing_start = ${head.attribute("PeriodicProcessingStart").get};\n", 1) +
+        this.emit(f"duration = ${head.attribute("Duration").get};\n") +
+        this.emit(f"partition_name_ref = ${head.attribute("PartitionNameRef").get};\n") +
+        this.emit(f"offset = ${head.attribute("Offset").get};\n") +
+        this.emit("}\n", -1);
+    }
+    case _ => "Ouch!"
   }
 
   //Generates the code for partitionPort
@@ -210,7 +251,7 @@ object ScheduleGenerator{
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
     }
-    case x::xs if xs == Nil => "";
+    case x::xs if xs == Nil => ""
     case x::xs if this.checkAttributeValidity("Type", x) == false => this.generateMemoryRegion(xs)
   }
 
