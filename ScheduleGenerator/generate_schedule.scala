@@ -162,10 +162,18 @@ object ScheduleGenerator{
       var emitString : String = this.emit("HealthMonitor health_monitor {\n");
 
       // Generate for all SystemErrors
-      emitString = emitString + this.generate(node.child) +
-      this.emit("}", -1);
+      emitString = emitString + this.generate(node.child);
 
-      return emitString;
+      // Handle generation for moduleHM, partitionHM and multiPartitionHm, since need of context ->
+      var moduleHms = node.child.filter(child => child.head.label == "ModuleHM");
+      emitString = emitString +
+        this.emit(f"ModuleHM module_hm[${moduleHms.size}] {\n") +
+        this.generateModuleHM(moduleHms) +
+        this.emit(f"}\n", -1);
+        
+
+
+      return emitString + this.emit("}\n", -1);
     }
     case "SystemErrors" => {
       // Generate code for systemErrors w/ scoping and indentation
@@ -180,9 +188,61 @@ object ScheduleGenerator{
       return emitString;
     }
 
-    case "ModuleHM" => "Hit ModuleHM!"
-    // TODO: Change this to "" when done
-    case _ => node.head.label
+    case _ => ""
+  }
+
+  def generateModuleHM(nodes : Seq[Node]) : String = nodes match {
+    // If there are more nodes in the sequence
+    case x::xs if xs != Nil => {
+      val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
+
+      var emitString : String = this.emit("{\n") +
+        this.emit(f"state_identifier = ${x.attribute("StateIdentifier").get};\n", 1) +
+        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
+      this.level += 1;
+
+      emitString = emitString +
+        this.generateErrorActions(errorActions) +
+        this.emit("},\n", -1) +
+        this.generateModuleHM(xs);
+
+      return emitString;
+    }
+    // If this is the last node in the sequence
+    case x::xs if xs == Nil => {
+      val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
+
+      var emitString : String = this.emit("{\n") +
+        this.emit(f"state_identifier = ${x.attribute("StateIdentifier").get};\n", 1) +
+        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
+      this.level += 1;
+
+      emitString = emitString +
+        this.generateErrorActions(errorActions) +
+        this.emit("}\n", -1);
+
+      return emitString;
+    }
+  }
+
+  def generateErrorActions(nodes : Seq[Node]) : String = nodes match {
+    // If there are more nodes in the sequenex
+    case x::xs if xs != Nil => {
+      this.emit("{\n") +
+      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
+      this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
+      this.emit("},\n", -1) +
+      this.generateErrorActions(xs);
+    }
+    // If this is the last node in the sequence
+    case x::xs if xs == Nil => {
+      this.emit("{\n") +
+      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
+      this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
+      this.emit("}\n", -1);
+    }
   }
 
   def generateSystemErrors(nodes : Seq[Node]) : String = nodes match {
