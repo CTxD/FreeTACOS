@@ -1,6 +1,8 @@
 #
 # Makefile
 #
+export TACOS_PATH=$(CURDIR)/../../
+export CIRCLE_PATH=$(TACOS_PATH)/aarch/rasp4
 
 CIRCLEHOME = ../../aarch/rasp4
 

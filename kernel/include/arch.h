@@ -3,6 +3,6 @@
 
 #include<errno.h>
 
-freeTACOS_ret_t freeTACOS_arch_init();
+// freeTACOS_ret_t freeTACOS_arch_init();
 
 #endif
