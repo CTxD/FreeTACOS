@@ -60,5 +60,7 @@ project/plugins/project/
 ### Scala ###
 *.class
 *.log
+ScheduleGenerator/project
+ScheduleGenerator/target
 
 # End of https://www.gitignore.io/api/c++,sbt,scala
