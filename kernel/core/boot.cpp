@@ -7,6 +7,10 @@
 //     return 0;
 // }
 
+int testboot(){
+    return 1;
+}
+
 // void freeTACOS()
 // {
 //     freeTACOS_arch_init();

@@ -16,11 +16,13 @@ AR	= $(PREFIX)ar
 
 ARCH	?= -DAARCH=64 -march=armv8-a -mtune=cortex-a72 -mlittle-endian -mcmodel=small
 
+INCLUDE	+= -I $(ROOT)/kernel/include
+
 CFLAGS	+= $(ARCH) -Wall -fsigned-char -ffreestanding $(DEFINE) $(INCLUDE) $(OPTIMIZE) -g
-CPPFLAGS+= $(CFLAGS) -std=c++14
+CPPFLAGS+= $(CFLAGS) -std=c++17
 
 
 
 %.o: %.cpp
-	@echo "  $(CPP)   $@"
+	@echo "  $(CPP)   $@ "
 	@$(CPP) $(CPPFLAGS) -c -o $@ $<

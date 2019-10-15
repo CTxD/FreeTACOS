@@ -4,6 +4,11 @@ deploy
 
 # Created by https://www.gitignore.io/api/c,c++,cmake
 # Edit at https://www.gitignore.io/?templates=c,c++,cmake
+#
+
+#circle stuff
+*.img
+*.lst
 
 ### C ###
 # Prerequisites
