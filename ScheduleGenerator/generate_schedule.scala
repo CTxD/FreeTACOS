@@ -179,6 +179,14 @@ object ScheduleGenerator{
         this.generateMultipartitions(multiPartitions) +
         this.emit("}\n", -1);
 
+      var partitionsHM = node.child.filter(child => child.head.label == "PartitionHM");
+      emitString = emitString +
+        this.emit(f"PartitionHM partitions[${partitionsHM.size}] {\n");
+        this.level += 1;
+        emitString = emitString + 
+          this.generatePartitionsHM(partitionsHM) +
+          this.emit("}\n", -1);
+
       return emitString + this.emit("}\n", -1);
     }
 
@@ -196,6 +204,39 @@ object ScheduleGenerator{
     }
 
     case _ => ""
+  }
+
+  def generatePartitionsHM(nodes : Seq[Node]) : String = nodes match {
+    case x::xs if xs != Nil => {
+      val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
+      var emitString = this.emit("{\n");
+
+      emitString = emitString +
+        this.emitNodeAttributes(x, List("TableName", "MultiPartitionHMTableNameRef"), true) +
+        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+
+      this.level += 1;
+      emitString = emitString +
+        this.generateErrorActions(errorActions, isPHM = true) +
+        this.emit("}\n", -1);
+      
+      return emitString + this.emit("}\n", -1) + this.generatePartitionsHM(xs);
+    }
+    case x::xs if xs == Nil => {
+      val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
+      var emitString = this.emit("{\n");
+
+      emitString = emitString +
+        this.emitNodeAttributes(x, List("TableName", "MultiPartitionHMTableNameRef"), true) +
+        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+
+      this.level += 1;
+      emitString = emitString +
+        this.generateErrorActions(errorActions, isPHM = true) +
+        this.emit("}\n", -1);
+      
+      return emitString + this.emit("}\n", -1);
+    }
   }
 
   def generateMultipartitions(nodes : Seq[Node]) : String = nodes match {
@@ -266,8 +307,19 @@ object ScheduleGenerator{
     }
   }
 
-  def generateErrorActions(nodes : Seq[Node], isHM : Boolean = false, isMP : Boolean = false) : String = nodes match {
-    // If there are more nodes in the sequenex
+  def generateErrorActions(nodes : Seq[Node], isHM : Boolean = false, isMP : Boolean = false, isPHM : Boolean = false) : String = nodes match {
+    case x::xs if xs != Nil && isPHM => {
+      this.emit("{\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "PartitionRecoveryAction", "ErrorLevel"), true) +
+      this.emit("},\n", -1) +
+      this.generateErrorActions(xs, isPHM = true);
+    }
+    case x::xs if xs == Nil && isPHM => {
+      this.emit("{\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "PartitionRecoveryAction", "ErrorLevel"), true) +
+      this.emit("}\n", -1);
+    }
+    // If there are more nodes in the sequence
     case x::xs if xs != Nil && isHM=> {
       this.emit("{\n") +
       this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ModuleRecoveryAction"), true) +
