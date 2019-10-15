@@ -137,7 +137,6 @@ object ScheduleGenerator{
     }
     // Partition end *** 
     // Schedules begin ***
-    // TODO: Add more schedule configuration options? Maybe never configuration files featuring all possibilities
     case "Schedules" => {
       // Retrieve all Time Windows
       var partitionTimeWindows = node.child.filter(child => this.checkAttributeValidity("PeriodicProcessingStart", child));
@@ -158,7 +157,7 @@ object ScheduleGenerator{
     // Schedules end ******
     case "HealthMonitoring" => {
       // Initial code gen
-      var emitString : String = this.emit("HealthMonitor health_monitor {\n");
+      var emitString : String = this.emit("HealthMonitor health_monitor {\n", 1);
 
       // Generate for all SystemErrors
       emitString = emitString + this.generate(node.child);
@@ -166,18 +165,23 @@ object ScheduleGenerator{
       // Handle generation for moduleHM, partitionHM and multiPartitionHm, since need of context ->
       var moduleHms = node.child.filter(child => child.head.label == "ModuleHM");
       emitString = emitString +
-        this.emit(f"ModuleHM module_hm[${moduleHms.size}] {\n") +
+        this.emit(f"ModuleHM module_hm[${moduleHms.size}] {\n");
+      this.level += 1;
+      emitString = emitString +
         this.generateModuleHM(moduleHms) +
         this.emit(f"}\n", -1);
         
       var multiPartitions = node.child.filter(child => child.head.label == "MultiPartitionHM");
       emitString = emitString + 
-        this.emit(f"MultiPartition multi_part[${multiPartitions.size}] {\n") +
+        this.emit(f"MultiPartition multi_part[${multiPartitions.size}] {\n");
+      this.level += 1;
+      emitString = emitString +
         this.generateMultipartitions(multiPartitions) +
         this.emit("}\n", -1);
 
       return emitString + this.emit("}\n", -1);
     }
+
     case "SystemErrors" => {
       // Generate code for systemErrors w/ scoping and indentation
       val errors = node.child.filter(child => this.checkAttributeValidity("ErrorIdentifier", child));
@@ -207,21 +211,23 @@ object ScheduleGenerator{
 
       emitString = emitString +
         this.generateErrorActions(errorActions, isMP = true) + 
-        this.emit("},\n", -1) +
-        this.generateMultipartitions(xs);
+        this.emit("}\n", -1);
       
-      return emitString + this.emit("}", -1);
+      return emitString + this.emit("},\n", -1) + this.generateMultipartitions(xs);
     }
     case x::xs if xs == Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
-      var emitString : String = this.emit("{\n") +
+      var emitString : String = this.emit("{\n");
+      
+      this.level += 1;
+      emitString = emitString +
         this.emitNodeAttributes(x, List("TableName"), true) +
         this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
       this.level += 1;
 
       emitString = emitString +
         this.generateErrorActions(errorActions, isMP = true) + 
-        this.emit("}", -1);
+        this.emit("}\n", -1);
       
       return emitString + this.emit("}\n", -1);
     }
@@ -239,10 +245,9 @@ object ScheduleGenerator{
 
       emitString = emitString +
         this.generateErrorActions(errorActions, true) +
-        this.emit("},\n", -1) +
-        this.generateModuleHM(xs);
+        this.emit("}\n", -1);
 
-      return emitString;
+      return emitString + this.emit("}\n", -1) + this.generateModuleHM(xs);
     }
     // If this is the last node in the sequence
     case x::xs if xs == Nil => {
@@ -257,7 +262,7 @@ object ScheduleGenerator{
         this.generateErrorActions(errorActions, true) +
         this.emit("}\n", -1);
 
-      return emitString;
+      return emitString + this.emit("}\n", -1);
     }
   }
 
