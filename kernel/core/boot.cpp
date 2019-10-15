@@ -8,7 +8,7 @@
 // }
 
 int testboot(){
-    return 1;
+    return 3;
 }
 
 // void freeTACOS()
