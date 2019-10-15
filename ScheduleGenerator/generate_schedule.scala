@@ -57,9 +57,12 @@ object ScheduleGenerator{
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {
       val partitionsSize = node.child.filter(child => child.head.label == "Partition").size;
-      return this.emit(f"Partition partitions[$partitionsSize] {\n") +
+      var emitString : String = this.emit(f"Partition partitions[$partitionsSize] {\n");
+      this.level += 1;
+      
+      return emitString +
         this.generate(node.child) +
-        this.emit("}\n");
+        this.emit("}\n", -1);
     }
     // Generation for partitions and scoping rules.
     case "Partition" => {
@@ -70,13 +73,10 @@ object ScheduleGenerator{
         if(this.checkAttributeValidity("Identifier", region)){
           partitionString = partitionString + 
             this.emit("{\n") +
-            this.emit(f"id = ${head.attribute("Identifier").get};\n", 1) +
-            this.emit(f"name = ${head.attribute("Name").get};\n") +
-            this.emit(f"affinity = ${head.attribute("Affinity").get};\n");
+            this.emitNodeAttributes(head, List("Identifier", "Name", "Affinity"), true);
         }else if(this.checkAttributeValidity("Period", region)){
           partitionString = partitionString +
-            this.emit(f"duration = ${head.attribute("Duration").get};\n") +
-            this.emit(f"period = ${head.attribute("Period").get};\n")
+            this.emitNodeAttributes(head, List("Duration", "Period"));
         }
       }
 
@@ -85,12 +85,12 @@ object ScheduleGenerator{
     // Parse memory region attributes
     case "MemoryRegions" => {
       // Loop through all MemoryRegion Tags
-      val regionSize = node.child.filter(child => this.checkAttributeValidity("Type", child)).size;
-      var emitString : String = this.emit(f"MemoryRegion memory_region[$regionSize] {\n");
+      val regions = node.child.filter(child => this.checkAttributeValidity("Type", child));
+      var emitString : String = this.emit(f"MemoryRegion memory_region[${regions.size}] {\n");
       this.level += 1;
 
       return emitString +
-        this.generateMemoryRegion(node.child) +
+        this.generateMemoryRegion(regions) +
         this.emit("}\n", -1);
     }
 
@@ -103,33 +103,32 @@ object ScheduleGenerator{
       var queuingPorts : Seq[Node] = Seq();
       var samplingPorts : Seq[Node] = Seq();
       for(child <- partitionPorts) {
+        // Filter all queing ports
         queuingPorts = child.child.filter(child => this.checkAttributeValidity("MaxNbMessage", child.head)) ++ queuingPorts;
+        
+        // Filter all sampling ports
         samplingPorts = child.child.filter(child => this.checkAttributeValidity("MaxNbMessage", child.head) == false && this.checkAttributeValidity("MaxMessageSize", child.head)) ++ samplingPorts;
       }
 
       // Emit queuing ports
       var queuingString : String = "";
       if(queuingPorts.size > 0){
-        queuingString = this.generatePartitionPorts(queuingPorts, true);
-
         emitString = emitString + this.emit(f"QueuePort queuingPartition[${queuingPorts.size}] {\n");
         this.level += 1;
 
         emitString = emitString +
-          queuingString +
+          this.generatePartitionPorts(queuingPorts, true) +
           this.emit("}\n", -1);
       }
       
       // Emit sampling ports
       var samplingString : String = "";
       if(samplingPorts.size > 0){
-        samplingString = this.generatePartitionPorts(samplingPorts, false);
-
         emitString = emitString + this.emit(f"SamplingPort samplingPartition[${samplingPorts.size}] {\n");
         this.level += 1;
 
         emitString = emitString +
-          samplingString + 
+          this.generatePartitionPorts(samplingPorts, false) +
           this.emit("}\n", -1);
       }
 
@@ -182,7 +181,7 @@ object ScheduleGenerator{
     case "SystemErrors" => {
       // Generate code for systemErrors w/ scoping and indentation
       val errors = node.child.filter(child => this.checkAttributeValidity("ErrorIdentifier", child));
-      var emitString = this.emit(f"SystemError system_errors[${errors.size}] {\n", 1);
+      var emitString = this.emit(f"SystemError system_errors[${errors.size}] {\n");
       this.level += 1;
 
       emitString = emitString + 
@@ -202,8 +201,8 @@ object ScheduleGenerator{
       
       this.level += 1;
       emitString = emitString +
-        this.emit(f"table_name = ${nodes.head.head.attribute("TableName").get};\n") +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n", 1);
+        this.emitNodeAttributes(x, List("TableName"), true) +
+        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
       this.level += 1;
 
       emitString = emitString +
@@ -216,8 +215,8 @@ object ScheduleGenerator{
     case x::xs if xs == Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
       var emitString : String = this.emit("{\n") +
-        this.emit(f"table_name = ${nodes.head.head.attribute("TableName").get};\n") +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n", 1);
+        this.emitNodeAttributes(x, List("TableName"), true) +
+        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
       this.level += 1;
 
       emitString = emitString +
@@ -234,8 +233,7 @@ object ScheduleGenerator{
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
       var emitString : String = this.emit("{\n") +
-        this.emit(f"state_identifier = ${x.attribute("StateIdentifier").get};\n", 1) +
-        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emitNodeAttributes(x, List("StateIdentifier", "Description"), true) +
         this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
       this.level += 1;
 
@@ -251,8 +249,7 @@ object ScheduleGenerator{
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
       var emitString : String = this.emit("{\n") +
-        this.emit(f"state_identifier = ${x.attribute("StateIdentifier").get};\n", 1) +
-        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emitNodeAttributes(x, List("StateIdentifier", "Description"), true) +
         this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
       this.level += 1;
 
@@ -268,29 +265,25 @@ object ScheduleGenerator{
     // If there are more nodes in the sequenex
     case x::xs if xs != Nil && isHM=> {
       this.emit("{\n") +
-      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
-      this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ModuleRecoveryAction"), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, true);
     }
     // If this is the last node in the sequence
     case x::xs if xs == Nil && isHM => {
       this.emit("{\n") +
-      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
-      this.emit(f"module_recovery_action = ${x.attribute("ModuleRecoveryAction").get};\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ModuleRecoveryAction"), true) +
       this.emit("}\n", -1);
     }
     case x::xs if xs != Nil && isMP => {
       this.emit("{\n") +
-      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
-      this.emit(f"error_level = ${x.attribute("ErrorLevel").get};\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ErrorLevel"), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, isMP = true);
     }
     case x::xs if xs == Nil && isMP => {
       this.emit("{\n") +
-      this.emit(f"error_identifier_ref = ${x.attribute("ErrorIdentifierRef").get};\n", 1) +
-      this.emit(f"error_level = ${x.attribute("ErrorLevel").get};\n") +
+      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ErrorLevel"), true) +
       this.emit("}\n", -1);
     }
   }
@@ -299,16 +292,14 @@ object ScheduleGenerator{
     // If we have more nodes in the sequence
     case x::xs if xs != Nil => {
       return this.emit("{\n") +
-        this.emit(f"error_identifier = ${x.attribute("ErrorIdentifier").get};\n", 1) +
-        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emitNodeAttributes(x, List("ErrorIdentifier", "Description"), true) +
         this.emit("},\n", -1) +
         this.generateSystemErrors(xs);
     }
     // If we are at the very last element
     case x::xs if xs == Nil => {
       return this.emit("{\n") +
-        this.emit(f"error_identifier = ${x.attribute("ErrorIdentifier").get};\n", 1) +
-        this.emit(f"description = ${x.attribute("Description").get};\n") +
+        this.emitNodeAttributes(x, List("ErrorIdentifier", "Description"), true) +
         this.emit("}\n", -1);
     }
   }
@@ -316,12 +307,8 @@ object ScheduleGenerator{
   def generatePartitionSchedules(nodes : Seq[Node]) : String = nodes match {
     // If we have more elements in the list
     case x::xs if xs != Nil => {
-      val head = x;
       return this.emit("{\n") +
-        this.emit(f"periodic_processing_start = ${head.attribute("PeriodicProcessingStart").get};\n", 1) +
-        this.emit(f"duration = ${head.attribute("Duration").get};\n") +
-        this.emit(f"partition_name_ref = ${head.attribute("PartitionNameRef").get};\n") +
-        this.emit(f"offset = ${head.attribute("Offset").get};\n") +
+        this.emitNodeAttributes(x, List("PeriodicProcessingStart", "Duration", "PartitionNameRef", "Offset"), true) +
         this.emit("},\n", -1) +
         this.generatePartitionSchedules(xs);
     }
@@ -329,10 +316,7 @@ object ScheduleGenerator{
     case x::xs if xs == Nil => {
       val head = x;
       return this.emit("{\n") +
-        this.emit(f"periodic_processing_start = ${head.attribute("PeriodicProcessingStart").get};\n", 1) +
-        this.emit(f"duration = ${head.attribute("Duration").get};\n") +
-        this.emit(f"partition_name_ref = ${head.attribute("PartitionNameRef").get};\n") +
-        this.emit(f"offset = ${head.attribute("Offset").get};\n") +
+        this.emitNodeAttributes(x, List("PeriodicProcessingStart", "Duration", "PartitionNameRef", "Offset"), true) +
         this.emit("}\n", -1);
     }
   }
@@ -341,20 +325,15 @@ object ScheduleGenerator{
   def generatePartitionPorts(nodes : Seq[Node], isSampling : Boolean) : String = nodes match {
     // If queuingPort and the last element of the list
     case x::xs if isSampling == false && xs == Nil => {
-      val head = x.head;
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"max_message_size = ${head.attribute("MaxMessageSize").get};\n") + 
-      this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
+      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction"), true) +
       this.emit("}\n", -1);
     }
     // If queuing port and not the last element of the list
     case x::xs if isSampling == false && xs != Nil => {
       val head = x.head;
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"max_message_size = ${head.attribute("MaxMessageSize").get};\n") + 
-      this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
+      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction"), true) +
       this.emit("},\n", -1) +
       this.generatePartitionPorts(xs, isSampling);
     }
@@ -362,20 +341,14 @@ object ScheduleGenerator{
     case x::xs if isSampling && xs == Nil => {
       val head = x.head;      
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"max_message_size = ${head.attribute("MaxMessageSize").get};\n") + 
-      this.emit(f"max_nb_message = ${head.attribute("MaxNbMessage").get};\n") +
-      this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
+      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction", "MaxNbMessage"), true) +
       this.emit("}\n", -1);
     }
     // If sampling and not the last element
     case x::xs if isSampling && xs != Nil => {
       val head = x.head;      
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"max_message_size = ${head.attribute("MaxMessageSize").get};\n") + 
-      this.emit(f"max_nb_message = ${head.attribute("MaxNbMessage").get};\n") +
-      this.emit(f"direction = ${head.attribute("Direction").get};\n") + 
+      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction", "MaxNbMessage"), true) +
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
     }
@@ -384,28 +357,23 @@ object ScheduleGenerator{
   // Recursively generate the memory region code 
   def generateMemoryRegion(nodes : Seq[Node]) : String = nodes match {
     // If we have a valid node, but there is no more valid nodes in the rest of the list
-    case x::xs if xs.filter(elem => this.checkAttributeValidity("Type", elem)) == Nil && this.checkAttributeValidity("Type", x) => {
-      val head = x.head;
+    case x::xs if xs == Nil => {
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"type = ${head.attribute("Type").get};\n") +
-      this.emit(f"size = ${head.attribute("Size").get};\n") +
-      this.emit(f"access_rights = ${head.attribute("AccessRights").get};\n") +
+      this.emitNodeAttributes(x, List("Name", "Type", "Size", "AccessRights"), true) +
       this.emit("}\n", -1);
     }
     // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
-    case x::xs if this.checkAttributeValidity("Type", x) && xs.filter(elem => this.checkAttributeValidity("Type", elem)) != Nil => {
-      val head = x.head;
+    case x::xs if xs != Nil => {
       this.emit("{\n") +
-      this.emit(f"name = ${head.attribute("Name").get};\n", 1) +
-      this.emit(f"type = ${head.attribute("Type").get};\n") +
-      this.emit(f"size = ${head.attribute("Size").get};\n") +
-      this.emit(f"access_rights = ${head.attribute("AccessRights").get};\n") +
+      this.emitNodeAttributes(x, List("Name", "Type", "Size", "AccessRights"), true) +
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
     }
-    case x::xs if xs == Nil => ""
-    case x::xs if this.checkAttributeValidity("Type", x) == false => this.generateMemoryRegion(xs)
+  }
+
+  def emitNodeAttributes(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
+    case x::xs if xs != Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs, false)
+    case x::xs if xs == Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n")
   }
 
   // Check validity of an attribute (Many cases there are too many 'dummy' nodes in the tree)
