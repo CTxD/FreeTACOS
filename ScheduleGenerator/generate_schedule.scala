@@ -49,8 +49,26 @@ object ScheduleGenerator{
   def handleNodeLabels(node : Node) : String = node.head.label match {
     // Initial setup
     case "MODULE" => {
-      val includes : String = this.emit("#include \"a.h\"\n") +
-                              this.emit("#include \"b.h\"\n\n");
+      val includes : String = this.emitIncludes(List(
+        "../types/arinc_module.h",
+        "../types/channel.h", 
+        "../types/error_id_action.h",
+        "../types/error_id_level.h",
+        "../types/general_types.h",
+        "../types/memory_requirements.h",
+        "../types/module_hm_table.h",
+        "../types/partition.h",
+        "../types/partition_hm_table.h",
+        "../types/partition_memory.h",
+        "../types/port_mapping.h",
+        "../types/port_type.h",
+        "../types/process.h",
+        "../types/queuing_port.h",
+        "../types/sampling_port.h",
+        "../types/schedule.h",
+        "../types/system_hm_table.h",
+        "../types/system_state_entry.h"
+      ));
       
       var emitString : String = includes + this.emit("ArincModule arincModule {\n");
       
@@ -60,12 +78,11 @@ object ScheduleGenerator{
 
       return emitString +
         this.generate(node.child) +
-        this.emit("}", -1);
+        this.emit("}\n", -1);
     }
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {
-      val partitionsSize = node.child.filter(child => child.head.label == "Partition").size;
-      var emitString : String = this.emit("{\n");
+      var emitString : String = this.emit("{ // Partitions\n");
       this.level += 1;
       
       return emitString +
@@ -75,16 +92,17 @@ object ScheduleGenerator{
     // Generation for partitions and scoping rules.
     case "Partition" => {
       var partitionString = "";
-      for(region <- node.child){
+      for(region <- node.child) {
         var head = region.head;
 
         if(this.checkAttributeValidity("Identifier", region)){
           partitionString = partitionString + 
-            this.emit("{\n") +
-            this.emitNodeAttributes(head, List("Identifier", "Name", "Affinity"), true);
+            this.emit("{ // Partition\n") +
+            this.emitNodeAttributesRequired(head, List(("Identifier", this.k), ("Affinity", this.k)), true) +
+            this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         }else if(this.checkAttributeValidity("Period", region)){
           partitionString = partitionString +
-            this.emitNodeAttributes(head, List("Duration", "Period"));
+            this.emitNodeAttributesRequiredNum(head, List("Duration", "Period"));
         }
       }
 
@@ -94,7 +112,7 @@ object ScheduleGenerator{
     case "MemoryRegions" => {
       // Loop through all MemoryRegion Tags
       val regions = node.child.filter(child => this.checkAttributeValidity("Type", child));
-      var emitString : String = this.emit(f"MemoryRegion memory_region[${regions.size}] {\n");
+      var emitString : String = this.emit(f"{ // MemoryRegion\n");
       this.level += 1;
 
       return emitString +
@@ -121,7 +139,7 @@ object ScheduleGenerator{
       // Emit queuing ports
       var queuingString : String = "";
       if(queuingPorts.size > 0){
-        emitString = emitString + this.emit(f"QueuePort queuingPartition[${queuingPorts.size}] {\n");
+        emitString = emitString + this.emit(f"{ // Queuing\n");
         this.level += 1;
 
         emitString = emitString +
@@ -132,7 +150,7 @@ object ScheduleGenerator{
       // Emit sampling ports
       var samplingString : String = "";
       if(samplingPorts.size > 0){
-        emitString = emitString + this.emit(f"SamplingPort samplingPartition[${samplingPorts.size}] {\n");
+        emitString = emitString + this.emit(f"{ // Sampling\n");
         this.level += 1;
 
         emitString = emitString +
@@ -390,30 +408,27 @@ object ScheduleGenerator{
   def generatePartitionPorts(nodes : Seq[Node], isSampling : Boolean) : String = nodes match {
     // If queuingPort and the last element of the list
     case x::xs if isSampling == false && xs == Nil => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction"), true) +
+      this.emit("{ // Sampling\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +      
       this.emit("}\n", -1);
     }
     // If queuing port and not the last element of the list
     case x::xs if isSampling == false && xs != Nil => {
-      val head = x.head;
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction"), true) +
+      this.emit("{ // Sampling\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +
       this.emit("},\n", -1) +
       this.generatePartitionPorts(xs, isSampling);
     }
     // If sampling port and the last element
     case x::xs if isSampling && xs == Nil => {
-      val head = x.head;      
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction", "MaxNbMessage"), true) +
+      this.emit("{ // Queuing\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
       this.emit("}\n", -1);
     }
     // If sampling and not the last element
-    case x::xs if isSampling && xs != Nil => {
-      val head = x.head;      
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "MaxMessageSize", "Direction", "MaxNbMessage"), true) +
+    case x::xs if isSampling && xs != Nil => {     
+      this.emit("{ //Queuing\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
     }
@@ -423,22 +438,36 @@ object ScheduleGenerator{
   def generateMemoryRegion(nodes : Seq[Node]) : String = nodes match {
     // If we have a valid node, but there is no more valid nodes in the rest of the list
     case x::xs if xs == Nil => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "Type", "Size", "AccessRights"), true) +
-      this.emit("}\n", -1);
+      this.emit("{ // Region\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
+      this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
+      this.emit("},\n", -1);
     }
     // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
     case x::xs if xs != Nil => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("Name", "Type", "Size", "AccessRights"), true) +
+      this.emit("{ // Region\n") +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
+      this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
     }
   }
 
   def emitNodeAttributeOptional(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
-    case x::xs if xs != Nil => (if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)},\n") else this.emit("{},\n")) + emitNodeAttributeOptional(node, xs)
-    case x::xs if xs == Nil => if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}\n") else this.emit("{}\n")
+    case x::xs if xs != Nil => (if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0) else this.emit(f"{}, // ${x._1}\n")) + emitNodeAttributeOptional(node, xs)
+    case x::xs if xs == Nil => if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n") else this.emit(f"{}, // ${x._1}\n")
+  }
+
+  def emitNodeAttributesRequired(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
+    case x::xs if xs != Nil => this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0) + emitNodeAttributeOptional(node, xs)
+    case x::xs if xs == Nil => this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n")
+    case _ => throw new Exception(f"The attribute: ${attr.head._1} is missing from your configuration");
+  }
+
+  def emitNodeAttributesRequiredNum(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
+    case x::xs if xs != Nil => this.emit(f"${node.attribute(x).get.toString}, // ${x}\n", if (scoping) 1 else 0) + emitNodeAttributesRequiredNum(node, xs)
+    case x::xs if xs == Nil => this.emit(f"${node.attribute(x).get.toString}, // ${x}\n")
+    case _ => throw new Exception(f"The attribute: ${attr.head} is missing from your configuration");
   }
 
   def emitNodeAttributes(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
@@ -455,6 +484,11 @@ object ScheduleGenerator{
   def checkAttributeValidity(tagName : String, node : Node) : Boolean = node.head.attribute(tagName) match {
     case None => false
     case _ => true
+  }
+
+  def emitIncludes(incls : List[String]) : String = incls match {
+    case x::xs if xs != Nil => this.emit(f"#include '$x'\n") + this.emitIncludes(xs)
+    case x::xs if xs == Nil => this.emit(f"#include '$x'\n\n")
   }
 
   def xmlLinesToList(filename : String) : List[Node] = {
