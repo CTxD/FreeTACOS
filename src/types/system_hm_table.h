@@ -1,9 +1,15 @@
-#include "general_types.h"
+#ifndef SYSTEM_HM_TABLE
+#define SYSTEM_HM_TABLE
+
 #include "module_hm_table.h"
 
-#ifndef MODULE_HM_TABLE
-#define MODULE_HM_TABLE
+class SystemHMTable
+{
+  private:
+    ModuleHMTable* moduleHMTable;
 
-ModuleHMTable moduleHmTable[MAX_NUMBER_MODULE_HM_TABLE];
+  public:
+    SystemHMTable(ModuleHMTable* moduleHM): moduleHMTable(moduleHM) {}
+};
 
 #endif
