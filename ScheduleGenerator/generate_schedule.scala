@@ -169,15 +169,17 @@ object ScheduleGenerator{
       val partitionNum = partitionTimeWindows.size;
 
       // Emit initial Schedules code
-      var emitString : String = this.emit(f"WindowSchedule window_schedule[$partitionNum] {\n");
+      var emitString : String = this.emit(f"{ // Schedules\n");
       this.level += 1;
 
+      emitString = emitString + this.emit(f"{ // PartitionTimeWindows\n");
+      this.level += 1;
       // Emit all the partitionWindows
       emitString = emitString + 
         this.generatePartitionSchedules(partitionTimeWindows) +
         this.emit("}\n", -1);
 
-      return emitString;
+      return emitString + this.emit("}\n", -1);
     }
 
     // Schedules end ******
@@ -389,68 +391,64 @@ object ScheduleGenerator{
   
   def generatePartitionSchedules(nodes : Seq[Node]) : String = nodes match {
     // If we have more elements in the list
-    case x::xs if xs != Nil => {
-      return this.emit("{\n") +
-        this.emitNodeAttributes(x, List("PeriodicProcessingStart", "Duration", "PartitionNameRef", "Offset"), true) +
-        this.emit("},\n", -1) +
-        this.generatePartitionSchedules(xs);
-    }
+    case x::xs if xs != Nil => 
+      this.emit("{\n") +
+      this.emitNodeAttributesRequired(x, List(("PeriodicProcessingStart", this.k), ("Duration", this.k), ("PartitionNameRef", this.s), ("Offset", this.k)), true) +
+      this.emit("},\n", -1) +
+      this.generatePartitionSchedules(xs);
+    
     // If we are at the last element in the list
-    case x::xs if xs == Nil => {
-      val head = x;
-      return this.emit("{\n") +
-        this.emitNodeAttributes(x, List("PeriodicProcessingStart", "Duration", "PartitionNameRef", "Offset"), true) +
-        this.emit("}\n", -1);
-    }
+    case x::xs if xs == Nil => 
+      this.emit("{\n") +
+      this.emitNodeAttributesRequired(x, List(("PeriodicProcessingStart", this.k), ("Duration", this.k), ("PartitionNameRef", this.s), ("Offset", this.k)), true) +
+      this.emit("}\n", -1);
+    
   }
 
   //Generates the code for partitionPort
   def generatePartitionPorts(nodes : Seq[Node], isSampling : Boolean) : String = nodes match {
     // If queuingPort and the last element of the list
-    case x::xs if isSampling == false && xs == Nil => {
+    case x::xs if isSampling == false && xs == Nil =>
       this.emit("{ // Sampling\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +      
       this.emit("}\n", -1);
-    }
+
     // If queuing port and not the last element of the list
-    case x::xs if isSampling == false && xs != Nil => {
+    case x::xs if isSampling == false && xs != Nil =>
       this.emit("{ // Sampling\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +
       this.emit("},\n", -1) +
       this.generatePartitionPorts(xs, isSampling);
-    }
+
     // If sampling port and the last element
-    case x::xs if isSampling && xs == Nil => {
+    case x::xs if isSampling && xs == Nil => 
       this.emit("{ // Queuing\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
       this.emit("}\n", -1);
-    }
+
     // If sampling and not the last element
-    case x::xs if isSampling && xs != Nil => {     
+    case x::xs if isSampling && xs != Nil => 
       this.emit("{ //Queuing\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
-    }
   }
 
   // Recursively generate the memory region code 
   def generateMemoryRegion(nodes : Seq[Node]) : String = nodes match {
     // If we have a valid node, but there is no more valid nodes in the rest of the list
-    case x::xs if xs == Nil => {
+    case x::xs if xs == Nil => 
       this.emit("{ // Region\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
       this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
       this.emit("},\n", -1);
-    }
     // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
-    case x::xs if xs != Nil => {
+    case x::xs if xs != Nil => 
       this.emit("{ // Region\n") +
       this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
       this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
-    }
   }
 
   def emitNodeAttributeOptional(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
