@@ -10,7 +10,7 @@ object ScheduleGenerator{
     val configName : String = "configuration.xml";
 
     try{
-      val lines = this.xmlLinesToList(configName);
+      var lines = this.xmlLinesToList(configName);
       val generatedString = generate(lines);
       println(generatedString);
       val writer = new PrintWriter(new File("gen.cpp" ));
@@ -80,7 +80,7 @@ object ScheduleGenerator{
         }
       }
 
-      return partitionString + this.generate(node.child) + this.emit("}\n", -1);
+      return partitionString + this.generate(node.child) + this.emit("},\n", -1);
     }
     // Parse memory region attributes
     case "MemoryRegions" => {
