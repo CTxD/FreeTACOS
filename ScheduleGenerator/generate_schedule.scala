@@ -185,7 +185,7 @@ object ScheduleGenerator{
     // Schedules end ******
     case "HealthMonitoring" => {
       // Initial code gen
-      var emitString : String = this.emit("HealthMonitor health_monitor {\n", 1);
+      var emitString : String = this.emit("{ // Health Monitor\n");
 
       // Generate for all SystemErrors
       emitString = emitString + this.generate(node.child);
@@ -193,7 +193,7 @@ object ScheduleGenerator{
       // Handle generation for moduleHM, partitionHM and multiPartitionHm, since need of context ->
       var moduleHms = node.child.filter(child => child.head.label == "ModuleHM");
       emitString = emitString +
-        this.emit(f"ModuleHM module_hm[${moduleHms.size}] {\n");
+        this.emit(f"{ // ModuleHM\n");
       this.level += 1;
       emitString = emitString +
         this.generateModuleHM(moduleHms) +
@@ -201,7 +201,7 @@ object ScheduleGenerator{
         
       var multiPartitions = node.child.filter(child => child.head.label == "MultiPartitionHM");
       emitString = emitString + 
-        this.emit(f"MultiPartition multi_part[${multiPartitions.size}] {\n");
+        this.emit(f"{ // MultiPartitionHM\n");
       this.level += 1;
       emitString = emitString +
         this.generateMultipartitions(multiPartitions) +
@@ -209,7 +209,7 @@ object ScheduleGenerator{
 
       var partitionsHM = node.child.filter(child => child.head.label == "PartitionHM");
       emitString = emitString +
-        this.emit(f"PartitionHM partitions[${partitionsHM.size}] {\n");
+        this.emit(f"{ // PartitionHM\n");
         this.level += 1;
         emitString = emitString + 
           this.generatePartitionsHM(partitionsHM) +
@@ -221,7 +221,7 @@ object ScheduleGenerator{
     case "SystemErrors" => {
       // Generate code for systemErrors w/ scoping and indentation
       val errors = node.child.filter(child => this.checkAttributeValidity("ErrorIdentifier", child));
-      var emitString = this.emit(f"SystemError system_errors[${errors.size}] {\n");
+      var emitString = this.emit(f"{ // SystemError\n");
       this.level += 1;
 
       emitString = emitString + 
@@ -237,11 +237,11 @@ object ScheduleGenerator{
   def generatePartitionsHM(nodes : Seq[Node]) : String = nodes match {
     case x::xs if xs != Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
-      var emitString = this.emit("{\n");
+      var emitString = this.emit("{ // PartitionHM\n");
 
       emitString = emitString +
-        this.emitNodeAttributes(x, List("TableName", "MultiPartitionHMTableNameRef"), true) +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+        this.emitNodeAttributesRequired(x, List(("TableName", this.s), ("MultiPartitionHMTableNameRef", this.s)), true) +
+        this.emit(f"{ // SystemError\n");
 
       this.level += 1;
       emitString = emitString +
@@ -252,11 +252,11 @@ object ScheduleGenerator{
     }
     case x::xs if xs == Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
-      var emitString = this.emit("{\n");
+      var emitString = this.emit("{ // PartitionHM\n");
 
       emitString = emitString +
-        this.emitNodeAttributes(x, List("TableName", "MultiPartitionHMTableNameRef"), true) +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+        this.emitNodeAttributesRequired(x, List(("TableName", this.s), ("MultiPartitionHMTableNameRef", this.s)), true) +
+        this.emit(f"{ // SystemError\n");
 
       this.level += 1;
       emitString = emitString +
@@ -274,8 +274,8 @@ object ScheduleGenerator{
       
       this.level += 1;
       emitString = emitString +
-        this.emitNodeAttributes(x, List("TableName"), true) +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+        this.emitNodeAttributesRequired(x, List(("TableName", this.s)), true) +
+        this.emit(f"{ // SystemError\n");
       this.level += 1;
 
       emitString = emitString +
@@ -290,8 +290,8 @@ object ScheduleGenerator{
       
       this.level += 1;
       emitString = emitString +
-        this.emitNodeAttributes(x, List("TableName"), true) +
-        this.emit(f"SystemError system_errors[${errorActions.size}] {\n");
+        this.emitNodeAttributesRequired(x, List(("TableName", this.s)), true) +
+        this.emit(f"{ // SystemError\n");
       this.level += 1;
 
       emitString = emitString +
@@ -308,8 +308,8 @@ object ScheduleGenerator{
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
       var emitString : String = this.emit("{\n") +
-        this.emitNodeAttributes(x, List("StateIdentifier", "Description"), true) +
-        this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
+        this.emitNodeAttributesRequired(x, List(("StateIdentifier", this.k), ("Description", this.s)), true) +
+        this.emit(f"{ // ErrorAction\n");
       this.level += 1;
 
       emitString = emitString +
@@ -323,8 +323,8 @@ object ScheduleGenerator{
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
       var emitString : String = this.emit("{\n") +
-        this.emitNodeAttributes(x, List("StateIdentifier", "Description"), true) +
-        this.emit(f"ErrorAction error_actions[${errorActions.size}]{\n");
+        this.emitNodeAttributesRequired(x, List(("StateIdentifier", this.k), ("Description", this.s)), true) +
+        this.emit(f"{ // ErrorAction\n");
       this.level += 1;
 
       emitString = emitString +
@@ -337,38 +337,38 @@ object ScheduleGenerator{
 
   def generateErrorActions(nodes : Seq[Node], isHM : Boolean = false, isMP : Boolean = false, isPHM : Boolean = false) : String = nodes match {
     case x::xs if xs != Nil && isPHM => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "PartitionRecoveryAction", "ErrorLevel"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.s), ("ErrorLevel", this.k)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, isPHM = true);
     }
     case x::xs if xs == Nil && isPHM => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "PartitionRecoveryAction", "ErrorLevel"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.s), ("ErrorLevel", this.s)), true) +
       this.emit("}\n", -1);
     }
     // If there are more nodes in the sequence
     case x::xs if xs != Nil && isHM=> {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ModuleRecoveryAction"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.s)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, true);
     }
     // If this is the last node in the sequence
     case x::xs if xs == Nil && isHM => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ModuleRecoveryAction"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.s)), true) +
       this.emit("}\n", -1);
     }
     case x::xs if xs != Nil && isMP => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ErrorLevel"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.s)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, isMP = true);
     }
     case x::xs if xs == Nil && isMP => {
-      this.emit("{\n") +
-      this.emitNodeAttributes(x, List("ErrorIdentifierRef", "ErrorLevel"), true) +
+      this.emit("{ // ErrorAction\n") +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.s)), true) +
       this.emit("}\n", -1);
     }
   }
