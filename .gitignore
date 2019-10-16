@@ -1,9 +1,16 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+.idea/codeStyles/codeStyleConfig.xml
+.idea/FreeTACOS.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
 .vs/FreeTACOS/v16/.suo
 .vs/FreeTACOS/v16/Browse.VC.db
 .vs/FreeTACOS/v16/Browse.VC.opendb
-.vs/FreeTACOS/v16/ipch/AutoPCH/30352a19bf84002c/TEMPLATEGENERATOR.ipch
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/FreeTACOS/v16/ipch/AutoPCH/30352a19bf84002c/TEMPLATEGENERATOR.ipch

@@ -1,22 +1,18 @@
-#ifndef PROCESS
-#define PROCESS
+#include <optional>
 
 #include "general_types.h"
+
+#ifndef PROCESS
+#define PROCESS
 
 class Process
 {
     private:
-        NameType name;                                /* required */
-        std::optional<DecOrHexValueType> stackSize;   /* optional */
-        CriticalityType criticalityType = LEVEL_A;    /* required */
-        bool systemPartition = false;                 /* required */
-        NameType entryPoint;                          /* required */
-
-    public:
-        Process(NameType& name, DecOrHexValueType size, CriticalityType critical,
-                bool systemPartition, NameType& entry):
-          name(std::move(name)), stackSize(size), criticalityType(critical),
-          systemPartition(systemPartition), entryPoint(std::move(entry)) {}
+        nameType name;                                  /* required */
+        std::optional<decOrHexValueType> stacksSize;    /* optional */
+        Criticality criticalityType = LEVEL_A;
+        bool systemPartition = false;
+        nameType entryPoint;                            /* required */
 };
 
 #endif

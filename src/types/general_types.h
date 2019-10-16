@@ -1,40 +1,37 @@
+#include <string>
+#include <optional>
+
 #ifndef GENERAL_TYPES
 #define GENERAL_TYPES
 
-#include <string>
-#include <utility>
-#include <optional>
+typedef unsigned int identifierValueType;
 
-typedef unsigned int IdentifierValueType;
+#define MAX_NAME_LENGTH 30;
 
-const int MAX_NAME_LENGTH = 30;
+#define PARTITION_NUMBER 128;
 
-const int PARTITION_NUMBER = 128;
+#define MAX_NUMBER_MEMORY_REQUIREMENTS 100;
 
-const int MAX_NUMBER_MEMORY_REQUIREMENTS = 100;
+#define MAX_NUMBER_WINDOWS 200;
 
-const int MAX_NUMBER_WINDOWS = 200;
+#define WINDOW_NUMBER 100;
 
-const int WINDOW_NUMBER = 100;
+#define CHANNEL_NUMBER 50;
 
-const int CHANNEL_NUMBER = 50;
+#define MAX_NUMBER_MODULE_HM_TABLE 50;
 
-const int MAX_NUMBER_MODULE_HM_TABLE = 50;
+typedef char[MAX_NAME_LENGTH] nameType;
 
-typedef struct
-{
-  char x[MAX_NAME_LENGTH];
-} NameType;
+typedef std::string decOrHexValueType;
 
-typedef std::string DecOrHexValueType;
-
+typedef
 enum CriticalityType
 {
-    LEVEL_A = 0,
-    LEVEL_B = 1,
-    LEVEL_C = 2,
-    LEVEL_D = 3,
-    LEVEL_E = 4,
+	LEVEL_A = 0,
+	LEVEL_B = 1,
+	LEVEL_C = 2,
+	LEVEL_D = 3,
+	LEVEL_E = 4,
 };
 
 #endif
