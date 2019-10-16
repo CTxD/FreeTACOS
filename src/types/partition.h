@@ -36,6 +36,6 @@ class Partition
         SamplingPort samplingPort[MAX_NUMBER_SAMPLING_PORT];
         QueuingPort queuingPort[MAX_NUMBER_QUEUING_PORT];
         Process process[MAX_NUMBER_PROCESS];
-};
+	};
 
 #endif
