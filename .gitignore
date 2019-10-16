@@ -1,3 +1,9 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+.vs/FreeTACOS/v16/.suo
+.vs/FreeTACOS/v16/Browse.VC.db
+.vs/FreeTACOS/v16/Browse.VC.opendb
+.vs/FreeTACOS/v16/ipch/AutoPCH/30352a19bf84002c/TEMPLATEGENERATOR.ipch
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
