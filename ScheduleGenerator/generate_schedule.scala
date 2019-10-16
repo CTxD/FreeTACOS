@@ -13,7 +13,7 @@ object ScheduleGenerator{
       var lines = this.xmlLinesToList(configName);
       val generatedString = generate(lines);
       println(generatedString);
-      val writer = new PrintWriter(new File("gen.cpp" ));
+      val writer = new PrintWriter(new File("../src/kernel/config.cpp" ));
       writer.write(generatedString);
       writer.close();
     } catch {
