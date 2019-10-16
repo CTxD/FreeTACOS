@@ -1,19 +1,15 @@
+#include "general_types.h"
+
 #ifndef CHANNEL
 #define CHANNEL
-
-#include "port_mapping.h"
 
 class Channel
 {
 	private:
-		IdentifierValueType channelIdentifier;					/* required */
-		std::optional<NameType> channelName;						/* optional */
-		PortMappingType* source;												/* required */
-		PortMappingType* destination;										/* required */
-
-	public:
-		Channel(IdentifierValueType id, NameType name, PortMappingType* source, PortMappingType* destinations):
-			channelIdentifier(id), channelName(name), source(source), destination(destinations) {}
+		identifierValueType channelIdentifier;			/* required */
+		std::optional<nameType> channelName;			/* optional */
+		PortMappingType source;							/* required */
+		PortMappingType destination[PARTITION_NUMBER];	/* required */
 };
 
 #endif

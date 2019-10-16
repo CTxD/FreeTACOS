@@ -1,22 +1,18 @@
-#ifndef MEMORY_REQUIREMENTS
-#define MEMORY_REQUIREMENTS
+#include <string>
 
 #include "general_types.h"
+
+#ifndef MEMORY_REQUIREMENTS
+#define MEMORY_REQUIREMENTS
 
 class MemoryRequirements
 {
   private:
-    std::optional<NameType> regionName;               /* optional */
+    std::optional<nameType> regionName;               /* optional */
     std::string type;                                 /* required */
-    DecOrHexValueType sizeBytes;                      /* required */
-    std::optional<DecOrHexValueType> physicalAdress;  /* optional */
+    decOrHexValueType sizeBytes;                      /* required */
+    std::optional<decOrHexValueType> physicalAdress;  /* optional */
     std::string access;                               /* required */
-
-  public:
-    MemoryRequirements(NameType name, std::string type, DecOrHexValueType size,
-                       DecOrHexValueType address, std::string access):
-      regionName(name), type(type), sizeBytes(size), physicalAdress(address), access(access) {}
-
 };
 
 #endif

@@ -1,17 +1,14 @@
+#include "general_types.h"
+#include "system_state_entry.h"
+
 #ifndef MODULE_HM_TABLE
 #define MODULE_HM_TABLE
-
-#include "system_state_entry.h"
 
 class ModuleHMTable
 {
     private:
-      std::optional<NameType> moduleCallback;     /* optional */
-      SystemStateEntry* systemStateEntry;         /* required */
-
-    public:
-      ModuleHMTable(NameType callback, SystemStateEntry* entry):
-        moduleCallback(callback), systemStateEntry(entry) {}
+        std::optional<nameType> moduleCallback;     /* optional */
+        SystemStateEntry systemStateEntry[MAX_NUMBER_SYSTEM_STATE_ENTRY];
 };
 
 #endif
