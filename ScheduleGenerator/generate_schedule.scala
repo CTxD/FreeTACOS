@@ -49,15 +49,23 @@ object ScheduleGenerator{
   def handleNodeLabels(node : Node) : String = node.head.label match {
     // Initial setup
     case "MODULE" => {
-      return (
-        this.emit("#include \"a.h\"\n") +
-        this.emit("#include \"b.h\"\n\n")
-      ) + this.generate(node.child);
+      val includes : String = this.emit("#include \"a.h\"\n") +
+                              this.emit("#include \"b.h\"\n\n");
+      
+      var emitString : String = includes + this.emit("ArincModule arincModule {\n");
+      
+      this.level += 1;
+      emitString = emitString +
+        this.emitNodeAttributeOptional(node, List(("Name", this.s), ("ModuleVersion", this.k), ("moduleId", this.k)), true);
+
+      return emitString +
+        this.generate(node.child) +
+        this.emit("}", -1);
     }
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {
       val partitionsSize = node.child.filter(child => child.head.label == "Partition").size;
-      var emitString : String = this.emit(f"Partition partitions[$partitionsSize] {\n");
+      var emitString : String = this.emit("{\n");
       this.level += 1;
       
       return emitString +
@@ -428,8 +436,18 @@ object ScheduleGenerator{
     }
   }
 
+  def emitNodeAttributeOptional(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
+    case x::xs if xs != Nil => (if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)},\n") else this.emit("{},\n")) + emitNodeAttributeOptional(node, xs)
+    case x::xs if xs == Nil => if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}\n") else this.emit("{}\n")
+  }
+
   def emitNodeAttributes(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
-    case x::xs if xs != Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs, false)
+    case x::xs if xs != Nil => this.emit(f"${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs)
+    case x::xs if xs == Nil => this.emit(f"${node.attribute(x).get};\n")
+  }
+
+  def emitNodeAttributesWithIdentifier(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
+    case x::xs if xs != Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs)
     case x::xs if xs == Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n")
   }
 
@@ -441,5 +459,32 @@ object ScheduleGenerator{
 
   def xmlLinesToList(filename : String) : List[Node] = {
     return XML.loadFile(filename).toList;
+  }
+
+  /**
+     *  @brief A function that returns the input parameter
+     *
+     *  @details
+     *      A dummy function used as a paramer, such that types can be passed as a 'null' value
+     * 
+     *  @param fun  Input String
+     *  @return     The same input string
+     */
+  def k(string : String) : String = {
+    string
+  }
+
+  /**
+     *  @brief A function that returns the input parameter with '"' '"' 
+     *
+     *  @details
+     *      A function used to append quotes in each end of a string
+     *      - This is used as a parameter function
+     * 
+     *  @param fun  Input String
+     *  @return     Input String with quotes
+     */
+  def s(string : String) : String = {
+    '"' + string + '"'
   }
 }
