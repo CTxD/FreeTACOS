@@ -1,22 +1,18 @@
-#ifndef PROCESS
-#define PROCESS
+#ifndef PROCESS_H
+#define PROCESS_H
 
 #include "general_types.h"
 
+// Deprecated
 class Process
 {
     private:
-        NameType name;                                /* required */
-        std::optional<DecOrHexValueType> stackSize;   /* optional */
-        CriticalityType criticalityType = LEVEL_A;    /* required */
-        bool systemPartition = false;                 /* required */
-        NameType entryPoint;                          /* required */
+        name_t name;                          /* required */
+        std::optional<decOrHex_t> stackSize;  /* optional */
 
     public:
-        Process(NameType& name, DecOrHexValueType size, CriticalityType critical,
-                bool systemPartition, NameType& entry):
-          name(std::move(name)), stackSize(size), criticalityType(critical),
-          systemPartition(systemPartition), entryPoint(std::move(entry)) {}
+        Process(name_t& name, decOrHex_t size):
+          name(std::move(name)), stackSize(size) {}
 };
 
 #endif

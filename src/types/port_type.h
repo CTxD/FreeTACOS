@@ -3,27 +3,35 @@
 
 #include "port_mapping.h"
 
+enum direction_t
+{
+  SOURCE,
+  DESTINATION,
+};
+
 class Port
 {
     private:
-        NameType portName;          /* required */
+        name_t portName;            /* required */
         int maxMessageSize;         /* required */
-        PortMappingType direction;  /* required */
-        int channelId;              /* required */  /* what type should this be */
+        direction_t direction;      /* required */
+
+        // Deprecated
+        identifier_t channelIdentifier; /* required */
 
     public:
-        Port(NameType name, int msgSize, PortMappingType dir, int id):
-          portName(name), maxMessageSize(msgSize), direction(dir), channelId(id) {}
+        Port(name_t name, int msgSize, direction_t dir):
+          portName(name), maxMessageSize(msgSize), direction(dir) {}
 };
 
 class SamplingPort : Port
 {
     private:
-        float refreshRateSecond;
+        float refreshRateSecond;  /* required */
 
     public:
-        SamplingPort(NameType name, int msgSize, PortMappingType direction, int id, float rate):
-          Port(name, msgSize, direction, id), refreshRateSecond(rate) {}
+        SamplingPort(name_t name, int msgSize, direction_t direction, float refreshRate):
+          Port(name, msgSize, direction), refreshRateSecond(refreshRate) {}
 };
 
 class QueuingPort : Port
@@ -32,8 +40,8 @@ class QueuingPort : Port
         int maxNumMessages;      /* required */
 
     public:
-        QueuingPort(NameType name, int msgSize, PortMappingType direction, int id, int msgNum):
-          Port(name, msgSize, direction, id), maxNumMessages(msgNum) {}
+        QueuingPort(name_t name, int msgSize, direction_t direction, int maxMessages):
+          Port(name, msgSize, direction), maxNumMessages(maxMessages) {}
 };
 
 #endif

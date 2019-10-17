@@ -1,38 +1,40 @@
-#ifndef PARTITION
-#define PARTITION
+#ifndef PARTITION_H
+#define PARTITION_H
 
 #include "process.h"
 #include "port_type.h"
-#include "general_types.h"
-
-enum AffinityType
-{
-  ANY     = 0,
-  CORE_1  = 1,
-  CORE_2  = 2,
-  CORE_3  = 3,
-  CORE_4  = 4,
-};
+#include "memory_requirements.h"
 
 class Partition
 {
     private:
-        IdentifierValueType partitionIdentifier;/* required */
-        std::optional<NameType> partitionName;  /* optional */
-        CriticalityType criticality = LEVEL_A;  /* required */
-        bool systemPartition = false;           /* required */
-        char* entryPoint;                       /* required */
-        SamplingPort* samplingPort;             /* required */
-        QueuingPort* queuingPort;               /* required */
-        Process* process;                       /* required */
+        identifier_t partitionIdentifier;       /* required */
+        affinity_t affinity = affinity_t::ANY;  /* required */
+        name_t partitionName;                   /* required */
 
-      public:
-        Partition(IdentifierValueType id, NameType name, CriticalityType critical,
-                  bool systemPartition, char* entry, SamplingPort* sampling,
-                  QueuingPort* queuing, Process* process):
-                  partitionIdentifier(id), partitionName(name), criticality(critical),
-                  systemPartition(systemPartition), entryPoint(entry), samplingPort(sampling),
-                  queuingPort(queuing), process(process) {}
+        decOrHex_t duration;                    /* required */
+        decOrHex_t period;                      /* required */
+
+        std::vector<MemoryRegion> memoryRegions;/* required */
+        std::vector<QueuingPort> queuePorts;    /* required */
+        std::vector<SamplingPort> samplePorts;  /* required */
+
+        // Deprecated
+        criticality_t criticality;                  /* required */
+        bool systemPartition;                       /* required */
+        name_t entryPoint;                          /* required */
+        std::vector<SamplingPort> samplingPort;     /* required */
+        std::vector<QueuingPort> queuingPort;       /* required */
+        std::vector<Process> process;               /* required */
+
+    public:
+        Partition(identifier_t id, name_t name, affinity_t afinity,
+                  decOrHex_t duration, decOrHex_t period,
+                  std::vector<MemoryRegion> mem,
+                  std::vector<QueuingPort> queuing,
+                  std::vector<SamplingPort> sampling):
+                  partitionIdentifier(id), affinity(affinity), partitionName(name), memoryRegions(mem),
+                  duration(duration), period(period), samplePorts(sampling), queuePorts(queuing) {}
 };
 
 #endif

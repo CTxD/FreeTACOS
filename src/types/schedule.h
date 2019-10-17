@@ -3,40 +3,60 @@
 
 #include "general_types.h"
 
+// Deprecated
 class WindowSchedule
 {
   private:
-    IdentifierValueType windowIdentifier; /* required */
-    float windowStartSeconds;             /* required */
-    float windowDurationSeconds;          /* required */
-    bool partitionPeriodStart;            /* required */
+    identifier_t windowIdentifier;  /* required */
+    float windowStartSeconds;       /* required */
+    float windowDurationSeconds;    /* required */
+    bool partitionPeriodStart;      /* required */
 
   public:
-    WindowSchedule(IdentifierValueType id, float startSec, float durationSec, bool periodStart):
-      windowIdentifier(id), windowStartSeconds(startSec), windowDurationSeconds(durationSec), partitionPeriodStart(periodStart) {}
+    WindowSchedule(identifier_t id, float startSec, float durationSec, bool periodStart):
+      windowIdentifier(id), windowStartSeconds(startSec),
+      windowDurationSeconds(durationSec), partitionPeriodStart(periodStart) {}
+
+    WindowSchedule(const WindowSchedule& w): windowIdentifier(w.windowIdentifier),
+      windowStartSeconds(w.windowStartSeconds), windowDurationSeconds(w.windowDurationSeconds),
+      partitionPeriodStart(w.partitionPeriodStart) {}
+    WindowSchedule(WindowSchedule&& w) noexcept: windowIdentifier(std::move(w.windowIdentifier)),
+
+      windowStartSeconds(std::move(w.windowStartSeconds)),
+      windowDurationSeconds(std::move(w.windowDurationSeconds)),
+      partitionPeriodStart(std::move(w.partitionPeriodStart)) {}
+
+    ~WindowSchedule() = default;
+
 };
 
 class PartitionSchedule
 {
   private:
-    IdentifierValueType partitionIdentifier;    /* required */
-    std::optional<NameType> partitionName;      /* optional */
-    float periodSeconds;                        /* required */
-    float periodDurationSeconds;                /* required */
-    WindowSchedule* windows;                    /* required */
+    bool partitionPeriodStart;        /* required */
+    decOrHex_t periodDurationSeconds; /* required */
+    name_t partitionName;             /* required */
+    decOrHex_t offset;                /* required */
+
+    // Deprecated
+    identifier_t partitionIdentifier;                   /* required */
+    // std::optional<name_t> partitionName;             /* optional */
+    float periodSeconds;                                /* required */
+    std::vector<WindowSchedule> windows;                /* required */
 
   public:
-    PartitionSchedule(IdentifierValueType id, NameType name, float periodSec, float durationSec, WindowSchedule* windows):
-      partitionIdentifier(id), partitionName(name), periodSeconds(periodSec), periodDurationSeconds(durationSec), windows(windows) {}
+    PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset):
+      partitionPeriodStart(periodicStart), periodDurationSeconds(duration),
+      partitionName(partition), offset(offset) {}
 };
 
 class ModuleSchedule
 {
   private:
-    PartitionSchedule* majorFrameSeconds;   /* required */
+    std::vector<PartitionSchedule> majorFrameSeconds;   /* required */
 
   public:
-    ModuleSchedule(PartitionSchedule* majorFrame): majorFrameSeconds(majorFrame) {}
+    ModuleSchedule(std::vector<PartitionSchedule> majorFrame): majorFrameSeconds(majorFrame) {}
 };
 
 #endif

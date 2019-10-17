@@ -1,23 +1,37 @@
 #ifndef SYSTEM_STATE_ENTRY
 #define SYSTEM_STATE_ENTRY
 
-#include "error_id_level.h"
-#include "error_id_action.h"
+#include <string>
 
+#include "error_level.h"
+#include "error_action.h"
+
+class SystemError
+{
+  private:
+    identifier_t errorIdentifier; /* required */
+    std::string description;      /* required */
+
+  public:
+    SystemError(identifier_t id, std::string descr):
+      errorIdentifier(id), description(descr) {}
+};
+
+
+// Deprecated
 class SystemStateEntry
 {
     private:
         int systemState;                      /* required */
-        std::optional<NameType> description;  /* optional */
-        ErrorIDLevel errorIdLevel;            /* required */
-        ErrorIDAction errorIdAction;          /* required */
+        std::optional<name_t> description;    /* optional */
+        std::vector<ErrorLevel> errorIdLevel; /* required */
+        std::vector<ErrorAction> actions;     /* required */
 
     public:
-      SystemStateEntry(const int state, const NameType descr, int numLevels, ErrorIDLevel levels, int numActions, ErrorIDAction actions):
-        systemState(std::move(state)), description(std::move(descr)), errorIdLevel(std::move(levels)), errorIdAction(std::move(actions)) {}
-
-      SystemStateEntry(const int state, ErrorIDLevel levels, ErrorIDAction actions):
-        systemState(std::move(state)), errorIdLevel(std::move(levels)), errorIdAction(std::move(actions)) {}
+      SystemStateEntry(const int state, const name_t descr,
+                       std::vector<ErrorLevel> levels, std::vector<ErrorAction> actions):
+        systemState(std::move(state)), description(std::move(descr)),
+        errorIdLevel(std::move(levels)), actions(std::move(actions)) {}
 };
 
 #endif

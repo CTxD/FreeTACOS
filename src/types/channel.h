@@ -3,16 +3,17 @@
 
 #include "port_mapping.h"
 
+// Deprecated
 class Channel
 {
 	private:
-		IdentifierValueType channelIdentifier;					/* required */
-		std::optional<NameType> channelName;						/* optional */
-		PortMappingType* source;												/* required */
-		PortMappingType* destination;										/* required */
+		identifier_t channelIdentifier;						/* required */
+		std::optional<name_t> channelName;				/* optional */
+		PortMappingType source;										/* required */
+		std::vector<PortMappingType> destination; /* required */
 
 	public:
-		Channel(IdentifierValueType id, NameType name, PortMappingType* source, PortMappingType* destinations):
+		Channel(identifier_t id, name_t name, PortMappingType source, std::vector<PortMappingType> destinations):
 			channelIdentifier(id), channelName(name), source(source), destination(destinations) {}
 };
 

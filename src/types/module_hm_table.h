@@ -1,17 +1,18 @@
 #ifndef MODULE_HM_TABLE
 #define MODULE_HM_TABLE
 
-#include "system_state_entry.h"
+#include "error_action.h"
 
 class ModuleHMTable
 {
     private:
-      std::optional<NameType> moduleCallback;     /* optional */
-      SystemStateEntry* systemStateEntry;         /* required */
+      identifier_t stateIdentifier;     /* required */
+      std::string description;          /* required */
+      std::vector<ErrorAction> actions; /* required */
 
     public:
-      ModuleHMTable(NameType callback, SystemStateEntry* entry):
-        moduleCallback(callback), systemStateEntry(entry) {}
+      ModuleHMTable(identifier_t state, std::string descr, std::vector<ErrorAction> actions):
+        stateIdentifier(state), description(descr), actions(std::move(actions)) {}
 };
 
 #endif

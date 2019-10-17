@@ -6,13 +6,13 @@
 class PartitionMemory
 {
   private:
-    IdentifierValueType partitionIdentifier;  /* required */
-    std::optional<NameType> partitionName;    /* optional */
-    MemoryRequirements* memoryRequirements;   /* required */
+    identifier_t partitionIdentifier;       /* required */
+    std::optional<name_t> partitionName;    /* optional */
+    std::vector<MemoryRegion> memoryRegion; /* required */
 
   public:
-    PartitionMemory(IdentifierValueType id, NameType name, MemoryRequirements* reqs):
-      partitionIdentifier(id), partitionName(name), memoryRequirements(reqs) {}
+    PartitionMemory(identifier_t id, name_t name, std::vector<MemoryRegion> memory):
+      partitionIdentifier(id), partitionName(name), memoryRegion(memory) {}
 };
 
 #endif
