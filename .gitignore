@@ -26,6 +26,27 @@ deploy
 *.ilk
 *.map
 *.exp
+.idea
+
+# Ignore generated documentation
+docs
+
+# Docker related
+.docker-sync
+
+
+# Created by https://www.gitignore.io/api/c++,sbt,scala
+# Edit at https://www.gitignore.io/?templates=c++,sbt,scala
+
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
 
 # Precompiled Headers
 *.gch
