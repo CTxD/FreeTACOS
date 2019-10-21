@@ -2,10 +2,6 @@
 aarch/rasp4
 deploy
 
-# Created by https://www.gitignore.io/api/c,c++,cmake
-# Edit at https://www.gitignore.io/?templates=c,c++,cmake
-#
-
 .vscode
 
 #circle stuff
@@ -103,3 +99,38 @@ dkms.conf
 
 # Compiled Static libraries
 *.lai
+
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+### SBT ###
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+# Ignore generated schedule files
+gen.cpp
+src/kernel/config.cpp
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+### Scala ###
+*.class
+*.log
+ScheduleGenerator/project
+ScheduleGenerator/target
+
+.vs/*
+
+# End of https://www.gitignore.io/api/c++,sbt,scala
