@@ -6,6 +6,12 @@ services:
     tty: true
     volumes:
       - tacos-sync:/app:nocopy # nocopy is important
+  doc:
+    image: hrektts/doxygen:latest
+    container_name: 'tacos_doxygen'
+    tty: true
+    volumes:
+      - .:/data
 
 volumes:
   tacos-sync:
