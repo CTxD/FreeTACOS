@@ -3,13 +3,16 @@
 
 #include "process.h"
 #include "port_type.h"
+#include "apex_types.h"
+#include "apex_error.h"
+#include "apex_partition.h"
 #include "memory_requirements.h"
 
 class Partition
 {
     private:
         identifier_t partitionIdentifier;       /* required */
-        affinity_t affinity = affinity_t::ANY;  /* required */
+        PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;  /* required */
         name_t partitionName;                   /* required */
 
         decOrHex_t duration;                    /* required */
@@ -19,16 +22,18 @@ class Partition
         std::vector<QueuingPort> queuePorts;    /* required */
         std::vector<SamplingPort> samplePorts;  /* required */
 
+        OPERATING_MODE_TYPE mode;
+        PARTITION_STATUS_TYPE status;
+
+        std::optional<std::vector<Process>> process;
+
         // Deprecated
-        criticality_t criticality;                  /* required */
-        bool systemPartition;                       /* required */
-        name_t entryPoint;                          /* required */
-        std::vector<SamplingPort> samplingPort;     /* required */
-        std::vector<QueuingPort> queuingPort;       /* required */
-        std::vector<Process> process;               /* required */
+        CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
+        bool systemPartition = false;            /* required */
+        name_t entryPoint;                       /* required */
 
     public:
-        Partition(identifier_t id, name_t name, affinity_t afinity,
+        Partition(identifier_t id, name_t name, PROCESSOR_CORE_ID_TYPE afinity,
                   decOrHex_t duration, decOrHex_t period,
                   std::vector<MemoryRegion> mem,
                   std::vector<QueuingPort> queuing,

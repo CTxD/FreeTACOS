@@ -47,6 +47,6 @@ extern void GET_EVENT_ID (
 extern void GET_EVENT_STATUS (
     /*in */ EVENT_ID_TYPE           EVENT_ID,
     /*out*/ EVENT_STATUS_TYPE       *EVENT_STATUS,
-    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE );
+    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE);
 
 #endif

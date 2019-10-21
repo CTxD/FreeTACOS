@@ -8,7 +8,7 @@
 #include <optional>
 #include <experimental/memory_resource>
 
-const int MAX_NAME_LENGTH = 30;
+#include <apex_types.h>
 
 const int PARTITION_NUMBER = 128;
 
@@ -30,29 +30,9 @@ typedef unsigned int identifier_t;
 
 typedef int decOrHex_t;
 
-char buffer[MAX_NAME_LENGTH];
-
 typedef struct
 {
-  char x[MAX_NAME_LENGTH];
+  NAME_TYPE x;
 } name_t;
-
-enum criticality_t
-{
-    LEVEL_A = 0,
-    LEVEL_B = 1,
-    LEVEL_C = 2,
-    LEVEL_D = 3,
-    LEVEL_E = 4,
-};
-
-enum affinity_t
-{
-  ANY     = 0,
-  CORE_1  = 1,
-  CORE_2  = 2,
-  CORE_3  = 3,
-  CORE_4  = 4,
-};
 
 #endif

@@ -40,7 +40,6 @@ class PartitionSchedule
 
     // Deprecated
     identifier_t partitionIdentifier;                   /* required */
-    // std::optional<name_t> partitionName;             /* optional */
     float periodSeconds;                                /* required */
     std::vector<WindowSchedule> windows;                /* required */
 

@@ -18,7 +18,7 @@ class ArincModule
   private:
     name_t moduleName;                    /* required */
     std::optional<name_t> moduleVersion;  /* optional */
-    std::optional<identifier_t> moduleId; /* optional */
+    std::optional<APEX_INTEGER> moduleId; /* optional */
 
     std::vector<SystemError> errors;
     std::vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
