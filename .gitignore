@@ -69,4 +69,7 @@ project/plugins/project/
 ScheduleGenerator/project
 ScheduleGenerator/target
 
+.vs/*
+
 # End of https://www.gitignore.io/api/c++,sbt,scala
+
