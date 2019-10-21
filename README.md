@@ -1,6 +1,17 @@
 # FreeTACOS
 Free Transparent Arinc Compliant Operating System
 
+## Documentation
+Doxygen Documentation
+
+### Generation
+To generate the documentation:
+
+```Bash
+$ docker exec -it tacos_doxygen bash # Enter the Doxygen container
+$ doxygen .doxygen # Generate documentation
+```
+
 # Getting Started
 Follow this guide for setting up Docker, Docker-Compose and Docker-Sync.
 
