@@ -15,7 +15,7 @@ object ScheduleGenerator{
       println(generatedString);
       val writer = new PrintWriter(new File("../src/kernel/config.cpp" ));
       writer.write(generatedString);
-      writer.close();
+      writer.close(); 
     } catch {
       case err : NoClassDefFoundError => {
         println("Class Not Found Exception");
@@ -50,24 +50,35 @@ object ScheduleGenerator{
     // Initial setup
     case "MODULE" => {
       val includes : String = this.emitIncludes(List(
-        "../types/arinc_module.h",
-        "../types/channel.h", 
-        "../types/error_id_action.h",
-        "../types/error_id_level.h",
-        "../types/general_types.h",
-        "../types/memory_requirements.h",
-        "../types/module_hm_table.h",
-        "../types/partition.h",
-        "../types/partition_hm_table.h",
-        "../types/partition_memory.h",
-        "../types/port_mapping.h",
-        "../types/port_type.h",
-        "../types/process.h",
-        "../types/queuing_port.h",
-        "../types/sampling_port.h",
-        "../types/schedule.h",
-        "../types/system_hm_table.h",
-        "../types/system_state_entry.h"
+        "arinc_module.h",
+        "channel.h", 
+        "error_id_action.h",
+        "error_id_level.h",
+        "general_types.h",
+        "memory_requirements.h",
+        "module_hm_table.h",
+        "partition.h",
+        "partition_hm_table.h",
+        "partition_memory.h",
+        "port_mapping.h",
+        "port_type.h",
+        "process.h",
+        "queuing_port.h",
+        "sampling_port.h",
+        "schedule.h",
+        "system_hm_table.h",
+        "system_state_entry.h",
+        "apex_blackboard.h",
+        "apex_buffer.h",
+        "apex_error.h",
+        "apex_event.h",
+        "apex_partition.h",
+        "apex_process",
+        "apex_queuing_port.h",
+        "apex_sampling_port.h",
+        "apex_semaphore.h",
+        "apex_time.h",
+        "apex_types.h"
       ));
       
       var emitString : String = includes + this.emit("ArincModule arincModule {\n");
@@ -87,7 +98,7 @@ object ScheduleGenerator{
       
       return emitString +
         this.generate(node.child) +
-        this.emit("}\n", -1);
+        this.emit("},\n", -1);
     }
     // Generation for partitions and scoping rules.
     case "Partition" => {
@@ -117,7 +128,7 @@ object ScheduleGenerator{
 
       return emitString +
         this.generateMemoryRegion(regions) +
-        this.emit("}\n", -1);
+        this.emit("},\n", -1);
     }
 
     case "PartitionPorts" => {
@@ -144,7 +155,7 @@ object ScheduleGenerator{
 
         emitString = emitString +
           this.generatePartitionPorts(queuingPorts, true) +
-          this.emit("}\n", -1);
+          this.emit("},\n", -1);
       }
       
       // Emit sampling ports
@@ -179,13 +190,14 @@ object ScheduleGenerator{
         this.generatePartitionSchedules(partitionTimeWindows) +
         this.emit("}\n", -1);
 
-      return emitString + this.emit("}\n", -1);
+      return emitString + this.emit("},\n", -1);
     }
 
     // Schedules end ******
     case "HealthMonitoring" => {
       // Initial code gen
       var emitString : String = this.emit("{ // Health Monitor\n");
+      this.level += 1
 
       // Generate for all SystemErrors
       emitString = emitString + this.generate(node.child);
@@ -193,11 +205,11 @@ object ScheduleGenerator{
       // Handle generation for moduleHM, partitionHM and multiPartitionHm, since need of context ->
       var moduleHms = node.child.filter(child => child.head.label == "ModuleHM");
       emitString = emitString +
-        this.emit(f"{ // ModuleHM\n");
+        this.emit(f"{ // ModulesHM\n");
       this.level += 1;
       emitString = emitString +
         this.generateModuleHM(moduleHms) +
-        this.emit(f"}\n", -1);
+        this.emit(f"},\n", -1);
         
       var multiPartitions = node.child.filter(child => child.head.label == "MultiPartitionHM");
       emitString = emitString + 
@@ -205,7 +217,7 @@ object ScheduleGenerator{
       this.level += 1;
       emitString = emitString +
         this.generateMultipartitions(multiPartitions) +
-        this.emit("}\n", -1);
+        this.emit("},\n", -1);
 
       var partitionsHM = node.child.filter(child => child.head.label == "PartitionHM");
       emitString = emitString +
@@ -213,9 +225,9 @@ object ScheduleGenerator{
         this.level += 1;
         emitString = emitString + 
           this.generatePartitionsHM(partitionsHM) +
-          this.emit("}\n", -1);
+          this.emit("},\n", -1);
 
-      return emitString + this.emit("}\n", -1);
+      return emitString + this.emit("},\n", -1);
     }
 
     case "SystemErrors" => {
@@ -226,7 +238,7 @@ object ScheduleGenerator{
 
       emitString = emitString + 
       this.generateSystemErrors(errors) +
-      this.emit("}\n", -1);
+      this.emit("},\n", -1);
 
       return emitString;
     }
@@ -237,7 +249,7 @@ object ScheduleGenerator{
   def generatePartitionsHM(nodes : Seq[Node]) : String = nodes match {
     case x::xs if xs != Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
-      var emitString = this.emit("{ // PartitionHM\n");
+      var emitString = this.emit("{ // PartitionsHM\n");
 
       emitString = emitString +
         this.emitNodeAttributesRequired(x, List(("TableName", this.s), ("MultiPartitionHMTableNameRef", this.s)), true) +
@@ -248,7 +260,7 @@ object ScheduleGenerator{
         this.generateErrorActions(errorActions, isPHM = true) +
         this.emit("}\n", -1);
       
-      return emitString + this.emit("}\n", -1) + this.generatePartitionsHM(xs);
+      return emitString + this.emit("},\n", -1) + this.generatePartitionsHM(xs);
     }
     case x::xs if xs == Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
@@ -261,9 +273,9 @@ object ScheduleGenerator{
       this.level += 1;
       emitString = emitString +
         this.generateErrorActions(errorActions, isPHM = true) +
-        this.emit("}\n", -1);
+        this.emit("},\n", -1);
       
-      return emitString + this.emit("}\n", -1);
+      return emitString + this.emit("},\n", -1);
     }
   }
 
@@ -307,7 +319,7 @@ object ScheduleGenerator{
     case x::xs if xs != Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
-      var emitString : String = this.emit("{\n") +
+      var emitString : String = this.emit("{ // ModuleHM\n") +
         this.emitNodeAttributesRequired(x, List(("StateIdentifier", this.k), ("Description", this.s)), true) +
         this.emit(f"{ // ErrorAction\n");
       this.level += 1;
@@ -316,13 +328,13 @@ object ScheduleGenerator{
         this.generateErrorActions(errorActions, true) +
         this.emit("}\n", -1);
 
-      return emitString + this.emit("}\n", -1) + this.generateModuleHM(xs);
+      return emitString + this.emit("},\n", -1) + this.generateModuleHM(xs);
     }
     // If this is the last node in the sequence
     case x::xs if xs == Nil => {
       val errorActions = x.child.filter(child => this.checkAttributeValidity("ErrorIdentifierRef", child));
 
-      var emitString : String = this.emit("{\n") +
+      var emitString : String = this.emit("{ // ModuleHM\n") +
         this.emitNodeAttributesRequired(x, List(("StateIdentifier", this.k), ("Description", this.s)), true) +
         this.emit(f"{ // ErrorAction\n");
       this.level += 1;
@@ -338,37 +350,37 @@ object ScheduleGenerator{
   def generateErrorActions(nodes : Seq[Node], isHM : Boolean = false, isMP : Boolean = false, isPHM : Boolean = false) : String = nodes match {
     case x::xs if xs != Nil && isPHM => {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.s), ("ErrorLevel", this.k)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.mapPartitionRecoveryAction), ("ErrorLevel", this.mapErrorLevel)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, isPHM = true);
     }
     case x::xs if xs == Nil && isPHM => {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.s), ("ErrorLevel", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("PartitionRecoveryAction", this.mapPartitionRecoveryAction), ("ErrorLevel", this.mapErrorLevel)), true) +
       this.emit("}\n", -1);
     }
     // If there are more nodes in the sequence
     case x::xs if xs != Nil && isHM=> {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.mapModuleRecoveryAction)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, true);
     }
     // If this is the last node in the sequence
     case x::xs if xs == Nil && isHM => {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ModuleRecoveryAction", this.mapModuleRecoveryAction)), true) +
       this.emit("}\n", -1);
     }
     case x::xs if xs != Nil && isMP => {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.mapErrorLevel)), true) +
       this.emit("},\n", -1) +
       this.generateErrorActions(xs, isMP = true);
     }
     case x::xs if xs == Nil && isMP => {
       this.emit("{ // ErrorAction\n") +
-      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("ErrorIdentifierRef", this.k), ("ErrorLevel", this.mapErrorLevel)), true) +
       this.emit("}\n", -1);
     }
   }
@@ -377,14 +389,14 @@ object ScheduleGenerator{
     // If we have more nodes in the sequence
     case x::xs if xs != Nil => {
       return this.emit("{\n") +
-        this.emitNodeAttributes(x, List("ErrorIdentifier", "Description"), true) +
+        this.emitNodeAttributesRequired(x, List(("ErrorIdentifier", this.k), ("Description", this.s)), true) +
         this.emit("},\n", -1) +
         this.generateSystemErrors(xs);
     }
     // If we are at the very last element
     case x::xs if xs == Nil => {
       return this.emit("{\n") +
-        this.emitNodeAttributes(x, List("ErrorIdentifier", "Description"), true) +
+        this.emitNodeAttributesRequired(x, List(("ErrorIdentifier", this.k), ("Description", this.s)), true) +
         this.emit("}\n", -1);
     }
   }
@@ -410,26 +422,26 @@ object ScheduleGenerator{
     // If queuingPort and the last element of the list
     case x::xs if isSampling == false && xs == Nil =>
       this.emit("{ // Sampling\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +      
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.mapDirectionType)), true) +
       this.emit("}\n", -1);
 
     // If queuing port and not the last element of the list
     case x::xs if isSampling == false && xs != Nil =>
       this.emit("{ // Sampling\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.mapDirectionType)), true) +
       this.emit("},\n", -1) +
       this.generatePartitionPorts(xs, isSampling);
 
     // If sampling port and the last element
     case x::xs if isSampling && xs == Nil => 
       this.emit("{ // Queuing\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.mapDirectionType), ("MaxNbMessage", this.k)), true) +      
       this.emit("}\n", -1);
 
     // If sampling and not the last element
     case x::xs if isSampling && xs != Nil => 
       this.emit("{ //Queuing\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.s), ("MaxNbMessage", this.k)), true) +      
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("MaxMessageSize", this.k), ("Direction", this.mapDirectionType), ("MaxNbMessage", this.k)), true) +      
       this.emit("},\n", -1) + 
       this.generatePartitionPorts(xs, isSampling);
   }
@@ -439,13 +451,13 @@ object ScheduleGenerator{
     // If we have a valid node, but there is no more valid nodes in the rest of the list
     case x::xs if xs == Nil => 
       this.emit("{ // Region\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.mapMemoryType), ("Size", this.k), ("AccessRights", this.mapMemoryAccess)), true) +
       this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
-      this.emit("},\n", -1);
+      this.emit("}\n", -1);
     // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
     case x::xs if xs != Nil => 
       this.emit("{ // Region\n") +
-      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.s), ("Size", this.k), ("AccessRights", this.s)), true) +
+      this.emitNodeAttributesRequired(x, List(("Name", this.s), ("Type", this.mapMemoryType), ("Size", this.k), ("AccessRights", this.mapMemoryAccess)), true) +
       this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
@@ -487,6 +499,59 @@ object ScheduleGenerator{
   def emitIncludes(incls : List[String]) : String = incls match {
     case x::xs if xs != Nil => this.emit(f"#include '$x'\n") + this.emitIncludes(xs)
     case x::xs if xs == Nil => this.emit(f"#include '$x'\n\n")
+  }
+
+  def mapErrorCode(code : String) : String = code match {
+    case "0" => "error_code_t.DEADLINE_MISSED"
+    case "1" => "error_code_t.APPLICATION_ERROR"
+    case "2" => "error_code_t.NUMERIC_ERROR"
+    case "3" => "error_code_t.ILLEGAL_REQUEST"
+    case "4" => "error_code_t.STACK_OVERFLOW"
+    case "5" => "error_code_t.MEMORY_VIOLATION"
+    case "6" => "error_code_t.HARDWARE_FAULT"
+    case "7" => "error_code_t.POWER_FAILURE"
+    case _   => throw new Exception(f"$code is not a supported ErrorCode")
+  }
+
+  def mapErrorLevel(error : String) : String = error match {
+    case "MODULE" => "error_level_t.MODULE"
+    case "PARTITION" => "error_level_t.PARTITION"
+    case "PROCESS" => "error_level_t.PROCESS"
+    case _ => throw new Exception(f"$error is not a support ErrorLevel")
+  }
+
+  def mapPartitionRecoveryAction(action : String) : String = action match {
+    case "IDLE" => "PARTITION_RECOVERY_ACTION_TYPE.IDLE"
+    case "COLD_RESTART" => "PARTITION_RECOVERY_ACTION_TYPE.COLD_RESTART"
+    case "WARM_RESTART" => "PARTITION_RECOVERY_ACTION_TYPE.WARM_RESTART"
+    case "NORMAL" => "PARTITION_RECOVERY_ACTION_TYPE.NORMAL"
+    case _      => throw new Exception(f"$action is not a supported Partition Recovery Action type")
+  }
+
+  def mapModuleRecoveryAction(action : String) : String = action match {
+    case "IGNORE" => "recovery_action_t.IGNORE"
+    case "SHUTDOWN" => "recovery_action_t.SHUTDOWN"
+    case "RESET" => "recovery_action_t.RESET"
+    case _ => throw new Exception(f"$action is not a support recovery action")
+  }
+
+  def mapDirectionType(direction : String) : String = direction match {
+    case "SOURCE" => "PORT_DIRECTION_TYPE.SOURCE"
+    case "DESTINATION" => "PORT_DIRECTION_TYPE.DESTINATION"
+    case _ => throw new Exception(f"$direction is not supported as a direction type")
+  }
+
+  def mapMemoryType(memType : String) : String = memType match {
+    case "Flash" => "memory_region_t.FLASH"
+    case "RAM" => "memory_region_t.RAM"
+    case "Input/Output" => "memory_region_t.INPUT_OUTPUT"
+    case _ => throw new Exception(f"$memType is not supported for MemoryRegions")
+  }
+
+  def mapMemoryAccess(access : String) : String = access match {
+    case "READ_ONLY" => "memory_access_t.READ_ONLY"
+    case "READ_WRITE" => "memory_access_t.WRITE"
+    case _ => throw new Exception(f"$access is not supported for MemoryAccess")
   }
 
   def xmlLinesToList(filename : String) : List[Node] = {

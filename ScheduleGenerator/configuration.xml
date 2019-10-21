@@ -70,7 +70,7 @@
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
-            <MemoryRegion Type="Input/Ouput" Size="524288" Name="IORegion" AccessRights="READ_WRITE" />
+            <MemoryRegion Type="Input/Output" Size="524288" Name="IORegion" AccessRights="READ_WRITE" />
          </MemoryRegions>
          <PartitionPorts>
             <PartitionPort>
