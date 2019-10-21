@@ -1,4 +1,76 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+<<<<<<< HEAD
 .vs/*
+=======
+.idea
+
+# Ignore generated documentation
+docs
+
+# Docker related
+.docker-sync
+
+
+# Created by https://www.gitignore.io/api/c++,sbt,scala
+# Edit at https://www.gitignore.io/?templates=c++,sbt,scala
+
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+### SBT ###
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+# Ignore generated schedule files
+gen.cpp
+src/kernel/config.cpp
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+### Scala ###
+*.class
+*.log
+ScheduleGenerator/project
+ScheduleGenerator/target
+
+# End of https://www.gitignore.io/api/c++,sbt,scala
+>>>>>>> 3e513a5... Added support for doxygen through docker
