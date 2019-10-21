@@ -3,6 +3,6 @@
 
 void freeTACOS_boot();
 
-int testboot();
+unsigned testboot();
 
 #endif

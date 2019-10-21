@@ -1,8 +1,8 @@
 #ifndef __FREETACOS_ARCH__
 #define __FREETACOS_ARCH__
 
-#include<errno.h>
+#include <errcode.h>
 
-// freeTACOS_ret_t freeTACOS_arch_init();
+ret_t init_arch();
 
 #endif

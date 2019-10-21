@@ -6,6 +6,8 @@ deploy
 # Edit at https://www.gitignore.io/?templates=c,c++,cmake
 #
 
+.vscode
+
 #circle stuff
 *.img
 *.lst

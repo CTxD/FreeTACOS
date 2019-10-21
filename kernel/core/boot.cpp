@@ -7,8 +7,8 @@
 //     return 0;
 // }
 
-int testboot(){
-    return 3;
+unsigned testboot(){
+    return 30;
 }
 
 // void freeTACOS()

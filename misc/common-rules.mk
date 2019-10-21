@@ -1,11 +1,12 @@
 ifneq ($(TARGET),) 
-$(TARGET): $(DEPS) $(OBJS)
-	$(LD) $(LDFLAGS) $(LDOPTS) -r $(LO_DEPS) $(OBJS) -o $(TARGET)
+$(TARGET): $(ADEPS) $(OBJS)
+	$(LD) $(LDFLAGS) $(LDOPTS) -r $(LIBS) $(OBJS) -o $(TARGET)
 endif
 
 common-clean:
 	$(RM) $(TARGET) $(LO_TARGET) $(LO_DEPS) $(LO_OBJS) $(OBJS)
 
+# --- Target dependent
 PREFIX ?= aarch64-elf-
 
 CC	= $(PREFIX)gcc
@@ -21,8 +22,8 @@ INCLUDE	+= -I $(ROOT)/kernel/include
 CFLAGS	+= $(ARCH) -Wall -fsigned-char -ffreestanding $(DEFINE) $(INCLUDE) $(OPTIMIZE) -g
 CPPFLAGS+= $(CFLAGS) -std=c++17
 
-
+# --- Target dependent
 
 %.o: %.cpp
-	@echo "  $(CPP)   $@ "
+	@echo "  $(CPP)  $@ "
 	@$(CPP) $(CPPFLAGS) -c -o $@ $<
