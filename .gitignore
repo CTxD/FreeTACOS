@@ -1,9 +1,6 @@
 # Ignore the build files
 aarch/rasp4
 deploy
-<<<<<<< HEAD
-.vs/*
-=======
 .idea
 
 # Ignore generated documentation
@@ -73,4 +70,3 @@ ScheduleGenerator/project
 ScheduleGenerator/target
 
 # End of https://www.gitignore.io/api/c++,sbt,scala
->>>>>>> 3e513a5... Added support for doxygen through docker
