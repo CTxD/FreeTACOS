@@ -6,15 +6,12 @@
 class MultiPartitionHMTable
 {
   private:
-    name_t tableName;                       /* required */
-    std::vector<ErrorAction> errorActions;  /* required */
-
-    // Deprecated
-    std::optional<identifier_t> tableIdentifier;  /* optional */
+    name_t tableName;                                     /* required */
+    std::vector<MultiPartitionErrorAction> errorActions;  /* required */
 
   public:
-    MultiPartitionHMTable(identifier_t id, name_t name, std::vector<ErrorAction> actions):
-      tableIdentifier(id), tableName(name), errorActions(actions) {}
+    MultiPartitionHMTable(name_t name, std::vector<MultiPartitionErrorAction> actions):
+      tableName(name), errorActions(actions) {}
 };
 
 #endif

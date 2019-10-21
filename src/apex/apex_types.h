@@ -17,6 +17,8 @@
 #ifndef APEX_TYPES
 #define APEX_TYPES
 
+#include <string>
+
 /*---------------------------*/
 /* Domain limits             */
 /*---------------------------*/
@@ -77,7 +79,7 @@ typedef
 
 #define MAX_NAME_LENGTH 30
 
-typedef char NAME_TYPE[MAX_NAME_LENGTH];
+typedef std::string NAME_TYPE;
 
 typedef void (* SYSTEM_ADDRESS_TYPE);
 

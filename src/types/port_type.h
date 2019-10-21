@@ -21,7 +21,7 @@ class Port
 class SamplingPort : Port
 {
     private:
-        float refreshRate;  /* required */
+        std::optional<float> refreshRate;  /* optional */
 
     public:
         SamplingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, float refreshRate):

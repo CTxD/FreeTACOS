@@ -8,10 +8,10 @@ class ModuleHMTable
     private:
       identifier_t stateIdentifier;     /* required */
       std::string description;          /* required */
-      std::vector<ErrorAction> actions; /* required */
+      std::vector<ModuleErrorAction> actions; /* required */
 
     public:
-      ModuleHMTable(identifier_t state, std::string descr, std::vector<ErrorAction> actions):
+      ModuleHMTable(identifier_t state, std::string descr, std::vector<ModuleErrorAction> actions):
         stateIdentifier(state), description(descr), actions(std::move(actions)) {}
 };
 

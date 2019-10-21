@@ -25,11 +25,11 @@ class SystemStateEntry
         int systemState;                      /* required */
         std::optional<name_t> description;    /* optional */
         std::vector<ErrorLevel> errorIdLevel; /* required */
-        std::vector<ErrorAction> actions;     /* required */
+        std::vector<ModuleErrorAction> actions;     /* required */
 
     public:
       SystemStateEntry(const int state, const name_t descr,
-                       std::vector<ErrorLevel> levels, std::vector<ErrorAction> actions):
+                       std::vector<ErrorLevel> levels, std::vector<ModuleErrorAction> actions):
         systemState(std::move(state)), description(std::move(descr)),
         errorIdLevel(std::move(levels)), actions(std::move(actions)) {}
 };

@@ -6,7 +6,7 @@
 #include "channel.h"
 #include "schedule.h"
 #include "partition.h"
-#include "alocator.h"
+#include "allocator.h"
 #include "module_hm_table.h"
 #include "partition_memory.h"
 #include "system_state_entry.h"
@@ -27,7 +27,7 @@ class ArincModule
 
     MemoryArea partitionArea{GIGABYTE};
     MonotonicResource<> memory{partitionArea};
-    MonotonicAllocator<void> alocator{memory};
+    MonotonicAllocator<void> allocator{memory};
 
     std::vector<Partition> partitions;          /* required */
     ModuleSchedule schedule;                    /* required */
