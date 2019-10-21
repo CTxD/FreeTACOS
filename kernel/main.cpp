@@ -1,6 +1,7 @@
 #include <arch.h>
+#include <core/boot.h>
 
 int main(void)
 {
-	return init_arch();
+	return boot();
 }

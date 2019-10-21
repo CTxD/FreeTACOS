@@ -1,14 +1,13 @@
-#include "../include/arch.h"
-#include "../include/bsp.h"
-
+#include <arch.h>
+#include <errcode.h>
 // int main()
 // {
 //     /* code */
 //     return 0;
 // }
 
-unsigned testboot(){
-    return 30;
+ret_t boot(){
+    return init_arch();
 }
 
 // void freeTACOS()

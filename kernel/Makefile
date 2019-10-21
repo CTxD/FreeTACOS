@@ -17,3 +17,4 @@ include $(ROOT)/misc/common-rules.mk
 
 clean: kernel-clean
 	cd $(CURDIR)/core && $(MAKE) clean
+	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
