@@ -5,6 +5,7 @@ import java.io.{File, PrintWriter}
 
 object ScheduleGenerator{
   var level : Int = 0;
+  var prevEmit : String = "";
 
   def main(args: Array[String]): Unit = {
     val configName : String = "configuration.xml";
@@ -230,7 +231,7 @@ object ScheduleGenerator{
         this.level += 1;
         emitString = emitString + 
           this.generatePartitionsHM(partitionsHM) +
-          this.emit("},\n", -1);
+          this.emit("}\n", -1);
 
       return emitString;
     }
@@ -278,9 +279,9 @@ object ScheduleGenerator{
       this.level += 1;
       emitString = emitString +
         this.generateErrorActions(errorActions, isPHM = true) +
-        this.emit("},\n", -1);
+        this.emit("}\n", -1);
       
-      return emitString + this.emit("},\n", -1);
+      return emitString + this.emit("}\n", -1);
     }
   }
 
