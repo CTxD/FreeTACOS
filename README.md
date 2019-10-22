@@ -45,8 +45,10 @@ Interrupt CTRL+C the running docker-sync process
 
 ## Compile Generated Configuration File
 ### Prerequisites
-1. Install Scala compiler (sbt)
-2. Go to /ScheduleGenerator folder
+Install Scala compiler (sbt) https://www.scala-sbt.org/
+
+### Compile
+Go to /ScheduleGenerator folder
 
 ```Bash
 $ sbt run # Compile scala code and run the generator program
