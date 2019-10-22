@@ -5,6 +5,7 @@ deploy
 # Ignore any executable files
 *.exe
 *.o
+*.gch
 
 .vs/FreeTACOS/v16/.suo
 .vs/FreeTACOS/v16/Browse.VC.db
