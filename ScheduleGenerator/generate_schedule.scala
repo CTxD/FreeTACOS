@@ -5,18 +5,22 @@ import java.io.{File, PrintWriter}
 
 object ScheduleGenerator{
   var level : Int = 0;
-  var prevEmit : String = "";
 
   def main(args: Array[String]): Unit = {
-    val configName : String = "configuration.xml";
+    var configName : String = args.filter(arg => arg.split("=").head == "--filename").head.split("=").last;
 
     try{
+      println("Fetching xml file");
       var lines = this.xmlLinesToList(configName);
+
+      println("Generating code");
       val generatedString = generate(lines);
-      println(generatedString);
+
+      println("Writing to file");
       val writer = new PrintWriter(new File("../src/kernel/config.cpp" ));
       writer.write(generatedString);
       writer.close(); 
+      println("Success");
     } catch {
       case err : NoClassDefFoundError => {
         println("Class Not Found Exception");
