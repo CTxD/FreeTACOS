@@ -42,3 +42,14 @@ $ docker-sync stop # Closes the docker-sync container
 ```
 OR
 Interrupt CTRL+C the running docker-sync process
+
+## Compile Generated Configuration File
+### Prerequisites
+1. Install Scala compiler (sbt)
+2. Go to /ScheduleGenerator folder
+
+```Bash
+$ sbt run # Compile scala code and run the generator program
+$ cd ../src # Enter the source folder
+$ g++ -c --std=c++17 kernel/config.cpp -I apex/ -I types/ # Compile the generated config.cpp file
+```
