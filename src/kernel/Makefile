@@ -1,12 +1,12 @@
-export ROOT=$(CURDIR)/../
+export ROOT=$(CURDIR)/../../
 
 # ---  Target dependent and should be changed w.r.t architecture
-OBJS = main.o $(ROOT)/kernel/arch/rasp4/arch.o
+OBJS = main.o $(ROOT)/src/kernel/arch/rasp4/arch.o
 
-LIBS	= $(ROOT)/kernel/core/core.a $(CIRCLEHOME)/lib/libcircle.a
+LIBS	= $(ROOT)/src/kernel/core/core.a $(CIRCLEHOME)/lib/libcircle.a
 
-include $(ROOT)/misc/common-pi4.mk
-include $(ROOT)/misc/common-rules.mk
+include $(ROOT)/src/misc/common-pi4.mk
+include $(ROOT)/src/misc/common-rules.mk
 
 # ---
 .deps: 

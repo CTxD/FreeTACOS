@@ -1,4 +1,4 @@
-ROOT=		../../
+ROOT=		../../../
 
 TARGET=	core.a
 
@@ -15,4 +15,4 @@ all: $(TARGET)
 clean: common-clean
 
 #include $(ROOT)/misc/common-pi4.mk
-include $(ROOT)/misc/common-rules.mk
+include $(ROOT)/src/misc/common-rules.mk
