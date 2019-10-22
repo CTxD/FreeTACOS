@@ -3,7 +3,7 @@
 
 #include "port_mapping.h"
 
-// Deprecated
+
 class Channel
 {
 	private:

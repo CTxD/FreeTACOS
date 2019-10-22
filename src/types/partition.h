@@ -8,11 +8,12 @@
 #include "apex_partition.h"
 #include "memory_requirements.h"
 
+
 class Partition
 {
     private:
         identifier_t partitionIdentifier;       /* required */
-        PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;  /* required */
+        PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
         name_t partitionName;                   /* required */
 
         decOrHex_t duration;                    /* required */
@@ -29,8 +30,8 @@ class Partition
 
         // Deprecated
         CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
-        bool systemPartition = false;            /* required */
-        name_t entryPoint;                       /* required */
+        bool systemPartition = false;                             /* required */
+        name_t entryPoint;                                        /* required */
 
     public:
         Partition(identifier_t id, name_t name, PROCESSOR_CORE_ID_TYPE afinity,

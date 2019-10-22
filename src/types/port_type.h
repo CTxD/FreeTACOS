@@ -33,7 +33,6 @@ class QueuingPort : Port
     private:
         int maxNumMessages; /* required */
 
-
     public:
         QueuingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, int maxMessages):
           Port(name, msgSize, direction), maxNumMessages(maxMessages) {}

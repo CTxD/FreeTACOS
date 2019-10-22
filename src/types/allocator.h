@@ -8,6 +8,7 @@
 #include <sys/mman.h>
 #include <system_error>
 
+
 class MemoryArea {
   private:
     std::size_t area_size = 0;
@@ -78,7 +79,8 @@ class MonotonicAllocator {
     Resource* resource;
 
   public:
-    static_assert(alignof(T) <= Resource::alignment, "Given type cannot be allocated within the given resource. Its size is too big.");
+    static_assert(alignof(T) <= Resource::alignment,
+                  "Given type cannot be allocated within the given resource. Its size is too big.");
 
     MonotonicAllocator(Resource& res): resource(&res) {}
 

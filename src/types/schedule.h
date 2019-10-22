@@ -3,7 +3,7 @@
 
 #include "general_types.h"
 
-// Deprecated
+
 class WindowSchedule
 {
   private:
@@ -39,9 +39,9 @@ class PartitionSchedule
     decOrHex_t offset;                /* required */
 
     // Deprecated
-    identifier_t partitionIdentifier;                   /* required */
-    float periodSeconds;                                /* required */
-    std::vector<WindowSchedule> windows;                /* required */
+    identifier_t partitionIdentifier;      /* required */
+    float periodSeconds;                   /* required */
+    std::vector<WindowSchedule> windows;   /* required */
 
   public:
     PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset):

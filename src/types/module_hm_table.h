@@ -3,11 +3,12 @@
 
 #include "error_action.h"
 
+
 class ModuleHMTable
 {
     private:
-      identifier_t stateIdentifier;     /* required */
-      std::string description;          /* required */
+      identifier_t stateIdentifier;           /* required */
+      std::string description;                /* required */
       std::vector<ModuleErrorAction> actions; /* required */
 
     public:

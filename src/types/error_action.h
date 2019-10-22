@@ -9,13 +9,14 @@ class MultiPartitionErrorAction
 {
     private:
         identifier_t errorIdentifier;                       /* required */
-        ERROR_LEVEL_TYPE level;                            /* required */
+        ERROR_LEVEL_TYPE level;                             /* required */
         std::optional<MODULE_RECOVERY_ACTION_TYPE> action;  /* optional */
 
     public:
         MultiPartitionErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action, ERROR_LEVEL_TYPE level):
           errorIdentifier(id), action(action), level(level) {}
 };
+
 
 class PartitionErrorAction
 {
@@ -26,9 +27,11 @@ class PartitionErrorAction
         ERROR_CODE_TYPE code;                    /* required */
 
     public:
-        PartitionErrorAction(identifier_t id, PARTITION_RECOVERY_ACTION_TYPE action, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
+        PartitionErrorAction(identifier_t id, PARTITION_RECOVERY_ACTION_TYPE action,
+                             ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
           errorIdentifier(id), action(action), level(level), code(code) {}
 };
+
 
 class ModuleErrorAction
 {

@@ -3,6 +3,7 @@
 
 #include "memory_requirements.h"
 
+
 class PartitionMemory
 {
   private:

@@ -3,6 +3,7 @@
 
 #include "general_types.h"
 
+
 class ErrorLevel
 {
     private:

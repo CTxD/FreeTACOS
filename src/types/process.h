@@ -3,7 +3,7 @@
 
 #include "general_types.h"
 
-// Deprecated
+
 class Process
 {
     private:

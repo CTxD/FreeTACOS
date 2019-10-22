@@ -3,6 +3,7 @@
 
 #include "error_action.h"
 
+
 class MultiPartitionHMTable
 {
   private:

@@ -3,6 +3,7 @@
 
 #include "general_types.h"
 
+
 enum memory_region_t
 {
   RAM,

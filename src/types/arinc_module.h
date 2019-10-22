@@ -1,8 +1,6 @@
 #ifndef ARINC_MODULE
 #define ARINC_MODULE
 
-#include <vector>
-
 #include "channel.h"
 #include "schedule.h"
 #include "partition.h"
@@ -12,6 +10,7 @@
 #include "system_state_entry.h"
 #include "partition_hm_table.h"
 #include "multipartition_hm_table.h"
+
 
 class ArincModule
 {

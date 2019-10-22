@@ -1,10 +1,9 @@
 #ifndef SYSTEM_STATE_ENTRY
 #define SYSTEM_STATE_ENTRY
 
-#include <string>
-
 #include "error_level.h"
 #include "error_action.h"
+
 
 class SystemError
 {
@@ -17,15 +16,14 @@ class SystemError
       errorIdentifier(id), description(descr) {}
 };
 
-
 // Deprecated
 class SystemStateEntry
 {
     private:
-        int systemState;                      /* required */
-        std::optional<name_t> description;    /* optional */
-        std::vector<ErrorLevel> errorIdLevel; /* required */
-        std::vector<ModuleErrorAction> actions;     /* required */
+        int systemState;                          /* required */
+        std::optional<name_t> description;        /* optional */
+        std::vector<ErrorLevel> errorIdLevel;     /* required */
+        std::vector<ModuleErrorAction> actions;   /* required */
 
     public:
       SystemStateEntry(const int state, const name_t descr,

@@ -31,14 +31,14 @@ typedef
     enum {
         IGNORE      = 0,
         SHUTDOWN    = 1,
-        RESET       = 2,
+        RESET       = 2
 } MODULE_RECOVERY_ACTION_TYPE;
 
 typedef
     enum {
       MODULE    = 0,
       PARTITION = 1,
-      PROCESS   = 2,
+      PROCESS   = 2
 } ERROR_LEVEL_TYPE;
 
 enum class MODULE_ERROR_LEVEL_TYPE {
