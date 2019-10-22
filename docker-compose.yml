@@ -6,6 +6,13 @@ services:
     tty: true
     volumes:
       - tacos-sync:/app:nocopy # nocopy is important
+  tacos_sbt:
+    image:  hseeberger/scala-sbt:8u222_1.3.3_2.13.1
+    container_name: 'tacos_sbt'
+    tty: true
+    volumes:
+      - ./ScheduleGenerator:/generator
+      - ./src/kernel:/src/kernel
 
 volumes:
   tacos-sync:

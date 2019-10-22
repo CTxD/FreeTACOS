@@ -9,3 +9,6 @@ enter:
 
 start:
 	docker-sync-stack start
+
+generate-config:
+	docker exec -it --workdir /generator tacos_sbt sbt run
