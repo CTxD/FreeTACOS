@@ -56,7 +56,7 @@ $ cd ../src # Enter the source folder
 $ g++ -c --std=c++17 kernel/config.cpp -I apex/ -I types/ # Compile the generated config.cpp file
 ```
 
-#### Docker
+### Docker
 Run:
 
 ```Bash
