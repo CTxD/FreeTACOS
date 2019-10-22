@@ -12,3 +12,9 @@ deploy
 .vs/FreeTACOS/v16/ipch/AutoPCH/30352a19bf84002c/TEMPLATEGENERATOR.ipch
 .vs/ProjectSettings.json
 .vs/slnx.sqlite
+
+.idea/FreeTACOS.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
