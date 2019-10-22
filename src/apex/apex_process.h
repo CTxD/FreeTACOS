@@ -21,6 +21,12 @@ typedef NAME_TYPE       PROCESS_NAME_TYPE;
 
 typedef APEX_INTEGER    PROCESS_ID_TYPE;
 
+#define NULL_PROCESS_ID 0
+
+#define MAIN_PROCESS_ID -1
+
+typedef APEX_INTEGER PROCESS_INDEX_TYPE;
+
 typedef APEX_INTEGER    LOCK_LEVEL_TYPE;
 
 typedef APEX_UNSIGNED   STACK_SIZE_TYPE;
@@ -39,8 +45,6 @@ enum {
 } PROCESS_STATE_TYPE;
 
 typedef enum { SOFT = 0, HARD = 1 } DEADLINE_TYPE;
-
-typedef int PROCESS_INDEX_TYPE;
 
 typedef
     struct {
