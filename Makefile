@@ -11,4 +11,4 @@ start:
 	docker-sync-stack start
 
 generate-config:
-	docker exec -it --workdir /generator tacos_sbt sbt run
+	docker exec --workdir /generator tacos_sbt sbt "run --filename=$(file)"
