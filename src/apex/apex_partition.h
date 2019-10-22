@@ -37,7 +37,7 @@ typedef
         LEVEL_B = 1,
         LEVEL_C = 2,
         LEVEL_D = 3,
-        LEVEL_E = 4,
+        LEVEL_E = 4
 } CRITICALITY_TYPE;
 
 typedef

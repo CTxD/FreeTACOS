@@ -7,6 +7,9 @@
 #ifndef APEX_EVENT
 #define APEX_EVENT
 
+#include "apex_types.h"
+#include "apex_process.h"
+
 #define MAX_NUMBER_OF_EVENTS SYSTEM_LIMIT_NUMBER_OF_EVENTS
 
 typedef NAME_TYPE EVENT_NAME_TYPE;

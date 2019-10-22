@@ -7,6 +7,8 @@
 #ifndef APEX_PROCESS
 #define APEX_PROCESS
 
+#include "apex_types.h"
+
 #define MAX_NUMBER_OF_PROCESSES SYSTEM_LIMIT_NUMBER_OF_PROCESSES
 
 #define MIN_PRIORITY_VALUE 1
@@ -33,7 +35,7 @@ enum {
     READY   = 1,
     RUNNING = 2,
     WAITING = 3,
-    FAULTED = 4,
+    FAULTED = 4
 } PROCESS_STATE_TYPE;
 
 typedef enum { SOFT = 0, HARD = 1 } DEADLINE_TYPE;

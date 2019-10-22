@@ -20,8 +20,8 @@ class WindowSchedule
     WindowSchedule(const WindowSchedule& w): windowIdentifier(w.windowIdentifier),
       windowStartSeconds(w.windowStartSeconds), windowDurationSeconds(w.windowDurationSeconds),
       partitionPeriodStart(w.partitionPeriodStart) {}
-    WindowSchedule(WindowSchedule&& w) noexcept: windowIdentifier(std::move(w.windowIdentifier)),
 
+    WindowSchedule(WindowSchedule&& w) noexcept: windowIdentifier(std::move(w.windowIdentifier)),
       windowStartSeconds(std::move(w.windowStartSeconds)),
       windowDurationSeconds(std::move(w.windowDurationSeconds)),
       partitionPeriodStart(std::move(w.partitionPeriodStart)) {}

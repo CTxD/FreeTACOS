@@ -7,6 +7,9 @@
 #ifndef APEX_BUFFER
 #define APEX_BUFFER
 
+#include "apex_types.h"
+#include "apex_process.h"
+
 #define MAX_NUMBER_OF_BUFFERS SYSTEM_LIMIT_NUMBER_OF_BUFFERS
 
 typedef NAME_TYPE BUFFER_NAME_TYPE;

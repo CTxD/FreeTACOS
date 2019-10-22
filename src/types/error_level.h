@@ -1,6 +1,7 @@
 #ifndef ERROR_ID_LEVEL
 #define ERROR_ID_LEVEL
 
+#include "apex_error.h"
 #include "general_types.h"
 
 

@@ -7,6 +7,9 @@
 #ifndef APEX_MUTEX
 #define APEX_MUTEX
 
+#include "apex_types.h"
+#include "apex_process.h"
+
 typedef NAME_TYPE MUTEX_NAME_TYPE;
 
 typedef APEX_INTEGER MUTEX_ID_TYPE;

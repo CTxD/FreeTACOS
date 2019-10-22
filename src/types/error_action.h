@@ -3,6 +3,7 @@
 
 #include "error_level.h"
 #include "general_types.h"
+#include "apex_partition.h"
 
 
 class MultiPartitionErrorAction
@@ -16,7 +17,6 @@ class MultiPartitionErrorAction
         MultiPartitionErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action, ERROR_LEVEL_TYPE level):
           errorIdentifier(id), action(action), level(level) {}
 };
-
 
 class PartitionErrorAction
 {
@@ -32,7 +32,6 @@ class PartitionErrorAction
           errorIdentifier(id), action(action), level(level), code(code) {}
 };
 
-
 class ModuleErrorAction
 {
     private:
@@ -43,6 +42,5 @@ class ModuleErrorAction
         ModuleErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action):
           errorIdentifier(id), action(action) {}
 };
-
 
 #endif

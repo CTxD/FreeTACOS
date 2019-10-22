@@ -6,6 +6,10 @@
 
 #ifndef APEX_BLACKBOARD
 #define APEX_BLACKBOARD
+
+#include "apex_types.h"
+#include "apex_process.h"
+
 #define MAX_NUMBER_OF_BLACKBOARDS SYSTEM_LIMIT_NUMBER_OF_BLACKBOARDS
 
 typedef NAME_TYPE BLACKBOARD_NAME_TYPE;
