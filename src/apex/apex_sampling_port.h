@@ -29,29 +29,29 @@ extern void CREATE_SAMPLING_PORT (
     /*in */ PORT_DIRECTION_TYPE         PORT_DIRECTION,
     /*in */ SYSTEM_TIME_TYPE            REFRESH_PERIOD,
     /*out*/ SAMPLING_PORT_ID_TYPE       *SAMPLING_PORT_ID,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void WRITE_SAMPLING_MESSAGE (
     /*in */ SAMPLING_PORT_ID_TYPE       SAMPLING_PORT_ID,
     /*in */ MESSAGE_ADDR_TYPE           MESSAGE_ADDR,    /* by reference */
     /*in */ MESSAGE_SIZE_TYPE           LENGTH,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void READ_SAMPLING_MESSAGE (
     /*in */ SAMPLING_PORT_ID_TYPE       SAMPLING_PORT_ID,
     /*out*/ MESSAGE_ADDR_TYPE           MESSAGE_ADDR,
     /*out*/ MESSAGE_SIZE_TYPE           *LENGTH,
     /*out*/ VALIDITY_TYPE               *VALIDITY,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void GET_SAMPLING_PORT_ID (
     /*in */ SAMPLING_PORT_NAME_TYPE     SAMPLING_PORT_NAME,
     /*out*/ SAMPLING_PORT_ID_TYPE       *SAMPLING_PORT_ID,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void GET_SAMPLING_PORT_STATUS (
     /*in */ SAMPLING_PORT_ID_TYPE       SAMPLING_PORT_ID,
     /*out*/ SAMPLING_PORT_STATUS_TYPE   *SAMPLING_PORT_STATUS,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 #endif

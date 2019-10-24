@@ -26,21 +26,21 @@ extern void CREATE_BUFFER (
     /*in */ MESSAGE_RANGE_TYPE          MAX_NB_MESSAGE,
     /*in */ QUEUING_DISCIPLINE_TYPE     QUEUING_DISCIPLINE,
     /*out*/ BUFFER_ID_TYPE              *BUFFER_ID,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void SEND_BUFFER (
     /*in */ BUFFER_ID_TYPE              BUFFER_ID,
     /*in */ MESSAGE_ADDR_TYPE           MESSAGE_ADDR,   /* by reference */
     /*in */ MESSAGE_SIZE_TYPE           LENGTH,
     /*in */ SYSTEM_TIME_TYPE            TIME_OUT,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void RECEIVE_BUFFER (
     /*in */ BUFFER_ID_TYPE              BUFFER_ID,
     /*in */ SYSTEM_TIME_TYPE            TIME_OUT,
     /*out*/ MESSAGE_ADDR_TYPE           MESSAGE_ADDR,
     /*out*/ MESSAGE_SIZE_TYPE           *LENGTH,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 extern void GET_BUFFER_ID (
     /*in */ BUFFER_NAME_TYPE            BUFFER_NAME,
@@ -50,6 +50,6 @@ extern void GET_BUFFER_ID (
 extern void GET_BUFFER_STATUS (
     /*in */ BUFFER_ID_TYPE              BUFFER_ID,
     /*out*/ BUFFER_STATUS_TYPE          *BUFFER_STATUS,
-    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE            *RETURN_CODE );
 
 #endif
