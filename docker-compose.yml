@@ -6,6 +6,7 @@ services:
     tty: true
     volumes:
       - tacos-sync:/app:nocopy # nocopy is important
+<<<<<<< HEAD:docker-compose.yml
   tacos_sbt:
     image:  hseeberger/scala-sbt:8u222_1.3.3_2.13.1
     container_name: 'tacos_sbt'
@@ -13,6 +14,14 @@ services:
     volumes:
       - ./ScheduleGenerator:/generator
       - ./src/kernel:/src/kernel
+=======
+  doc:
+    image: hrektts/doxygen:latest
+    container_name: 'tacos_doxygen'
+    tty: true
+    volumes:
+      - .:/data
+>>>>>>> b76ca99b84c164ca5d38d9d37abab27755b88963:src/docker-compose.yml
 
 volumes:
   tacos-sync:
