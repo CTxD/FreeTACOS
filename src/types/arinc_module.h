@@ -4,7 +4,6 @@
 #include "channel.h"
 #include "schedule.h"
 #include "partition.h"
-#include "allocator.h"
 #include "module_hm_table.h"
 #include "partition_memory.h"
 #include "system_state_entry.h"
