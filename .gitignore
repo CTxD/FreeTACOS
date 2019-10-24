@@ -1,6 +1,27 @@
 # Ignore the build files
 aarch/rasp4
 deploy
+
+.vscode
+
+#circle stuff
+*.img
+*.lst
+
+### C ###
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
 .idea
 
 # Ignore generated documentation
@@ -27,10 +48,50 @@ docs
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
 *.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+### C++ ###
+# Prerequisites
+
+# Compiled Object files
+*.slo
+
+# Precompiled Headers
+
+# Compiled Dynamic libraries
 
 # Fortran module files
 *.mod
@@ -38,6 +99,7 @@ docs
 
 # Compiled Static libraries
 *.lai
+
 *.la
 *.a
 *.lib
@@ -68,5 +130,7 @@ project/plugins/project/
 *.log
 ScheduleGenerator/project
 ScheduleGenerator/target
+
+.vs/*
 
 # End of https://www.gitignore.io/api/c++,sbt,scala
