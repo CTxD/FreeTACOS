@@ -19,7 +19,7 @@ jobs:
           command: "apt-get update && apt-get install -y cmake"
       - run:
           name: Install catch
-          command: "apt-get update && apt-get install -y catch"
+          command: "git clone https://github.com/catchorg/Catch2.git && cd Catch2 && cmake -Bbuild -H. -DBUILD_TESTING=OFF && cmake --build build/ --target install"
       - run:
           name: Run tests
           command: "cd test && cmake . && make && make test"
