@@ -19,7 +19,7 @@ jobs:
           command: "apt-get update && apt-get install -y cmake"
       - run:
           name: Install catch
-          command: "apt-get update && apt-get install -y catch2"
+          command: "apt-get update && apt-get install -y catch"
       - run:
           name: Run tests
           command: "cd test && cmake . && make && make test"
