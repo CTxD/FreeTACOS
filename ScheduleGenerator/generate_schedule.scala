@@ -28,6 +28,12 @@ object ScheduleGenerator{
       case err : FileNotFoundException => {
         println("Input file not found");
       }
+      case err : Exception => {
+        println(err);
+      }
+      case _ : Throwable => {
+        println("Some unexpected error happened");
+      }
     }
   }
 
@@ -477,28 +483,33 @@ object ScheduleGenerator{
       this.generateMemoryRegion(xs);
   }
 
+  // Emits optional attributes (if not found emit '{}')
   def emitNodeAttributeOptional(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => (if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0) else this.emit(f"{}, // ${x._1}\n")) + emitNodeAttributeOptional(node, xs)
     case x::xs if xs == Nil => if(this.checkAttributeValidity(x._1, node)) this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n") else this.emit(f"{}, // ${x._1}\n")
   }
 
+  // Emits required attributes (If not found, throw an exception)
   def emitNodeAttributesRequired(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0) + emitNodeAttributeOptional(node, xs)
     case x::xs if xs == Nil => this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n")
     case _ => throw new Exception(f"The attribute: ${attr.head._1} is missing from your configuration");
   }
 
+  // Function that emits attributes as numerical type
   def emitNodeAttributesRequiredNum(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => this.emit(f"${node.attribute(x).get.toString}, // ${x}\n", if (scoping) 1 else 0) + emitNodeAttributesRequiredNum(node, xs)
     case x::xs if xs == Nil => this.emit(f"${node.attribute(x).get.toString}, // ${x}\n")
     case _ => throw new Exception(f"The attribute: ${attr.head} is missing from your configuration");
   }
 
+  // Function to emit node attributes without any other information 
   def emitNodeAttributes(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => this.emit(f"${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs)
     case x::xs if xs == Nil => this.emit(f"${node.attribute(x).get};\n")
   }
 
+  // Emits node without a mapping function, but instead utilises the identifier
   def emitNodeAttributesWithIdentifier(node : Node, attr : List[String], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(node, xs)
     case x::xs if xs == Nil => this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n")
@@ -510,11 +521,13 @@ object ScheduleGenerator{
     case _ => true
   }
 
+  // Emit function specific for the includes
   def emitIncludes(incls : List[String]) : String = incls match {
     case x::xs if xs != Nil => this.emit(f"#include ${this.sInclude(x)} \n") + this.emitIncludes(xs)
     case x::xs if xs == Nil => this.emit(f"#include ${this.sInclude(x)}\n\n")
   }
 
+  // Mapping function for error code attributes
   def mapErrorCode(code : String) : String = code match {
     case "DEADLINE_MISSED" => "ERROR_CODE_TYPE::DEADLINE_MISSED"
     case "APPLICATION_ERROR" => "ERROR_CODE_TYPE::APPLICATION_ERROR"
@@ -527,6 +540,7 @@ object ScheduleGenerator{
     case _   => throw new Exception(f"$code is not a supported ErrorCode")
   }
 
+  // Mapping function for error level attributes
   def mapErrorLevel(error : String) : String = error match {
     case "MODULE" => "ERROR_LEVEL_TYPE::MODULE"
     case "PARTITION" => "ERROR_LEVEL_TYPE::PARTITION"
@@ -534,6 +548,7 @@ object ScheduleGenerator{
     case _ => throw new Exception(f"$error is not a support ErrorLevel")
   }
 
+  // Mapping function for partition recovery action attributes
   def mapPartitionRecoveryAction(action : String) : String = action match {
     case "IDLE" => "PARTITION_RECOVERY_ACTION_TYPE::IDLE"
     case "COLD_RESTART" => "PARTITION_RECOVERY_ACTION_TYPE::COLD_RESTART"
@@ -542,6 +557,7 @@ object ScheduleGenerator{
     case _      => throw new Exception(f"$action is not a supported Partition Recovery Action type")
   }
 
+  // Mapping function for module recovery action attributes
   def mapModuleRecoveryAction(action : String) : String = action match {
     case "IGNORE" => "MODULE_RECOVERY_ACTION_TYPE::IGNORE"
     case "SHUTDOWN" => "MODULE_RECOVERY_ACTION_TYPE::SHUTDOWN"
@@ -549,12 +565,14 @@ object ScheduleGenerator{
     case _ => throw new Exception(f"$action is not a support recovery action")
   }
 
+  // Mapping function for direction type attributes
   def mapDirectionType(direction : String) : String = direction match {
     case "SOURCE" => "PORT_DIRECTION_TYPE::SOURCE"
     case "DESTINATION" => "PORT_DIRECTION_TYPE::DESTINATION"
     case _ => throw new Exception(f"$direction is not supported as a direction type")
   }
 
+  // Mapping function for memory type attributes
   def mapMemoryType(memType : String) : String = memType match {
     case "Flash" => "memory_region_t::FLASH"
     case "RAM" => "memory_region_t::RAM"
@@ -562,12 +580,14 @@ object ScheduleGenerator{
     case _ => throw new Exception(f"$memType is not supported for MemoryRegions")
   }
 
+  // Mapping function for memory access attributes
   def mapMemoryAccess(access : String) : String = access match {
     case "READ_ONLY" => "memory_access_t::READ_ONLY"
     case "READ_WRITE" => "memory_access_t::READ_WRITE"
     case _ => throw new Exception(f"$access is not supported for MemoryAccess")
   }
 
+  // Function for reading xml file
   def xmlLinesToList(filename : String) : List[Node] = {
     return XML.loadFile(filename).toList;
   }
@@ -599,6 +619,7 @@ object ScheduleGenerator{
     "{" + '"' + string + '"' + "}"
   }
 
+  // String converter function for includes
   def sInclude(string : String) : String = {
     '"' + string + '"'
   }
