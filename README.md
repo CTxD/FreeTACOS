@@ -1,6 +1,8 @@
 # FreeTACOS
 Free Transparent Arinc Compliant Operating System
 
+[![CircleCI](https://circleci.com/gh/CTxD/FreeTACOS/tree/master.svg?style=svg)](https://circleci.com/gh/CTxD/FreeTACOS/tree/master)
+
 # Getting Started
 Follow this guide for setting up Docker, Docker-Compose and Docker-Sync.
 
