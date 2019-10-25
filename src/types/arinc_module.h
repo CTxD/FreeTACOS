@@ -23,10 +23,6 @@ class ArincModule
     std::vector<ModuleHMTable> moduleHMTable;                 /* required */
     std::vector<PartitionHMTable> partitionHMTable;           /* required */
 
-    MemoryArea partitionArea{GIGABYTE};
-    MonotonicResource<> memory{partitionArea};
-    MonotonicAllocator<void> allocator{memory};
-
     std::vector<Partition> partitions;          /* required */
     ModuleSchedule schedule;                    /* required */
     std::optional<QueuingPort> queuingPorts;    /* required */
