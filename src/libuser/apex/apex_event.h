@@ -7,6 +7,9 @@
 #ifndef APEX_EVENT
 #define APEX_EVENT
 
+#include "apex_types.h"
+#include "apex_process.h"
+
 #define MAX_NUMBER_OF_EVENTS SYSTEM_LIMIT_NUMBER_OF_EVENTS
 
 typedef NAME_TYPE EVENT_NAME_TYPE;
@@ -47,6 +50,6 @@ extern void GET_EVENT_ID (
 extern void GET_EVENT_STATUS (
     /*in */ EVENT_ID_TYPE           EVENT_ID,
     /*out*/ EVENT_STATUS_TYPE       *EVENT_STATUS,
-    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE );
+    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE);
 
 #endif
