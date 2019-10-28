@@ -9,3 +9,6 @@ enter:
 
 start:
 	docker-sync-stack start
+
+docs:
+	docker exec -it --workdir /data tacos_doxygen doxygen .doxygen
