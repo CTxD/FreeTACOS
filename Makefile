@@ -12,6 +12,6 @@ start:
 
 generate-config:
 	docker exec --workdir /generator tacos_sbt sbt "run --filename=$(file)"
-	docker exec -it --workdir /app/src tacos g++ -c --std=c++17 kernel/config.cpp -I apex/ -I types/
+	docker exec -it --workdir /app/src tacos g++ -c --std=c++17 kernel/config.cpp -I apex/ -I types/ -I libuser/apex/
 docs:
 	docker exec -it --workdir /data tacos_doxygen doxygen .doxygen
