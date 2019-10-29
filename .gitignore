@@ -4,15 +4,24 @@ deploy
 
 .vscode
 
-# Circle stuff
+#circle stuff
 *.img
 *.lst
+
+### C ###
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
 
 # Linker output
 *.ilk
 *.map
 *.exp
-
 .idea
 
 # Ignore generated documentation
@@ -20,6 +29,7 @@ docs
 
 # Docker related
 .docker-sync
+
 
 # Created by https://www.gitignore.io/api/c++,sbt,scala
 # Edit at https://www.gitignore.io/?templates=c++,sbt,scala
@@ -30,17 +40,15 @@ docs
 
 # Compiled Object files
 *.slo
+*.lo
 *.o
 *.obj
-*.ko
-.elf
 
 # Precompiled Headers
 *.gch
 *.pch
 
-# Compiled Static libraries
-*.lai
+# Libraries
 *.lib
 *.a
 *.la
@@ -74,6 +82,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+### C++ ###
+# Prerequisites
+
+# Compiled Object files
+*.slo
+
+# Precompiled Headers
 
 # Compiled Dynamic libraries
 

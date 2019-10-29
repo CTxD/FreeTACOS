@@ -25,16 +25,7 @@ typedef
         PARTITION_RESTART       = 1,
         HM_MODULE_RESTART       = 2,
         HM_PARTITION_RESTART    = 3
-};
-
-typedef
-    enum {
-        LEVEL_A = 0,
-        LEVEL_B = 1,
-        LEVEL_C = 2,
-        LEVEL_D = 3,
-        LEVEL_E = 4
-} CRITICALITY_TYPE;
+} START_CONDITION_TYPE;
 
 typedef
     struct {

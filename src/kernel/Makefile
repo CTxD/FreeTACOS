@@ -12,7 +12,6 @@ include $(ROOT)/src/misc/common-rules.mk
 .deps: 
 	@echo "deps"
 	$(MAKE) -C $(CURDIR)/core
-	cd $(ROOT)/aarch/rasp4 && ./makeall
 
 .PHONY: all clean deps
 

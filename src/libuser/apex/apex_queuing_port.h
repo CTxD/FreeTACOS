@@ -6,9 +6,6 @@
 #ifndef APEX_QUEUING
 #define APEX_QUEUING
 
-#include "apex_types.h"
-#include "apex_process.h"
-
 #define MAX_NUMBER_OF_QUEUING_PORTS SYSTEM_LIMIT_NUMBER_OF_QUEUING_PORTS
 
 typedef NAME_TYPE QUEUING_PORT_NAME_TYPE;
