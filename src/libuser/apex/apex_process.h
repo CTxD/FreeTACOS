@@ -7,6 +7,8 @@
 #ifndef APEX_PROCESS
 #define APEX_PROCESS
 
+#include "apex_types.h"
+
 #define MAX_NUMBER_OF_PROCESSES SYSTEM_LIMIT_NUMBER_OF_PROCESSES
 
 #define MIN_PRIORITY_VALUE 1
@@ -18,6 +20,12 @@
 typedef NAME_TYPE       PROCESS_NAME_TYPE;
 
 typedef APEX_INTEGER    PROCESS_ID_TYPE;
+
+#define NULL_PROCESS_ID 0
+
+#define MAIN_PROCESS_ID -1
+
+typedef APEX_INTEGER PROCESS_INDEX_TYPE;
 
 typedef APEX_INTEGER    LOCK_LEVEL_TYPE;
 
@@ -32,7 +40,8 @@ enum {
     DORMANT = 0,
     READY   = 1,
     RUNNING = 2,
-    WAITING = 3
+    WAITING = 3,
+    FAULTED = 4
 } PROCESS_STATE_TYPE;
 
 typedef enum { SOFT = 0, HARD = 1 } DEADLINE_TYPE;

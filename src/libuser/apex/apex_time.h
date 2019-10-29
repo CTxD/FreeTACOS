@@ -7,6 +7,8 @@
 #ifndef APEX_TIME
 #define APEX_TIME
 
+#include "apex_types.h"
+
 extern void TIMED_WAIT (
     /*in */ SYSTEM_TIME_TYPE    DELAY_TIME,
     /*out*/ RETURN_CODE_TYPE    *RETURN_CODE );

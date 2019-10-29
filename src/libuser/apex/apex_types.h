@@ -91,8 +91,8 @@ typedef enum { SOURCE = 0, DESTINATION = 1 } PORT_DIRECTION_TYPE;
 
 typedef enum { FIFO = 0, PRIORITY = 1 } QUEUING_DISCIPLINE_TYPE;
 
+/* 64-bit signed integer with a 1 nanosecond LSB */
 typedef APEX_LONG_INTEGER SYSTEM_TIME_TYPE;
-        /* 64-bit signed integer with a 1 nanosecond LSB */
 
 #define INFINITE_TIME_VALUE -1
 

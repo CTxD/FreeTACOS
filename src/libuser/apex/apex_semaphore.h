@@ -7,6 +7,9 @@
 #ifndef APEX_SEMAPHORE
 #define APEX_SEMAPHORE
 
+#include "apex_types.h"
+#include "apex_process.h"
+
 #define MAX_NUMBER_OF_SEMAPHORES SYSTEM_LIMIT_NUMBER_OF_SEMAPHORES
 
 #define MAX_SEMAPHORE_VALUE 32767
