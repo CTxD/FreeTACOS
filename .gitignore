@@ -81,6 +81,17 @@ dkms.conf
 *.mod
 *.smod
 
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
 ### SBT ###
 # Simple Build Tool
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
@@ -102,5 +113,7 @@ project/plugins/project/
 *.log
 ScheduleGenerator/project
 ScheduleGenerator/target
-
+ScheduleGenerator$.class
 .vs/*
+
+# End of https://www.gitignore.io/api/c++,sbt,scala

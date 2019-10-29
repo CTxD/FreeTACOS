@@ -7,8 +7,6 @@
 #ifndef APEX_PARTITION
 #define APEX_PARTITION
 
-#include "apex_process.h"
-
 #define MAX_NUMBER_OF_PARTITIONS SYSTEM_LIMIT_NUMBER_OF_PARTITIONS
 
 typedef
@@ -21,10 +19,8 @@ typedef
 
 typedef APEX_INTEGER PARTITION_ID_TYPE;
 
-typedef APEX_UNSIGNED NUM_CORES_TYPE;
-
-enum
-  class START_CONDITION_TYPE {
+typedef
+    enum {
         NORMAL_START            = 0,
         PARTITION_RESTART       = 1,
         HM_MODULE_RESTART       = 2,
@@ -48,22 +44,14 @@ typedef
         LOCK_LEVEL_TYPE LOCK_LEVEL;
         OPERATING_MODE_TYPE OPERATING_MODE;
         START_CONDITION_TYPE START_CONDITION;
-        NUM_CORES_TYPE NUM_ASSIGNED_CORES;
 } PARTITION_STATUS_TYPE;
-
-enum class PARTITION_RECOVERY_ACTION_TYPE {
-    IGNORE        = 0,
-    IDLE          = 1,
-    WARM_RESTART  = 2,
-    COLD_RESTART  = 3
-};
 
 extern void GET_PARTITION_STATUS (
     /*out*/ PARTITION_STATUS_TYPE   *PARTITION_STATUS,
-    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE );
 
 extern void SET_PARTITION_MODE (
     /*in */ OPERATING_MODE_TYPE     OPERATING_MODE,
-    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE);
+    /*out*/ RETURN_CODE_TYPE        *RETURN_CODE );
 
 #endif
