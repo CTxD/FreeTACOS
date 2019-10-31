@@ -34,7 +34,7 @@ class Partition
         name_t entryPoint;                                        /* required */
 
     public:
-        Partition(identifier_t id, name_t name, PROCESSOR_CORE_ID_TYPE afinity,
+        Partition(identifier_t id, PROCESSOR_CORE_ID_TYPE afinity, name_t name,
                   decOrHex_t duration, decOrHex_t period,
                   std::vector<MemoryRegion> mem,
                   std::vector<QueuingPort> queuing,

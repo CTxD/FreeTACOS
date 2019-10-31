@@ -561,7 +561,7 @@ object ScheduleGenerator{
   def emitNodeAttributeOptional(node : Node, attr : List[(String, (String) => String)], scoping : Boolean = false) : String = attr match {
     case x::xs if xs != Nil => {
       if(this.checkAttributeValidity(x._1, node)) 
-        return this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0);
+        return this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n", if (scoping) 1 else 0) + emitNodeAttributeOptional(node, xs);
       else 
         return this.emit(f"{}, // ${x._1}\n") + emitNodeAttributeOptional(node, xs);
     }
@@ -705,6 +705,6 @@ object ScheduleGenerator{
 
   // String converter function for includes
   def sInclude(string : String) : String = {
-    '"' + string + '"'
+    '<' + string + '>'
   }
 }
