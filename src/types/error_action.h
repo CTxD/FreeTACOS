@@ -14,7 +14,7 @@ class MultiPartitionErrorAction
         std::optional<MODULE_RECOVERY_ACTION_TYPE> action;  /* optional */
 
     public:
-        MultiPartitionErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action, ERROR_LEVEL_TYPE level):
+        MultiPartitionErrorAction(identifier_t id, ERROR_LEVEL_TYPE level, MODULE_RECOVERY_ACTION_TYPE action):
           errorIdentifier(id), action(action), level(level) {}
 };
 
