@@ -1,12 +1,7 @@
 ROOT=		../../../
 
-TARGET=	core.a
-
-OBJS=		partition.o \
-			error.o \
-			boot.o \
-			scheduling.o \
-			time.o
+OBJS=		boot.o \
+			tacoskernel.o 
 
 all: $(TARGET)
 
