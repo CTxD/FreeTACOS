@@ -1,29 +1,37 @@
-#include "arch.h"
 #include <circle/gpiopin.h>
 #include <circle/timer.h>
 #include <errcode.h>
 #include <circle/startup.h>
+#include <arch.h>
 
-ret_t init_arch()
+ret_t init_arch(){
+	CBootableKernel kernel;
+	return kernel.Start();
+}
+
+CBootableKernel::CBootableKernel(){}
+CBootableKernel::~CBootableKernel(){}
+
+ret_t CBootableKernel::Start()
 {
-	CKernel Kernel;
-	if (!Kernel.Initialize())
+	CKernel kernel;
+	if (!Initialize ())
 	{
-		halt();
+		halt ();
 		return (ret_t)EXIT_HALT;
 	}
-
-	TShutdownMode ShutdownMode = Kernel.Run();
+	
+	TShutdownMode ShutdownMode = Run ();
 
 	switch (ShutdownMode)
 	{
 	case ShutdownReboot:
-		reboot();
-		return (ret_t)EXIT_REBOOT;
+		reboot ();
+		return (ret_t) EXIT_REBOOT;
 
 	case ShutdownHalt:
 	default:
-		halt();
+		halt ();
 		return (ret_t)EXIT_HALT;
 	}
 };

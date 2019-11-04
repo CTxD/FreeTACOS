@@ -103,4 +103,6 @@ project/plugins/project/
 ScheduleGenerator/project
 ScheduleGenerator/target
 
+bin/
+
 .vs/*

@@ -2,7 +2,7 @@ export CIRCLEHOME=$(ROOT)/aarch/rasp4
 
 include $(CIRCLEHOME)/Rules.mk
 
-all: .deps $(TARGET).img 
+all: $(TARGET).img 
 
 $(TARGET).img: $(OBJS) $(LIBS) $(CIRCLEHOME)/circle.ld
 	@echo "  LD    bin/$(TARGET).elf"
