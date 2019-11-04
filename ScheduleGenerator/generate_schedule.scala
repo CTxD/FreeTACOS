@@ -2,9 +2,11 @@ import scala.io.Source;
 import scala.xml._;
 import java.io.FileNotFoundException;
 import java.io.{File, PrintWriter}
+import Validator.Validator;
 
 object ScheduleGenerator{
   var level : Int = 0;
+  var validator : Validator = new Validator();
 
   def main(args: Array[String]): Unit = {
     var configName : String = args.filter(arg => arg.split("=").head == "--filename").head.split("=").last;
@@ -16,10 +18,16 @@ object ScheduleGenerator{
       println("Generating code");
       val generatedString = generate(lines);
 
+      // validator will throw an exception if the check is unsuccessful
+      println("Validating schedule configuration");
+      //this.validator.checkScheduleValidity();
+      println("Validation succeeded")
+
       println("Writing to file");
       val writer = new PrintWriter(new File("../src/kernel/config.cpp" ));
       writer.write(generatedString);
       writer.close(); 
+      
       println("Success");
     } catch {
       case err : NoClassDefFoundError => {
@@ -123,6 +131,10 @@ object ScheduleGenerator{
         var head = region.head;
 
         if(this.checkAttributeValidity("Identifier", region)){
+          // Populate the partition name to the validator
+          this.validator.populatePartitionIdentifier(this.retrieveNodeAttributeString(region, "Name"));
+
+          // Append emit string with partition definition info
           partitionString = partitionString + 
             this.emit("{ // Partition\n") +
             this.emitNodeAttributesRequired(head, List(
@@ -131,6 +143,13 @@ object ScheduleGenerator{
               true) +
             this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         }else if(this.checkAttributeValidity("Period", region)){
+          // Populate the remaining attributes to the validator
+          this.validator.populatePartitionRemainder(
+            this.retrieveNodeAttributeString(region, "Period").toInt,
+            this.retrieveNodeAttributeString(region, "Duration").toInt
+          );
+
+          // Append emit string with partition attributes
           partitionString = partitionString +
             this.emitNodeAttributesRequiredNum(head, List("Duration", "Period"));
         }
@@ -465,8 +484,18 @@ object ScheduleGenerator{
   
   def generatePartitionSchedules(nodes : Seq[Node]) : String = nodes match {
     // If we have more elements in the list
-    case x::xs if xs != Nil => 
-      this.emit("{\n") +
+    case x::xs if xs != Nil => {
+      // Create a new TimeSchedule object for the validator
+      if(this.checkAttributeValidity("PartitionNameRef", x)){
+        this.validator.appendSchedule(
+          this.retrieveNodeAttributeString(x, "PartitionNameRef"),
+          this.retrieveNodeAttributeString(x, "Duration").toInt,
+          this.retrieveNodeAttributeString(x, "Offset").toInt
+        );
+      }
+
+      // Append emit string
+      return this.emit("{\n") +
       this.emitNodeAttributesRequired(x, List(
         ("PeriodicProcessingStart", this.k), 
         ("Duration", this.k), 
@@ -475,16 +504,28 @@ object ScheduleGenerator{
         true) +
       this.emit("},\n", -1) +
       this.generatePartitionSchedules(xs);
+    }
     
     // If we are at the last element in the list
-    case x::xs if xs == Nil => 
-      this.emit("{\n") +
+    case x::xs if xs == Nil => {
+      // Create a new TimeSchedule object for the validator
+      if(this.checkAttributeValidity("PartitionNameRef", x)){
+        this.validator.appendSchedule(
+          this.retrieveNodeAttributeString(x, "PartitionNameRef"),
+          this.retrieveNodeAttributeString(x, "Duration").toInt,
+          this.retrieveNodeAttributeString(x, "Offset").toInt
+        );
+      }
+
+      // Append the last element to the emit string
+      return this.emit("{\n") +
       this.emitNodeAttributesRequired(x, List(
         ("PeriodicProcessingStart", this.k), 
         ("Duration", this.k), 
         ("PartitionNameRef", this.s), 
         ("Offset", this.k)), true) +
         this.emit("}\n", -1);
+    }
   }
 
   //Generates the code for partitionPort
@@ -555,6 +596,11 @@ object ScheduleGenerator{
       this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
       this.emit("},\n", -1) +
       this.generateMemoryRegion(xs);
+  }
+
+  def retrieveNodeAttributeString(node : Node, attr : String) : String = attr match {
+    case x if this.checkAttributeValidity(x, node) => node.attribute(attr).get.toString;
+    case _ => throw new Exception(f"Attribute $attr can not be found");
   }
 
   // Emits optional attributes (if not found emit '{}')
