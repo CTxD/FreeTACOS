@@ -132,7 +132,10 @@ object ScheduleGenerator{
 
         if(this.checkAttributeValidity("Identifier", region)){
           // Populate the partition name to the validator
-          this.validator.populatePartitionIdentifier(this.retrieveNodeAttributeString(region, "Name"));
+          this.validator.populatePartitionIdentifier(
+            this.retrieveNodeAttributeString(region, "Name"),
+            this.retrieveNodeAttributeString(region, "Affinity").toInt
+          );
 
           // Append emit string with partition definition info
           partitionString = partitionString + 

@@ -6,6 +6,7 @@ object Validator {
         
         // Placeholder object for building partitions
         var namePlaceholder : String = "";
+        var affinityPlaceholder : Integer = 0;
 
         def checkScheduleValidity() : Boolean = {
             // Check that there are as many schedule configurations as partition configurations
@@ -15,7 +16,6 @@ object Validator {
             val entities : List[TimeEntity] = this.createTimeEntities();
 
             // Create "schedulability" table
-            println("Creating table");
             this.createTable(entities);
 
             // Check the table for overlapping periods
@@ -23,25 +23,47 @@ object Validator {
             return true;
         }
         
-        // Done using inspiration from this lecture: https://www.moodle.aau.dk/pluginfile.php/1163980/mod_resource/content/10/Lecture-4.pdf
+        // Done using inspiration from this lecture: https://www.moodle.aau.dk/pluginfile.php/1163980/mod_resource/content/10/Lecture-4.pdf (Overlapping activity schedule problem)
         def createTable(entities : List[TimeEntity]){
-            println("Creating table - " + entities.length);
-            for(ent <- entities){
-                println("Got this far :)");
+            val TABLE_HEIGHT : Integer = 6;
+
+            // Initialise matrix of the matrix configuration and core list table
+            var scheduleTable = Array.ofDim[Integer](entities.length, TABLE_HEIGHT);
+            var coreListTable : List[List[Integer]] = List();
+            
+            // Iterate through the entity table
+            var identifier = 0;
+            for(ent <- entities) {
+                // Check for overlapping periods
+                
+
+                // True: Insert new entry in the table
+
+                // False: Throw exception - overlapping schedule
+
+                // Increment identifier counter
+                identifier = identifier + 1;
             }
+
+            // TODO: Maybe return the schedule table.
         }
 
         def appendSchedule(identifier : String, duration : Integer, offset : Integer) = {
             this.schedules = new ScheduleTime(identifier, duration, offset) :: this.schedules;
         }
 
-        def populatePartitionIdentifier(name : String) = this.namePlaceholder = name;
+        def populatePartitionIdentifier(name : String, affinity : Integer) = {
+            this.namePlaceholder = name;
+            this.affinityPlaceholder = affinity;
+        }
+
         def populatePartitionRemainder(period : Integer, duration : Integer) = {
             // Append new partition to the list of PartitionTime
             this.partitions = new PartitionTime(
                 this.namePlaceholder,
                 period,
-                duration
+                duration,
+                this.affinityPlaceholder
             ) :: this.partitions;
         }
 
@@ -57,7 +79,7 @@ object Validator {
                 if(sched.length < 1) throw new Exception(f"No matching schedule with identifier ${part.identifier}");
 
                 // Append configuration to entities
-                entities = new TimeEntity(part.identifier, part.period, part.duration, sched.head.offset) :: entities;
+                entities = new TimeEntity(part.identifier, part.period, part.duration, sched.head.offset, part.affinity) :: entities;
             }
 
             return entities;
@@ -66,7 +88,7 @@ object Validator {
 
     
 
-    class TimeEntity(val identifier : String, val period : Integer, val duration : Integer, val offset : Integer) {}
-    class PartitionTime (val identifier : String, val period : Integer, val duration : Integer) {}
+    class TimeEntity(val identifier : String, val period : Integer, val duration : Integer, val offset : Integer, val affinity : Integer) {}
+    class PartitionTime (val identifier : String, val period : Integer, val duration : Integer, val affinity : Integer) {}
     class ScheduleTime(val identifier : String, val duration : Integer, val offset : Integer) {}
 }
