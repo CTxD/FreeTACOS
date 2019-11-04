@@ -10,6 +10,16 @@
 #include "partition_hm_table.h"
 #include "multipartition_hm_table.h"
 
+#include <initializer_list>
+
+#include <boost/container/pmr/vector.hpp>
+#include <boost/container/pmr/polymorphic_allocator.hpp>
+#include <boost/container/pmr/monotonic_buffer_resource.hpp>
+
+
+using namespace boost::container::pmr;
+
+typedef memory_resource* allocator_type;
 
 class ArincModule
 {
@@ -18,24 +28,27 @@ class ArincModule
     std::optional<name_t> moduleVersion;  /* optional */
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
-    std::vector<SystemError> errors;
-    std::vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
-    std::vector<ModuleHMTable> moduleHMTable;                 /* required */
-    std::vector<PartitionHMTable> partitionHMTable;           /* required */
+    vector<SystemError> errors;
+    vector<MultiPartitionHMTable> multiPartitionHMTable{&multiPartHMMemory}; /* required */
+    vector<ModuleHMTable> moduleHMTable{&moduleHMMemory};                    /* required */
+    vector<PartitionHMTable> partitionHMTable{&partitionHMMemory};           /* required */
+    vector<Partition> partitions;                                            /* required */
 
-    std::vector<Partition> partitions;          /* required */
-    ModuleSchedule schedule;                    /* required */
-    std::optional<QueuingPort> queuingPorts;    /* required */
-    std::optional<SamplingPort> samplingPorts;  /* required */
+    // ModuleSchedule schedule;                    /* required */
+    // std::optional<QueuingPort> queuingPorts;    /* required */
+    // std::optional<SamplingPort> samplingPorts;  /* required */
 
   public:
-    explicit ArincModule(name_t name, name_t version, identifier_t id,
-                         std::vector<Partition> part, ModuleSchedule schedule,
-                         std::vector<SystemError> err, std::vector<MultiPartitionHMTable> multiPartitionHM,
-                         std::vector<ModuleHMTable> moduleHM, std::vector<PartitionHMTable> partitionHM):
-      moduleName(std::move(name)), moduleVersion(std::move(version)), moduleId(std::move(id)),
-      partitions(std::move(part)), schedule(schedule), errors(err),multiPartitionHMTable(std::move(multiPartitionHM)),
-      moduleHMTable(std::move(moduleHM)), partitionHMTable(std::move(partitionHM)) {}
+    ArincModule(name_t name, std::optional<name_t> version, std::optional<identifier_t> id,
+                std::initializer_list<Partition> part, allocator_type alloc): //,
+      moduleName(name), moduleVersion(version), moduleId(id),
+                         // , ModuleSchedule schedule,
+                         // std::vector<ArincModule> err, std::vector<MultiPartitionHMTable> multiPartitionHM,
+                         // std::vector<ModuleHMTable> moduleHM, std::vector<PartitionHMTable> partitionHM):
+      partitions(part, alloc) {}
+      // , schedule(schedule), errors(err.begin(), err.end()),
+      // multiPartitionHMTable(multiPartitionHM.begin(), multiPartitionHM.end()),
+      // moduleHMTable(moduleHM.begin(), moduleHM.end()), partitionHMTable(partitionHM.begin(), partitionHM.end()) {}
 };
 
 #endif

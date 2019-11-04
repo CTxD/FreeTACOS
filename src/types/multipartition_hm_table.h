@@ -13,6 +13,14 @@ class MultiPartitionHMTable
   public:
     MultiPartitionHMTable(name_t name, std::vector<MultiPartitionErrorAction> actions):
       tableName(name), errorActions(actions) {}
+    // 
+    // MultiPartitionHMTable(const MultiPartitionHMTable& p):
+    //   tableName(p.tableName), errorActions(p.errorActions) {}
+    //
+    // MultiPartitionHMTable(MultiPartitionHMTable&& p) noexcept:
+    //   tableName(std::move(p.tableName)), errorActions(std::move(p.errorActions)) {}
+    //
+    // ~MultiPartitionHMTable() = default;
 };
 
 #endif

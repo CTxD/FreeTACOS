@@ -39,8 +39,27 @@ class Partition
                   std::vector<MemoryRegion> mem,
                   std::vector<QueuingPort> queuing,
                   std::vector<SamplingPort> sampling):
-                  partitionIdentifier(id), affinity(affinity), partitionName(name), memoryRegions(mem),
-                  duration(duration), period(period), samplePorts(sampling), queuePorts(queuing) {}
+                  partitionIdentifier(id), affinity(affinity), partitionName(name),
+                  duration(duration), period(period), memoryRegions(mem),
+                  queuePorts(queuing), samplePorts(sampling) {}
+
+          // Partition(const Partition& p): partitionIdentifier(p.partitionIdentifier),
+          //   affinity(p.affinity), partitionName(p.partitionName), duration(p.duration),
+          //   period(p.period), memoryRegions(p.memoryRegions), queuePorts(p.queuePorts),
+          //   samplePorts(p.samplePorts) {}
+          //
+          // Partition& operator=(Partition&& rhs)
+          // {
+          //     partitionIdentifier = std::move(rhs.partitionIdentifier);
+          //     affinity = std::move(rhs.affinity);
+          //     partitionName = std::move(rhs.partitionName);
+          //     duration = std::move(rhs.duration);
+          //     period = std::move(rhs.period);
+          //     memoryRegions = std::move(rhs.memoryRegions);
+          //     // queuePorts = std::move(rhs.queuePorts);
+          //     // samplePorts = std::move(rhs.samplePorts);
+          //     return *this;
+          // }
 };
 
 #endif
