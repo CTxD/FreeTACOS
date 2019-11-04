@@ -20,7 +20,7 @@ object ScheduleGenerator{
 
       // validator will throw an exception if the check is unsuccessful
       println("Validating schedule configuration");
-      //this.validator.checkScheduleValidity();
+      this.validator.checkScheduleValidity();
       println("Validation succeeded")
 
       println("Writing to file");
