@@ -7,7 +7,10 @@ CTacosKernel::CTacosKernel()
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    GetLogger().Write(GetKernelName(), LogNotice, "C Standard Library stdin/stdout/stderr Demo");
+    while (1) {
+        GetLogger().Write(GetKernelName(), LogNotice,
+                          "C Standard Library stdin/stdout/stderr Demo");
+    }
 
     return ShutdownHalt;
 }
