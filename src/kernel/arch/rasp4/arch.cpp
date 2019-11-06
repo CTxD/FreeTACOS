@@ -1,55 +1,18 @@
+#include <arch.h>
+#include <circle/debug.h>
 #include <circle/gpiopin.h>
+#include <circle/startup.h>
 #include <circle/timer.h>
 #include <errcode.h>
-#include <circle/startup.h>
-#include <arch.h>
 
-ret_t init_arch(){
-	CBootableKernel kernel;
-	return kernel.Start();
+CKernel::CKernel(void) : CStdlibAppStdio("FreeTACOS Kernel")
+{
+    mActLED.Blink(5); // show we are alive
 }
 
-CBootableKernel::CBootableKernel(){}
-CBootableKernel::~CBootableKernel(){}
-
-ret_t CBootableKernel::Start()
+CStdlibApp::TShutdownMode CKernel::Run(void)
 {
-	CKernel kernel;
-	if (!Initialize ())
-	{
-		halt ();
-		return (ret_t)EXIT_HALT;
-	}
-	
-	TShutdownMode ShutdownMode = Run ();
-
-	switch (ShutdownMode)
-	{
-	case ShutdownReboot:
-		reboot ();
-		return (ret_t) EXIT_REBOOT;
-
-	case ShutdownHalt:
-	default:
-		halt ();
-		return (ret_t)EXIT_HALT;
-	}
-};
-
-CKernel::CKernel(void)
-{
-}
-
-CKernel::~CKernel(void)
-{
-}
-
-boolean CKernel::Initialize(void)
-{
-	return TRUE;
-}
-
-TShutdownMode CKernel::Run(void)
-{
-	return ShutdownReboot;
+    mLogger.Write(GetKernelName(), LogNotice,
+                  "C Standard Library stdin/stdout/stderr Demo");
+    return CStdlibApp::ShutdownHalt;
 }

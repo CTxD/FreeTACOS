@@ -34,6 +34,7 @@ docs
 *.obj
 *.ko
 .elf
+kernel8-rpi4.elf
 
 # Precompiled Headers
 *.gch
