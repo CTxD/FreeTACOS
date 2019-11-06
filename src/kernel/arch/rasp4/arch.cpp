@@ -4,34 +4,35 @@
 #include <circle/startup.h>
 #include <arch.h>
 
-ret_t init_arch(){
+ret_t init_arch()
+{
 	CBootableKernel kernel;
 	return kernel.Start();
 }
 
-CBootableKernel::CBootableKernel(){}
-CBootableKernel::~CBootableKernel(){}
+CBootableKernel::CBootableKernel() {}
+CBootableKernel::~CBootableKernel() {}
 
 ret_t CBootableKernel::Start()
 {
 	CKernel kernel;
-	if (!Initialize ())
+	if (!Initialize())
 	{
-		halt ();
+		halt();
 		return (ret_t)EXIT_HALT;
 	}
-	
-	TShutdownMode ShutdownMode = Run ();
+
+	TShutdownMode ShutdownMode = Run();
 
 	switch (ShutdownMode)
 	{
 	case ShutdownReboot:
-		reboot ();
-		return (ret_t) EXIT_REBOOT;
+		reboot();
+		return (ret_t)EXIT_REBOOT;
 
 	case ShutdownHalt:
 	default:
-		halt ();
+		halt();
 		return (ret_t)EXIT_HALT;
 	}
 };
