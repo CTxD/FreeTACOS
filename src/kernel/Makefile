@@ -17,7 +17,7 @@ INCLUDE	+= -I $(ROOT)/src/kernel/include
 
 include $(CIRCLEHOME)/Rules.mk
 
-CFLAGS += -I "$(NEWLIBDIR)/include" -I $(STDDEF_INCPATH) -I ../../include
+CFLAGS += -I "$(NEWLIBDIR)/include" -I $(STDDEF_INCPATH) -I $(CIRCLELIB)/include
 LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/libcirclenewlib.a" \
  	$(CIRCLEHOME)/addon/SDCard/libsdcard.a \
   	$(CIRCLEHOME)/lib/usb/libusb.a \
@@ -26,7 +26,7 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
  	$(CIRCLEHOME)/lib/fs/libfs.a \
   	$(CIRCLEHOME)/lib/net/libnet.a \
   	$(CIRCLEHOME)/lib/sched/libsched.a \
-  	$(CIRCLEHOME)/lib/libcircle.a
+  	$(CIRCLEHOME)/lib/libcircle.a 
 
 # ---
 
