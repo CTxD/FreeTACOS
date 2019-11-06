@@ -5,36 +5,7 @@
 #include <circle/timer.h>
 #include <errcode.h>
 
-CBootableKernel::CBootableKernel()
-{
-}
-CBootableKernel::~CBootableKernel()
-{
-}
-
-ret_t CBootableKernel::Start()
-{
-    CKernel kernel;
-    if (!Initialize()) {
-        halt();
-        return (ret_t)EXIT_HALT;
-    }
-
-    TShutdownMode ShutdownMode = Run();
-
-    switch (ShutdownMode) {
-    case ShutdownReboot:
-        reboot();
-        return (ret_t)EXIT_REBOOT;
-
-    case ShutdownHalt:
-    default:
-        halt();
-        return (ret_t)EXIT_HALT;
-    }
-};
-
-CKernel::CKernel(void) : CStdlibAppStdio("CKERNEL")
+CKernel::CKernel(void) : CStdlibAppStdio("FreeTACOS Kernel")
 {
     mActLED.Blink(5); // show we are alive
 }
