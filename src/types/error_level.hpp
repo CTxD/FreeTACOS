@@ -16,6 +16,14 @@ class ErrorLevel
     public:
         ErrorLevel(identifier_t id, name_t description, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
           errorIdentifier(id), description(description), error_level(level), error_code(code) {}
+
+        identifier_t getErrorIdentifier();
+
+        name_t getDescription();
+
+        ERROR_LEVEL_TYPE getErrorLevel();
+
+        ERROR_CODE_TYPE getErrorCode();
 };
 
 #endif

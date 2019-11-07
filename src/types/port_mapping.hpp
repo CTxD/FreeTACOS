@@ -1,8 +1,8 @@
 #ifndef PORT_MAPPING
 #define PORT_MAPPING
 
-#include "pseudo_standard_partitions.h"
-
+#include "pseudo_partition.h"
+#include "standard_partition.h"
 
 class PortMappingType
 {
@@ -15,14 +15,9 @@ class PortMappingType
 
     PortMappingType(StandardPartition standardPart): standardPartition(std::move(standardPart)) {}
 
-    PortMappingType(const PortMappingType& p): pseudoPartition(p.pseudoPartition),
-      standardPartition(p.standardPartition) {}
+    std::optional<PseudoPartition> getPseudoPartition();
 
-    PortMappingType(PortMappingType&& p) noexcept: pseudoPartition(std::move(p.pseudoPartition)),
-      standardPartition(std::move(p.standardPartition)) {}
-
-    ~PortMappingType() = default;
-
+    std::optional<StandardPartition> getStandardPartition();
 };
 
 #endif

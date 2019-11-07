@@ -31,6 +31,15 @@ class MemoryRegion
                 memory_access_t accessRights, decOrHex_t address):
       regionName(name), type(type), size(size), accessRights(accessRights), address(address) {}
 
+    name_t getRegionName();
+
+    memory_region_t getType();
+
+    decOrHex_t getSize();
+
+    memory_access_t getAccessRights();
+
+    decOrHex_t getAddress();
 };
 
 #endif
