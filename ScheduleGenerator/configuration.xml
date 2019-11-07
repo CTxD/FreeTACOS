@@ -2,8 +2,8 @@
 <MODULE xmlns="http://www.aviation-ia.com/aeec/2015/ARINC653" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aviation-ia.com/aeec/2015/ARINC653ExampleSchema.xsd" Name="MyModule">
    <Partitions>
       <Partition>
-         <PartitionDefinition Name="systemManagement" Identifier="1" Affinity="0" />
-         <PartitionPeriodicity Duration="20000000" Period="100000000" />
+         <PartitionDefinition Name="systemManagement" Identifier="1" Affinity="2" />
+         <PartitionPeriodicity Duration="20000000" Period="20000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
@@ -24,8 +24,8 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="flightControls" Identifier="2" Affinity="0" />
-         <PartitionPeriodicity Duration="10000000" Period="100000000" />
+         <PartitionDefinition Name="flightControls" Identifier="2" Affinity="1" />
+         <PartitionPeriodicity Duration="10000000" Period="20000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
