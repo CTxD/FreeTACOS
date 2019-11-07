@@ -10,16 +10,6 @@
 #include "partition_hm_table.h"
 #include "multipartition_hm_table.h"
 
-#include <initializer_list>
-
-#include <boost/container/pmr/vector.hpp>
-#include <boost/container/pmr/polymorphic_allocator.hpp>
-#include <boost/container/pmr/monotonic_buffer_resource.hpp>
-
-
-using namespace boost::container::pmr;
-
-typedef memory_resource* allocator_type;
 
 class ArincModule
 {
@@ -28,27 +18,47 @@ class ArincModule
     std::optional<name_t> moduleVersion;  /* optional */
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
-    vector<SystemError> errors;
-    vector<MultiPartitionHMTable> multiPartitionHMTable{&multiPartHMMemory}; /* required */
-    vector<ModuleHMTable> moduleHMTable{&moduleHMMemory};                    /* required */
-    vector<PartitionHMTable> partitionHMTable{&partitionHMMemory};           /* required */
-    vector<Partition> partitions;                                            /* required */
+    Partition partition[100];
+    monotonic_buffer_resource partitionSrc{std::data(partition),
+                                                    std::size(partition)};
 
-    // ModuleSchedule schedule;                    /* required */
-    // std::optional<QueuingPort> queuingPorts;    /* required */
-    // std::optional<SamplingPort> samplingPorts;  /* required */
+    SystemError systemError[100];
+    monotonic_buffer_resource systemErrorSrc{std::data(systemError),
+                                              std::size(systemError)};
+    
+    MultiPartitionHMTable multiPartitionHMTableBuffer[100];
+    monotonic_buffer_resource multiPartitionHMTableBufferSrc{std::data(multiPartitionHMTableBuffer),
+                                              std::size(multiPartitionHMTableBuffer)};
+  
+    ModuleHMTable moduleHMTableBuffer[100];
+    monotonic_buffer_resource moduleHMTableBufferSrc{std::data(moduleHMTableBuffer),
+                                                    std::size(moduleHMTableBuffer)};
+
+    PartitionHMTable partitionHMBuffer[125];
+    monotonic_buffer_resource partitionHMBufferSrc{std::data(partitionHMBuffer),
+                                                    std::size(partitionHMBuffer)};
+
+    vector<Partition> partitions;                         /* required */
+    ModuleSchedule schedule;                              /* required */
+    vector<SystemError> errors;
+    vector<MultiPartitionHMTable> multiPartitionHMTable;  /* required */
+    vector<ModuleHMTable> moduleHMTable;                  /* required */
+    vector<PartitionHMTable> partitionHMTable;            /* required */
+    
 
   public:
+    ArincModule() {};
     ArincModule(name_t name, std::optional<name_t> version, std::optional<identifier_t> id,
-                std::initializer_list<Partition> part, allocator_type alloc): //,
-      moduleName(name), moduleVersion(version), moduleId(id),
-                         // , ModuleSchedule schedule,
-                         // std::vector<ArincModule> err, std::vector<MultiPartitionHMTable> multiPartitionHM,
-                         // std::vector<ModuleHMTable> moduleHM, std::vector<PartitionHMTable> partitionHM):
-      partitions(part, alloc) {}
-      // , schedule(schedule), errors(err.begin(), err.end()),
-      // multiPartitionHMTable(multiPartitionHM.begin(), multiPartitionHM.end()),
-      // moduleHMTable(moduleHM.begin(), moduleHM.end()), partitionHMTable(partitionHM.begin(), partitionHM.end()) {}
+                std::initializer_list<Partition> part, std::initializer_list<PartitionSchedule> sched,
+                std::initializer_list<SystemError> err, std::initializer_list<MultiPartitionHMTable> mul,
+                std::initializer_list<ModuleHMTable> moduleHMTab,
+                std::initializer_list<PartitionHMTable> partitionHMTab ) :
+      moduleName(name), moduleVersion(version), moduleId(id), partitions(part, &partitionSrc),
+      schedule(sched), errors(err, &systemErrorSrc),
+      multiPartitionHMTable(mul, &multiPartitionHMTableBufferSrc),
+      moduleHMTable(moduleHMTab, &moduleHMTableBufferSrc),
+      partitionHMTable(partitionHMTab, &partitionHMBufferSrc) {}
+
 };
 
 #endif

@@ -14,6 +14,7 @@ class MultiPartitionErrorAction
         std::optional<MODULE_RECOVERY_ACTION_TYPE> action;  /* optional */
 
     public:
+        MultiPartitionErrorAction() {};
         MultiPartitionErrorAction(identifier_t id, ERROR_LEVEL_TYPE level, MODULE_RECOVERY_ACTION_TYPE action):
           errorIdentifier(id), action(action), level(level) {}
 };
@@ -27,6 +28,7 @@ class PartitionErrorAction
         ERROR_CODE_TYPE code;                    /* required */
 
     public:
+        PartitionErrorAction() {};
         PartitionErrorAction(identifier_t id, PARTITION_RECOVERY_ACTION_TYPE action,
                              ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
           errorIdentifier(id), action(action), level(level), code(code) {}
@@ -39,6 +41,7 @@ class ModuleErrorAction
         MODULE_RECOVERY_ACTION_TYPE action;  /* required */
 
     public:
+        ModuleErrorAction() {};
         ModuleErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action):
           errorIdentifier(id), action(action) {}
 };

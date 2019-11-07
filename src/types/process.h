@@ -11,6 +11,7 @@ class Process
         std::optional<decOrHex_t> stackSize;  /* optional */
 
     public:
+        Process() {};
         Process(name_t& name, decOrHex_t size):
           name(std::move(name)), stackSize(size) {}
 };

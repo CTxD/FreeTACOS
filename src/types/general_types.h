@@ -10,6 +10,16 @@
 
 #include <apex_types.h>
 
+#include <initializer_list>
+
+#include <boost/container/pmr/vector.hpp>
+#include <boost/container/pmr/polymorphic_allocator.hpp>
+#include <boost/container/pmr/monotonic_buffer_resource.hpp>
+
+using namespace boost::container::pmr;
+
+typedef memory_resource* allocator_type;
+
 const int PARTITION_NUMBER = 128;
 
 const int MAX_NUMBER_MEMORY_REQUIREMENTS = 100;
