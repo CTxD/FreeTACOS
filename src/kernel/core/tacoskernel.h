@@ -5,5 +5,4 @@ private:
 public:
     CTacosKernel();
     CStdlibApp::TShutdownMode Run();
-    ~CTacosKernel();
 };
