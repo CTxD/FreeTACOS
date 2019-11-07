@@ -1,10 +1,9 @@
 #include <arch.h>
 
-class CTacosKernel : public CBootableKernel
-{
+class CTacosKernel : public CKernel {
 private:
-    
 public:
     CTacosKernel();
+    CStdlibApp::TShutdownMode Run();
     ~CTacosKernel();
 };
