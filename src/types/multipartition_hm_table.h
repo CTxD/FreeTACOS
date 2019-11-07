@@ -7,12 +7,16 @@
 class MultiPartitionHMTable
 {
   private:
-    name_t tableName;                                     /* required */
-    std::vector<MultiPartitionErrorAction> errorActions;  /* required */
+    MultiPartitionErrorAction multiPartitionErrorAction[100];
+    monotonic_buffer_resource multiPartitionErrorActionSrc{std::data(multiPartitionErrorAction),
+                                                          std::size(multiPartitionErrorAction)};
+    name_t tableName;                                   /* required */
+    vector<MultiPartitionErrorAction> errorAction;      /* required */
 
   public:
-    MultiPartitionHMTable(name_t name, std::vector<MultiPartitionErrorAction> actions):
-      tableName(name), errorActions(actions) {}
+    MultiPartitionHMTable() {};
+    MultiPartitionHMTable(name_t name, std::initializer_list<MultiPartitionErrorAction> actions):
+      tableName(name), errorAction(actions, &multiPartitionErrorActionSrc) {}
 };
 
 #endif

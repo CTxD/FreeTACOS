@@ -7,13 +7,18 @@
 class ModuleHMTable
 {
     private:
-      identifier_t stateIdentifier;           /* required */
-      std::string description;                /* required */
-      std::vector<ModuleErrorAction> actions; /* required */
+      ModuleErrorAction moduleErrorAction[100];
+      monotonic_buffer_resource moduleErrorActionSrc{std::data(moduleErrorAction),
+                                                    std::size(moduleErrorAction)};
+      identifier_t stateIdentifier;       /* required */
+      std::string description;            /* required */
+      vector<ModuleErrorAction> action;   /* required */
 
     public:
-      ModuleHMTable(identifier_t state, std::string descr, std::vector<ModuleErrorAction> actions):
-        stateIdentifier(state), description(descr), actions(std::move(actions)) {}
+    ModuleHMTable() {};
+      ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions):
+        stateIdentifier(state), description(descr), action(actions, &moduleErrorActionSrc) {}
+      
 };
 
 #endif

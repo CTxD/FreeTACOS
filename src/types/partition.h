@@ -12,6 +12,19 @@
 class Partition
 {
     private:
+        MemoryRegion memoryRegion[100];
+        monotonic_buffer_resource memoryRegionSrc{std::data(memoryRegion),
+                                                    std::size(memoryRegion)};
+        QueuingPort queuingPort[100];
+        monotonic_buffer_resource queuingPortSrc{std::data(queuingPort),
+                                                    std::size(queuingPort)};
+        SamplingPort samplingPort[100];
+        monotonic_buffer_resource samplingPortSrc{std::data(samplingPort),
+                                                    std::size(samplingPort)};
+        Process proces[100];
+        monotonic_buffer_resource processSrc{std::data(proces),
+                                                std::size(proces)};
+        
         identifier_t partitionIdentifier;       /* required */
         PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
         name_t partitionName;                   /* required */
@@ -19,28 +32,28 @@ class Partition
         decOrHex_t duration;                    /* required */
         decOrHex_t period;                      /* required */
 
-        std::vector<MemoryRegion> memoryRegions;/* required */
-        std::vector<QueuingPort> queuePorts;    /* required */
-        std::vector<SamplingPort> samplePorts;  /* required */
+        vector<MemoryRegion> memoryRegions;     /* required */
+        vector<QueuingPort> queuePorts;         /* required */
+        vector<SamplingPort> samplePorts;       /* required */
 
         OPERATING_MODE_TYPE mode;
         PARTITION_STATUS_TYPE status;
 
-        std::optional<std::vector<Process>> process;
-
-        // Deprecated
-        CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
-        bool systemPartition = false;                             /* required */
-        name_t entryPoint;                                        /* required */
+        vector<Process> process;
 
     public:
+        Partition() {};
         Partition(identifier_t id, PROCESSOR_CORE_ID_TYPE afinity, name_t name,
                   decOrHex_t duration, decOrHex_t period,
-                  std::vector<MemoryRegion> mem,
-                  std::vector<QueuingPort> queuing,
-                  std::vector<SamplingPort> sampling):
-                  partitionIdentifier(id), affinity(affinity), partitionName(name), memoryRegions(mem),
-                  duration(duration), period(period), samplePorts(sampling), queuePorts(queuing) {}
+                  std::initializer_list<MemoryRegion> mem,
+                  std::initializer_list<QueuingPort> queuing,
+                  std::initializer_list<SamplingPort> sampling,
+                  std::initializer_list<Process> proc):
+                  partitionIdentifier(id), affinity(affinity), partitionName(name),
+                  duration(duration), period(period), memoryRegions(mem, &memoryRegionSrc),
+                  queuePorts(queuing, &queuingPortSrc), samplePorts(sampling, &samplingPortSrc),
+                  process(proc, &processSrc) {}
+
 };
 
 #endif

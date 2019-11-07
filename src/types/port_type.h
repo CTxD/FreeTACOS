@@ -11,11 +11,11 @@ class Port
         name_t portName;                /* required */
         int maxMessageSize;             /* required */
         PORT_DIRECTION_TYPE direction;  /* required */
-        identifier_t portIdentifier;    /* required */
 
     public:
-        Port(name_t name, int msgSize, PORT_DIRECTION_TYPE dir):
-          portName(name), maxMessageSize(msgSize), direction(dir) {}
+      Port() {};
+      Port(name_t name, int msgSize, PORT_DIRECTION_TYPE dir):
+        portName(name), maxMessageSize(msgSize), direction(dir) {}
 };
 
 class SamplingPort : Port
@@ -24,8 +24,9 @@ class SamplingPort : Port
         std::optional<float> refreshRate;  /* optional */
 
     public:
-        SamplingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, float refreshRate):
-          Port(name, msgSize, direction), refreshRate(refreshRate) {}
+      SamplingPort() {};
+      SamplingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, float refreshRate):
+        Port(name, msgSize, direction), refreshRate(refreshRate) {}
 };
 
 class QueuingPort : Port
@@ -34,8 +35,9 @@ class QueuingPort : Port
         int maxNumMessages; /* required */
 
     public:
-        QueuingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, int maxMessages):
-          Port(name, msgSize, direction), maxNumMessages(maxMessages) {}
+      QueuingPort() {};
+      QueuingPort(name_t name, int msgSize, PORT_DIRECTION_TYPE direction, int maxMessages):
+        Port(name, msgSize, direction), maxNumMessages(maxMessages) {}
 };
 
 #endif

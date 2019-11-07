@@ -38,12 +38,8 @@ class PartitionSchedule
     name_t partitionName;             /* required */
     decOrHex_t offset;                /* required */
 
-    // Deprecated
-    identifier_t partitionIdentifier;      /* required */
-    float periodSeconds;                   /* required */
-    std::vector<WindowSchedule> windows;   /* required */
-
   public:
+    PartitionSchedule() {};
     PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset):
       partitionPeriodStart(periodicStart), periodDurationSeconds(duration),
       partitionName(partition), offset(offset) {}
@@ -52,10 +48,15 @@ class PartitionSchedule
 class ModuleSchedule
 {
   private:
-    std::vector<PartitionSchedule> majorFrameSeconds;   /* required */
+    PartitionSchedule partitionSchedule[100];
+    monotonic_buffer_resource partitionScheduleSrc{std::data(partitionSchedule),
+                                                    std::size(partitionSchedule)};
+    vector<PartitionSchedule> majorFrameSeconds;   /* required */
 
   public:
-    ModuleSchedule(std::vector<PartitionSchedule> majorFrame): majorFrameSeconds(majorFrame) {}
+    ModuleSchedule() {};
+    ModuleSchedule(std::initializer_list<PartitionSchedule> majorFrame): 
+      majorFrameSeconds(majorFrame, &partitionScheduleSrc) {}
 };
 
 #endif

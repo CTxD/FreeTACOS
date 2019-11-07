@@ -14,6 +14,7 @@ class ErrorLevel
         std::optional<ERROR_CODE_TYPE> error_code;  /* optional */
 
     public:
+        ErrorLevel() {};
         ErrorLevel(identifier_t id, name_t description, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
           errorIdentifier(id), description(description), error_level(level), error_code(code) {}
 };

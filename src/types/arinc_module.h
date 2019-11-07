@@ -18,24 +18,49 @@ class ArincModule
     std::optional<name_t> moduleVersion;  /* optional */
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
-    std::vector<SystemError> errors;
-    std::vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
-    std::vector<ModuleHMTable> moduleHMTable;                 /* required */
-    std::vector<PartitionHMTable> partitionHMTable;           /* required */
+    Partition partitionBuffer[100];
+    monotonic_buffer_resource partitionBufferSrc{std::data(partitionBuffer),
+                                                  std::size(partitionBuffer)};
 
-    std::vector<Partition> partitions;          /* required */
-    ModuleSchedule schedule;                    /* required */
-    std::optional<QueuingPort> queuingPorts;    /* required */
-    std::optional<SamplingPort> samplingPorts;  /* required */
+    SystemError systemErrorBuffer[100];
+    monotonic_buffer_resource systemErrorBufferSrc{std::data(systemErrorBuffer),
+                                                    std::size(systemErrorBuffer)};
+    
+    MultiPartitionHMTable multiPartitionHMTableBuffer[100];
+    monotonic_buffer_resource multiPartitionHMTableBufferSrc{std::data(multiPartitionHMTableBuffer),
+                                                              std::size(multiPartitionHMTableBuffer)};
+  
+    ModuleHMTable moduleHMTableBuffer[100];
+    monotonic_buffer_resource moduleHMTableBufferSrc{std::data(moduleHMTableBuffer),
+                                                      std::size(moduleHMTableBuffer)};
+
+    PartitionHMTable partitionHMBuffer[125];
+    monotonic_buffer_resource partitionHMBufferSrc{std::data(partitionHMBuffer),
+                                                    std::size(partitionHMBuffer)};
+
+    vector<Partition> partitions;                         /* required */
+    ModuleSchedule schedule;                              /* required */
+    vector<SystemError> errors;                           /* required */
+    vector<MultiPartitionHMTable> multiPartitionHMTable;  /* required */
+    vector<ModuleHMTable> moduleHMTable;                  /* required */
+    vector<PartitionHMTable> partitionHMTable;            /* required */
+    
 
   public:
-    explicit ArincModule(name_t name, name_t version, identifier_t id,
-                         std::vector<Partition> part, ModuleSchedule schedule,
-                         std::vector<SystemError> err, std::vector<MultiPartitionHMTable> multiPartitionHM,
-                         std::vector<ModuleHMTable> moduleHM, std::vector<PartitionHMTable> partitionHM):
-      moduleName(std::move(name)), moduleVersion(std::move(version)), moduleId(std::move(id)),
-      partitions(std::move(part)), schedule(schedule), errors(err),multiPartitionHMTable(std::move(multiPartitionHM)),
-      moduleHMTable(std::move(moduleHM)), partitionHMTable(std::move(partitionHM)) {}
+    ArincModule() {};
+    ArincModule(name_t name, std::optional<name_t> version, std::optional<identifier_t> id,
+                std::initializer_list<Partition> part, std::initializer_list<PartitionSchedule> sched,
+                std::initializer_list<SystemError> err,
+                std::initializer_list<MultiPartitionHMTable> multiPartTab,
+                std::initializer_list<ModuleHMTable> moduleHMTab,
+                std::initializer_list<PartitionHMTable> partitionHMTab) :
+                  moduleName(name), moduleVersion(version), moduleId(id),
+                  partitions(part, &partitionBufferSrc), schedule(sched),
+                  errors(err, &systemErrorBufferSrc),
+                  multiPartitionHMTable(multiPartTab, &multiPartitionHMTableBufferSrc),
+                  moduleHMTable(moduleHMTab, &moduleHMTableBufferSrc),
+                  partitionHMTable(partitionHMTab, &partitionHMBufferSrc) {}
+
 };
 
 #endif
