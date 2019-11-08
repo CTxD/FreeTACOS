@@ -1,7 +1,7 @@
 #ifndef SYSTEM_ERROR
 #define SYSTEM_ERROR
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 
 class SystemError
@@ -11,6 +11,8 @@ class SystemError
     std::string description;      /* required */
 
   public:
+    SystemError() {}
+
     SystemError(identifier_t id, std::string descr):
       errorIdentifier(id), description(descr) {}
 };

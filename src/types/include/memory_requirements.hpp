@@ -1,7 +1,7 @@
 #ifndef MEMORY_REQUIREMENTS
 #define MEMORY_REQUIREMENTS
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 
 enum memory_region_t
@@ -27,6 +27,8 @@ class MemoryRegion
     std::optional<decOrHex_t> address;  /* optional */
 
   public:
+    MemoryRegion() {};
+    
     MemoryRegion(name_t name, memory_region_t type, decOrHex_t size,
                 memory_access_t accessRights, decOrHex_t address):
       regionName(name), type(type), size(size), accessRights(accessRights), address(address) {}

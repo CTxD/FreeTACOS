@@ -1,7 +1,7 @@
 #ifndef STANDARD_PARTITION
 #define STANDARD_PARTITION
 
-#include "pseudo_partition.h"
+#include "pseudo_partition.hpp"
 
 
 class StandardPartition : PseudoPartition

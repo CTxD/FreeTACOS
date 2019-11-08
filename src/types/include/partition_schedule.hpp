@@ -1,7 +1,7 @@
 #ifndef PARTITON_SCHEDULE
 #define PARTITON_SCHEDULE
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 
 class PartitionSchedule
@@ -15,6 +15,8 @@ class PartitionSchedule
     identifier_t partitionIdentifier;
 
   public:
+    PartitionSchedule() {}
+
     PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset):
       partitionPeriodStart(periodicStart), periodDurationSeconds(duration),
       partitionName(partition), offset(offset) {}

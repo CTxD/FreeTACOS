@@ -1,7 +1,7 @@
 #ifndef PARTITION_MEMORY
 #define PARTITION_MEMORY
 
-#include "memory_requirements.h"
+#include "memory_requirements.hpp"
 
 
 class PartitionMemory
@@ -19,7 +19,7 @@ class PartitionMemory
 
     name_t getPartitionName();
 
-    vector<MemoryRegion> getMemoryRegion();    
+    vector<MemoryRegion> getMemoryRegion();
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef PSEUDO_PARTITION
 #define PSEUDO_PARTITION
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 
 class PseudoPartition
