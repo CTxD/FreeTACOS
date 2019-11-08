@@ -29,9 +29,10 @@ object ScheduleGenerator{
 
       // validator will throw an exception if the check is unsuccessful
       println("Validating schedule configuration");
-      println(Console.GREEN + "Validation succeeded")
 
       val schedule = this.validator.checkScheduleValidity();
+      println(Console.GREEN + "Validation succeeded")
+
       if(configPrint){
         // Print schedule here
         println(Console.BLUE + "Valid Schedule configuration:");

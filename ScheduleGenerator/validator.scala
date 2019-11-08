@@ -78,11 +78,11 @@ object Validator {
           if((whites % 2) == 0){
             // Even number
             val whiteSpace = whites / 2;
-            rString = " ".repeat(whiteSpace) + ins.toString() + " ".repeat(whiteSpace);
+            rString = " " * whiteSpace + ins.toString() + " " * whiteSpace;
           }else{
             // Odd number
             val whiteSpace = math.floor(whites / 2).toInt;
-            rString = " ".repeat(whiteSpace) + ins.toString() + " ".repeat(whiteSpace + 1);
+            rString = " " * whiteSpace + ins.toString() + (" " * whiteSpace + " ");
           }
 
           return rString;
