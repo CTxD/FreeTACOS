@@ -26,7 +26,12 @@ object Validator {
         def createTable(entities : List[TimeEntity]) : String = {
             // Initialise matrix of the matrix configuration and core list table (allocate space for all possible schedules)
             // This initialises a table of Affinity[Entities[Values]]
-            var scheduleTable : Array[Array[Array[Integer]]] = Array(Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT), Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT), Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT), Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT));
+            var scheduleTable : Array[Array[Array[Integer]]] = Array(
+              Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
+              Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
+              Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
+              Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT)
+            );
 
             // Sort entities list based on when periods start (Default ascending based on offsets)
             var sortedEntities = entities.sortBy(ent => ent.offset);
