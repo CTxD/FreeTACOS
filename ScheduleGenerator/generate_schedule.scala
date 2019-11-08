@@ -38,7 +38,7 @@ object ScheduleGenerator {
         println(schedule);
       }
 
-      println(Console.BLUE + "Writing to file");
+      println(Console.YELLOW + "Writing to file");
       val writer = new PrintWriter(new File("../src/kernel/config.cpp"));
       writer.write(generatedString);
       writer.close();

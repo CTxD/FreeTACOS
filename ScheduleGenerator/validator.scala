@@ -11,12 +11,12 @@ object Validator {
     var namePlaceholder: String = "";
     var affinityPlaceholder: Integer = 0;
 
-    val TABLE_HEIGHT: Integer = 5;
     val TOTAL_CORES: Integer = 4;
+    val TABLE_HEIGHT: Integer = TOTAL_CORES + 1;
 
     def checkScheduleValidity(): String = {
       // Check that there are as many schedule configurations as partition configurations
-      if (!(this.partitions.length == this.schedules.length))
+      if (this.partitions.length != this.schedules.length)
         throw new ValidationException(
           "The number of  partitions does not match the number of partitions");
 
@@ -50,9 +50,9 @@ object Validator {
       return printScheduleConfigation(entities, scheduleTable);
     }
 
-    def printScheduleConfigation(
-        entities: List[TimeEntity],
-        scheduleTable: CoreIterable): String = {
+    // TODO: Maybe use stringbuilder instead of string append (+) to reduce execution time. This might not be a problem.
+    def printScheduleConfigation(entities: List[TimeEntity],
+                                 scheduleTable: CoreIterable): String = {
       var emptyField = false;
       var cString = "|";
       for (c <- 0 to this.TOTAL_CORES - 1) {
@@ -100,55 +100,18 @@ object Validator {
       return rString;
     }
 
-    // Iterate through all schedules in the table and check the validity
-    def checkScheduleOverlap(
-        entity: TimeEntity,
-        table: EntityIterable): (EntityIterable, Boolean) = {
-      // Get the total size of the table
-      var entryCount = 0;
-      for (entry <- 0 to table.size - 1) {
-        // Check if the value is valid -> thereby there is an instance
-        if (table(entry)(0) != null) {
-          entryCount = entryCount + 1;
-        }
-      }
-
-      // Check if any entries has been assigned
-      if (entryCount > 0) {
-        // Iterate through all entities in the table
-        for (i <- 0 to entryCount) {
-          val tperiod = table(i)(1);
-          val toffset = table(i)(3);
-
-          val tstart = tperiod + toffset;
-
-          // If the starting point of the entititty ;) is lesser than the last finished one
-          if (tstart >= entity.offset) {
-            // Return false
-            return (table, false);
-          }
-        }
-      }
-
-      var tableCopy = table;
-
-      // Update the table entry
-      tableCopy(entryCount)(0) = entity.id; // Set the id
-      tableCopy(entryCount)(1) = entity.period; // Period
-      tableCopy(entryCount)(2) = entity.duration; // Duration
-      tableCopy(entryCount)(3) = entity.offset; // Offset
-      tableCopy(entryCount)(4) = entity.affinity; // Affinity
-
-      // All is good
-      return (tableCopy, true);
-    }
+    def generateAndCheckSchedule(entity: TimeEntity,
+                                 table: CoreIterable): CoreIterable =
+      this.checkCoreOverlap(entity,
+                            this.TOTAL_CORES - 1,
+                            entity.affinity,
+                            table);
 
     // Iterate through all cores (based on affinity) to find the next core match
-    def checkCoreOverlap(
-        ent: TimeEntity,
-        coreRemainder: Integer,
-        doneRemainder: Integer,
-        table: CoreIterable): CoreIterable =
+    def checkCoreOverlap(ent: TimeEntity,
+                         coreRemainder: Integer,
+                         doneRemainder: Integer,
+                         table: CoreIterable): CoreIterable =
       coreRemainder match {
         // If the partition has been assigned to all of it's number of cores (Affinity)
         case x if doneRemainder == -1 => {
@@ -192,33 +155,47 @@ object Validator {
             f"The partition ${ent.identifier} has an invalid affinity of ${ent.affinity}");
       }
 
-    def generateAndCheckSchedule(
+    // Iterate through all schedules in the table and check the validity
+    def checkScheduleOverlap(
         entity: TimeEntity,
-        table: CoreIterable): CoreIterable =
-      this.checkCoreOverlap(entity,
-                            this.TOTAL_CORES - 1,
-                            entity.affinity,
-                            table);
+        table: EntityIterable): (EntityIterable, Boolean) = {
+      // Get the total size of the table
+      var entryCount = 0;
+      for (entry <- 0 to table.size - 1) {
+        // Check if the value is valid -> thereby there is an instance
+        if (table(entry)(0) != null) {
+          entryCount = entryCount + 1;
+        }
+      }
 
-    def appendSchedule(identifier: String,
-                       duration: Integer,
-                       offset: Integer) = {
-      this.schedules = new ScheduleTime(identifier, duration, offset) :: this.schedules;
-    }
+      // Check if any entries has been assigned
+      if (entryCount > 0) {
+        // Iterate through all entities in the table
+        for (i <- 0 to entryCount) {
+          val tperiod = table(i)(1);
+          val toffset = table(i)(3);
 
-    def populatePartitionIdentifier(name: String, affinity: Integer) = {
-      this.namePlaceholder = name;
-      this.affinityPlaceholder = affinity;
-    }
+          val tstart = tperiod + toffset;
 
-    def populatePartitionRemainder(period: Integer, duration: Integer) = {
-      // Append new partition to the list of PartitionTime
-      this.partitions = new PartitionTime(
-        this.namePlaceholder,
-        period,
-        duration,
-        this.affinityPlaceholder
-      ) :: this.partitions;
+          // If the starting point of the entititty ;) is lesser than the last finished one
+          if (tstart >= entity.offset) {
+            // Return false
+            return (table, false);
+          }
+        }
+      }
+
+      var tableCopy = table;
+
+      // Update the table entry
+      tableCopy(entryCount)(0) = entity.id; // Set the id
+      tableCopy(entryCount)(1) = entity.period; // Period
+      tableCopy(entryCount)(2) = entity.duration; // Duration
+      tableCopy(entryCount)(3) = entity.offset; // Offset
+      tableCopy(entryCount)(4) = entity.affinity; // Affinity
+
+      // All is good
+      return (tableCopy, true);
     }
 
     def createTimeEntities(): List[TimeEntity] = {
@@ -246,6 +223,27 @@ object Validator {
       }
 
       return entities;
+    }
+
+    def appendSchedule(identifier: String,
+                       duration: Integer,
+                       offset: Integer) = {
+      this.schedules = new ScheduleTime(identifier, duration, offset) :: this.schedules;
+    }
+
+    def populatePartitionIdentifier(name: String, affinity: Integer) = {
+      this.namePlaceholder = name;
+      this.affinityPlaceholder = affinity;
+    }
+
+    def populatePartitionRemainder(period: Integer, duration: Integer) = {
+      // Append new partition to the list of PartitionTime
+      this.partitions = new PartitionTime(
+        this.namePlaceholder,
+        period,
+        duration,
+        this.affinityPlaceholder
+      ) :: this.partitions;
     }
   }
 
