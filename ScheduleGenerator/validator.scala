@@ -1,5 +1,8 @@
 // Validator object for validating the schedules configuration in terms of offset, period and duration
 object Validator {
+  type CoreIterable = Array[Array[Array[Integer]]];
+  type EntityIterable = Array[Array[Integer]];
+
   class Validator {
     var partitions: List[PartitionTime] = List();
     var schedules: List[ScheduleTime] = List();
@@ -28,7 +31,7 @@ object Validator {
     def createTable(entities: List[TimeEntity]): String = {
       // Initialise matrix of the matrix configuration and core list table (allocate space for all possible schedules)
       // This initialises a table of Affinity[Entities[Values]]
-      var scheduleTable: Array[Array[Array[Integer]]] = Array(
+      var scheduleTable: CoreIterable = Array(
         Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
         Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
         Array.ofDim[Integer](entities.length, this.TABLE_HEIGHT),
@@ -49,7 +52,7 @@ object Validator {
 
     def printScheduleConfigation(
         entities: List[TimeEntity],
-        scheduleTable: Array[Array[Array[Integer]]]): String = {
+        scheduleTable: CoreIterable): String = {
       var emptyField = false;
       var cString = "|";
       for (c <- 0 to this.TOTAL_CORES - 1) {
@@ -100,7 +103,7 @@ object Validator {
     // Iterate through all schedules in the table and check the validity
     def checkScheduleOverlap(
         entity: TimeEntity,
-        table: Array[Array[Integer]]): (Array[Array[Integer]], Boolean) = {
+        table: EntityIterable): (EntityIterable, Boolean) = {
       // Get the total size of the table
       var entryCount = 0;
       for (entry <- 0 to table.size - 1) {
@@ -145,7 +148,7 @@ object Validator {
         ent: TimeEntity,
         coreRemainder: Integer,
         doneRemainder: Integer,
-        table: Array[Array[Array[Integer]]]): Array[Array[Array[Integer]]] =
+        table: CoreIterable): CoreIterable =
       coreRemainder match {
         // If the partition has been assigned to all of it's number of cores (Affinity)
         case x if doneRemainder == -1 => {
@@ -191,7 +194,7 @@ object Validator {
 
     def generateAndCheckSchedule(
         entity: TimeEntity,
-        table: Array[Array[Array[Integer]]]): Array[Array[Array[Integer]]] =
+        table: CoreIterable): CoreIterable =
       this.checkCoreOverlap(entity,
                             this.TOTAL_CORES - 1,
                             entity.affinity,
