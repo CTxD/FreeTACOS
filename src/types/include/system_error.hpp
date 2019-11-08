@@ -15,6 +15,10 @@ class SystemError
 
     SystemError(identifier_t id, std::string descr):
       errorIdentifier(id), description(descr) {}
+
+    const identifier_t& getErrorId() const;
+
+    const std::string& getDescription() const;
 };
 
 #endif

@@ -14,9 +14,9 @@ class StandardPartition : PseudoPartition
     StandardPartition(identifier_t id, name_t partitionName, name_t portName,APEX_INTEGER address, name_t procedure):
       PseudoPartition(partitionName, address, procedure), partitionIdentifier(id), portName(portName) {}
 
-    identifier_t getPartitionIdentifier();
+    const identifier_t& getPartitionIdentifier() const;
 
-    name_t getPortName();
+    const name_t& getPortName() const;
 };
 
 #endif

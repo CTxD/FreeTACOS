@@ -4,21 +4,22 @@
 #include "pseudo_partition.hpp"
 #include "standard_partition.hpp"
 
-class PortMappingType
+class PortMapping
 {
   private:
     std::optional<PseudoPartition> pseudoPartition;     /* optional */
     std::optional<StandardPartition> standardPartition; /* optional */
 
   public:
-    PortMappingType() {};
-    PortMappingType(PseudoPartition pseudoPart): pseudoPartition(std::move(pseudoPart)) {}
+    PortMapping() {};
 
-    PortMappingType(StandardPartition standardPart): standardPartition(std::move(standardPart)) {}
+    PortMapping(PseudoPartition pseudoPart): pseudoPartition(std::move(pseudoPart)) {}
 
-    std::optional<PseudoPartition> getPseudoPartition();
+    PortMapping(StandardPartition standardPart): standardPartition(std::move(standardPart)) {}
 
-    std::optional<StandardPartition> getStandardPartition();
+    const std::optional<PseudoPartition>& getPseudoPartition() const;
+
+    const std::optional<StandardPartition>& getStandardPartition() const;
 };
 
 #endif

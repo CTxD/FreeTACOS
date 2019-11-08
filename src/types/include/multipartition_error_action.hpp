@@ -17,11 +17,11 @@ class MultiPartitionErrorAction
     MultiPartitionErrorAction(identifier_t id, ERROR_LEVEL_TYPE level, MODULE_RECOVERY_ACTION_TYPE action):
       errorIdentifier(id), action(action), level(level) {}
 
-    identifier_t getErrorAction();
+    const identifier_t& getErrorId() const;
 
-    ERROR_LEVEL_TYPE getLevel();
+    const ERROR_LEVEL_TYPE& getLevel() const;
 
-    MODULE_RECOVERY_ACTION_TYPE getAction();
+    const std::optional<MODULE_RECOVERY_ACTION_TYPE>& getAction() const;
 };
 
 #endif

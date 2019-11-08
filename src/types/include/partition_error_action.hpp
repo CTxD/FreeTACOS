@@ -20,13 +20,13 @@ class PartitionErrorAction
                          ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
       errorIdentifier(id), action(action), level(level), code(code) {}
 
-    identifier_t getErrorIdentifier();
+    const identifier_t& getErrorIdentifier() const;
 
-    PARTITION_RECOVERY_ACTION_TYPE getAction();
+    const PARTITION_RECOVERY_ACTION_TYPE& getAction() const;
 
-    ERROR_LEVEL_TYPE getLevel();
+    const ERROR_LEVEL_TYPE& getLevel() const;
 
-    ERROR_CODE_TYPE getCode();
+    const ERROR_CODE_TYPE& getCode() const;
 };
 
 #endif

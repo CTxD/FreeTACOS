@@ -21,17 +21,17 @@ class PartitionSchedule
       partitionPeriodStart(periodicStart), periodDurationSeconds(duration),
       partitionName(partition), offset(offset) {}
 
-    bool getPartitionPeriodStart();
+    const bool& getPartitionPeriodStart() const;
 
-    decOrHex_t getPeriodDuration();
+    const decOrHex_t& getPeriodDuration() const;
 
-    name_t getPartitionName();
+    const name_t& getPartitionName() const;
 
-    decOrHex_t getOffset();
+    const decOrHex_t& getOffset() const;
 
-    void setPartitionIdentifier(identifier_t&& id);
+    void setPartitionIdentifier(identifier_t id);
 
-    identifier_t getPartitionIdentifier();
+    const identifier_t& getPartitionIdentifier() const;
 };
 
 #endif

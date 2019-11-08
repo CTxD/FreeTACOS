@@ -17,9 +17,9 @@ class ModuleErrorAction
     ModuleErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action):
       errorIdentifier(id), action(action) {}
 
-    identifier_t getErrorIdentifier();
+    const identifier_t& getErrorIdentifier() const;
 
-    MODULE_RECOVERY_ACTION_TYPE getAction();
+    const MODULE_RECOVERY_ACTION_TYPE& getAction() const;
 };
 
 #endif

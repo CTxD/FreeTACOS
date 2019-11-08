@@ -14,11 +14,11 @@ class ModuleSchedule
 
   public:
     ModuleSchedule() {};
-    
+
     ModuleSchedule(std::initializer_list<PartitionSchedule> majorFrame):
       majorFrameSeconds(majorFrame, &partitionScheduleSrc) {}
 
-    vector<PartitionSchedule> getMajorFrameSeconds();
+    const vector<PartitionSchedule>& getMajorFrameSeconds() const;
 };
 
 #endif

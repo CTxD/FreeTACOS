@@ -10,11 +10,11 @@ class QueuingPort : Port
 
   public:
       QueuingPort() {}
-          
+
       QueuingPort(name_t name,APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction,APEX_INTEGER maxMessages):
         Port(name, msgSize, direction), maxNumMessages(maxMessages) {}
 
-     APEX_INTEGER getMaxNumMessages();
+     const APEX_INTEGER& getMaxNumMessages() const;
 };
 
 #endif

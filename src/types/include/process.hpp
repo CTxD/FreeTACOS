@@ -15,12 +15,12 @@ class Process
     public:
       Process() {}
 
-      Process(PROCESS_ATTRIBUTE_TYPE&& attr, PROCESS_STATUS_TYPE&& status):
+      Process(PROCESS_ATTRIBUTE_TYPE attr, PROCESS_STATUS_TYPE status):
         attributes(std::move(attr)), status(std::move(status)) {}
 
-      PROCESS_STATUS_TYPE getStatus();
+      const PROCESS_STATUS_TYPE& getStatus() const;
 
-      PROCESS_ATTRIBUTE_TYPE getAttributes();
+      const PROCESS_ATTRIBUTE_TYPE& getAttributes() const;
 };
 
 #endif

@@ -18,11 +18,11 @@ class Port
     Port(name_t name,APEX_INTEGER msgSize, PORT_DIRECTION_TYPE dir):
       portName(name), maxMessageSize(msgSize), direction(dir) {}
 
-    name_t getPortName();
+    const name_t& getPortName() const;
 
-    APEX_INTEGER getMaxMessageSize();
+    const APEX_INTEGER& getMaxMessageSize() const;
 
-    PORT_DIRECTION_TYPE getDirection();
+    const PORT_DIRECTION_TYPE& getDirection() const;
 };
 
 #endif

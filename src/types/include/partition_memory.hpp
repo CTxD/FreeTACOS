@@ -7,19 +7,22 @@
 class PartitionMemory
 {
   private:
+    MemoryRegion memoryRegion[100];
+    monotonic_buffer_resource memoryRegionSrc{std::data(memoryRegion),
+                                              std::size(memoryRegion)};
     identifier_t partitionIdentifier;     /* required */
     std::optional<name_t> partitionName;  /* optional */
-    vector<MemoryRegion> memoryRegion;    /* required */
+    vector<MemoryRegion> memoryRegions;    /* required */
 
   public:
     PartitionMemory(identifier_t id, name_t name, std::initializer_list<MemoryRegion> memory):
-      partitionIdentifier(id), partitionName(name), memoryRegion(memory) {}
+      partitionIdentifier(id), partitionName(name), memoryRegions(memory, &memoryRegionSrc) {}
 
-    identifier_t getPartitionIdentifier();
+    const identifier_t& getPartitionIdentifier() const;
 
-    name_t getPartitionName();
+    const std::optional<name_t>& getPartitionName() const;
 
-    vector<MemoryRegion> getMemoryRegion();
+    const vector<MemoryRegion>& getMemoryRegion() const;
 };
 
 #endif

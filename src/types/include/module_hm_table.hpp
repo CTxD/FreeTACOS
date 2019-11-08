@@ -12,26 +12,24 @@ class ModuleHMTable
                                                     std::size(moduleErrorAction)};
       identifier_t stateIdentifier;       /* required */
       std::string description;            /* required */
-      vector<ModuleErrorAction> action;   /* required */
+      vector<ModuleErrorAction> actions;   /* required */
 
     public:
       ModuleHMTable() {};
 
       ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions):
-        stateIdentifier(state), description(descr), action(actions, &moduleErrorActionSrc) {}
+        stateIdentifier(state), description(descr), actions(actions, &moduleErrorActionSrc) {}
 
-      ModuleHMTable(const ModuleHMTable&) {}
+      ModuleHMTable(const ModuleHMTable& rhs):
+        stateIdentifier(rhs.stateIdentifier), description(rhs.description), actions(rhs.actions) {}
 
-      ModuleHMTable& operator=(const ModuleHMTable&)
-      {
-        return *this;
-      }
+      ModuleHMTable& operator=(const ModuleHMTable&);
 
-      identifier_t getStateIdentifier();
+      const identifier_t& getStateIdentifier() const;
 
-      std::string getDescription();
+      const std::string& getDescription() const;
 
-      vector<ModuleErrorAction> getActions();
+      const vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

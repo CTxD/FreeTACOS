@@ -20,18 +20,16 @@ class PartitionHMTable
     PartitionHMTable(name_t name, name_t multiPartitionHM, std::initializer_list<PartitionErrorAction> actions):
       tableName(name), multiPartitionTableName(multiPartitionHM), actions(actions, &partitionErrorActionSrc) {}
 
-    PartitionHMTable(const PartitionHMTable&) {}
+    PartitionHMTable(const PartitionHMTable& rhs):
+      tableName(rhs.tableName), multiPartitionTableName(rhs.multiPartitionTableName), actions(rhs.actions) {}
 
-    PartitionHMTable& operator=(const PartitionHMTable&)
-    {
-      return *this;
-    }
+    PartitionHMTable& operator=(const PartitionHMTable&);
 
-    name_t getTableName();
+    const name_t& getTableName() const;
 
-    name_t getMultiPartitionTableName();
+    const name_t& getMultiPartitionTableName() const;
 
-    vector<PartitionErrorAction> getActions();
+    const vector<PartitionErrorAction>& getActions() const;
 };
 
 #endif

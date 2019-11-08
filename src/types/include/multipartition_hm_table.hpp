@@ -11,23 +11,22 @@ class MultiPartitionHMTable
     monotonic_buffer_resource multiPartitionErrorActionSrc{std::data(multiPartitionErrorAction),
                                                            std::size(multiPartitionErrorAction)};
     name_t tableName;                                   /* required */
-    vector<MultiPartitionErrorAction> errorAction;      /* required */
+    vector<MultiPartitionErrorAction> errorActions;      /* required */
 
   public:
     MultiPartitionHMTable() {}
 
     MultiPartitionHMTable(name_t name, std::initializer_list<MultiPartitionErrorAction> actions):
-      tableName(name), errorAction(actions, &multiPartitionErrorActionSrc) {}
+      tableName(name), errorActions(actions, &multiPartitionErrorActionSrc) {}
 
-    MultiPartitionHMTable(const MultiPartitionHMTable&) {}
+    MultiPartitionHMTable(const MultiPartitionHMTable& rhs):
+      tableName(rhs.tableName), errorActions(rhs.errorActions) {}
 
-    MultiPartitionHMTable& operator=(const MultiPartitionHMTable&) {
-      return *this;
-    }
+    MultiPartitionHMTable& operator=(const MultiPartitionHMTable&);
 
-    name_t getTableName();
+    const name_t& getTableName() const;
 
-    vector<MultiPartitionErrorAction> getActions();
+    const vector<MultiPartitionErrorAction>& getActions() const;
 };
 
 #endif

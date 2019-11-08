@@ -28,20 +28,20 @@ class MemoryRegion
 
   public:
     MemoryRegion() {};
-    
+
     MemoryRegion(name_t name, memory_region_t type, decOrHex_t size,
                 memory_access_t accessRights, decOrHex_t address):
       regionName(name), type(type), size(size), accessRights(accessRights), address(address) {}
 
-    name_t getRegionName();
+    const name_t& getRegionName() const;
 
-    memory_region_t getType();
+    const memory_region_t& getType() const;
 
-    decOrHex_t getSize();
+    const decOrHex_t& getSize() const;
 
-    memory_access_t getAccessRights();
+    const memory_access_t& getAccessRights() const;
 
-    decOrHex_t getAddress();
+    const std::optional<decOrHex_t>& getAddress() const;
 };
 
 #endif

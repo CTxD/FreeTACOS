@@ -15,11 +15,11 @@ class PseudoPartition
     PseudoPartition(name_t name, decOrHex_t address, name_t procedure):
       name(name), physicalAddress(address), procedure(procedure) {}
 
-    name_t getName();
+    const std::optional<name_t>& getName() const;
 
-    decOrHex_t getPhysicalAddress();
+    const std::optional<decOrHex_t>& getPhysicalAddress() const;
 
-    name_t getProcedure();
+    const std::optional<name_t>& getProcedure() const;
 };
 
 #endif

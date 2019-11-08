@@ -14,7 +14,7 @@ class SamplingPort : Port
     SamplingPort(name_t name,APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, float refreshRate):
       Port(name, msgSize, direction), refreshRate(refreshRate) {}
 
-    float getRefreshRate();
+    const std::optional<float>& getRefreshRate() const;
 };
 
 #endif

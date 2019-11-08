@@ -15,17 +15,17 @@ class ErrorLevel
 
     public:
         ErrorLevel() {};
-        
+
         ErrorLevel(identifier_t id, name_t description, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code):
           errorIdentifier(id), description(description), error_level(level), error_code(code) {}
 
-        identifier_t getErrorIdentifier();
+        const identifier_t& getErrorIdentifier() const;
 
-        name_t getDescription();
+        const std::optional<name_t>& getDescription() const;
 
-        ERROR_LEVEL_TYPE getErrorLevel();
+        const ERROR_LEVEL_TYPE& getErrorLevel() const;
 
-        ERROR_CODE_TYPE getErrorCode();
+        const std::optional<ERROR_CODE_TYPE>& getErrorCode() const;
 };
 
 #endif

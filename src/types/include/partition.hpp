@@ -41,7 +41,10 @@ class Partition
       OPERATING_MODE_TYPE mode;
       PARTITION_STATUS_TYPE status;
 
-      vector<Process> process;
+      vector<Process> processes;
+      CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
+      bool systemPartition = false;                             /* required */
+      name_t entryPoint;                                        /* required */
 
   public:
       Partition() {};
@@ -52,57 +55,58 @@ class Partition
                 std::initializer_list<QueuingPort> queuing,
                 std::initializer_list<SamplingPort> sampling,
                 std::initializer_list<Process> proc):
-                partitionIdentifier(id), affinity(affinity), partitionName(name),
-                duration(duration), period(period), memoryRegions(mem, &memoryRegionSrc),
-                queuePorts(queuing, &queuingPortSrc), samplePorts(sampling, &samplingPortSrc),
-                process(proc, &processSrc) {}
+        partitionIdentifier(id), affinity(affinity), partitionName(name),
+        duration(duration), period(period), memoryRegions(mem, &memoryRegionSrc),
+        queuePorts(queuing, &queuingPortSrc), samplePorts(sampling, &samplingPortSrc),
+        processes(proc, &processSrc) {}
 
-      Partition& operator=(const Partition&)
-      {
-        return *this;
-      }
+      Partition(const Partition& rhs):
+        partitionIdentifier(rhs.partitionIdentifier), affinity(rhs.affinity),
+        partitionName(rhs.partitionName), duration(rhs.duration), period(rhs.period),
+        memoryRegions(rhs.memoryRegions), queuePorts(rhs.queuePorts), samplePorts(rhs.samplePorts),
+        processes(rhs.processes) {}
 
-      Partition(const Partition&) {}
+      Partition& operator=(const Partition& rhs);
 
-      identifier_t getPartitionIdentifier();
+      const identifier_t& getPartitionIdentifier() const;
 
-      PROCESSOR_CORE_ID_TYPE getAffinity();
+      const PROCESSOR_CORE_ID_TYPE& getAffinity() const;
 
-      name_t getPartitionName();
+      const name_t& getPartitionName() const;
 
-      decOrHex_t getDuration();
+      const decOrHex_t& getDuration() const;
 
-      decOrHex_t getPeriod();
+      const decOrHex_t& getPeriod() const;
 
-      vector<MemoryRegion> getMemoryRegions();
+      const vector<MemoryRegion>& getMemoryRegions() const;
 
-      vector<QueuingPort> getQueuePorts();
+      const vector<QueuingPort>& getQueuePorts() const;
 
-      vector<SamplingPort> getSamplePorts();
+      const vector<SamplingPort>& getSamplePorts() const;
 
-      void setMode(OPERATING_MODE_TYPE&& mode);
+      void setMode(OPERATING_MODE_TYPE mode);
 
-      OPERATING_MODE_TYPE getMode();
+      const OPERATING_MODE_TYPE& getMode() const;
 
-      void setStatus(PARTITION_STATUS_TYPE&& status);
+      void setStatus(PARTITION_STATUS_TYPE status);
 
-      PARTITION_STATUS_TYPE getStatus();
+      const PARTITION_STATUS_TYPE& getStatus() const;
 
-      void addProcess(Process&& proc);
+      void addProcess(Process proc);
 
-      vector<Process> getProcesses();
+      const vector<Process>& getProcesses() const;
 
       void setCriticality(CRITICALITY_TYPE criticality);
 
-      CRITICALITY_TYPE getCriticality();
+      const CRITICALITY_TYPE& getCriticality() const;
 
-      void setSystemPartition();
+      void setSystemPartition(bool systemPart);
 
-      bool getSystemPartition();
+      const bool& getSystemPartition() const;
 
-      void setEntryPoint();
+      void setEntryPoint(name_t entry);
 
-      name_t getEntryPoint();
+      const name_t& getEntryPoint() const;
 };
 
 #endif
