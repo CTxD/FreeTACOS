@@ -17,8 +17,6 @@
 #ifndef APEX_TYPES
 #define APEX_TYPES
 
-#include <string>
-
 /*---------------------------*/
 /* Domain limits             */
 /*---------------------------*/
@@ -45,6 +43,12 @@
 #define SYSTEM_LIMIT_NUMBER_OF_SEMAPHORES 256 /* partition scope */
 
 #define SYSTEM_LIMIT_NUMBER_OF_EVENTS 256 /* partition scope */
+
+#define INFINITE_TIME_VALUE -1
+
+#define CORE_AFFINITY_NO_PREFERENCE -1
+
+const int MAX_NAME_LENGTH = 30;
 
 /*----------------------*/
 /* Base APEX types      */
@@ -77,9 +81,11 @@ typedef
         TIMED_OUT       = 6  /* time-out tied up with request has expired */
 } RETURN_CODE_TYPE;
 
-#define MAX_NAME_LENGTH 30
 
-typedef std::string NAME_TYPE;
+typedef struct
+{
+  char x[MAX_NAME_LENGTH];
+} NAME_TYPE;
 
 typedef void (* SYSTEM_ADDRESS_TYPE);
 
@@ -96,10 +102,7 @@ typedef enum { FIFO = 0, PRIORITY = 1 } QUEUING_DISCIPLINE_TYPE;
 /* 64-bit signed integer with a 1 nanosecond LSB */
 typedef APEX_LONG_INTEGER SYSTEM_TIME_TYPE;
 
-#define INFINITE_TIME_VALUE -1
-
 typedef APEX_INTEGER PROCESSOR_CORE_ID_TYPE;
 
-#define CORE_AFFINITY_NO_PREFERENCE -1
 
 #endif

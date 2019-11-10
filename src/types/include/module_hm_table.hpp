@@ -11,23 +11,29 @@ class ModuleHMTable
       monotonic_buffer_resource moduleErrorActionSrc{std::data(moduleErrorAction),
                                                     std::size(moduleErrorAction)};
       identifier_t stateIdentifier;       /* required */
-      std::string description;            /* required */
-      vector<ModuleErrorAction> actions;   /* required */
+      description_t description;          /* required */
+      vector<ModuleErrorAction> actions;  /* required */
 
     public:
       ModuleHMTable() {};
 
       ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions):
-        stateIdentifier(state), description(descr), actions(actions, &moduleErrorActionSrc) {}
+        stateIdentifier(state), actions(actions, &moduleErrorActionSrc)
+        {
+          strcpy(description, descr.c_str());
+        }
 
       ModuleHMTable(const ModuleHMTable& rhs):
-        stateIdentifier(rhs.stateIdentifier), description(rhs.description), actions(rhs.actions) {}
+        stateIdentifier(rhs.stateIdentifier), actions(rhs.actions)
+        {
+          strcpy(description, rhs.description);
+        }
 
       ModuleHMTable& operator=(const ModuleHMTable&);
 
       const identifier_t& getStateIdentifier() const;
 
-      const std::string& getDescription() const;
+      const description_t& getDescription() const;
 
       const vector<ModuleErrorAction>& getActions() const;
 };

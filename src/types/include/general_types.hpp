@@ -29,6 +29,8 @@ const APEX_INTEGER MAX_NUMBER_MODULE_HM_TABLE = 50;
 
 const unsigned long GIGABYTE = 1024 * 1024 * 1024;
 
+const APEX_INTEGER MAX_DESCRIPTION_LENGTH = 150;
+
 typedef APEX_UNSIGNED identifier_t;
 
 typedef APEX_INTEGER decOrHex_t;
@@ -37,5 +39,7 @@ typedef struct
 {
   NAME_TYPE x;
 } name_t;
+
+typedef char description_t[MAX_DESCRIPTION_LENGTH];
 
 #endif

@@ -9,7 +9,7 @@ class Port
 {
   private:
     name_t portName;                /* required */
-    APEX_INTEGER maxMessageSize;             /* required */
+    APEX_INTEGER maxMessageSize;    /* required */
     PORT_DIRECTION_TYPE direction;  /* required */
 
   public:

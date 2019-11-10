@@ -10,10 +10,10 @@ class Channel
 		PortMapping portMapping[100];
     	monotonic_buffer_resource portMappingSrc{std::data(portMapping),
                                                std::size(portMapping)};
-		identifier_t channelIdentifier;					/* required */
-		std::optional<name_t> channelName;			/* optional */
+		identifier_t channelIdentifier;			/* required */
+		std::optional<name_t> channelName;	/* optional */
 		PortMapping source;									/* required */
-		vector<PortMapping> destinations; 		/* required */
+		vector<PortMapping> destinations; 	/* required */
 
 	public:
 		Channel() {};
