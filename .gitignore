@@ -3,7 +3,6 @@ aarch/rasp4
 deploy
 
 .vscode
-.clang-format
 
 # Circle stuff
 *.img
