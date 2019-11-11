@@ -1,7 +1,7 @@
 #ifndef PARTITION_HM_TABLE
 #define PARTITION_HM_TABLE
 
-#include "multipartition_hm_table.h"
+#include "partition_error_action.hpp"
 
 
 class PartitionHMTable
@@ -15,9 +15,21 @@ class PartitionHMTable
     vector<PartitionErrorAction> actions;       /* required */
 
   public:
-    PartitionHMTable() {};
+    PartitionHMTable() {}
+
     PartitionHMTable(name_t name, name_t multiPartitionHM, std::initializer_list<PartitionErrorAction> actions):
       tableName(name), multiPartitionTableName(multiPartitionHM), actions(actions, &partitionErrorActionSrc) {}
+
+    PartitionHMTable(const PartitionHMTable& rhs):
+      tableName(rhs.tableName), multiPartitionTableName(rhs.multiPartitionTableName), actions(rhs.actions) {}
+
+    PartitionHMTable& operator=(const PartitionHMTable&);
+
+    const name_t& getTableName() const;
+
+    const name_t& getMultiPartitionTableName() const;
+
+    const vector<PartitionErrorAction>& getActions() const;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef MEMORY_REQUIREMENTS
 #define MEMORY_REQUIREMENTS
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 
 enum memory_region_t
@@ -28,10 +28,20 @@ class MemoryRegion
 
   public:
     MemoryRegion() {};
+
     MemoryRegion(name_t name, memory_region_t type, decOrHex_t size,
                 memory_access_t accessRights, decOrHex_t address):
       regionName(name), type(type), size(size), accessRights(accessRights), address(address) {}
 
+    const name_t& getRegionName() const;
+
+    const memory_region_t& getType() const;
+
+    const decOrHex_t& getSize() const;
+
+    const memory_access_t& getAccessRights() const;
+
+    const std::optional<decOrHex_t>& getAddress() const;
 };
 
 #endif
