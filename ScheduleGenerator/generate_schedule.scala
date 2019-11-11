@@ -1,67 +1,26 @@
 import scala.io.Source;
 import scala.xml._;
-import java.io.FileNotFoundException;
-import java.io.{File, PrintWriter}
 import Validator.{Validator, ValidationException}
 
 object ScheduleGenerator {
   var level: Int = 0;
-  var validator: Validator = new Validator();
 
-  def main(args: Array[String]): Unit = {
-    var configPrint = false;
-    var configName = "";
+  // Instanciate a validator (Must be initialised and therefore will be overridden)
+  var validator : Validator = new Validator();
 
-    // Match input parameter attributes
-    for (arg <- args; id <- 1 to args.length) arg match {
-      case "-p" | "--print" => configPrint = true
-      case "--filename" | "-f" => configName = args(id - 1);
-      case _ => {}
-    }
+  // Starting the generation
+  def startGenerator(validator : Validator, lines : Seq[Node]) : String = {
+    // Mutable validator
+    this.validator = validator;
 
-    try {
-      println(Console.YELLOW + "Fetching xml file");
-      var lines = this.xmlLinesToList(configName);
+    return this.generate(lines);
+  }
 
-      println(Console.YELLOW + "Generating code");
-      val generatedString = generate(lines);
-
-      // validator will throw an exception if the check is unsuccessful
-      println("Validating schedule configuration");
-
-      val schedule = this.validator.checkScheduleValidity();
-      println(Console.GREEN + "Validation succeeded")
-
-      if (configPrint) {
-        // Print schedule here
-        println(Console.BLUE + "Valid Schedule configuration:");
-        println(schedule);
-      }
-
-      println(Console.YELLOW + "Writing to file");
-      val writer = new PrintWriter(new File("../src/kernel/config.cpp"));
-      writer.write(generatedString);
-      writer.close();
-
-      println(Console.GREEN + "Success");
-    } catch {
-      case err: NoClassDefFoundError => {
-        println(Console.RED + "Class Not Found Exception");
-      }
-      case err: FileNotFoundException => {
-        println(
-          Console.RED + "You need to specify input file with --filename {filename} or -f {filename}");
-      }
-      case err: Exception => {
-        println(f"Generation error: ${err.getMessage()}");
-      }
-      case err: ValidationException => {
-        println(Console.RED + f"Validation error: ${err.getMessage()}");
-      }
-      case _: Throwable => {
-        println(Console.RED + "Some unexpected error happened");
-      }
-    }
+  // Iterate through all nodes - depth first
+  def generate(lines: Seq[Node]): String = lines match {
+    case x :: xs if x.child == Nil => generate(xs)
+    case x :: xs => this.handleNodeLabels(x) + generate(xs)
+    case _ => ""
   }
 
   // Responsible of emitting the string, such that indentation is correct
@@ -74,13 +33,6 @@ object ScheduleGenerator {
 
     // Return the string with indentation
     return indentString + snippet;
-  }
-
-  // Iterate through all nodes - depth first
-  def generate(lines: Seq[Node]): String = lines match {
-    case x :: xs if x.child == Nil => generate(xs)
-    case x :: xs => this.handleNodeLabels(x) + generate(xs)
-    case _ => ""
   }
 
   // Handle the node labels, such that code are generated based on the labels of each node (The XML tag)
@@ -842,11 +794,6 @@ object ScheduleGenerator {
     case "READ_ONLY" => "memory_access_t::READ_ONLY"
     case "READ_WRITE" => "memory_access_t::READ_WRITE"
     case _ => throw new Exception(f"$access is not supported for MemoryAccess")
-  }
-
-  // Function for reading xml file
-  def xmlLinesToList(filename: String): List[Node] = {
-    return XML.loadFile(filename).toList;
   }
 
   /**
