@@ -22,29 +22,39 @@ object PartitionScheduleGenerator {
   }
 
   def initCodeGeneration(scheduleTable : CoreIterable) : String = {
-    var emitString = this.emit("PartitionSchedule partitionSchedule = {\n");
+    var emitString = this.emit("PartitionSchedule partitionSchedule = \n{\n");
 
+    this.level += 1;
     emitString = emitString +
-      this.emit(this.traverseCores(scheduleTable)) +
-      this.emit("};", -1);
+      this.emit(this.traverseCores(scheduleTable), 1);
 
-    return emitString;
+    return emitString + this.emit("};", -1);
   }
 
   // Generate code for each core and further traverse
   def traverseCores(cores : CoreIterable) : String = cores.toList match {
     // If there are more cores to traverse
     case x::xs if xs != Nil => {
-        this.emit("{ // Core\n", 1) +
-        this.emit(traversePartitions(x)) +
-        this.emit("},\n", -1) +
-        this.traverseCores(xs.toArray);
+        var emitString = this.emit("{ // Core\n");
+        this.level += 1;
+
+        emitString = emitString +
+          this.emit(traversePartitions(x));
+
+        emitString = emitString +
+          this.emit("},\n", -1);
+
+        return emitString + this.traverseCores(xs.toArray);
     }
     // If we are at the last core
     case x::xs if xs == Nil => {
-      this.emit("{ // Core\n", 1) +
-      this.emit(traversePartitions(x), 1) +
-      this.emit("}\n", -1);
+      var emitString = this.emit("{ // Core\n");
+      this.level += 1;
+
+      emitString = emitString +
+        this.emit(traversePartitions(x));
+
+      return emitString + this.emit("}\n", -1);
     }
     // Something went wrong
     case _ => throw new PartitionScheduleGeneratorException("Something went wrong generating code for the cores");
@@ -81,7 +91,7 @@ object PartitionScheduleGenerator {
     }
 
     // Return indented string
-    return " " * (this.level + 1) + string;
+    return " " * this.level + string;
   }
 
   class PartitionScheduleGeneratorException(message: String) extends Exception(message);

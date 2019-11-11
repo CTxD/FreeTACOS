@@ -48,7 +48,7 @@ object Main {
 
       println(Console.GREEN + "ArincModule successfully written");
 
-      val scheduleWriter = new PrintWriter(new File("../src/kernel/partition_schedule.cpp"));
+      val scheduleWriter = new PrintWriter(new File("../src/kernel/schedule.cpp"));
       scheduleWriter.write(generatedSchedule);
       scheduleWriter.close();
 
