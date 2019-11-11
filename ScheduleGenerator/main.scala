@@ -1,5 +1,5 @@
 import Validator.{Validator, ValidationException};
-import ScheduleGenerator.startGenerator;
+import ModuleGenerator.startGenerator;
 import java.io.FileNotFoundException;
 import java.io.{File, PrintWriter};
 import scala.xml._;

@@ -2,7 +2,7 @@ import scala.io.Source;
 import scala.xml._;
 import Validator.{Validator, ValidationException}
 
-object ScheduleGenerator {
+object ModuleGenerator {
   var level: Int = 0;
 
   // Instanciate a validator (Must be initialised and therefore will be overridden)
