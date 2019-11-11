@@ -3,6 +3,7 @@ import ModuleGenerator.startGenerator;
 import java.io.FileNotFoundException;
 import java.io.{File, PrintWriter};
 import scala.xml._;
+import PartitionScheduleGenerator.generateSchedule;
 
 object Main {
   var validator: Validator = new Validator();
@@ -32,15 +33,26 @@ object Main {
       println(Console.GREEN + "Validation succeeded")
 
       if (configPrint) {
-        // Print schedule here
+        // Print the valid schedule if -p flag is passed
         println(Console.BLUE + "Valid Schedule configuration:");
-        println(schedule);
+        println(schedule._1);
       }
 
+      // Start the schedule generator based on the valid schedule configuration
+      var generatedSchedule : String = generateSchedule(schedule._2, validator.entities);
+
       println(Console.YELLOW + "Writing to file");
-      val writer = new PrintWriter(new File("../src/kernel/config.cpp"));
-      writer.write(generatedString);
-      writer.close();
+      val moduleWriter = new PrintWriter(new File("../src/kernel/config.cpp"));
+      moduleWriter.write(generatedString);
+      moduleWriter.close();
+
+      println(Console.GREEN + "ArincModule successfully written");
+
+      val scheduleWriter = new PrintWriter(new File("../src/kernel/partition_schedule.cpp"));
+      scheduleWriter.write(generatedSchedule);
+      scheduleWriter.close();
+
+      println("PartitionSchedule successfully written");
 
       println(Console.GREEN + "Success");
     } catch {

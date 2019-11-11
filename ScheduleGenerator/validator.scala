@@ -4,8 +4,9 @@ object Validator {
   type EntityIterable = Array[Array[Integer]];
 
   class Validator {
-    var partitions: List[PartitionTime] = List();
+    var partitions : List[PartitionTime] = List();
     var schedules: List[ScheduleTime] = List();
+    var entities : List[TimeEntity] = List();
 
     // Placeholder object for building partitions
     var namePlaceholder: String = "";
@@ -14,7 +15,7 @@ object Validator {
     val TOTAL_CORES: Integer = 4;
     val TABLE_HEIGHT: Integer = TOTAL_CORES + 1;
 
-    def checkScheduleValidity(): String = {
+    def checkScheduleValidity(): (String, CoreIterable) = {
       // Check that there are as many schedule configurations as partition configurations
       if (this.partitions.length != this.schedules.length)
         throw new ValidationException(
@@ -28,7 +29,7 @@ object Validator {
     }
 
     // Done using inspiration from this lecture: https://www.moodle.aau.dk/pluginfile.php/1163980/mod_resource/content/10/Lecture-4.pdf (Overlapping activity schedule problem)
-    def createTable(entities: List[TimeEntity]): String = {
+    def createTable(entities: List[TimeEntity]): (String, CoreIterable) = {
       // Initialise matrix of the matrix configuration and core list table (allocate space for all possible schedules)
       // This initialises a table of Affinity[Entities[Values]]
       var scheduleTable: CoreIterable = Array(
@@ -47,7 +48,7 @@ object Validator {
         scheduleTable = this.generateAndCheckSchedule(ent, scheduleTable);
       }
 
-      return printScheduleConfigation(entities, scheduleTable);
+      return (printScheduleConfigation(entities, scheduleTable), scheduleTable);
     }
 
     // TODO: Maybe use stringbuilder instead of string append (+) to reduce execution time. This might not be a problem.
@@ -221,6 +222,8 @@ object Validator {
                                   sched.head.offset,
                                   part.affinity) :: entities;
       }
+
+      this.entities = entities;
 
       return entities;
     }

@@ -87,6 +87,7 @@ dkms.conf
 # Ignore generated schedule files
 gen.cpp
 src/kernel/config.cpp
+src/kernel/partition_schedule.cpp
 dist/*
 target/
 lib_managed/
