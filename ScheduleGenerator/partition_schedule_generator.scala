@@ -6,6 +6,7 @@ object PartitionScheduleGenerator {
 
   // Initialise indentation level value
   var level : Integer = 0;
+  var INDENTATION_SPACE : Integer = 2;
 
   // Property for mapping id's to nameIdentifierRef
   var entities : List[TimeEntity] = List();
@@ -26,7 +27,7 @@ object PartitionScheduleGenerator {
 
     this.level += 1;
     emitString = emitString +
-      this.emit(this.traverseCores(scheduleTable), 1);
+      this.traverseCores(scheduleTable);
 
     return emitString + this.emit("};", -1);
   }
@@ -39,7 +40,7 @@ object PartitionScheduleGenerator {
         this.level += 1;
 
         emitString = emitString +
-          this.emit(traversePartitions(x));
+          this.traversePartitions(x);
 
         emitString = emitString +
           this.emit("},\n", -1);
@@ -52,7 +53,7 @@ object PartitionScheduleGenerator {
       this.level += 1;
 
       emitString = emitString +
-        this.emit(traversePartitions(x));
+        this.traversePartitions(x);
 
       return emitString + this.emit("}\n", -1);
     }
@@ -91,7 +92,7 @@ object PartitionScheduleGenerator {
     }
 
     // Return indented string
-    return " " * this.level + string;
+    return " " * (this.INDENTATION_SPACE * this.level) + string;
   }
 
   class PartitionScheduleGeneratorException(message: String) extends Exception(message);
