@@ -97,22 +97,3 @@ object PartitionScheduleGenerator {
 
   class PartitionScheduleGeneratorException(message: String) extends Exception(message);
 }
-
-/* Sample implementation
-partitionSchedule =
-  { // Cores Array
-    { // Core 0
-      "FlighController", // PartitionNameRef
-      "IHVMU" // PartitionNameRef
-    },
-    {
-      "CommunicationController"
-    },
-    {
-      "SnackDispensorController"
-    },
-    {
-
-    }
-  };
-*/
