@@ -23,11 +23,16 @@ object PartitionScheduleGenerator {
     return scheduleCpp;
   }
 
+  // Initial code generation function
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
+    // Emit includes first
     var emitString =
       this.emit(this.mapStringToInclude("core_schedule")) +
       "\n\n";
-    // Emit includes first
+
+    // Emit namespace uses
+    emitString = emitString +
+      this.emit(this.mapStringToUsingNameSpace("core_schedule") + "\n\n");
 
     emitString = emitString + this.emit("CoreSchedule = \n{\n");
 
@@ -111,6 +116,8 @@ object PartitionScheduleGenerator {
     this.emit(f"${partition.period}, // Period \n") +
     this.emit(f"${partition.offset} // Offset \n");
   }
+
+  def mapStringToUsingNameSpace(string : String) : String = "using namespace " + string + ";";
 
   def mapStringToInclude(string : String) : String = "#include <" + string + ">";
 
