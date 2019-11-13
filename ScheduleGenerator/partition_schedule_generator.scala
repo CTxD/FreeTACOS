@@ -24,7 +24,12 @@ object PartitionScheduleGenerator {
   }
 
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
-    var emitString = this.emit("CoreSchedule = \n{\n");
+    var emitString =
+      this.emit(this.mapStringToInclude("core_schedule")) +
+      "\n\n";
+    // Emit includes first
+
+    emitString = emitString + this.emit("CoreSchedule = \n{\n");
 
     this.level += 1;
     emitString = emitString +
@@ -84,6 +89,8 @@ object PartitionScheduleGenerator {
         throw new PartitionScheduleGeneratorException(
           "Something went wrong generating code for the partitions");
   }
+
+  def mapStringToInclude(string : String) : String = "#include <" + string + ">";
 
   def mapStringToNameT(string : String) : String = "{" + '"' + string + '"' + "}";
 
