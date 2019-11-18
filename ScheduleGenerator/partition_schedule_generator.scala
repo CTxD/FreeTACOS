@@ -27,18 +27,18 @@ object PartitionScheduleGenerator {
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
     // Emit includes first
     var emitString =
-      this.emit(this.mapStringToInclude("core_schedule")) +
+      this.emit(this.mapStringToInclude("core_schedule.hpp")) +
       "\n\n";
 
-    // Emit namespace uses
-    emitString = emitString +
-      this.emit(this.mapStringToUsingNameSpace("core_schedule") + "\n\n");
+    emitString = emitString + this.emit("CoreSchedule coreSchedule = \n{ // CoreSchedule \n");
 
-    emitString = emitString + this.emit("CoreSchedule = \n{\n");
+    emitString = emitString +
+      this.emit("{\n", 1);
 
     this.level += 1;
     emitString = emitString +
-      this.traverseCores(scheduleTable);
+      this.traverseCores(scheduleTable) +
+      this.emit("}\n", -1);
 
     return emitString + this.emit("};", -1);
   }
@@ -110,16 +110,18 @@ object PartitionScheduleGenerator {
   }
 
   def emitPartitionValues(partition : TimeEntity) : String = {
+    this.emit("{ // PartitionValues \n", 1) +
     this.emit(f"${this.mapStringToNameT(partition.identifier)}, // PartitionNameRef \n", 1) +
     this.emit(f"${partition.affinity}, // affinity \n") +
     this.emit(f"${partition.duration}, // Duration \n") +
     this.emit(f"${partition.period}, // Period \n") +
-    this.emit(f"${partition.offset} // Offset \n");
+    this.emit(f"${partition.offset} // Offset \n") +
+    this.emit("}\n", -1);
   }
 
   def mapStringToUsingNameSpace(string : String) : String = "using namespace " + string + ";";
 
-  def mapStringToInclude(string : String) : String = "#include <" + string + ">";
+  def mapStringToInclude(string : String) : String = "#include " + '"' + string + '"';
 
   def mapStringToNameT(string : String) : String = "{" + '"' + string + '"' + "}";
 
