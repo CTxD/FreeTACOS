@@ -1,7 +1,7 @@
 version: "2"
 services:
   tacos:
-    image: ctxd/circle_raspi4:latest
+    image: ctxd/tacos:latest
     container_name: 'tacos'
     tty: true
     volumes:
