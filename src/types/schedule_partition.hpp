@@ -1,7 +1,7 @@
 #ifndef __SCHEDULE_PARTITION__
 #define __SCHEDULE_PARTITION__
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 class SchedulePartition {
 private:
