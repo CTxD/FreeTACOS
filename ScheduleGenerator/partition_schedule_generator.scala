@@ -116,6 +116,7 @@ object PartitionScheduleGenerator {
     this.emit(f"${partition.duration}, // Duration \n") +
     this.emit(f"${partition.period}, // Period \n") +
     this.emit(f"${partition.offset} // Offset \n") +
+    this.emit(f"${partition.perioperiodicProcessingStart} // PeriodicProcessingStart \n") +
     this.emit("}\n", -1);
   }
 
