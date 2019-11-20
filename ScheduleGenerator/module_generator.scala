@@ -204,18 +204,9 @@ object ModuleGenerator {
         this.checkAttributeValidity("PeriodicProcessingStart", child));
       val partitionNum = partitionTimeWindows.size;
 
-      // Emit initial Schedules code
-      var emitString: String = this.emit(f"{ // Schedules\n");
-      this.level += 1;
-
-      emitString = emitString + this.emit(f"{ // PartitionTimeWindows\n");
-      this.level += 1;
-      // Emit all the partitionWindows
-      emitString = emitString +
-        this.generatePartitionSchedules(partitionTimeWindows) +
-        this.emit("}\n", -1);
-
-      return emitString + this.emit("},\n", -1);
+      // Set the partitions for the validation step
+      this.generatePartitionSchedules(partitionTimeWindows);
+      return "";
     }
 
     // Schedules end ******
@@ -509,7 +500,8 @@ object ModuleGenerator {
         this.validator.appendSchedule(
           this.retrieveNodeAttributeString(x, "PartitionNameRef"),
           this.retrieveNodeAttributeString(x, "Duration").toInt,
-          this.retrieveNodeAttributeString(x, "Offset").toInt
+          this.retrieveNodeAttributeString(x, "Offset").toInt,
+          this.retrieveNodeAttributeString(x, "PeriodicProcessingStart").toBoolean
         );
       }
 
@@ -533,7 +525,8 @@ object ModuleGenerator {
         this.validator.appendSchedule(
           this.retrieveNodeAttributeString(x, "PartitionNameRef"),
           this.retrieveNodeAttributeString(x, "Duration").toInt,
-          this.retrieveNodeAttributeString(x, "Offset").toInt
+          this.retrieveNodeAttributeString(x, "Offset").toInt,
+          this.retrieveNodeAttributeString(x, "PeriodicProcessingStart").toBoolean
         );
       }
 

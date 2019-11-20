@@ -220,7 +220,8 @@ object Validator {
                                   part.period,
                                   part.duration,
                                   sched.head.offset,
-                                  part.affinity) :: entities;
+                                  part.affinity,
+                                  sched.head.periodicProcessingStart) :: entities;
       }
 
       this.entities = entities;
@@ -230,8 +231,9 @@ object Validator {
 
     def appendSchedule(identifier: String,
                        duration: Integer,
-                       offset: Integer) = {
-      this.schedules = new ScheduleTime(identifier, duration, offset) :: this.schedules;
+                       offset: Integer,
+                       periodicProcessingStart: Boolean) = {
+      this.schedules = new ScheduleTime(identifier, duration, offset, periodicProcessingStart) :: this.schedules;
     }
 
     def populatePartitionIdentifier(name: String, affinity: Integer) = {
@@ -256,14 +258,16 @@ object Validator {
                    val period: Integer,
                    val duration: Integer,
                    val offset: Integer,
-                   val affinity: Integer) {}
+                   val affinity: Integer,
+                   val periodicProcessingStart : Boolean) {}
   class PartitionTime(val identifier: String,
                       val period: Integer,
                       val duration: Integer,
                       val affinity: Integer) {}
   class ScheduleTime(val identifier: String,
                      val duration: Integer,
-                     val offset: Integer) {}
+                     val offset: Integer,
+                     val periodicProcessingStart: Boolean) {}
 
   class ValidationException(message: String) extends Exception(message);
 }
