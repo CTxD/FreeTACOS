@@ -1,6 +1,6 @@
 ROOT=		../../../
 
-OBJS= arch.o
+OBJS= arch.o 
 
 .PHONY: clean all
 

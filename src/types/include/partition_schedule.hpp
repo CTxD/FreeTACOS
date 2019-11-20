@@ -10,26 +10,18 @@ private:
     name_t partitionName;             /* required */
     decOrHex_t offset;                /* required */
 
-    decOrHex_t period;
-    PROCESSOR_CORE_ID_TYPE affinity;
+    identifier_t partitionIdentifier;
 
 public:
     PartitionSchedule()
     {
     }
 
-    PartitionSchedule(name_t partition,
-                      PROCESSOR_CORE_ID_TYPE affinity,
-                      decOrHex_t duration,
-                      decOrHex_t period,
-                      decOrHex_t offset,
-                      bool periodicStart)
-        : partitionName(partition),
-          affinity(affinity),
+    PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset)
+        : partitionPeriodStart(periodicStart),
           periodDurationSeconds(duration),
-          period(period),
-          offset(offset),
-          partitionPeriodStart(periodicStart)
+          partitionName(partition),
+          offset(offset)
     {
     }
 
@@ -41,9 +33,9 @@ public:
 
     const decOrHex_t& getOffset() const;
 
-    const decOrHex_t& getPeriod() const;
+    void setPartitionIdentifier(identifier_t id);
 
-    const PROCESSOR_CORE_ID_TYPE& getAffinity() const;
+    const identifier_t& getPartitionIdentifier() const;
 };
 
 #endif

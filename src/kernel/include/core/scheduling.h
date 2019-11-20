@@ -1,4 +1,0 @@
-#ifndef __FREETACOS_SCHEDULING__
-#define __FREETACOS_SCHEDULING__
-
-#endif

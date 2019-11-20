@@ -1,20 +1,13 @@
-#include <arch.h>
+#include "tacoskernel.h"
+#include <circle/startup.h>
 #include <errcode.h>
-// int main()
-// {
-//     /* code */
-//     return 0;
-// }
 
-ret_t boot(){
-    return init_arch();
+ret_t boot()
+{
+    CTacosKernel kernel;
+    if (!kernel.Initialize()) {
+        halt();
+        return (ret_t)EXIT_HALT;
+    }
+    return (ret_t)kernel.Run();
 }
-
-// void freeTACOS()
-// {
-//     freeTACOS_arch_init();
-//     freeTACOS_bsp_init();
-
-//     main();
-// }
-
