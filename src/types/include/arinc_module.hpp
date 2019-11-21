@@ -3,7 +3,6 @@
 
 #include "channel.hpp"
 #include "module_hm_table.hpp"
-#include "module_schedule.hpp"
 #include "multipartition_hm_table.hpp"
 #include "partition.hpp"
 #include "partition_hm_table.hpp"
@@ -75,8 +74,6 @@ public:
     const vector<PartitionHMTable>& getPartitionHmTable() const;
 
     const vector<Partition>& getPartitions() const;
-
-    const ModuleSchedule& getModuleSchedule() const;
 
     const vector<MultiPartitionHMTable>& getMultiPartitionHMTable() const;
 
