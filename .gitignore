@@ -88,6 +88,8 @@ dkms.conf
 # Ignore generated schedule files
 gen.cpp
 src/kernel/config.cpp
+src/kernel/core_schedule.cpp
+src/kernel/arinc_module.cpp
 dist/*
 target/
 lib_managed/
@@ -99,6 +101,7 @@ project/plugins/project/
 .lib/
 
 ### Scala ###
+.metals
 *.class
 *.log
 ScheduleGenerator/project
