@@ -34,7 +34,7 @@ object ModuleGenerator {
     return indentString + snippet;
   }
 
-  // Handle the node labels, such that code are generated based on the labels of each node (The XML tag)
+  // Handle the node labels, such that code is generated based on the labels of each node (The XML tag)
   def handleNodeLabels(node: Node): String = node.head.label match {
     // Initial setup
     case "MODULE" => {

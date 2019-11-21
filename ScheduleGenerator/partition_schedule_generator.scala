@@ -12,8 +12,10 @@ object PartitionScheduleGenerator {
   var entities: List[TimeEntity] = List();
 
   // Initial function for starting the schedule generation
-  def generateSchedule(scheduleTable: CoreIterable,
-                       entities: List[TimeEntity]): String = {
+  def generateSchedule(
+      scheduleTable: CoreIterable,
+      entities: List[TimeEntity]
+  ): String = {
     // Set properties
     this.entities = entities;
 
@@ -28,9 +30,11 @@ object PartitionScheduleGenerator {
     // Emit includes first
     var emitString =
       this.emit(this.mapStringToInclude("core_schedule.hpp")) +
-      "\n\n";
+        "\n\n";
 
-    emitString = emitString + this.emit("CoreSchedule coreSchedule = \n{ // CoreSchedule \n");
+    emitString = emitString + this.emit(
+      "CoreSchedule coreSchedule = \n{ // CoreSchedule \n"
+    );
 
     emitString = emitString +
       this.emit("{\n", 1);
@@ -71,18 +75,19 @@ object PartitionScheduleGenerator {
     // Something went wrong
     case _ =>
       throw new PartitionScheduleGeneratorException(
-        "Something went wrong generating code for the cores");
+        "Something went wrong generating code for the cores"
+      );
   }
 
   // Traverse and append partitions to cores
   def traversePartitions(partitions: EntityIterable): String =
     partitions.toList match {
-      // If the entitiy value is empty (just skip)
+      // If the entity value is empty (just skip)
       case x :: xs if x.head == null => ""
 
       // If there are more partitions to traverse
       case x :: xs if xs != Nil && xs.head.head != null => {
-        val partition : TimeEntity = this.mapIdToPartitionO(x.head);
+        val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
         var emitString = this.emit("{ // Partition \n") +
           this.emitPartitionValues(partition) +
@@ -91,10 +96,9 @@ object PartitionScheduleGenerator {
         return emitString + this.traversePartitions(xs.toArray);
       }
 
-
       // If we are at the last partition
       case x :: xs if xs == Nil || xs.head.head == null => {
-        val partition : TimeEntity = this.mapIdToPartitionO(x.head);
+        val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
         var emitString = this.emit("{ // Partition \n") +
           this.emitPartitionValues(partition) +
@@ -106,27 +110,35 @@ object PartitionScheduleGenerator {
       // Something went wrong
       case _ =>
         throw new PartitionScheduleGeneratorException(
-          "Something went wrong generating code for the partitions");
-  }
+          "Something went wrong generating code for the partitions"
+        );
+    }
 
-  def emitPartitionValues(partition : TimeEntity) : String = {
+  def emitPartitionValues(partition: TimeEntity): String = {
     this.emit("{ // PartitionValues \n", 1) +
-    this.emit(f"${partition.periodicProcessingStart}, // PeriodicProcessingStart \n", 1) +
-    this.emit(f"${partition.duration}, // Duration \n") +
-    this.emit(f"${this.mapStringToNameT(partition.identifier)}, // PartitionNameRef \n") +
-    this.emit(f"${partition.offset}, // Offset \n") +
-    this.emit(f"${partition.period}, // Period \n") +
-    this.emit(f"${partition.affinity} // Affinity \n") +
-    this.emit("}\n", -1);
+      this.emit(
+        f"${partition.periodicProcessingStart}, // PeriodicProcessingStart \n",
+        1
+      ) +
+      this.emit(f"${partition.duration}, // Duration \n") +
+      this.emit(
+        f"${this.mapStringToNameT(partition.identifier)}, // PartitionNameRef \n"
+      ) +
+      this.emit(f"${partition.offset}, // Offset \n") +
+      this.emit(f"${partition.period}, // Period \n") +
+      this.emit(f"${partition.affinity} // Affinity \n") +
+      this.emit("}\n", -1);
   }
 
-  def mapStringToUsingNameSpace(string : String) : String = "using namespace " + string + ";";
+  def mapStringToUsingNameSpace(string: String): String =
+    "using namespace " + string + ";";
 
-  def mapStringToInclude(string : String) : String = "#include " + '"' + string + '"';
+  def mapStringToInclude(string: String): String =
+    "#include " + '"' + string + '"';
 
-  def mapStringToNameT(string : String) : String = "{" + '"' + string + '"' + "}";
+  def mapStringToNameT(string: String): String = "{" + '"' + string + '"' + "}";
 
-  def mapIdToPartitionO(id : Integer) : TimeEntity =
+  def mapIdToPartitionO(id: Integer): TimeEntity =
     this.entities.filter(entity => entity.id == id).head;
 
   // Mapping function from Integer value to entity PartitionNameRef value
@@ -138,8 +150,8 @@ object PartitionScheduleGenerator {
     // Match indentation settings
     indent match {
       case (-1) => this.level -= 1;
-      case 1 => this.level += 1;
-      case _ => {}
+      case 1    => this.level += 1;
+      case _    => {}
     }
 
     // Return indented string
