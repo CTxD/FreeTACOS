@@ -6,21 +6,20 @@ object ModuleGenerator {
   var level: Int = 0;
 
   // Instanciate a validator (Must be initialised and therefore will be overridden)
-  var validator : Validator = new Validator();
+  var validator: Validator = new Validator();
 
   // Starting the generation
-  def startGenerator(validator : Validator, lines : Seq[Node]) : String = {
+  def startGenerator(validator: Validator, lines: Seq[Node]): String = {
     // Mutable validator
     this.validator = validator;
 
     return this.generate(lines);
   }
 
-  // Iterate through all nodes - depth first
   def generate(lines: Seq[Node]): String = lines match {
     case x :: xs if x.child == Nil => generate(xs)
-    case x :: xs => this.handleNodeLabels(x) + generate(xs)
-    case _ => ""
+    case x :: xs                   => this.handleNodeLabels(x) + generate(xs)
+    case _                         => ""
   }
 
   // Responsible of emitting the string, such that indentation is correct
@@ -41,48 +40,25 @@ object ModuleGenerator {
     case "MODULE" => {
       val includes: String = this.emitIncludes(
         List(
-          "arinc_module.h",
-          "channel.h",
-          "error_action.h",
-          "error_level.h",
-          "general_types.h",
-          "memory_requirements.h",
-          "module_hm_table.h",
-          "multipartition_hm_table.h",
-          "partition.h",
-          "partition_hm_table.h",
-          "partition_memory.h",
-          "port_mapping.h",
-          "port_type.h",
-          "process.h",
-          "pseudo_standard_partitions.h",
-          "schedule.h",
-          "system_state_entry.h",
-          "apex_blackboard.h",
-          "apex_queuing_port.h",
-          "apex_sampling_port.h",
-          "apex_buffer.h",
-          "apex_error.h",
-          "apex_event.h",
-          "apex_partition.h",
-          "apex_process.h",
-          "apex_queuing_port.h",
-          "apex_sampling_port.h",
-          "apex_semaphore.h",
-          "apex_time.h",
-          "apex_types.h"
-        ));
+          "arinc_module.hpp"
+        )
+      );
 
       var emitString: String = includes + this.emit(
-        "ArincModule arincModule {\n");
+        "ArincModule arincModule {\n"
+      );
 
       this.level += 1;
       emitString = emitString +
-        this.emitNodeAttributeOptional(node,
-                                       List(("Name", this.s),
-                                            ("ModuleVersion", this.k),
-                                            ("moduleId", this.k)),
-                                       true);
+        this.emitNodeAttributeOptional(
+          node,
+          List(
+            ("Name", this.s),
+            ("ModuleVersion", this.k),
+            ("moduleId", this.k)
+          ),
+          true
+        );
 
       return emitString +
         this.generate(node.child) +
@@ -113,10 +89,11 @@ object ModuleGenerator {
           // Append emit string with partition definition info
           partitionString = partitionString +
             this.emit("{ // Partition\n") +
-            this.emitNodeAttributesRequired(head,
-                                            List(("Identifier", this.k),
-                                                 ("Affinity", this.k)),
-                                            true) +
+            this.emitNodeAttributesRequired(
+              head,
+              List(("Identifier", this.k), ("Affinity", this.k)),
+              true
+            ) +
             this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         } else if (this.checkAttributeValidity("Period", region)) {
           // Populate the remaining attributes to the validator
@@ -127,13 +104,13 @@ object ModuleGenerator {
 
           // Append emit string with partition attributes
           partitionString = partitionString +
-            this.emitNodeAttributesRequiredNum(head,
-                                               List("Duration", "Period"));
+            this
+              .emitNodeAttributesRequiredNum(head, List("Duration", "Period"));
         }
       }
 
-      return partitionString + this.generate(node.child) + this.emit("},\n",
-                                                                     -1);
+      return partitionString + this.generate(node.child) +
+        this.emit("},\n", -1);
     }
     // Parse memory region attributes
     case "MemoryRegions" => {
@@ -159,12 +136,15 @@ object ModuleGenerator {
       var samplingPorts: Seq[Node] = Seq();
       for (child <- partitionPorts) {
         // Filter all queing ports
-        queuingPorts = child.child.filter(child =>
-          this.checkAttributeValidity("MaxNbMessage", child.head)) ++ queuingPorts;
+        queuingPorts = child.child.filter(
+          child => this.checkAttributeValidity("MaxNbMessage", child.head)
+        ) ++ queuingPorts;
         // Filter all sampling ports
-        samplingPorts = child.child.filter(child =>
-          this.checkAttributeValidity("MaxNbMessage", child.head) == false && this
-            .checkAttributeValidity("MaxMessageSize", child.head)) ++ samplingPorts;
+        samplingPorts = child.child.filter(
+          child =>
+            this.checkAttributeValidity("MaxNbMessage", child.head) == false && this
+              .checkAttributeValidity("MaxMessageSize", child.head)
+        ) ++ samplingPorts;
       }
 
       // Emit queuing ports
@@ -200,8 +180,9 @@ object ModuleGenerator {
     // Schedules begin ***
     case "Schedules" => {
       // Retrieve all Time Windows
-      var partitionTimeWindows = node.child.filter(child =>
-        this.checkAttributeValidity("PeriodicProcessingStart", child));
+      var partitionTimeWindows = node.child.filter(
+        child => this.checkAttributeValidity("PeriodicProcessingStart", child)
+      );
       val partitionNum = partitionTimeWindows.size;
 
       // Set the partitions for the validation step
@@ -251,8 +232,9 @@ object ModuleGenerator {
 
     case "SystemErrors" => {
       // Generate code for systemErrors w/ scoping and indentation
-      val errors = node.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifier", child));
+      val errors = node.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifier", child)
+      );
       var emitString = this.emit(f"{ // SystemError\n");
       this.level += 1;
 
@@ -268,16 +250,17 @@ object ModuleGenerator {
 
   def generatePartitionsHM(nodes: Seq[Node]): String = nodes match {
     case x :: xs if xs != Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
       var emitString = this.emit("{ // PartitionsHM\n");
 
       emitString = emitString +
         this.emitNodeAttributesRequired(
           x,
-          List(("TableName", this.s),
-               ("MultiPartitionHMTableNameRef", this.s)),
-          true) +
+          List(("TableName", this.s), ("MultiPartitionHMTableNameRef", this.s)),
+          true
+        ) +
         this.emit(f"{ // SystemError\n");
 
       this.level += 1;
@@ -285,20 +268,20 @@ object ModuleGenerator {
         this.generateErrorActions(errorActions, isPHM = true) +
         this.emit("}\n", -1);
 
-      return emitString + this.emit("},\n", -1) + this.generatePartitionsHM(
-        xs);
+      return emitString + this.emit("},\n", -1) + this.generatePartitionsHM(xs);
     }
     case x :: xs if xs == Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
       var emitString = this.emit("{ // PartitionHM\n");
 
       emitString = emitString +
         this.emitNodeAttributesRequired(
           x,
-          List(("TableName", this.s),
-               ("MultiPartitionHMTableNameRef", this.s)),
-          true) +
+          List(("TableName", this.s), ("MultiPartitionHMTableNameRef", this.s)),
+          true
+        ) +
         this.emit(f"{ // SystemError\n");
 
       this.level += 1;
@@ -312,8 +295,9 @@ object ModuleGenerator {
 
   def generateMultipartitions(nodes: Seq[Node]): String = nodes match {
     case x :: xs if xs != Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
       var emitString: String = this.emit("{\n");
 
       this.level += 1;
@@ -327,11 +311,13 @@ object ModuleGenerator {
         this.emit("}\n", -1);
 
       return emitString + this.emit("},\n", -1) + this.generateMultipartitions(
-        xs);
+        xs
+      );
     }
     case x :: xs if xs == Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
       var emitString: String = this.emit("{\n");
 
       this.level += 1;
@@ -351,14 +337,16 @@ object ModuleGenerator {
   def generateModuleHM(nodes: Seq[Node]): String = nodes match {
     // If there are more nodes in the sequence
     case x :: xs if xs != Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
 
       var emitString: String = this.emit("{ // ModuleHM\n") +
-        this.emitNodeAttributesRequired(x,
-                                        List(("StateIdentifier", this.k),
-                                             ("Description", this.s)),
-                                        true) +
+        this.emitNodeAttributesRequired(
+          x,
+          List(("StateIdentifier", this.k), ("Description", this.s)),
+          true
+        ) +
         this.emit(f"{ // ErrorAction\n");
       this.level += 1;
 
@@ -370,14 +358,16 @@ object ModuleGenerator {
     }
     // If this is the last node in the sequence
     case x :: xs if xs == Nil => {
-      val errorActions = x.child.filter(child =>
-        this.checkAttributeValidity("ErrorIdentifierRef", child));
+      val errorActions = x.child.filter(
+        child => this.checkAttributeValidity("ErrorIdentifierRef", child)
+      );
 
       var emitString: String = this.emit("{ // ModuleHM\n") +
-        this.emitNodeAttributesRequired(x,
-                                        List(("StateIdentifier", this.k),
-                                             ("Description", this.s)),
-                                        true) +
+        this.emitNodeAttributesRequired(
+          x,
+          List(("StateIdentifier", this.k), ("Description", this.s)),
+          true
+        ) +
         this.emit(f"{ // ErrorAction\n");
       this.level += 1;
 
@@ -389,10 +379,12 @@ object ModuleGenerator {
     }
   }
 
-  def generateErrorActions(nodes: Seq[Node],
-                           isHM: Boolean = false,
-                           isMP: Boolean = false,
-                           isPHM: Boolean = false): String = nodes match {
+  def generateErrorActions(
+      nodes: Seq[Node],
+      isHM: Boolean = false,
+      isMP: Boolean = false,
+      isPHM: Boolean = false
+  ): String = nodes match {
     case x :: xs if xs != Nil && isPHM => {
       this.emit("{ // ErrorAction\n") +
         this.emitNodeAttributesRequired(
@@ -427,9 +419,12 @@ object ModuleGenerator {
       this.emit("{ // ErrorAction\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("ErrorIdentifierRef", this.k),
-               ("ModuleRecoveryAction", this.mapModuleRecoveryAction)),
-          true) +
+          List(
+            ("ErrorIdentifierRef", this.k),
+            ("ModuleRecoveryAction", this.mapModuleRecoveryAction)
+          ),
+          true
+        ) +
         this.emit("},\n", -1) +
         this.generateErrorActions(xs, true);
     }
@@ -438,21 +433,28 @@ object ModuleGenerator {
       this.emit("{ // ErrorAction\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("ErrorIdentifierRef", this.k),
-               ("ModuleRecoveryAction", this.mapModuleRecoveryAction)),
-          true) +
+          List(
+            ("ErrorIdentifierRef", this.k),
+            ("ModuleRecoveryAction", this.mapModuleRecoveryAction)
+          ),
+          true
+        ) +
         this.emit("}\n", -1);
     }
     case x :: xs if xs != Nil && isMP => {
       this.emit("{ // ErrorAction\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("ErrorIdentifierRef", this.k),
-               ("ErrorLevel", this.mapErrorLevel)),
-          true) +
+          List(
+            ("ErrorIdentifierRef", this.k),
+            ("ErrorLevel", this.mapErrorLevel)
+          ),
+          true
+        ) +
         this.emitNodeAttributeOptional(
           x,
-          List(("ErrorAction", this.mapModuleRecoveryAction))) +
+          List(("ErrorAction", this.mapModuleRecoveryAction))
+        ) +
         this.emit("},\n", -1) +
         this.generateErrorActions(xs, isMP = true);
     }
@@ -460,12 +462,16 @@ object ModuleGenerator {
       this.emit("{ // ErrorAction\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("ErrorIdentifierRef", this.k),
-               ("ErrorLevel", this.mapErrorLevel)),
-          true) +
+          List(
+            ("ErrorIdentifierRef", this.k),
+            ("ErrorLevel", this.mapErrorLevel)
+          ),
+          true
+        ) +
         this.emitNodeAttributeOptional(
           x,
-          List(("ErrorAction", this.mapModuleRecoveryAction))) +
+          List(("ErrorAction", this.mapModuleRecoveryAction))
+        ) +
         this.emit("}\n", -1);
     }
   }
@@ -474,20 +480,22 @@ object ModuleGenerator {
     // If we have more nodes in the sequence
     case x :: xs if xs != Nil => {
       return this.emit("{\n") +
-        this.emitNodeAttributesRequired(x,
-                                        List(("ErrorIdentifier", this.k),
-                                             ("Description", this.s)),
-                                        true) +
+        this.emitNodeAttributesRequired(
+          x,
+          List(("ErrorIdentifier", this.k), ("Description", this.s)),
+          true
+        ) +
         this.emit("},\n", -1) +
         this.generateSystemErrors(xs);
     }
     // If we are at the very last element
     case x :: xs if xs == Nil => {
       return this.emit("{\n") +
-        this.emitNodeAttributesRequired(x,
-                                        List(("ErrorIdentifier", this.k),
-                                             ("Description", this.s)),
-                                        true) +
+        this.emitNodeAttributesRequired(
+          x,
+          List(("ErrorIdentifier", this.k), ("Description", this.s)),
+          true
+        ) +
         this.emit("}\n", -1);
     }
   }
@@ -501,7 +509,9 @@ object ModuleGenerator {
           this.retrieveNodeAttributeString(x, "PartitionNameRef"),
           this.retrieveNodeAttributeString(x, "Duration").toInt,
           this.retrieveNodeAttributeString(x, "Offset").toInt,
-          this.retrieveNodeAttributeString(x, "PeriodicProcessingStart").toBoolean
+          this
+            .retrieveNodeAttributeString(x, "PeriodicProcessingStart")
+            .toBoolean
         );
       }
 
@@ -509,11 +519,14 @@ object ModuleGenerator {
       return this.emit("{\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("PeriodicProcessingStart", this.k),
-               ("Duration", this.k),
-               ("PartitionNameRef", this.s),
-               ("Offset", this.k)),
-          true) +
+          List(
+            ("PeriodicProcessingStart", this.k),
+            ("Duration", this.k),
+            ("PartitionNameRef", this.s),
+            ("Offset", this.k)
+          ),
+          true
+        ) +
         this.emit("},\n", -1) +
         this.generatePartitionSchedules(xs);
     }
@@ -526,7 +539,9 @@ object ModuleGenerator {
           this.retrieveNodeAttributeString(x, "PartitionNameRef"),
           this.retrieveNodeAttributeString(x, "Duration").toInt,
           this.retrieveNodeAttributeString(x, "Offset").toInt,
-          this.retrieveNodeAttributeString(x, "PeriodicProcessingStart").toBoolean
+          this
+            .retrieveNodeAttributeString(x, "PeriodicProcessingStart")
+            .toBoolean
         );
       }
 
@@ -534,11 +549,14 @@ object ModuleGenerator {
       return this.emit("{\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("PeriodicProcessingStart", this.k),
-               ("Duration", this.k),
-               ("PartitionNameRef", this.s),
-               ("Offset", this.k)),
-          true) +
+          List(
+            ("PeriodicProcessingStart", this.k),
+            ("Duration", this.k),
+            ("PartitionNameRef", this.s),
+            ("Offset", this.k)
+          ),
+          true
+        ) +
         this.emit("}\n", -1);
     }
   }
@@ -551,10 +569,13 @@ object ModuleGenerator {
         this.emit("{ // Sampling\n") +
           this.emitNodeAttributesRequired(
             x,
-            List(("Name", this.s),
-                 ("MaxMessageSize", this.k),
-                 ("Direction", this.mapDirectionType)),
-            true) +
+            List(
+              ("Name", this.s),
+              ("MaxMessageSize", this.k),
+              ("Direction", this.mapDirectionType)
+            ),
+            true
+          ) +
           this.emitNodeAttributeOptional(x, List(("RefreshRate", this.s))) +
           this.emit("}\n", -1);
 
@@ -563,10 +584,13 @@ object ModuleGenerator {
         this.emit("{ // Sampling\n") +
           this.emitNodeAttributesRequired(
             x,
-            List(("Name", this.s),
-                 ("MaxMessageSize", this.k),
-                 ("Direction", this.mapDirectionType)),
-            true) +
+            List(
+              ("Name", this.s),
+              ("MaxMessageSize", this.k),
+              ("Direction", this.mapDirectionType)
+            ),
+            true
+          ) +
           this.emitNodeAttributeOptional(x, List(("RefreshRate", this.s))) +
           this.emit("},\n", -1) +
           this.generatePartitionPorts(xs, isSampling);
@@ -576,11 +600,14 @@ object ModuleGenerator {
         this.emit("{ // Queuing\n") +
           this.emitNodeAttributesRequired(
             x,
-            List(("Name", this.s),
-                 ("MaxMessageSize", this.k),
-                 ("Direction", this.mapDirectionType),
-                 ("MaxNbMessage", this.k)),
-            true) +
+            List(
+              ("Name", this.s),
+              ("MaxMessageSize", this.k),
+              ("Direction", this.mapDirectionType),
+              ("MaxNbMessage", this.k)
+            ),
+            true
+          ) +
           this.emit("}\n", -1);
 
       // If sampling and not the last element
@@ -588,11 +615,14 @@ object ModuleGenerator {
         this.emit("{ //Queuing\n") +
           this.emitNodeAttributesRequired(
             x,
-            List(("Name", this.s),
-                 ("MaxMessageSize", this.k),
-                 ("Direction", this.mapDirectionType),
-                 ("MaxNbMessage", this.k)),
-            true) +
+            List(
+              ("Name", this.s),
+              ("MaxMessageSize", this.k),
+              ("Direction", this.mapDirectionType),
+              ("MaxNbMessage", this.k)
+            ),
+            true
+          ) +
           this.emit("},\n", -1) +
           this.generatePartitionPorts(xs, isSampling);
     }
@@ -604,11 +634,14 @@ object ModuleGenerator {
       this.emit("{ // Region\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("Name", this.s),
-               ("Type", this.mapMemoryType),
-               ("Size", this.k),
-               ("AccessRights", this.mapMemoryAccess)),
-          true) +
+          List(
+            ("Name", this.s),
+            ("Type", this.mapMemoryType),
+            ("Size", this.k),
+            ("AccessRights", this.mapMemoryAccess)
+          ),
+          true
+        ) +
         this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
         this.emit("}\n", -1);
     // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
@@ -616,11 +649,14 @@ object ModuleGenerator {
       this.emit("{ // Region\n") +
         this.emitNodeAttributesRequired(
           x,
-          List(("Name", this.s),
-               ("Type", this.mapMemoryType),
-               ("Size", this.k),
-               ("AccessRights", this.mapMemoryAccess)),
-          true) +
+          List(
+            ("Name", this.s),
+            ("Type", this.mapMemoryType),
+            ("Size", this.k),
+            ("AccessRights", this.mapMemoryAccess)
+          ),
+          true
+        ) +
         this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
         this.emit("},\n", -1) +
         this.generateMemoryRegion(xs);
@@ -634,79 +670,100 @@ object ModuleGenerator {
     }
 
   // Emits optional attributes (if not found emit '{}')
-  def emitNodeAttributeOptional(node: Node,
-                                attr: List[(String, (String) => String)],
-                                scoping: Boolean = false): String =
+  def emitNodeAttributeOptional(
+      node: Node,
+      attr: List[(String, (String) => String)],
+      scoping: Boolean = false
+  ): String =
     attr match {
       case x :: xs if xs != Nil => {
         if (this.checkAttributeValidity(x._1, node))
           return this.emit(
             f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n",
-            if (scoping) 1 else 0) + emitNodeAttributeOptional(node, xs);
+            if (scoping) 1 else 0
+          ) + emitNodeAttributeOptional(node, xs);
         else
           return this.emit(f"{}, // ${x._1}\n") + emitNodeAttributeOptional(
             node,
-            xs);
+            xs
+          );
       }
       case x :: xs if xs == Nil => {
         if (this.checkAttributeValidity(x._1, node))
           return this.emit(
-            f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n");
+            f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n"
+          );
         else
           return this.emit(f"{}, // ${x._1}\n");
       }
     }
 
   // Emits required attributes (If not found, throw an exception)
-  def emitNodeAttributesRequired(node: Node,
-                                 attr: List[(String, (String) => String)],
-                                 scoping: Boolean = false): String =
+  def emitNodeAttributesRequired(
+      node: Node,
+      attr: List[(String, (String) => String)],
+      scoping: Boolean = false
+  ): String =
     attr match {
       case x :: xs if xs != Nil =>
-        this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n",
-                  if (scoping) 1 else 0) + emitNodeAttributeOptional(node, xs)
+        this.emit(
+          f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n",
+          if (scoping) 1 else 0
+        ) + emitNodeAttributeOptional(node, xs)
       case x :: xs if xs == Nil =>
         this.emit(f"${x._2(node.attribute(x._1).get.toString)}, // ${x._1}\n")
       case _ =>
         throw new Exception(
-          f"The attribute: ${attr.head._1} is missing from your configuration");
+          f"The attribute: ${attr.head._1} is missing from your configuration"
+        );
     }
 
   // Function that emits attributes as numerical type
-  def emitNodeAttributesRequiredNum(node: Node,
-                                    attr: List[String],
-                                    scoping: Boolean = false): String =
+  def emitNodeAttributesRequiredNum(
+      node: Node,
+      attr: List[String],
+      scoping: Boolean = false
+  ): String =
     attr match {
       case x :: xs if xs != Nil =>
         this.emit(
           f"${node.attribute(x).get.toString}, // ${x}\n",
-          if (scoping) 1 else 0) + emitNodeAttributesRequiredNum(node, xs)
+          if (scoping) 1 else 0
+        ) + emitNodeAttributesRequiredNum(node, xs)
       case x :: xs if xs == Nil =>
         this.emit(f"${node.attribute(x).get.toString}, // ${x}\n")
       case _ =>
         throw new Exception(
-          f"The attribute: ${attr.head} is missing from your configuration");
+          f"The attribute: ${attr.head} is missing from your configuration"
+        );
     }
 
   // Function to emit node attributes without any other information
-  def emitNodeAttributes(node: Node,
-                         attr: List[String],
-                         scoping: Boolean = false): String = attr match {
+  def emitNodeAttributes(
+      node: Node,
+      attr: List[String],
+      scoping: Boolean = false
+  ): String = attr match {
     case x :: xs if xs != Nil =>
       this.emit(f"${node.attribute(x).get};\n", if (scoping) 1 else 0) + emitNodeAttributes(
         node,
-        xs)
+        xs
+      )
     case x :: xs if xs == Nil => this.emit(f"${node.attribute(x).get};\n")
   }
 
   // Emits node without a mapping function, but instead utilises the identifier
-  def emitNodeAttributesWithIdentifier(node: Node,
-                                       attr: List[String],
-                                       scoping: Boolean = false): String =
+  def emitNodeAttributesWithIdentifier(
+      node: Node,
+      attr: List[String],
+      scoping: Boolean = false
+  ): String =
     attr match {
       case x :: xs if xs != Nil =>
-        this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n",
-                  if (scoping) 1 else 0) + emitNodeAttributes(node, xs)
+        this.emit(
+          f"${x.toLowerCase} = ${node.attribute(x).get};\n",
+          if (scoping) 1 else 0
+        ) + emitNodeAttributes(node, xs)
       case x :: xs if xs == Nil =>
         this.emit(f"${x.toLowerCase} = ${node.attribute(x).get};\n")
     }
@@ -715,7 +772,7 @@ object ModuleGenerator {
   def checkAttributeValidity(tagName: String, node: Node): Boolean =
     node.head.attribute(tagName) match {
       case None => false
-      case _ => true
+      case _    => true
     }
 
   // Emit function specific for the includes
@@ -727,47 +784,48 @@ object ModuleGenerator {
 
   // Mapping function for error code attributes
   def mapErrorCode(code: String): String = code match {
-    case "DEADLINE_MISSED" => "ERROR_CODE_TYPE::DEADLINE_MISSED"
+    case "DEADLINE_MISSED"   => "ERROR_CODE_TYPE::DEADLINE_MISSED"
     case "APPLICATION_ERROR" => "ERROR_CODE_TYPE::APPLICATION_ERROR"
-    case "NUMERIC_ERROR" => "ERROR_CODE_TYPE::NUMERIC_ERROR"
-    case "ILLEGAL_REQUEST" => "ERROR_CODE_TYPE::ILLEGAL_REQUEST"
-    case "STACK_OVERFLOW" => "ERROR_CODE_TYPE::STACK_OVERFLOW"
-    case "MEMORY_VIOLATION" => "ERROR_CODE_TYPE::MEMORY_VIOLATION"
-    case "HARDWARE_FAULT" => "ERROR_CODE_TYPE::HARDWARE_FAULT"
-    case "POWER_FAILURE" => "ERROR_CODE_TYPE::POWER_FAILURE"
-    case _ => throw new Exception(f"$code is not a supported ErrorCode")
+    case "NUMERIC_ERROR"     => "ERROR_CODE_TYPE::NUMERIC_ERROR"
+    case "ILLEGAL_REQUEST"   => "ERROR_CODE_TYPE::ILLEGAL_REQUEST"
+    case "STACK_OVERFLOW"    => "ERROR_CODE_TYPE::STACK_OVERFLOW"
+    case "MEMORY_VIOLATION"  => "ERROR_CODE_TYPE::MEMORY_VIOLATION"
+    case "HARDWARE_FAULT"    => "ERROR_CODE_TYPE::HARDWARE_FAULT"
+    case "POWER_FAILURE"     => "ERROR_CODE_TYPE::POWER_FAILURE"
+    case _                   => throw new Exception(f"$code is not a supported ErrorCode")
   }
 
   // Mapping function for error level attributes
   def mapErrorLevel(error: String): String = error match {
-    case "MODULE" => "ERROR_LEVEL_TYPE::MODULE"
+    case "MODULE"    => "ERROR_LEVEL_TYPE::MODULE"
     case "PARTITION" => "ERROR_LEVEL_TYPE::PARTITION"
-    case "PROCESS" => "ERROR_LEVEL_TYPE::PROCESS"
-    case _ => throw new Exception(f"$error is not a support ErrorLevel")
+    case "PROCESS"   => "ERROR_LEVEL_TYPE::PROCESS"
+    case _           => throw new Exception(f"$error is not a support ErrorLevel")
   }
 
   // Mapping function for partition recovery action attributes
   def mapPartitionRecoveryAction(action: String): String = action match {
-    case "IDLE" => "PARTITION_RECOVERY_ACTION_TYPE::IDLE"
+    case "IDLE"         => "PARTITION_RECOVERY_ACTION_TYPE::IDLE"
     case "COLD_RESTART" => "PARTITION_RECOVERY_ACTION_TYPE::COLD_RESTART"
     case "WARM_RESTART" => "PARTITION_RECOVERY_ACTION_TYPE::WARM_RESTART"
-    case "NORMAL" => "PARTITION_RECOVERY_ACTION_TYPE::NORMAL"
+    case "NORMAL"       => "PARTITION_RECOVERY_ACTION_TYPE::NORMAL"
     case _ =>
       throw new Exception(
-        f"$action is not a supported Partition Recovery Action type")
+        f"$action is not a supported Partition Recovery Action type"
+      )
   }
 
   // Mapping function for module recovery action attributes
   def mapModuleRecoveryAction(action: String): String = action match {
-    case "IGNORE" => "MODULE_RECOVERY_ACTION_TYPE::IGNORE"
+    case "IGNORE"   => "MODULE_RECOVERY_ACTION_TYPE::IGNORE"
     case "SHUTDOWN" => "MODULE_RECOVERY_ACTION_TYPE::SHUTDOWN"
-    case "RESET" => "MODULE_RECOVERY_ACTION_TYPE::RESET"
-    case _ => throw new Exception(f"$action is not a support recovery action")
+    case "RESET"    => "MODULE_RECOVERY_ACTION_TYPE::RESET"
+    case _          => throw new Exception(f"$action is not a support recovery action")
   }
 
   // Mapping function for direction type attributes
   def mapDirectionType(direction: String): String = direction match {
-    case "SOURCE" => "PORT_DIRECTION_TYPE::SOURCE"
+    case "SOURCE"      => "PORT_DIRECTION_TYPE::SOURCE"
     case "DESTINATION" => "PORT_DIRECTION_TYPE::DESTINATION"
     case _ =>
       throw new Exception(f"$direction is not supported as a direction type")
@@ -775,8 +833,8 @@ object ModuleGenerator {
 
   // Mapping function for memory type attributes
   def mapMemoryType(memType: String): String = memType match {
-    case "Flash" => "memory_region_t::FLASH"
-    case "RAM" => "memory_region_t::RAM"
+    case "Flash"        => "memory_region_t::FLASH"
+    case "RAM"          => "memory_region_t::RAM"
     case "Input/Output" => "memory_region_t::INPUT_OUTPUT"
     case _ =>
       throw new Exception(f"$memType is not supported for MemoryRegions")
@@ -784,9 +842,9 @@ object ModuleGenerator {
 
   // Mapping function for memory access attributes
   def mapMemoryAccess(access: String): String = access match {
-    case "READ_ONLY" => "memory_access_t::READ_ONLY"
+    case "READ_ONLY"  => "memory_access_t::READ_ONLY"
     case "READ_WRITE" => "memory_access_t::READ_WRITE"
-    case _ => throw new Exception(f"$access is not supported for MemoryAccess")
+    case _            => throw new Exception(f"$access is not supported for MemoryAccess")
   }
 
   /**
