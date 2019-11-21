@@ -11,7 +11,7 @@ private:
     name_t partitionName;             /* required */
     decOrHex_t offset;                /* required */
     decOrHex_t period;                /* required */
-    decOrHex_t affinity;              /* required */
+    PROCESSOR_CORE_ID_TYPE affinity;  /* required */
 
     identifier_t partitionIdentifier;
 
@@ -21,7 +21,7 @@ public:
                       name_t name,
                       decOrHex_t offset,
                       decOrHex_t period,
-                      decOrHex_t affinity)
+                      PROCESSOR_CORE_ID_TYPE affinity)
         : partitionPeriodStart(periodicStart),
           periodDurationSeconds(duration),
           partitionName(name),
