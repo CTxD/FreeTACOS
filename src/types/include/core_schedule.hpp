@@ -1,7 +1,7 @@
 #ifndef __CORE_SCHEDULE__
 #define __CORE_SCHEDULE__
 
-#include "schedule_partition.hpp"
+#include <partition_schedule.hpp>
 
 #include <boost/container/pmr/vector.hpp>
 
@@ -9,7 +9,7 @@
 using namespace boost::container::pmr;
 
 // Define type aliases
-typedef vector<SchedulePartition> PartitionIterable;
+typedef vector<PartitionSchedule> PartitionIterable;
 typedef vector<vector<PartitionIterable>> CoreIterable;
 
 class CoreSchedule {

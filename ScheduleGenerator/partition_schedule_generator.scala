@@ -111,12 +111,12 @@ object PartitionScheduleGenerator {
 
   def emitPartitionValues(partition : TimeEntity) : String = {
     this.emit("{ // PartitionValues \n", 1) +
-    this.emit(f"${this.mapStringToNameT(partition.identifier)}, // PartitionNameRef \n", 1) +
-    this.emit(f"${partition.affinity}, // affinity \n") +
+    this.emit(f"${partition.periodicProcessingStart}, // PeriodicProcessingStart \n", 1) +
     this.emit(f"${partition.duration}, // Duration \n") +
+    this.emit(f"${this.mapStringToNameT(partition.identifier)}, // PartitionNameRef \n") +
+    this.emit(f"${partition.offset}, // Offset \n") +
     this.emit(f"${partition.period}, // Period \n") +
-    this.emit(f"${partition.offset} // Offset \n") +
-    this.emit(f"${partition.perioperiodicProcessingStart} // PeriodicProcessingStart \n") +
+    this.emit(f"${partition.affinity} // Affinity \n") +
     this.emit("}\n", -1);
   }
 

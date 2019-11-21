@@ -1,7 +1,8 @@
 #ifndef PARTITON_SCHEDULE
 #define PARTITON_SCHEDULE
 
-#include "general_types.hpp"
+#include <apex_types.h>
+#include <general_types.hpp>
 
 class PartitionSchedule {
 private:
@@ -9,19 +10,24 @@ private:
     decOrHex_t periodDurationSeconds; /* required */
     name_t partitionName;             /* required */
     decOrHex_t offset;                /* required */
+    decOrHex_t period;                /* required */
+    decOrHex_t affinity;              /* required */
 
     identifier_t partitionIdentifier;
 
 public:
-    PartitionSchedule()
-    {
-    }
-
-    PartitionSchedule(bool periodicStart, decOrHex_t duration, name_t partition, decOrHex_t offset)
+    PartitionSchedule(bool periodicStart,
+                      decOrHex_t duration,
+                      name_t name,
+                      decOrHex_t offset,
+                      decOrHex_t period,
+                      decOrHex_t affinity)
         : partitionPeriodStart(periodicStart),
           periodDurationSeconds(duration),
-          partitionName(partition),
-          offset(offset)
+          partitionName(name),
+          offset(offset),
+          period(period),
+          affinity(affinity)
     {
     }
 
