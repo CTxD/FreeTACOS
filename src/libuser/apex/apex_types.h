@@ -46,6 +46,13 @@
 
 #define SYSTEM_LIMIT_NUMBER_OF_EVENTS 256 /* partition scope */
 
+#define INFINITE_TIME_VALUE -1
+
+// only applies to the error handler process
+#define CORE_AFFINITY_NO_PREFERENCE -1
+
+const int MAX_NAME_LENGTH = 30;
+
 /*----------------------*/
 /* Base APEX types      */
 /*----------------------*/
