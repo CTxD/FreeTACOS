@@ -2,8 +2,8 @@
 <MODULE xmlns="http://www.aviation-ia.com/aeec/2015/ARINC653" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aviation-ia.com/aeec/2015/ARINC653ExampleSchema.xsd" Name="MyModule">
    <Partitions>
       <Partition>
-         <PartitionDefinition Name="systemManagement" Identifier="1" Affinity="0" />
-         <PartitionPeriodicity Duration="20000000" Period="100000000" />
+         <PartitionDefinition Name="systemManagement" Identifier="1" Affinity="2" />
+         <PartitionPeriodicity Duration="20000000" Period="20000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
@@ -24,8 +24,8 @@
          </PartitionPorts>
       </Partition>
       <Partition>
-         <PartitionDefinition Name="flightControls" Identifier="2" Affinity="0" />
-         <PartitionPeriodicity Duration="10000000" Period="100000000" />
+         <PartitionDefinition Name="flightControls" Identifier="2" Affinity="1" />
+         <PartitionPeriodicity Duration="10000000" Period="20000000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
@@ -101,15 +101,9 @@
    <Schedules>
       <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="systemManagement" Offset="0" />
       <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="20000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="flightControl" Offset="30000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="flightControls" Offset="30000000" />
       <PartitionTimeWindow PeriodicProcessingStart="false" Duration="30000000" PartitionNameRef="flightManagement" Offset="40000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="70000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="systemManagement" Offset="100000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="120000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="flightControl" Offset="130000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="30000000" PartitionNameRef="flightManagement" Offset="140000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IOProcessing" Offset="170000000" />
-      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="20000000" PartitionNameRef="IVHM " Offset="180000000" />
+      <PartitionTimeWindow PeriodicProcessingStart="false" Duration="10000000" PartitionNameRef="IHVM" Offset="70000000" />
    </Schedules>
    <HealthMonitoring>
       <SystemErrors>

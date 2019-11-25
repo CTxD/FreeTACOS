@@ -46,7 +46,26 @@ public:
     Partition(){};
 
     Partition(identifier_t id,
-              PROCESSOR_CORE_ID_TYPE afinity,
+              PROCESSOR_CORE_ID_TYPE affinity,
+              name_t name,
+              decOrHex_t duration,
+              decOrHex_t period,
+              std::initializer_list<MemoryRegion> mem,
+              std::initializer_list<QueuingPort> queuing,
+              std::initializer_list<SamplingPort> sampling)
+        : partitionIdentifier(id),
+          affinity(affinity),
+          partitionName(name),
+          duration(duration),
+          period(period),
+          memoryRegions(mem, &memoryRegionSrc),
+          queuePorts(queuing, &queuingPortSrc),
+          samplePorts(sampling, &samplingPortSrc)
+    {
+    }
+
+    Partition(identifier_t id,
+              PROCESSOR_CORE_ID_TYPE affinity,
               name_t name,
               decOrHex_t duration,
               decOrHex_t period,

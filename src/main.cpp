@@ -1,4 +1,4 @@
-#include "arinc_module.hpp"
+#include "types/arinc_module.h"
 
 int main()
 {

@@ -1,7 +1,7 @@
 version: "2"
 services:
   tacos:
-    image: ctxd/circle_raspi4:latest
+    image: ctxd/tacos:latest
     container_name: 'tacos'
     tty: true
     volumes:
@@ -12,6 +12,7 @@ services:
     tty: true
     volumes:
       - ./ScheduleGenerator:/generator
+      - ./src/kernel:/src/kernel
   doc:
     image: hrektts/doxygen:latest
     container_name: 'tacos_doxygen'

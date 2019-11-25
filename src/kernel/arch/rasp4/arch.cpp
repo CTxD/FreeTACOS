@@ -1,4 +1,5 @@
 #include <arch.h>
+#include <circle/debug.h>
 #include <circle/gpiopin.h>
 #include <circle/memory.h>
 #include <circle/startup.h>
@@ -46,9 +47,10 @@ CKernel::CKernel(void)
 
 CKernel::~CKernel(void)
 {
+    mActLED.Blink(5); // show we are alive
 }
 
-boolean CKernel::Initialize(void)
+CStdlibApp::TShutdownMode CKernel::Run(void)
 {
     return TRUE;
 }
