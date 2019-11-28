@@ -33,7 +33,7 @@ object PartitionScheduleGenerator {
         "\n\n";
 
     emitString = emitString + this.emit(
-      "CoreSchedule coreSchedule = \n{ // CoreSchedule \n"
+      "extern CoreSchedule coreSchedule = \n{ // CoreSchedule \n"
     );
 
     emitString = emitString +
