@@ -10,7 +10,7 @@ using namespace boost::container::pmr;
 
 // Define type aliases
 typedef vector<PartitionSchedule> PartitionIterable;
-typedef vector<vector<PartitionIterable>> CoreIterable;
+typedef vector<PartitionIterable> CoreIterable;
 
 class CoreSchedule {
 private:

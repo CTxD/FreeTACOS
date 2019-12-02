@@ -13,7 +13,10 @@ include $(CIRCLELIB)/Config.mk
 CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
-INCLUDE	+= -I $(ROOT)/src/kernel/include
+INCLUDE	+= -I $(ROOT)/src/kernel/include 
+INCLUDE	+= -I $(ROOT)/src/types
+INCLUDE	+= -I $(ROOT)/src/types/include
+INCLUDE	+= -I $(ROOT)/src/libuser/apex
 
 include $(CIRCLEHOME)/Rules.mk
 

@@ -89,9 +89,9 @@ object PartitionScheduleGenerator {
       case x :: xs if xs != Nil && xs.head.head != null => {
         val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
-        var emitString = this.emit("{ // Partition \n") +
+        var emitString = this.emit("// Partition \n") +
           this.emitPartitionValues(partition) +
-          this.emit("},\n", -1);
+          this.emit(",\n", -1);
 
         return emitString + this.traversePartitions(xs.toArray);
       }
@@ -100,9 +100,9 @@ object PartitionScheduleGenerator {
       case x :: xs if xs == Nil || xs.head.head == null => {
         val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
-        var emitString = this.emit("{ // Partition \n") +
+        var emitString = this.emit("// Partition \n") +
           this.emitPartitionValues(partition) +
-          this.emit("}\n", -1);
+          this.emit("\n", -1);
 
         return emitString;
       }
