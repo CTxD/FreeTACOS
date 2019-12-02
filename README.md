@@ -67,9 +67,5 @@ Done.
 
 ```Bash
 # From circle/ root
-$ docker-compose down # Closes the arinc_circle container
-$ docker-sync stop # Closes the docker-sync container
+$ make stop # Closes all docker-compose containers and docker-sync
 ```
-
-OR
-Interrupt CTRL+C the running docker-sync process

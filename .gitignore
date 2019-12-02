@@ -106,7 +106,7 @@ project/plugins/project/
 *.log
 ScheduleGenerator/project
 ScheduleGenerator/target
-
+.scalafmt.conf
 bin/
 
 .vs/*

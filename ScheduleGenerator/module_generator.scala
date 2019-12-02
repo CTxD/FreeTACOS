@@ -45,7 +45,7 @@ object ModuleGenerator {
       );
 
       var emitString: String = includes + this.emit(
-        "ArincModule arincModule {\n"
+        "extern ArincModule arincModule {\n"
       );
 
       this.level += 1;
