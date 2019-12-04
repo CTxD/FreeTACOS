@@ -10,7 +10,7 @@ const decOrHex_t& PartitionSchedule::getPeriodDuration() const
   return periodDurationSeconds;
 }
 
-const name_t& PartitionSchedule::getPartitionName() const
+const NAME_TYPE& PartitionSchedule::getPartitionName() const
 {
   return partitionName;
 }

@@ -3,39 +3,40 @@
 
 #include "module_error_action.hpp"
 
+class ModuleHMTable {
+private:
+    ModuleErrorAction moduleErrorAction[100];
+    MemoryArea moduleErrorActionArea{std::data(moduleErrorAction),
+                                     std::size(moduleErrorAction)};
+    MonotonicMemoryResource<> moduleErrorActionSrc{moduleErrorActionArea};
+    MonotonicAllocator<void> moduleErrorActionAllocator{moduleErrorActionSrc};
+    identifier_t stateIdentifier; /* required */
+    description_t description;    /* required */
+    std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>> actions{
+        moduleErrorActionAllocator}; /* required */
 
-class ModuleHMTable
-{
-    private:
-      ModuleErrorAction moduleErrorAction[100];
-      monotonic_buffer_resource moduleErrorActionSrc{std::data(moduleErrorAction),
-                                                    std::size(moduleErrorAction)};
-      identifier_t stateIdentifier;       /* required */
-      description_t description;          /* required */
-      vector<ModuleErrorAction> actions;  /* required */
+public:
+    ModuleHMTable(){};
 
-    public:
-      ModuleHMTable() {};
+    ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions)
+        : stateIdentifier(state), actions(actions)
+    {
+        strcpy(description, descr.c_str());
+    }
 
-      ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions):
-        stateIdentifier(state), actions(actions, &moduleErrorActionSrc)
-        {
-          strcpy(description, descr.c_str());
-        }
+    ModuleHMTable(const ModuleHMTable& rhs)
+        : stateIdentifier(rhs.stateIdentifier), actions(rhs.actions)
+    {
+        strcpy(description, rhs.description);
+    }
 
-      ModuleHMTable(const ModuleHMTable& rhs):
-        stateIdentifier(rhs.stateIdentifier), actions(rhs.actions)
-        {
-          strcpy(description, rhs.description);
-        }
+    ModuleHMTable& operator=(const ModuleHMTable&);
 
-      ModuleHMTable& operator=(const ModuleHMTable&);
+    const identifier_t& getStateIdentifier() const;
 
-      const identifier_t& getStateIdentifier() const;
+    const description_t& getDescription() const;
 
-      const description_t& getDescription() const;
-
-      const vector<ModuleErrorAction>& getActions() const;
+    const std::vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

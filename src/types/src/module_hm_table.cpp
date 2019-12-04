@@ -18,7 +18,7 @@ const description_t& ModuleHMTable::getDescription() const
   return description;
 }
 
-const vector<ModuleErrorAction>& ModuleHMTable::getActions() const
+const std::vector<ModuleErrorAction>& ModuleHMTable::getActions() const
 {
   return actions;
 }

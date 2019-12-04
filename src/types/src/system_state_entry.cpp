@@ -5,17 +5,17 @@ const APEX_INTEGER& SystemStateEntry::getSystemState() const
   return systemState;
 }
 
-const std::optional<name_t> SystemStateEntry::getDescription() const
+const std::optional<NAME_TYPE> SystemStateEntry::getDescription() const
 {
   return description;
 }
 
-const vector<ErrorLevel>& SystemStateEntry::getErrorIdLevels() const
+const std::vector<ErrorLevel>& SystemStateEntry::getErrorIdLevels() const
 {
   return errorIdLevels;
 }
 
-const vector<ModuleErrorAction>& SystemStateEntry::getActions() const
+const std::vector<ModuleErrorAction>& SystemStateEntry::getActions() const
 {
   return actions;
 }

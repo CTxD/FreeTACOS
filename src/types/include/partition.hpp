@@ -1,6 +1,8 @@
 #ifndef PARTITION_H
 #define PARTITION_H
 
+#include <circle/memory.h>
+
 #include "apex_error.h"
 #include "apex_partition.h"
 #include "apex_types.h"
@@ -13,41 +15,52 @@
 class Partition {
 private:
     MemoryRegion memoryRegion[100];
-    monotonic_buffer_resource memoryRegionSrc{std::data(memoryRegion),
-                                              std::size(memoryRegion)};
+    MemoryArea memoryRegionArea{std::data(memoryRegion), std::size(memoryRegion)};
+    MonotonicMemoryResource<> memoryRegionSrc{memoryRegionArea};
+    MonotonicAllocator<void> memoryRegionAllocator{memoryRegionSrc};
+
     QueuingPort queuingPort[100];
-    monotonic_buffer_resource queuingPortSrc{std::data(queuingPort), std::size(queuingPort)};
+    MemoryArea queuePortArea{std::data(queuingPort), std::size(queuingPort)};
+    MonotonicMemoryResource<> queuingPortSrc{queuePortArea};
+    MonotonicAllocator<void> queuePortAllocator{queuingPortSrc};
+
     SamplingPort samplingPort[100];
-    monotonic_buffer_resource samplingPortSrc{std::data(samplingPort),
-                                              std::size(samplingPort)};
+    MemoryArea samplingPortArea{std::data(samplingPort), std::size(samplingPort)};
+    MonotonicMemoryResource<> samplingPortSrc{samplingPortArea};
+    MonotonicAllocator<void> samplingPortAllocator{samplingPortSrc};
+
     Process proces[100];
-    monotonic_buffer_resource processSrc{std::data(proces), std::size(proces)};
+    MemoryArea processArea{std::data(proces), std::size(proces)};
+    MonotonicMemoryResource<> processSrc{processArea};
+    MonotonicAllocator<void> processAllocator{processSrc};
 
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
-    name_t partitionName; /* required */
+    NAME_TYPE partitionName; /* required */
 
     decOrHex_t duration; /* required */
     decOrHex_t period;   /* required */
 
-    vector<MemoryRegion> memoryRegions; /* required */
-    vector<QueuingPort> queuePorts;     /* required */
-    vector<SamplingPort> samplePorts;   /* required */
+    std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>> memoryRegions{
+        memoryRegionAllocator}; /* required */
+    std::vector<QueuingPort, MonotonicAllocator<QueuingPort>> queuePorts{queuePortAllocator}; /* required */
+    std::vector<SamplingPort, MonotonicAllocator<SamplingPort>> samplePorts{
+        samplingPortAllocator}; /* required */
 
     OPERATING_MODE_TYPE mode;
     PARTITION_STATUS_TYPE status;
 
-    vector<Process> processes;
+    std::vector<Process, MonotonicAllocator<Process>> processes{processAllocator};
     CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
     bool systemPartition = false;                             /* required */
-    name_t entryPoint;                                        /* required */
+    NAME_TYPE entryPoint;                                        /* required */
 
 public:
     Partition(){};
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              name_t name,
+              NAME_TYPE name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
@@ -58,15 +71,16 @@ public:
           partitionName(name),
           duration(duration),
           period(period),
-          memoryRegions(mem, &memoryRegionSrc),
-          queuePorts(queuing, &queuingPortSrc),
-          samplePorts(sampling, &samplingPortSrc)
+          memoryRegions(mem),
+          queuePorts(queuing),
+          samplePorts(sampling)
     {
+        // CMemorySystem::Get()->nBaseAddress;
     }
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              name_t name,
+              NAME_TYPE name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
@@ -78,10 +92,9 @@ public:
           partitionName(name),
           duration(duration),
           period(period),
-          memoryRegions(mem, &memoryRegionSrc),
-          queuePorts(queuing, &queuingPortSrc),
-          samplePorts(sampling, &samplingPortSrc),
-          processes(proc, &processSrc)
+          memoryRegions(mem),
+          queuePorts(queuing),
+          samplePorts(sampling)
     {
     }
 
@@ -104,17 +117,17 @@ public:
 
     const PROCESSOR_CORE_ID_TYPE& getAffinity() const;
 
-    const name_t& getPartitionName() const;
+    const NAME_TYPE& getPartitionName() const;
 
     const decOrHex_t& getDuration() const;
 
     const decOrHex_t& getPeriod() const;
 
-    const vector<MemoryRegion>& getMemoryRegions() const;
+    const std::vector<MemoryRegion>& getMemoryRegions() const;
 
-    const vector<QueuingPort>& getQueuePorts() const;
+    const std::vector<QueuingPort>& getQueuePorts() const;
 
-    const vector<SamplingPort>& getSamplePorts() const;
+    const std::vector<SamplingPort>& getSamplePorts() const;
 
     void setMode(OPERATING_MODE_TYPE mode);
 
@@ -126,7 +139,7 @@ public:
 
     void addProcess(Process proc);
 
-    const vector<Process>& getProcesses() const;
+    const std::vector<Process>& getProcesses() const;
 
     void setCriticality(CRITICALITY_TYPE criticality);
 
@@ -136,9 +149,9 @@ public:
 
     const bool& getSystemPartition() const;
 
-    void setEntryPoint(name_t entry);
+    void setEntryPoint(NAME_TYPE entry);
 
-    const name_t& getEntryPoint() const;
+    const NAME_TYPE& getEntryPoint() const;
 };
 
 #endif

@@ -1,6 +1,8 @@
 #ifndef ARINC_MODULE
 #define ARINC_MODULE
 
+#include <vector>
+
 #include "channel.hpp"
 #include "module_hm_table.hpp"
 #include "multipartition_hm_table.hpp"
@@ -11,41 +13,50 @@
 
 class ArincModule {
 private:
-    name_t moduleName;                    /* required */
-    std::optional<name_t> moduleVersion;  /* optional */
-    std::optional<APEX_INTEGER> moduleId; /* optional */
+    NAME_TYPE moduleName;                   /* required */
+    std::optional<NAME_TYPE> moduleVersion; /* optional */
+    std::optional<APEX_INTEGER> moduleId;   /* optional */
 
     Partition partitionBuffer[100];
-    monotonic_buffer_resource partitionBufferSrc{std::data(partitionBuffer),
-                                                 std::size(partitionBuffer)};
+    MemoryArea partitionArea{std::data(partitionBuffer), std::size(partitionBuffer)};
+    MonotonicMemoryResource<> partitionBufferSrc{partitionArea};
+    MonotonicAllocator<void> partitionAlloc{partitionBufferSrc};
 
     SystemError systemErrorBuffer[100];
-    monotonic_buffer_resource systemErrorBufferSrc{
-        std::data(systemErrorBuffer), std::size(systemErrorBuffer)};
+    MemoryArea sysErrorArea{std::data(systemErrorBuffer), std::size(systemErrorBuffer)};
+    MonotonicMemoryResource<> systemErrorBufferSrc{sysErrorArea};
+    MonotonicAllocator<void> sysErrorAlloc{systemErrorBufferSrc};
 
     MultiPartitionHMTable multiPartitionHMTableBuffer[100];
-    monotonic_buffer_resource multiPartitionHMTableBufferSrc{
-        std::data(multiPartitionHMTableBuffer), std::size(multiPartitionHMTableBuffer)};
+    MemoryArea multiPartHMArea{std::data(multiPartitionHMTableBuffer),
+                               std::size(multiPartitionHMTableBuffer)};
+    MonotonicMemoryResource<> multiPartitionHMTableBufferSrc{multiPartHMArea};
+    MonotonicAllocator<void> multiPartHMAlloc{multiPartitionHMTableBufferSrc};
 
     ModuleHMTable moduleHMTableBuffer[100];
-    monotonic_buffer_resource moduleHMTableBufferSrc{
-        std::data(moduleHMTableBuffer), std::size(moduleHMTableBuffer)};
+    MemoryArea moduleHMArea{std::data(moduleHMTableBuffer), std::size(moduleHMTableBuffer)};
+    MonotonicMemoryResource<> moduleHMTableBufferSrc{moduleHMArea};
+    MonotonicAllocator<void> moduleHMAllocator{moduleHMTableBufferSrc};
 
     PartitionHMTable partitionHMBuffer[125];
-    monotonic_buffer_resource partitionHMBufferSrc{
-        std::data(partitionHMBuffer), std::size(partitionHMBuffer)};
+    MemoryArea partitionHMArea{std::data(partitionHMBuffer), std::size(partitionHMBuffer)};
+    MonotonicMemoryResource<> partitionHMBufferSrc{partitionHMArea};
+    MonotonicAllocator<void> partitionHMAllocator{partitionHMBufferSrc};
 
-    vector<Partition> partitions;                        /* required */
-    vector<SystemError> systemErrorsTable;               /* required */
-    vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
-    vector<ModuleHMTable> moduleHMTable;                 /* required */
-    vector<PartitionHMTable> partitionHMTable;           /* required */
+    std::vector<Partition, MonotonicAllocator<Partition>> partitions{partitionAlloc}; /* required */
+    std::vector<SystemError, MonotonicAllocator<SystemError>> systemErrorsTable{sysErrorAlloc}; /* required */
+    std::vector<MultiPartitionHMTable, MonotonicAllocator<MultiPartitionHMTable>> multiPartitionHMTable{
+        multiPartHMAlloc}; /* required */
+    std::vector<ModuleHMTable, MonotonicAllocator<ModuleHMTable>> moduleHMTable{
+        moduleHMAllocator}; /* required */
+    std::vector<PartitionHMTable, MonotonicAllocator<PartitionHMTable>> partitionHMTable{
+        partitionHMAllocator}; /* required */
 
 public:
     ArincModule(){};
 
-    ArincModule(name_t name,
-                std::optional<name_t> version,
+    ArincModule(NAME_TYPE name,
+                std::optional<NAME_TYPE> version,
                 std::optional<identifier_t> id,
                 std::initializer_list<Partition> part,
                 std::initializer_list<SystemError> err,
@@ -55,31 +66,31 @@ public:
         : moduleName(name),
           moduleVersion(version),
           moduleId(id),
-          partitions(part, &partitionBufferSrc),
-          systemErrorsTable(err, &systemErrorBufferSrc),
-          multiPartitionHMTable(multiPartTab, &multiPartitionHMTableBufferSrc),
-          moduleHMTable(moduleHMTab, &moduleHMTableBufferSrc),
-          partitionHMTable(partitionHMTab, &partitionHMBufferSrc)
+          partitions(part),
+          systemErrorsTable(err),
+          multiPartitionHMTable(multiPartTab),
+          moduleHMTable(moduleHMTab),
+          partitionHMTable(partitionHMTab)
     {
     }
 
-    const name_t& getModuleName() const;
+    const NAME_TYPE& getModuleName() const;
 
-    const std::optional<name_t>& getModuleVersion() const;
+    const std::optional<NAME_TYPE>& getModuleVersion() const;
 
     const std::optional<APEX_INTEGER>& getModuleId() const;
 
-    const vector<SystemError>& getSystemErrorsTable() const;
+    const std::vector<SystemError>& getSystemErrorsTable() const;
 
-    const vector<PartitionHMTable>& getPartitionHmTable() const;
+    const std::vector<PartitionHMTable>& getPartitionHmTable() const;
 
-    const vector<Partition>& getPartitions() const;
+    const std::vector<Partition>& getPartitions() const;
 
-    const vector<MultiPartitionHMTable>& getMultiPartitionHMTable() const;
+    const std::vector<MultiPartitionHMTable>& getMultiPartitionHMTable() const;
 
-    const vector<ModuleHMTable>& getModuleHmTable() const;
+    const std::vector<ModuleHMTable>& getModuleHmTable() const;
 
-    const vector<PartitionHMTable>& getPartitionHMTable() const;
+    const std::vector<PartitionHMTable>& getPartitionHMTable() const;
 };
 
 #endif

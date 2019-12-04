@@ -8,17 +8,17 @@ PartitionHMTable& PartitionHMTable::operator=(const PartitionHMTable& rhs)
   return *this;
 }
 
-const name_t& PartitionHMTable::getTableName() const
+const NAME_TYPE& PartitionHMTable::getTableName() const
 {
   return tableName;
 }
 
-const name_t& PartitionHMTable::getMultiPartitionTableName() const
+const NAME_TYPE& PartitionHMTable::getMultiPartitionTableName() const
 {
   return multiPartitionTableName;
 }
 
-const vector<PartitionErrorAction>& PartitionHMTable::getActions() const
+const std::vector<PartitionErrorAction>& PartitionHMTable::getActions() const
 {
   return actions;
 }

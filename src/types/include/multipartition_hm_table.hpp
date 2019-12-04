@@ -3,30 +3,38 @@
 
 #include "multipartition_error_action.hpp"
 
-
-class MultiPartitionHMTable
-{
-  private:
+class MultiPartitionHMTable {
+private:
     MultiPartitionErrorAction multiPartitionErrorAction[100];
-    monotonic_buffer_resource multiPartitionErrorActionSrc{std::data(multiPartitionErrorAction),
-                                                           std::size(multiPartitionErrorAction)};
-    name_t tableName;                                   /* required */
-    vector<MultiPartitionErrorAction> errorActions;      /* required */
+    MemoryArea multiPartErrorArea{std::data(multiPartitionErrorAction),
+                                  std::size(multiPartitionErrorAction)};
+    MonotonicMemoryResource<> multiPartitionErrorActionSrc{multiPartErrorArea};
+    MonotonicAllocator<void> multiPartitionErrorAllocator{multiPartitionErrorActionSrc};
 
-  public:
-    MultiPartitionHMTable() {}
+    NAME_TYPE tableName; /* required */
+    std::vector<MultiPartitionErrorAction, MonotonicAllocator<MultiPartitionErrorAction>> errorActions{
+        multiPartitionErrorAllocator}; /* required */
 
-    MultiPartitionHMTable(name_t name, std::initializer_list<MultiPartitionErrorAction> actions):
-      tableName(name), errorActions(actions, &multiPartitionErrorActionSrc) {}
+public:
+    MultiPartitionHMTable()
+    {
+    }
 
-    MultiPartitionHMTable(const MultiPartitionHMTable& rhs):
-      tableName(rhs.tableName), errorActions(rhs.errorActions) {}
+    MultiPartitionHMTable(NAME_TYPE name, std::initializer_list<MultiPartitionErrorAction> actions)
+        : tableName(name), errorActions(actions)
+    {
+    }
+
+    MultiPartitionHMTable(const MultiPartitionHMTable& rhs)
+        : tableName(rhs.tableName), errorActions(rhs.errorActions)
+    {
+    }
 
     MultiPartitionHMTable& operator=(const MultiPartitionHMTable&);
 
-    const name_t& getTableName() const;
+    const NAME_TYPE& getTableName() const;
 
-    const vector<MultiPartitionErrorAction>& getActions() const;
+    const std::vector<MultiPartitionErrorAction>& getActions() const;
 };
 
 #endif

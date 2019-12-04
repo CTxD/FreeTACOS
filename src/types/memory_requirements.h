@@ -4,6 +4,7 @@
 #include "general_types.h"
 
 #include <circle/memio.h>
+#include <circle/memory.h>
 #include <cstdlib>
 
 enum memory_region_t {
@@ -19,23 +20,25 @@ enum memory_access_t {
 
 class MemoryRegion {
 private:
-    name_t regionName;                 /* required */
+    NAME_TYPE regionName;                 /* required */
     memory_region_t type;              /* required */
     decOrHex_t size;                   /* required */
     memory_access_t accessRights;      /* required */
     std::optional<decOrHex_t> address; /* optional */
 
+    SYSTEM_ADDRESS_TYPE stackAddress;
+    decOrHex_t freeMemory;
     // region;
 
 public:
     MemoryRegion(){};
 
-    MemoryRegion(name_t name, memory_region_t type, decOrHex_t size, memory_access_t accessRights, decOrHex_t address)
+    MemoryRegion(NAME_TYPE name, memory_region_t type, decOrHex_t size, memory_access_t accessRights, decOrHex_t address)
         : regionName(name), type(type), size(size), accessRights(accessRights), address(address)
     {
         if (!address)
             address = 0;
-
+        freeMemory = size;
         switch (type) {
         case memory_region_t::RAM:
             // code block
@@ -50,6 +53,10 @@ public:
             break;
         }
     }
+
+    const memory_access_t& getAccessRights() const;
+
+    void createContext(SYSTEM_ADDRESS_TYPE stackPtr, SYSTEM_ADDRESS_TYPE entryPtr, STACK_SIZE size);
 };
 
 #endif

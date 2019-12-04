@@ -19,7 +19,7 @@ enum memory_access_t {
 
 class MemoryRegion {
 private:
-    name_t regionName;                 /* required */
+    NAME_TYPE regionName;                 /* required */
     memory_region_t type;              /* required */
     decOrHex_t size;                   /* required */
     memory_access_t accessRights;      /* required */
@@ -30,7 +30,7 @@ private:
 public:
     MemoryRegion(){};
 
-    MemoryRegion(name_t name, memory_region_t type, decOrHex_t size, memory_access_t accessRights, decOrHex_t address)
+    MemoryRegion(NAME_TYPE name, memory_region_t type, decOrHex_t size, memory_access_t accessRights, decOrHex_t address)
         : regionName(name), type(type), size(size), accessRights(accessRights), address(address)
     {
         if (!address)

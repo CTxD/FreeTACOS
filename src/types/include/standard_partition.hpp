@@ -8,15 +8,15 @@ class StandardPartition : PseudoPartition
 {
   private:
     identifier_t partitionIdentifier;     /* required */
-    name_t portName;                      /* required */
+    NAME_TYPE portName;                      /* required */
 
   public:
-    StandardPartition(identifier_t id, name_t partitionName, name_t portName,APEX_INTEGER address, name_t procedure):
+    StandardPartition(identifier_t id, NAME_TYPE partitionName, NAME_TYPE portName,APEX_INTEGER address, NAME_TYPE procedure):
       PseudoPartition(partitionName, address, procedure), partitionIdentifier(id), portName(portName) {}
 
     const identifier_t& getPartitionIdentifier() const;
 
-    const name_t& getPortName() const;
+    const NAME_TYPE& getPortName() const;
 };
 
 #endif

@@ -1,17 +1,14 @@
 #ifndef GENERAL_TYPES
 #define GENERAL_TYPES
 
-#include <boost/container/pmr/monotonic_buffer_resource.hpp>
-#include <boost/container/pmr/vector.hpp>
+#include "allocator.hpp"
+#include "memory_area.hpp"
 #include <optional>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <apex_types.h>
-
-using namespace boost::container::pmr;
-
-typedef memory_resource* allocator_type;
 
 const APEX_INTEGER PARTITION_NUMBER = 128;
 
@@ -27,8 +24,6 @@ const APEX_INTEGER CHANNEL_NUMBER = 50;
 
 const APEX_INTEGER MAX_NUMBER_MODULE_HM_TABLE = 50;
 
-const unsigned long GIGABYTE = 1024 * 1024 * 1024;
-
 const APEX_INTEGER MAX_DESCRIPTION_LENGTH = 150;
 
 const PROCESSOR_CORE_ID_TYPE DEFAULT_PROCESS_CORE_AFFINITY = 0;
@@ -38,10 +33,6 @@ const APEX_INTEGER DEFAULT_ASSOCIATED_PROCESSOR_CORES = 1;
 typedef APEX_UNSIGNED identifier_t;
 
 typedef APEX_INTEGER decOrHex_t;
-
-typedef struct {
-    NAME_TYPE x;
-} name_t;
 
 typedef char description_t[MAX_DESCRIPTION_LENGTH];
 

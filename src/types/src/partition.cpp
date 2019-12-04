@@ -24,22 +24,22 @@ const PROCESSOR_CORE_ID_TYPE& Partition::getAffinity() const
     return affinity;
 }
 
-const name_t& Partition::getPartitionName() const
+const NAME_TYPE& Partition::getPartitionName() const
 {
     return partitionName;
 }
 
-const vector<MemoryRegion>& Partition::getMemoryRegions() const
+const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
 {
     return memoryRegions;
 }
 
-const vector<QueuingPort>& Partition::getQueuePorts() const
+const std::vector<QueuingPort>& Partition::getQueuePorts() const
 {
     return queuePorts;
 }
 
-const vector<SamplingPort>& Partition::getSamplePorts() const
+const std::vector<SamplingPort>& Partition::getSamplePorts() const
 {
     return samplePorts;
 }
@@ -64,7 +64,7 @@ const PARTITION_STATUS_TYPE& Partition::getStatus() const
     return status;
 }
 
-const vector<Process>& Partition::getProcesses() const
+const std::vector<Process>& Partition::getProcesses() const
 {
     return processes;
 }
@@ -144,7 +144,16 @@ RETURN_CODE_TYPE createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
 RETURN_CODE_TYPE Partition::checkPointer(void* ptr, APEX_INTEGER size)
 {
     // check storage (insufficient storage capacity)
-    // pok_check_ptr_or_return
+    // pok_check_ptr_in_partition
+    for (const auto& region : memoryRegions) {
+        if (region.getAccessRights() == memory_access_t::READ_WRITE &&
+            region.getType() == memory_region_t::RAM) {
+            if (region.createContext(freeMemory, ptr, size) == RETURN_CODE_TYPE::NO_ERROR) {
+                freeMemory += size;
+            }
+        }
+    }
+}
 
-    return RETURN_CODE_TYPE::NO_ERROR;
+return RETURN_CODE_TYPE::NO_ERROR;
 }

@@ -6,12 +6,12 @@ MultiPartitionHMTable& MultiPartitionHMTable::operator=(const MultiPartitionHMTa
   return *this;
 }
 
-const name_t& MultiPartitionHMTable::getTableName() const
+const NAME_TYPE& MultiPartitionHMTable::getTableName() const
 {
   return tableName;
 }
 
-const vector<MultiPartitionErrorAction>& MultiPartitionHMTable::getActions() const
+const std::vector<MultiPartitionErrorAction>& MultiPartitionHMTable::getActions() const
 {
   return errorActions;
 }
