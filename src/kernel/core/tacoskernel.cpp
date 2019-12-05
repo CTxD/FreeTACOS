@@ -1,6 +1,5 @@
 #include "tacoskernel.h"
 #include <errcode.h>
-#include <stdio.h>
 
 CTacosKernel::CTacosKernel()
 {
