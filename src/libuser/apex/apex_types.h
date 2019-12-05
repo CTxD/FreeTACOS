@@ -17,6 +17,9 @@
 #ifndef APEX_TYPES
 #define APEX_TYPES
 
+#include <vector>
+#include <circle/util.h>
+
 /*---------------------------*/
 /* Domain limits             */
 /*---------------------------*/
@@ -81,9 +84,13 @@ typedef enum {
     TIMED_OUT = 6       /* time-out tied up with request has expired */
 } RETURN_CODE_TYPE;
 
-typedef struct {
-    const char* x[MAX_NAME_LENGTH];
-} NAME_TYPE;
+struct NAME_TYPE {
+    char x[MAX_NAME_LENGTH];
+    NAME_TYPE() {}
+    NAME_TYPE(std::vector<char> name){
+      memcpy(&x, &name[0], MAX_NAME_LENGTH);
+    }
+};
 
 typedef void(*SYSTEM_ADDRESS_TYPE);
 
