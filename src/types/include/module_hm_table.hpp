@@ -9,7 +9,7 @@ private:
     MemoryArea moduleErrorActionArea{std::data(moduleErrorAction),
                                      std::size(moduleErrorAction)};
     MonotonicMemoryResource<> moduleErrorActionSrc{moduleErrorActionArea};
-    MonotonicAllocator<void> moduleErrorActionAllocator{moduleErrorActionSrc};
+    MonotonicAllocator<ModuleErrorAction> moduleErrorActionAllocator{moduleErrorActionSrc};
     identifier_t stateIdentifier; /* required */
     description_t description;    /* required */
     std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>> actions{
@@ -36,7 +36,7 @@ public:
 
     const description_t& getDescription() const;
 
-    const std::vector<ModuleErrorAction>& getActions() const;
+    const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& getActions() const;
 };
 
 #endif

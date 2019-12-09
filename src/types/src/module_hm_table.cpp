@@ -2,23 +2,23 @@
 
 ModuleHMTable& ModuleHMTable::operator=(const ModuleHMTable& rhs)
 {
-  stateIdentifier = rhs.stateIdentifier;
-  strcpy(description, rhs.description);
-  actions = rhs.actions;
-  return *this;
+    stateIdentifier = rhs.stateIdentifier;
+    strcpy(description, rhs.description);
+    actions = rhs.actions;
+    return *this;
 }
 
 const identifier_t& ModuleHMTable::getStateIdentifier() const
 {
-  return stateIdentifier;
+    return stateIdentifier;
 }
 
 const description_t& ModuleHMTable::getDescription() const
 {
-  return description;
+    return description;
 }
 
-const std::vector<ModuleErrorAction>& ModuleHMTable::getActions() const
+const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& ModuleHMTable::getActions() const
 {
-  return actions;
+    return actions;
 }

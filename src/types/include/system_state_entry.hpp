@@ -9,13 +9,13 @@ private:
     ErrorLevel errorLevel[100];
     MemoryArea errorLevelArea{std::data(errorLevel), std::size(errorLevel)};
     MonotonicMemoryResource<> errorLevelSrc{errorLevelArea};
-    MonotonicAllocator<void> errorLevelAllocator{errorLevelSrc};
+    MonotonicAllocator<ErrorLevel> errorLevelAllocator{errorLevelSrc};
 
     ModuleErrorAction moduleErrorAction[100];
     MemoryArea moduleErrorActionArea{std::data(moduleErrorAction),
                                      std::size(moduleErrorAction)};
     MonotonicMemoryResource<> moduleErrorActionSrc{moduleErrorActionArea};
-    MonotonicAllocator<void> moduleErrorActionAllocator{moduleErrorActionSrc};
+    MonotonicAllocator<ModuleErrorAction> moduleErrorActionAllocator{moduleErrorActionSrc};
     APEX_INTEGER systemState;             /* required */
     std::optional<NAME_TYPE> description; /* optional */
     std::vector<ErrorLevel, MonotonicAllocator<ErrorLevel>> errorIdLevels{errorLevelAllocator}; /* required */
@@ -37,9 +37,9 @@ public:
 
     const std::optional<NAME_TYPE> getDescription() const;
 
-    const std::vector<ErrorLevel>& getErrorIdLevels() const;
+    const std::vector<ErrorLevel, MonotonicAllocator<ErrorLevel>>& getErrorIdLevels() const;
 
-    const std::vector<ModuleErrorAction>& getActions() const;
+    const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& getActions() const;
 };
 
 #endif

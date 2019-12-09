@@ -9,7 +9,8 @@ private:
     MemoryArea multiPartErrorArea{std::data(multiPartitionErrorAction),
                                   std::size(multiPartitionErrorAction)};
     MonotonicMemoryResource<> multiPartitionErrorActionSrc{multiPartErrorArea};
-    MonotonicAllocator<void> multiPartitionErrorAllocator{multiPartitionErrorActionSrc};
+    MonotonicAllocator<MultiPartitionErrorAction> multiPartitionErrorAllocator{
+        multiPartitionErrorActionSrc};
 
     NAME_TYPE tableName; /* required */
     std::vector<MultiPartitionErrorAction, MonotonicAllocator<MultiPartitionErrorAction>> errorActions{
@@ -34,7 +35,7 @@ public:
 
     const NAME_TYPE& getTableName() const;
 
-    const std::vector<MultiPartitionErrorAction>& getActions() const;
+    const std::vector<MultiPartitionErrorAction, MonotonicAllocator<MultiPartitionErrorAction>>& getActions() const;
 };
 
 #endif

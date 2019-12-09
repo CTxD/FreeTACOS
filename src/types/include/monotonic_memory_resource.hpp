@@ -1,17 +1,16 @@
 #ifndef MONOTONIC_MEMORY_RESOURCE
 #define MONOTONIC_MEMORY_RESOURCE
 
-#include <atomic>
-#include <utility>
-
 #include <apex_types.h>
+#include <atomic>
+#include <circle/types.h>
 
-// static const int MAX_ALLIGN = 16;
+static const int MAX_ALLIGN = 16;
 
-template <std::size_t align = 16>
+template <size_t align = MAX_ALLIGN>
 class MonotonicMemoryResource {
-    std::atomic<SYSTEM_ADDRESS_TYPE> ptr;
-    std::size_t freeSpace;
+    std::atomic<char*> ptr;
+    size_t freeSpace;
 
 public:
     template <typename Area, typename = decltype(std::declval<Area&>().data())>
@@ -22,22 +21,9 @@ public:
 
     constexpr static auto alignment = align;
 
-    void* allocate(std::size_t size) noexcept
-    {
-        if (size >= freeSpace) {
-            // Health monitor
-        }
-        freeSpace -= size;
-        auto under = size % alignment;
-        auto adjust_size = alignment - under;
-        auto adjusted_size = size + adjust_size;
-        auto ret = ptr.fetch_add(adjusted_size);
-        return ret;
-    }
+    void* allocate(size_t size) noexcept;
 
-    void deallocate(void*) noexcept
-    {
-    }
+    void deallocate(void*) noexcept;
 };
 
 #endif

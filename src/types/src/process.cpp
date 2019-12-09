@@ -7,5 +7,5 @@ const PROCESS_STATUS_TYPE& Process::getStatus() const
 
 const PROCESS_ATTRIBUTE_TYPE& Process::getAttributes() const
 {
-    return status.attributes;
+    return status.ATTRIBUTES;
 }

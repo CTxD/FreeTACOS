@@ -1,6 +1,8 @@
 #ifndef GENERAL_TYPES
 #define GENERAL_TYPES
 
+#include <circle/types.h>
+
 #include "allocator.hpp"
 #include "memory_area.hpp"
 #include <optional>

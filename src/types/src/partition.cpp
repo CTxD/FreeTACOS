@@ -13,7 +13,7 @@ Partition& Partition::operator=(const Partition& rhs)
     mode = rhs.mode;
     status = rhs.status;
     processes = rhs.processes;
-    criticality = rhs.criticxality;
+    criticality = rhs.criticality;
     systemPartition = rhs.systemPartition;
     entryPoint = rhs.entryPoint;
     return *this;
@@ -29,17 +29,17 @@ const NAME_TYPE& Partition::getPartitionName() const
     return partitionName;
 }
 
-const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
+const std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>>& Partition::getMemoryRegions() const
 {
     return memoryRegions;
 }
 
-const std::vector<QueuingPort>& Partition::getQueuePorts() const
+const std::vector<QueuingPort, MonotonicAllocator<QueuingPort>>& Partition::getQueuePorts() const
 {
     return queuePorts;
 }
 
-const std::vector<SamplingPort>& Partition::getSamplePorts() const
+const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& Partition::getSamplePorts() const
 {
     return samplePorts;
 }
@@ -64,7 +64,7 @@ const PARTITION_STATUS_TYPE& Partition::getStatus() const
     return status;
 }
 
-const std::vector<Process>& Partition::getProcesses() const
+const std::vector<Process, MonotonicAllocator<Process>>& Partition::getProcesses() const
 {
     return processes;
 }
@@ -84,6 +84,22 @@ void Partition::setSystemPartition(bool systemPart)
     systemPartition = std::move(systemPart);
 }
 
+RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr, APEX_INTEGER size)
+{
+    // check storage (insufficient storage capacity)
+    // pok_check_ptr_in_partition
+    for (auto& region : memoryRegions) {
+        if (region.getAccessRights() == memory_access_t::READ_WRITE &&
+            region.getType() == memory_region_t::RAM) {
+            if (region.createContext(ptr, size) == RETURN_CODE_TYPE::NO_ERROR) {
+                //
+            }
+        }
+    }
+
+    return RETURN_CODE_TYPE::NO_ERROR;
+}
+
 const bool& Partition::getSystemPartition() const
 {
     return systemPartition;
@@ -99,7 +115,7 @@ const SYSTEM_ADDRESS_TYPE& Partition::getEntryPoint() const
     return entryPoint;
 }
 
-RETURN_CODE_TYPE createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
+RETURN_CODE_TYPE Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
 {
     // check if partition storage capacity is sufficient
     if (checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE) ==
@@ -111,21 +127,21 @@ RETURN_CODE_TYPE createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
     }
     // process must have a unique name
     for (const auto& proc : processes) {
-        if (strcmp(proc->attributes.NAME, attributes.NAME) == 0) {
-            return RETURN_CODE_TYPE::NO_ACTION;
-        }
+        // if (strcmp(proc.getAttributes().NAME.name, attributes.NAME.name) == 0) {
+        //     return RETURN_CODE_TYPE::NO_ACTION;
+        // }
     }
-    if (attributes.STACK_SIZE < 0) {
+    if (attributes.STACK_SIZE <= 0) {
         return RETURN_CODE_TYPE::INVALID_PARAM;
     }
     if (attributes.BASE_PRIORITY > MAX_PRIORITY_VALUE ||
         attributes.BASE_PRIORITY < MIN_PRIORITY_VALUE) {
         return RETURN_CODE_TYPE::INVALID_PARAM;
     }
-    if (attributes.PERIOD < 0) {
+    if (attributes.PERIOD <= 0) {
         return RETURN_CODE_TYPE::INVALID_CONFIG;
     }
-    if (attributes.TIME_CAPACITY < 0) {
+    if (attributes.TIME_CAPACITY <= 0) {
         return RETURN_CODE_TYPE::INVALID_PARAM;
     }
     // process must be created during partition initialization
@@ -133,27 +149,10 @@ RETURN_CODE_TYPE createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
         return RETURN_CODE_TYPE::INVALID_MODE;
     }
 
-    processes.push_back(Process(
-        processes.size() + 1,
-        {m_Timer.GetTicks() + attributes.TIME_CAPAC ITY, attributes.BASE_PRIORITY,
-         PROCESS_STATE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY}));
+    // processes.push_back(Process(
+    //     processes.size() + 1,
+    //     {m_Timer.GetTicks() + attributes.TIME_CAPACITY, attributes.BASE_PRIORITY,
+    //      PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY}));
 
     return RETURN_CODE_TYPE::NO_ERROR;
-}
-
-RETURN_CODE_TYPE Partition::checkPointer(void* ptr, APEX_INTEGER size)
-{
-    // check storage (insufficient storage capacity)
-    // pok_check_ptr_in_partition
-    for (const auto& region : memoryRegions) {
-        if (region.getAccessRights() == memory_access_t::READ_WRITE &&
-            region.getType() == memory_region_t::RAM) {
-            if (region.createContext(freeMemory, ptr, size) == RETURN_CODE_TYPE::NO_ERROR) {
-                freeMemory += size;
-            }
-        }
-    }
-}
-
-return RETURN_CODE_TYPE::NO_ERROR;
 }

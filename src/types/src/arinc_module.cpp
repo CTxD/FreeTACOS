@@ -2,50 +2,45 @@
 
 const NAME_TYPE& ArincModule::getModuleName() const
 {
-  return moduleName;
-};
+    return moduleName;
+}
 
 const std::optional<NAME_TYPE>& ArincModule::getModuleVersion() const
 {
-  return moduleVersion;
-};
+    return moduleVersion;
+}
 
 const std::optional<APEX_INTEGER>& ArincModule::getModuleId() const
 {
-  return moduleId;
-};
+    return moduleId;
+}
 
-const std::vector<SystemError>& ArincModule::getSystemErrorsTable() const
+const std::vector<SystemError, MonotonicAllocator<SystemError>>& ArincModule::getSystemErrorsTable() const
 {
-  return systemErrorsTable;
-};
+    return systemErrorsTable;
+}
 
-const std::vector<PartitionHMTable>& ArincModule::getPartitionHmTable() const
+const std::vector<PartitionHMTable, MonotonicAllocator<PartitionHMTable>>& ArincModule::getPartitionHmTable() const
 {
-  return partitionHMTable;
-};
+    return partitionHMTable;
+}
 
-const std::vector<Partition>& ArincModule::getPartitions() const
+const std::vector<Partition, MonotonicAllocator<Partition>>& ArincModule::getPartitions() const
 {
-  return partitions;
-};
+    return partitions;
+}
 
-const ModuleSchedule& ArincModule::getModuleSchedule() const
+const std::vector<MultiPartitionHMTable, MonotonicAllocator<MultiPartitionHMTable>>& ArincModule::getMultiPartitionHMTable() const
 {
-  return schedule;
-};
+    return multiPartitionHMTable;
+}
 
-const std::vector<MultiPartitionHMTable>& ArincModule::getMultiPartitionHMTable() const
+const std::vector<ModuleHMTable, MonotonicAllocator<ModuleHMTable>>& ArincModule::getModuleHmTable() const
 {
-  return multiPartitionHMTable;
-};
+    return moduleHMTable;
+}
 
-const std::vector<ModuleHMTable>& ArincModule::getModuleHmTable() const
+const std::vector<PartitionHMTable, MonotonicAllocator<PartitionHMTable>>& ArincModule::getPartitionHMTable() const
 {
-  return moduleHMTable;
-};
-
-const std::vector<PartitionHMTable>& ArincModule::getPartitionHMTable() const
-{
-  return partitionHMTable;
-};
+    return partitionHMTable;
+}

@@ -34,11 +34,12 @@ public:
         return *_res;
     }
 
-    T* allocate(std::size_t n)
+    T* allocate(size_t n)
     {
         return static_cast<T*>(_res->allocate(sizeof(T) * n));
     }
-    void deallocate(T* ptr, std::size_t)
+
+    void deallocate(T* ptr, size_t)
     {
         _res->deallocate(ptr);
     }

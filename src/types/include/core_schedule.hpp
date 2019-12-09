@@ -5,7 +5,8 @@
 
 // Define type aliases
 typedef std::vector<PartitionSchedule, MonotonicAllocator<PartitionSchedule>> PartitionIterable;
-typedef std::vector<std::vector<PartitionIterable, MonotonicAllocator<PartitionIterable>>> CoreIterable;
+typedef std::vector <
+    std::vector<PartitionIterable, MonotonicAllocator<PartitionIterable>> CoreIterable;
 
 class CoreSchedule {
 private:

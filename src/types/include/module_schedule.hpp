@@ -9,7 +9,7 @@ private:
     MemoryArea partitionScheduleArea{std::data(partitionSchedule),
                                      std::size(partitionSchedule)};
     MonotonicMemoryResource<> partitionScheduleSrc{partitionScheduleArea};
-    MonotonicAllocator<void> partitionSchedulerAllocator{partitionScheduleSrc};
+    MonotonicAllocator<PartitionSchedule> partitionSchedulerAllocator{partitionScheduleSrc};
     std::vector<PartitionSchedule, MonotonicAllocator<PartitionSchedule>> majorFrameSeconds{
         partitionSchedulerAllocator}; /* required */
 
@@ -19,7 +19,7 @@ public:
     {
     }
 
-    const std::vector<PartitionSchedule>& getMajorFrameSeconds() const;
+    const std::vector<PartitionSchedule, MonotonicAllocator<PartitionSchedule>>& getMajorFrameSeconds() const;
 };
 
 #endif

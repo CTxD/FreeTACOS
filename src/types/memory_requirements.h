@@ -1,7 +1,7 @@
 #ifndef MEMORY_REQUIREMENTS
 #define MEMORY_REQUIREMENTS
 
-#include "general_types.h"
+#include "general_types.hpp"
 
 #include <circle/memio.h>
 #include <circle/memory.h>
@@ -20,7 +20,7 @@ enum memory_access_t {
 
 class MemoryRegion {
 private:
-    NAME_TYPE regionName;                 /* required */
+    NAME_TYPE regionName;              /* required */
     memory_region_t type;              /* required */
     decOrHex_t size;                   /* required */
     memory_access_t accessRights;      /* required */

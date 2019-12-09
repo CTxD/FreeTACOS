@@ -8,11 +8,11 @@ private:
     PortMapping portMapping[100];
     MemoryArea portMappingArea{std::data(portMapping), std::size(portMapping)};
     MonotonicMemoryResource<> portBufferSrc{portMappingArea};
-    MonotonicAllocator<void> portMappingAllocator{portBufferSrc};
+    MonotonicAllocator<PortMapping> portMappingAllocator{portBufferSrc};
 
-    identifier_t channelIdentifier;    /* required */
+    identifier_t channelIdentifier;       /* required */
     std::optional<NAME_TYPE> channelName; /* optional */
-    PortMapping source;                /* required */
+    PortMapping source;                   /* required */
     std::vector<PortMapping, MonotonicAllocator<PortMapping>> destinations{
         portMappingAllocator}; /* required */
 
@@ -30,7 +30,7 @@ public:
 
     const PortMapping& getSource() const;
 
-    const std::vector<PortMapping>& getDestinations() const;
+    const std::vector<PortMapping, MonotonicAllocator<PortMapping>>& getDestinations() const;
 };
 
 #endif
