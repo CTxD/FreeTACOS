@@ -189,8 +189,8 @@ object Validator {
       if (entryCount > 0) {
         // Iterate through all entities in the table
         for (i <- 0 to entryCount) {
-          val tperiod = table(i)(1);
           val tduration = table(i)(2);
+          val toffset = table(i)(3);
 
           val tstart = tduration + toffset;
 
