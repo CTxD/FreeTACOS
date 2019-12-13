@@ -1,4 +1,9 @@
 #include "include/partition.hpp"
+#ifdef HOST_TESTING
+#include <time.h>
+#else
+#include "arch.hpp"
+#endif
 
 Partition& Partition::operator=(const Partition& rhs)
 {
@@ -84,16 +89,14 @@ void Partition::setSystemPartition(bool systemPart)
     systemPartition = std::move(systemPart);
 }
 
-RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr, APEX_INTEGER size)
+RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size)
 {
     // check storage (insufficient storage capacity)
     // pok_check_ptr_in_partition
     for (auto& region : memoryRegions) {
         if (region.getAccessRights() == memory_access_t::READ_WRITE &&
             region.getType() == memory_region_t::RAM) {
-            if (region.createContext(ptr, size) == RETURN_CODE_TYPE::NO_ERROR) {
-                //
-            }
+            return region.createContext(ptr, size);
         }
     }
 
@@ -115,15 +118,16 @@ const SYSTEM_ADDRESS_TYPE& Partition::getEntryPoint() const
     return entryPoint;
 }
 
-RETURN_CODE_TYPE Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
+void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
+                              identifier_t& processId,
+                              RETURN_CODE_TYPE& returnCode)
 {
+    processId = NULL;
     // check if partition storage capacity is sufficient
-    if (checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE) ==
-        RETURN_CODE_TYPE::INVALID_CONFIG) {
-        return RETURN_CODE_TYPE::INVALID_CONFIG;
-    }
+    returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE);
+
     if (processes.size() >= MAX_PROCESS_NUM) {
-        return RETURN_CODE_TYPE::INVALID_CONFIG;
+        returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
     // process must have a unique name
     for (const auto& proc : processes) {
@@ -132,27 +136,46 @@ RETURN_CODE_TYPE Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes)
         // }
     }
     if (attributes.STACK_SIZE <= 0) {
-        return RETURN_CODE_TYPE::INVALID_PARAM;
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
     if (attributes.BASE_PRIORITY > MAX_PRIORITY_VALUE ||
         attributes.BASE_PRIORITY < MIN_PRIORITY_VALUE) {
-        return RETURN_CODE_TYPE::INVALID_PARAM;
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
-    if (attributes.PERIOD <= 0) {
-        return RETURN_CODE_TYPE::INVALID_CONFIG;
+    if ((attributes.PERIOD % period) != 0 || attributes.PERIOD <= 0) {
+        returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
     if (attributes.TIME_CAPACITY <= 0) {
-        return RETURN_CODE_TYPE::INVALID_PARAM;
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
     // process must be created during partition initialization
-    if (mode == OPERATING_MODE_TYPE::NORMAL || mode == OPERATING_MODE_TYPE::IDLE) {
-        return RETURN_CODE_TYPE::INVALID_MODE;
+    if (mode == OPERATING_MODE_TYPE::NORMAL) {
+        returnCode = RETURN_CODE_TYPE::INVALID_MODE;
     }
 
-    // processes.push_back(Process(
-    //     processes.size() + 1,
-    //     {m_Timer.GetTicks() + attributes.TIME_CAPACITY, attributes.BASE_PRIORITY,
-    //      PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY}));
+    int t;
+#ifdef HOST_TESTING
+    t = clock();
+#else
+    t = CKernel::GetTimer().GetTicks();
+#endif
 
-    return RETURN_CODE_TYPE::NO_ERROR;
+    processId = processes.size() + 1;
+    Process proc{processId,
+                 {t + attributes.DEADLINE, attributes.BASE_PRIORITY,
+                  PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY}};
+    processes.push_back(proc);
+
+    returnCode = RETURN_CODE_TYPE::NO_ERROR;
+}
+
+void Partition::getProcess(identifier_t processId, Process& process, RETURN_CODE_TYPE& returnCode)
+{
+    for (const auto& proc : processes) {
+        if (proc.getId() == processId)
+            returnCode = RETURN_CODE_TYPE::NO_ERROR;
+        process = proc;
+    }
+    returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    processId = NULL;
 }

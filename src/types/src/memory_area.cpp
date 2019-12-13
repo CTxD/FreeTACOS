@@ -2,7 +2,6 @@
 
 #include <circle/alloc.h>
 #include <circle/memory.h>
-#include <circle/util.h>
 
 MemoryArea::MemoryArea(void* ptr, size_t size)
 {

@@ -9,3 +9,8 @@ const PROCESS_ATTRIBUTE_TYPE& Process::getAttributes() const
 {
     return status.ATTRIBUTES;
 }
+
+const identifier_t& Process::getId() const
+{
+    return id;
+}

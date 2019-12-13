@@ -46,22 +46,30 @@ enum {
 
 typedef enum { SOFT = 0, HARD = 1 } DEADLINE_TYPE;
 
-typedef
-    struct {
-        SYSTEM_TIME_TYPE      PERIOD;
-        SYSTEM_TIME_TYPE      TIME_CAPACITY;
-        SYSTEM_ADDRESS_TYPE   ENTRY_POINT;
-        STACK_SIZE_TYPE       STACK_SIZE;
-        PRIORITY_TYPE         BASE_PRIORITY;
-        DEADLINE_TYPE         DEADLINE;
-        PROCESS_NAME_TYPE     NAME;
-    } PROCESS_ATTRIBUTE_TYPE;
+struct PROCESS_ATTRIBUTE_TYPE {
+      PROCESS_NAME_TYPE     NAME;
+      SYSTEM_ADDRESS_TYPE   ENTRY_POINT;
+      STACK_SIZE_TYPE       STACK_SIZE;
+      PRIORITY_TYPE         BASE_PRIORITY;
+      SYSTEM_TIME_TYPE      PERIOD;
+      SYSTEM_TIME_TYPE      TIME_CAPACITY;
+      DEADLINE_TYPE         DEADLINE;
+
+      PROCESS_ATTRIBUTE_TYPE() {}
+
+      PROCESS_ATTRIBUTE_TYPE(std::string n, SYSTEM_ADDRESS_TYPE addr,
+                             STACK_SIZE_TYPE size, PRIORITY_TYPE prior,
+                             SYSTEM_TIME_TYPE period, SYSTEM_TIME_TYPE duration,
+                             DEADLINE_TYPE deadln):
+        NAME(n), ENTRY_POINT(addr), STACK_SIZE(size), BASE_PRIORITY(prior),
+        PERIOD(period), TIME_CAPACITY(duration), DEADLINE(deadln) {}
+    };
 
 struct PROCESS_STATUS_TYPE {
         SYSTEM_TIME_TYPE              DEADLINE_TIME;
         PRIORITY_TYPE                 CURRENT_PRIORITY;
         PROCESS_STATE_TYPE            PROCESS_STATE;
-        static PROCESS_ATTRIBUTE_TYPE ATTRIBUTES;
+        PROCESS_ATTRIBUTE_TYPE        ATTRIBUTES;
         PROCESSOR_CORE_ID_TYPE        AFFINITY;
 };
 

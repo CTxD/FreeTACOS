@@ -12,7 +12,7 @@ const memory_region_t& MemoryRegion::getType() const
     return type;
 }
 
-const decOrHex_t& MemoryRegion::getSize() const
+const STACK_SIZE_TYPE& MemoryRegion::getSize() const
 {
     return size;
 }
@@ -27,20 +27,21 @@ const std::optional<decOrHex_t>& MemoryRegion::getAddress() const
     return address;
 }
 
-RETURN_CODE_TYPE MemoryRegion::checkPointer(SYSTEM_ADDRESS_TYPE entryPtr,
-                                            decOrHex_t sizeRequest) const
+const RETURN_CODE_TYPE MemoryRegion::checkPointer(SYSTEM_ADDRESS_TYPE entryPtr,
+                                                  STACK_SIZE_TYPE sizeRequest) const
 {
     if (size >= sizeRequest) {
         if ((decOrHex_t)freeMemory + sizeRequest <= (decOrHex_t)entryPtr + sizeRequest) {
             // print "Entry point for address space is out of bounds"
             return RETURN_CODE_TYPE::NO_ERROR;
         }
+        return RETURN_CODE_TYPE::INVALID_PARAM;
         // print "There is not enough of free space in this region"
     }
     return RETURN_CODE_TYPE::INVALID_CONFIG;
 }
 
-RETURN_CODE_TYPE MemoryRegion::createContext(SYSTEM_ADDRESS_TYPE entryPtr, decOrHex_t size)
+RETURN_CODE_TYPE MemoryRegion::createContext(SYSTEM_ADDRESS_TYPE entryPtr, STACK_SIZE_TYPE size)
 {
     if (checkPointer(entryPtr, size) == RETURN_CODE_TYPE::NO_ERROR) {
         // pok_thread_stack_addr

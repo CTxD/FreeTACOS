@@ -38,4 +38,15 @@ typedef APEX_INTEGER decOrHex_t;
 
 typedef char description_t[MAX_DESCRIPTION_LENGTH];
 
+enum memory_region_t {
+    RAM,
+    FLASH,
+    INPUT_OUTPUT,
+};
+
+enum memory_access_t {
+    READ_WRITE,
+    READ_ONLY,
+};
+
 #endif

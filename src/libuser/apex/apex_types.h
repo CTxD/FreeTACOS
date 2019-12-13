@@ -17,8 +17,12 @@
 #ifndef APEX_TYPES
 #define APEX_TYPES
 
-#include <vector>
+#include <string>
+#ifdef HOST_TESTING
+#include <cstring>
+#else
 #include <circle/util.h>
+#endif
 
 /*---------------------------*/
 /* Domain limits             */
@@ -85,10 +89,10 @@ typedef enum {
 } RETURN_CODE_TYPE;
 
 struct NAME_TYPE {
-    char x[MAX_NAME_LENGTH];
+    char name[MAX_NAME_LENGTH];
     NAME_TYPE() {}
-    NAME_TYPE(std::vector<char> name){
-      memcpy(&x, &name[0], MAX_NAME_LENGTH);
+    NAME_TYPE(std::string str){
+      memcpy(name, str.c_str(), MAX_NAME_LENGTH);
     }
 };
 

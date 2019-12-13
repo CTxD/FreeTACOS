@@ -49,7 +49,7 @@ private:
     std::vector<SamplingPort, MonotonicAllocator<SamplingPort>> samplePorts{
         samplingPortAllocator}; /* required */
 
-    OPERATING_MODE_TYPE mode;
+    OPERATING_MODE_TYPE mode = OPERATING_MODE_TYPE::IDLE;
     PARTITION_STATUS_TYPE status;
 
     std::vector<Process, MonotonicAllocator<Process>> processes{processAllocator};
@@ -62,21 +62,16 @@ public:
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              NAME_TYPE name,
+              std::string name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
               std::initializer_list<QueuingPort> queuing,
               std::initializer_list<SamplingPort> sampling)
-        : partitionIdentifier(id),
-          affinity(affinity),
-          partitionName(name),
-          duration(duration),
-          period(period),
-          memoryRegions(mem),
-          queuePorts(queuing),
-          samplePorts(sampling)
+        : partitionIdentifier(id), affinity(affinity), partitionName(name), duration(duration),
+          period(period), memoryRegions(mem), queuePorts(queuing), samplePorts(sampling)
     {
+        mode = OPERATING_MODE_TYPE::COLD_START;
         // CMemorySystem::Get()->nBaseAddress;
     }
 
@@ -111,7 +106,7 @@ public:
 
     const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& getSamplePorts() const;
 
-    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, APEX_INTEGER size);
+    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size);
 
     void setMode(OPERATING_MODE_TYPE mode);
 
@@ -125,7 +120,11 @@ public:
 
     const std::vector<Process, MonotonicAllocator<Process>>& getProcesses() const;
 
-    RETURN_CODE_TYPE createProcess(PROCESS_ATTRIBUTE_TYPE attributes);
+    void getProcess(identifier_t processId, Process& proc, RETURN_CODE_TYPE& returnCode);
+
+    void createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
+                       identifier_t& processId,
+                       RETURN_CODE_TYPE& returnCode);
 
     void setCriticality(CRITICALITY_TYPE criticality);
 

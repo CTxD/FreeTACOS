@@ -6,7 +6,7 @@
 
 class Process {
 private:
-    PROCESS_ATTRIBUTE_TYPE attributes;
+    identifier_t id;
     PROCESS_STATUS_TYPE status;
 
 public:
@@ -14,14 +14,20 @@ public:
     {
     }
 
-    Process(PROCESS_ATTRIBUTE_TYPE attr, PROCESS_STATUS_TYPE status)
-        : attributes(std::move(attr)), status(std::move(status))
+    Process(identifier_t id, PROCESS_STATUS_TYPE status)
+        : id(id), status(status)
+    {
+    }
+
+    Process(const Process& rhs) : id(rhs.id), status(rhs.status)
     {
     }
 
     const PROCESS_STATUS_TYPE& getStatus() const;
 
     const PROCESS_ATTRIBUTE_TYPE& getAttributes() const;
+
+    const identifier_t& getId() const;
 };
 
 #endif
