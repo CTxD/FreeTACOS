@@ -1,8 +1,6 @@
 #ifndef MEMORY_AREA
 #define MEMORY_AREA
 
-#include <circle/types.h>
-
 #include "general_types.hpp"
 
 class MemoryArea {

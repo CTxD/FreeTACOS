@@ -1,7 +1,13 @@
 #ifndef GENERAL_TYPES
 #define GENERAL_TYPES
 
+#ifdef HOST_TESTING
+#include <cstring>
+typedef std::size_t size_t;
+#else
 #include <circle/types.h>
+#endif
+
 
 #include "allocator.hpp"
 #include "memory_area.hpp"

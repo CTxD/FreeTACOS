@@ -1,6 +1,7 @@
 #include "include/partition.hpp"
 #ifdef HOST_TESTING
 #include <time.h>
+#include <iostream>
 #else
 #include "arch.hpp"
 #endif
@@ -126,32 +127,35 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
     // check if partition storage capacity is sufficient
     returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE);
 
-    if (processes.size() >= MAX_PROCESS_NUM) {
+    if (processes.size() > MAX_PROCESS_NUM) {
         returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
     // process must have a unique name
     for (const auto& proc : processes) {
-        // if (strcmp(proc.getAttributes().NAME.name, attributes.NAME.name) == 0) {
-        //     return RETURN_CODE_TYPE::NO_ACTION;
-        // }
+        if (strcmp(proc.getAttributes().NAME.name, attributes.NAME.name) == 0) {
+            returnCode = RETURN_CODE_TYPE::NO_ACTION;
+        }
     }
     if (attributes.STACK_SIZE <= 0) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
+    std::cout << MIN_PRIORITY_VALUE << " " << MAX_PRIORITY_VALUE;
     if (attributes.BASE_PRIORITY > MAX_PRIORITY_VALUE ||
         attributes.BASE_PRIORITY < MIN_PRIORITY_VALUE) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
-    if ((attributes.PERIOD % period) != 0 || attributes.PERIOD <= 0) {
+    if ((period % attributes.PERIOD) != 0 || (attributes.PERIOD <= 0 && attributes.PERIOD != INFINITE_TIME_VALUE)) {
         returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
-    if (attributes.TIME_CAPACITY <= 0) {
+    if (attributes.TIME_CAPACITY <= 0 && attributes.TIME_CAPACITY != INFINITE_TIME_VALUE) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
     // process must be created during partition initialization
     if (mode == OPERATING_MODE_TYPE::NORMAL) {
         returnCode = RETURN_CODE_TYPE::INVALID_MODE;
     }
+
+    if(returnCode != RETURN_CODE_TYPE::NO_ERROR) return;
 
     int t;
 #ifdef HOST_TESTING

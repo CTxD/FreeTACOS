@@ -4,7 +4,6 @@
 #include "apex_process.h"
 #include "general_types.hpp"
 
-#include <circle/memio.h>
 #include <cstdlib>
 
 class MemoryRegion {

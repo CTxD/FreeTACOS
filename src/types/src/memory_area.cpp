@@ -1,7 +1,11 @@
 #include "include/memory_area.hpp"
 
+
+#ifdef HOST_TESTING
+#else
 #include <circle/alloc.h>
 #include <circle/memory.h>
+#endif
 
 MemoryArea::MemoryArea(void* ptr, size_t size)
 {

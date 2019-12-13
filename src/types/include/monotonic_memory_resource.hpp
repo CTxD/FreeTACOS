@@ -3,7 +3,7 @@
 
 #include <apex_types.h>
 #include <atomic>
-#include <circle/types.h>
+#include <include/general_types.hpp>
 
 static const int MAX_ALLIGN = 16;
 

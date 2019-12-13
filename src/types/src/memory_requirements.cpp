@@ -1,7 +1,5 @@
 #include "include/memory_requirements.hpp"
 
-#include <circle/memory.h>
-
 const NAME_TYPE& MemoryRegion::getRegionName() const
 {
     return regionName;

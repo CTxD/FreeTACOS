@@ -1,8 +1,6 @@
 #ifndef PARTITION_H
 #define PARTITION_H
 
-#include <circle/memory.h>
-
 #include "apex_error.h"
 #include "apex_partition.h"
 #include "apex_types.h"
