@@ -5,6 +5,7 @@
 
 MemoryArea::MemoryArea(void* ptr, size_t size)
 {
+	// filling with default value
     _area = memset(ptr, 0, size);
     if (_area == nullptr) {
         // health monitoring
@@ -12,11 +13,7 @@ MemoryArea::MemoryArea(void* ptr, size_t size)
 }
 
 MemoryArea::~MemoryArea()
-{
-    if (_area) {
-        free(_area);
-    }
-}
+{}
 
 size_t MemoryArea::size() const noexcept
 {

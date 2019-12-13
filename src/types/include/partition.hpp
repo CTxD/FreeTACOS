@@ -65,14 +65,24 @@ public:
               std::string name,
               decOrHex_t duration,
               decOrHex_t period,
-              std::initializer_list<MemoryRegion> mem,
-              std::initializer_list<QueuingPort> queuing,
-              std::initializer_list<SamplingPort> sampling)
+              std::vector<MemoryRegion> mem,
+              std::vector<QueuingPort> queuing,
+              std::vector<SamplingPort> sampling)
         : partitionIdentifier(id), affinity(affinity), partitionName(name), duration(duration),
-          period(period), memoryRegions(mem), queuePorts(queuing), samplePorts(sampling)
+          period(period)
     {
-        mode = OPERATING_MODE_TYPE::COLD_START;
-        // CMemorySystem::Get()->nBaseAddress;
+      for(auto reg: mem){
+        memoryRegions.push_back(reg);
+      }
+      for(auto queue: queuing){
+        queuePorts.push_back(queue);
+      }
+      for(auto sample: sampling){
+        samplePorts.push_back(sample);
+      }
+
+      mode = OPERATING_MODE_TYPE::COLD_START;
+      // CMemorySystem::Get()->nBaseAddress;
     }
 
     Partition(const Partition& rhs)
