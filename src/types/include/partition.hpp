@@ -116,11 +116,13 @@ public:
 
     RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size);
 
-    void setMode(OPERATING_MODE_TYPE mode);
+    void setMode(OPERATING_MODE_TYPE m);
 
     const OPERATING_MODE_TYPE& getMode() const;
 
-    void setStatus(PARTITION_STATUS_TYPE status);
+    void setStatus(PARTITION_STATUS_TYPE s);
+
+    void getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& s, RETURN_CODE_TYPE& returnCode);
 
     const PARTITION_STATUS_TYPE& getStatus() const;
 

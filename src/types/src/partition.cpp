@@ -1,7 +1,7 @@
 #include "include/partition.hpp"
 #ifdef HOST_TESTING
-#include <time.h>
 #include <iostream>
+#include <time.h>
 #else
 #include "arch.hpp"
 #endif
@@ -50,9 +50,9 @@ const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& Partition::ge
     return samplePorts;
 }
 
-void Partition::setMode(OPERATING_MODE_TYPE mode)
+void Partition::setMode(OPERATING_MODE_TYPE m)
 {
-    mode = std::move(mode);
+    mode = std::move(m);
 }
 
 const OPERATING_MODE_TYPE& Partition::getMode() const
@@ -60,9 +60,9 @@ const OPERATING_MODE_TYPE& Partition::getMode() const
     return mode;
 }
 
-void Partition::setStatus(PARTITION_STATUS_TYPE status)
+void Partition::setStatus(PARTITION_STATUS_TYPE s)
 {
-    status = std::move(status);
+    status = std::move(s);
 }
 
 const PARTITION_STATUS_TYPE& Partition::getStatus() const
@@ -97,11 +97,11 @@ RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYP
     for (auto& region : memoryRegions) {
         if (region.getAccessRights() == memory_access_t::READ_WRITE &&
             region.getType() == memory_region_t::RAM) {
-            return region.createContext(ptr, size);
+            if (region.createContext(ptr, size) == RETURN_CODE_TYPE::NO_ERROR)
+                return RETURN_CODE_TYPE::NO_ERROR;
         }
     }
-
-    return RETURN_CODE_TYPE::NO_ERROR;
+    return RETURN_CODE_TYPE::INVALID_CONFIG;
 }
 
 const bool& Partition::getSystemPartition() const
@@ -123,6 +123,7 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
                               identifier_t& processId,
                               RETURN_CODE_TYPE& returnCode)
 {
+    returnCode = RETURN_CODE_TYPE::NO_ERROR;
     processId = NULL;
     // check if partition storage capacity is sufficient
     returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE);
@@ -139,23 +140,29 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
     if (attributes.STACK_SIZE <= 0) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
-    std::cout << MIN_PRIORITY_VALUE << " " << MAX_PRIORITY_VALUE;
     if (attributes.BASE_PRIORITY > MAX_PRIORITY_VALUE ||
         attributes.BASE_PRIORITY < MIN_PRIORITY_VALUE) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
-    if ((period % attributes.PERIOD) != 0 || (attributes.PERIOD <= 0 && attributes.PERIOD != INFINITE_TIME_VALUE)) {
+    if ((period % attributes.PERIOD) != 0) {
         returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
+    else if (attributes.PERIOD <= 0 && attributes.PERIOD != INFINITE_TIME_VALUE) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
     if (attributes.TIME_CAPACITY <= 0 && attributes.TIME_CAPACITY != INFINITE_TIME_VALUE) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    else if (attributes.PERIOD != INFINITE_TIME_VALUE &&
+             attributes.TIME_CAPACITY > attributes.PERIOD) {
         returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     }
     // process must be created during partition initialization
     if (mode == OPERATING_MODE_TYPE::NORMAL) {
         returnCode = RETURN_CODE_TYPE::INVALID_MODE;
     }
-
-    if(returnCode != RETURN_CODE_TYPE::NO_ERROR) return;
+    if (returnCode != RETURN_CODE_TYPE::NO_ERROR)
+        return;
 
     int t;
 #ifdef HOST_TESTING
@@ -182,4 +189,11 @@ void Partition::getProcess(identifier_t processId, Process& process, RETURN_CODE
     }
     returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
     processId = NULL;
+}
+
+void Partition::getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& stat, RETURN_CODE_TYPE& returnCode)
+{
+    Process proc;
+    getProcess(id, proc, returnCode);
+    stat = proc.getStatus();
 }
