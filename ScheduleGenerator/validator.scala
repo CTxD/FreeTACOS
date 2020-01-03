@@ -194,7 +194,7 @@ object Validator {
 
           val tstart = tduration + toffset;
 
-          // If the starting point of the entititty ;) is lesser than the last finished one
+          // If the starting point of the entity is lesser than the last finished one
           if (tstart >= entity.offset) {
             // Return false
             return (table, false);
