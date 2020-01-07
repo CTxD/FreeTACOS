@@ -1,6 +1,6 @@
 #include "tacoskernel.h"
-#include <arinc_module.hpp>
 #include <errcode.h>
+#include <arinc_module.hpp>
 #include <process.hpp>
 
 CTacosKernel::CTacosKernel()
