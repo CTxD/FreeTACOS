@@ -15,7 +15,7 @@ NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(ROOT)/src/types
-INCLUDE += -I $(ROOT)/../boost_1_71_0
+INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
