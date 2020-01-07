@@ -1,11 +1,11 @@
 version: "2"
 services:
   tacos:
-    image: ctxd/tacos:latest
+    image: ctxd/tacos:path-fix
     container_name: "tacos"
     tty: true
     volumes:
-      - tacos-sync:/app:nocopy # nocopy is important
+      - .:/app # nocopy is important
   sbt:
     image: hseeberger/scala-sbt:8u222_1.3.3_2.13.1
     container_name: "tacos_sbt"
@@ -19,7 +19,3 @@ services:
     tty: true
     volumes:
       - .:/data
-
-volumes:
-  tacos-sync:
-    external: true

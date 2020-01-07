@@ -4,9 +4,9 @@ object Validator {
   type EntityIterable = Array[Array[Integer]];
 
   class Validator {
-    var partitions : List[PartitionTime] = List();
+    var partitions: List[PartitionTime] = List();
     var schedules: List[ScheduleTime] = List();
-    var entities : List[TimeEntity] = List();
+    var entities: List[TimeEntity] = List();
 
     // Placeholder object for building partitions
     var namePlaceholder: String = "";
@@ -19,7 +19,8 @@ object Validator {
       // Check that there are as many schedule configurations as partition configurations
       if (this.partitions.length != this.schedules.length)
         throw new ValidationException(
-          "The number of  partitions does not match the number of partitions");
+          "The number of  partitions does not match the number of partitions"
+        );
 
       // Create a list of time entities
       var entities: List[TimeEntity] = this.createTimeEntities();
@@ -52,8 +53,10 @@ object Validator {
     }
 
     // TODO: Maybe use stringbuilder instead of string append (+) to reduce execution time. This might not be a problem.
-    def printScheduleConfigation(entities: List[TimeEntity],
-                                 scheduleTable: CoreIterable): String = {
+    def printScheduleConfigation(
+        entities: List[TimeEntity],
+        scheduleTable: CoreIterable
+    ): String = {
       var emptyField = false;
       var cString = "|";
       for (c <- 0 to this.TOTAL_CORES - 1) {
@@ -101,18 +104,24 @@ object Validator {
       return rString;
     }
 
-    def generateAndCheckSchedule(entity: TimeEntity,
-                                 table: CoreIterable): CoreIterable =
-      this.checkCoreOverlap(entity,
-                            this.TOTAL_CORES - 1,
-                            entity.affinity,
-                            table);
+    def generateAndCheckSchedule(
+        entity: TimeEntity,
+        table: CoreIterable
+    ): CoreIterable =
+      this.checkCoreOverlap(
+        entity,
+        this.TOTAL_CORES - 1,
+        entity.affinity,
+        table
+      );
 
     // Iterate through all cores (based on affinity) to find the next core match
-    def checkCoreOverlap(ent: TimeEntity,
-                         coreRemainder: Integer,
-                         doneRemainder: Integer,
-                         table: CoreIterable): CoreIterable =
+    def checkCoreOverlap(
+        ent: TimeEntity,
+        coreRemainder: Integer,
+        doneRemainder: Integer,
+        table: CoreIterable
+    ): CoreIterable =
       coreRemainder match {
         // If the partition has been assigned to all of it's number of cores (Affinity)
         case x if doneRemainder == -1 => {
@@ -132,34 +141,41 @@ object Validator {
               var tableCopy = table;
               tableCopy(coreRemainder) = innerTable._1;
 
-              this.checkCoreOverlap(ent,
-                                    coreRemainder - 1,
-                                    doneRemainder - 1,
-                                    tableCopy);
+              this.checkCoreOverlap(
+                ent,
+                coreRemainder - 1,
+                doneRemainder - 1,
+                tableCopy
+              );
             }
             case false =>
-              this.checkCoreOverlap(ent,
-                                    coreRemainder - 1,
-                                    doneRemainder,
-                                    table);
+              this.checkCoreOverlap(
+                ent,
+                coreRemainder - 1,
+                doneRemainder,
+                table
+              );
           }
         }
 
         // If the partition can not be scheduled on any cores
         case x if x == -1 && doneRemainder != -1 =>
           throw new ValidationException(
-            f"The schedule conflicts on ${ent.identifier}");
+            f"The schedule conflicts on ${ent.identifier}"
+          );
 
         // If an invalid affinity is entered
         case _ =>
           throw new ValidationException(
-            f"The partition ${ent.identifier} has an invalid affinity of ${ent.affinity}");
+            f"The partition ${ent.identifier} has an invalid affinity of ${ent.affinity}"
+          );
       }
 
     // Iterate through all schedules in the table and check the validity
     def checkScheduleOverlap(
         entity: TimeEntity,
-        table: EntityIterable): (EntityIterable, Boolean) = {
+        table: EntityIterable
+    ): (EntityIterable, Boolean) = {
       // Get the total size of the table
       var entryCount = 0;
       for (entry <- 0 to table.size - 1) {
@@ -173,12 +189,12 @@ object Validator {
       if (entryCount > 0) {
         // Iterate through all entities in the table
         for (i <- 0 to entryCount) {
-          val tperiod = table(i)(1);
+          val tduration = table(i)(2);
           val toffset = table(i)(3);
 
-          val tstart = tperiod + toffset;
+          val tstart = tduration + toffset;
 
-          // If the starting point of the entititty ;) is lesser than the last finished one
+          // If the starting point of the entity is lesser than the last finished one
           if (tstart >= entity.offset) {
             // Return false
             return (table, false);
@@ -206,22 +222,25 @@ object Validator {
       for (id <- 1 to this.partitions.length) {
         val part = this.partitions(id - 1);
         // Filter schedules to the matching partition (Trim down the result)
-        val sched = this.schedules.filter(elem =>
-          elem.identifier.trim() == part.identifier.trim());
+        val sched = this.schedules
+          .filter(elem => elem.identifier.trim() == part.identifier.trim());
 
         // Check that a schedule was found
         if (sched.length < 1)
           throw new ValidationException(
-            f"No matching schedule with identifier ${part.identifier}");
+            f"No matching schedule with identifier ${part.identifier}"
+          );
 
         // Append configuration to entities
-        entities = new TimeEntity(id,
-                                  part.identifier,
-                                  part.period,
-                                  part.duration,
-                                  sched.head.offset,
-                                  part.affinity,
-                                  sched.head.periodicProcessingStart) :: entities;
+        entities = new TimeEntity(
+          id,
+          part.identifier,
+          part.period,
+          part.duration,
+          sched.head.offset,
+          part.affinity,
+          sched.head.periodicProcessingStart
+        ) :: entities;
       }
 
       this.entities = entities;
@@ -229,11 +248,18 @@ object Validator {
       return entities;
     }
 
-    def appendSchedule(identifier: String,
-                       duration: Integer,
-                       offset: Integer,
-                       periodicProcessingStart: Boolean) = {
-      this.schedules = new ScheduleTime(identifier, duration, offset, periodicProcessingStart) :: this.schedules;
+    def appendSchedule(
+        identifier: String,
+        duration: Integer,
+        offset: Integer,
+        periodicProcessingStart: Boolean
+    ) = {
+      this.schedules = new ScheduleTime(
+        identifier,
+        duration,
+        offset,
+        periodicProcessingStart
+      ) :: this.schedules;
     }
 
     def populatePartitionIdentifier(name: String, affinity: Integer) = {
@@ -253,21 +279,27 @@ object Validator {
   }
 
   // Classes for storing the schedule data in objects are defined
-  class TimeEntity(val id: Integer,
-                   val identifier: String,
-                   val period: Integer,
-                   val duration: Integer,
-                   val offset: Integer,
-                   val affinity: Integer,
-                   val periodicProcessingStart : Boolean) {}
-  class PartitionTime(val identifier: String,
-                      val period: Integer,
-                      val duration: Integer,
-                      val affinity: Integer) {}
-  class ScheduleTime(val identifier: String,
-                     val duration: Integer,
-                     val offset: Integer,
-                     val periodicProcessingStart: Boolean) {}
+  class TimeEntity(
+      val id: Integer,
+      val identifier: String,
+      val period: Integer,
+      val duration: Integer,
+      val offset: Integer,
+      val affinity: Integer,
+      val periodicProcessingStart: Boolean
+  ) {}
+  class PartitionTime(
+      val identifier: String,
+      val period: Integer,
+      val duration: Integer,
+      val affinity: Integer
+  ) {}
+  class ScheduleTime(
+      val identifier: String,
+      val duration: Integer,
+      val offset: Integer,
+      val periodicProcessingStart: Boolean
+  ) {}
 
   class ValidationException(message: String) extends Exception(message);
 }
