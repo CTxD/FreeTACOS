@@ -13,16 +13,16 @@ class Process
       PROCESS_STATUS_TYPE status;
       name_t      processName;
       decOrHex_t  processIdentifier;
-      decOrHex_t  processExecutionTime;
+      decOrHex_t  processPriority;
       decOrHex_t  processPeriod;
     public:
       Process(name_t name,
               decOrHex_t identifier,
-              decOrHex_t executionTime,
+              decOrHex_t priority,
               decOrHex_t period) 
               : processName(name),
                 processIdentifier(identifier),
-                processExecutionTime(executionTime),
+                processPriority(priority),
                 processPeriod(period)
       {
       }
