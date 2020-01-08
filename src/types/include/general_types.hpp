@@ -2,16 +2,13 @@
 #define GENERAL_TYPES
 
 #include <boost/container/pmr/monotonic_buffer_resource.hpp>
-#include <boost/container/pmr/vector.hpp>
 #include <optional>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <apex_types.h>
-
-using namespace boost::container::pmr;
-
-typedef memory_resource* allocator_type;
+using namespace std;
 
 const APEX_INTEGER PARTITION_NUMBER = 128;
 

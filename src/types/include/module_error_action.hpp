@@ -4,18 +4,20 @@
 #include "apex_error.h"
 #include "general_types.hpp"
 
+class ModuleErrorAction {
+private:
+    identifier_t errorIdentifier;       /* required */
+    MODULE_RECOVERY_ACTION_TYPE action; /* required */
 
-class ModuleErrorAction
-{
-  private:
-    identifier_t errorIdentifier;        /* required */
-    MODULE_RECOVERY_ACTION_TYPE action;  /* required */
+public:
+    ModuleErrorAction()
+    {
+    }
 
-  public:
-    ModuleErrorAction() {}
-
-    ModuleErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action):
-      errorIdentifier(id), action(action) {}
+    ModuleErrorAction(identifier_t id, MODULE_RECOVERY_ACTION_TYPE action)
+        : errorIdentifier(id), action(action)
+    {
+    }
 
     const identifier_t& getErrorIdentifier() const;
 

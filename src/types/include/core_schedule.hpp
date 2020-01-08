@@ -3,10 +3,10 @@
 
 #include <partition_schedule.hpp>
 
-#include <boost/container/pmr/vector.hpp>
+#include <vector>
 
 // Boost vector type
-using namespace boost::container::pmr;
+using namespace std;
 
 // Define type aliases
 typedef vector<PartitionSchedule> PartitionIterable;

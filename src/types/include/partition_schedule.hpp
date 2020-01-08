@@ -16,6 +16,9 @@ private:
     identifier_t partitionIdentifier;
 
 public:
+    PartitionSchedule()
+    {
+    }
     PartitionSchedule(bool periodicStart,
                       decOrHex_t duration,
                       name_t name,

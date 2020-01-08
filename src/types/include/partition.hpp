@@ -9,20 +9,10 @@
 #include "process.hpp"
 #include "queuing_port.hpp"
 #include "sampling_port.hpp"
+#include <vector>
 
 class Partition {
 private:
-    MemoryRegion memoryRegion[100];
-    monotonic_buffer_resource memoryRegionSrc{std::data(memoryRegion),
-                                              std::size(memoryRegion)};
-    QueuingPort queuingPort[100];
-    monotonic_buffer_resource queuingPortSrc{std::data(queuingPort), std::size(queuingPort)};
-    SamplingPort samplingPort[100];
-    monotonic_buffer_resource samplingPortSrc{std::data(samplingPort),
-                                              std::size(samplingPort)};
-    std::optional<Process> proces[100];
-    monotonic_buffer_resource processSrc{std::data(proces), std::size(proces)};
-
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
     name_t partitionName; /* required */
@@ -30,17 +20,24 @@ private:
     decOrHex_t duration; /* required */
     decOrHex_t period;   /* required */
 
-    vector<MemoryRegion> memoryRegions; /* required */
-    vector<QueuingPort> queuePorts;     /* required */
-    vector<SamplingPort> samplePorts;   /* required */
-
     OPERATING_MODE_TYPE mode;
     PARTITION_STATUS_TYPE status;
 
-    vector<Process> processes;
     CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
     bool systemPartition = false;                             /* required */
     name_t entryPoint;                                        /* required */
+
+    MemoryRegion memoryRegion[100];
+    std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
+
+    QueuingPort queuingPort[100];
+    std::vector<QueuingPort>* queuingPorts = new (&queuingPort) std::vector<QueuingPort>;
+
+    SamplingPort samplingPort[100];
+    std::vector<SamplingPort>* samplingPorts = new (&samplingPort) std::vector<SamplingPort>;
+
+    std::optional<Process> process[100];
+    std::vector<Process>* processes = new (&process) std::vector<Process>;
 
 public:
     Partition(){};
@@ -57,11 +54,17 @@ public:
           affinity(affinity),
           partitionName(name),
           duration(duration),
-          period(period),
-          memoryRegions(mem, &memoryRegionSrc),
-          queuePorts(queuing, &queuingPortSrc),
-          samplePorts(sampling, &samplingPortSrc)
+          period(period)
     {
+        for (auto m : mem) {
+            memoryRegions->push_back(m);
+        }
+        for (auto q : queuing) {
+            queuingPorts->push_back(q);
+        }
+        for (auto s : sampling) {
+            samplingPorts->push_back(s);
+        }
     }
 
     Partition(identifier_t id,
@@ -77,12 +80,17 @@ public:
           affinity(affinity),
           partitionName(name),
           duration(duration),
-          period(period),
-          memoryRegions(mem, &memoryRegionSrc),
-          queuePorts(queuing, &queuingPortSrc),
-          samplePorts(sampling, &samplingPortSrc),
-          processes(proc, &processSrc)
+          period(period)
     {
+        for (auto m : mem) {
+            memoryRegions->push_back(m);
+        }
+        for (auto q : queuing) {
+            queuingPorts->push_back(q);
+        }
+        for (auto p : proc) {
+            processes->push_back(p);
+        }
     }
 
     Partition(const Partition& rhs)
@@ -91,11 +99,20 @@ public:
           partitionName(rhs.partitionName),
           duration(rhs.duration),
           period(rhs.period),
-          memoryRegions(rhs.memoryRegions),
-          queuePorts(rhs.queuePorts),
-          samplePorts(rhs.samplePorts),
-          processes(rhs.processes)
+          memoryRegions(rhs.memoryRegions)
     {
+        for (auto m : rhs.getMemoryRegions()) {
+            memoryRegions->push_back(m);
+        }
+        for (auto q : rhs.getQueuePorts()) {
+            queuingPorts->push_back(q);
+        }
+        for (auto s : rhs.getSamplePorts()) {
+            samplingPorts->push_back(s);
+        }
+        for (auto p : rhs.getProcesses()) {
+            processes->push_back(p);
+        }
     }
 
     Partition& operator=(const Partition& rhs);

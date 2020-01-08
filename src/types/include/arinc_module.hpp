@@ -7,8 +7,9 @@
 #include "partition.hpp"
 #include "partition_hm_table.hpp"
 #include "partition_memory.hpp"
-#include "system_error.hpp"
 #include "process.hpp"
+#include "system_error.hpp"
+#include <vector>
 
 class ArincModule {
 private:
@@ -17,26 +18,24 @@ private:
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
     Partition partitionBuffer[100];
-    monotonic_buffer_resource partitionBufferSrc{std::data(partitionBuffer),
-                                                 std::size(partitionBuffer)};
+    std::vector<Partition>* partitions = new (&partitionBuffer) std::vector<Partition>;
 
     SystemError systemErrorBuffer[100];
-    monotonic_buffer_resource systemErrorBufferSrc{
-        std::data(systemErrorBuffer), std::size(systemErrorBuffer)};
+    std::vector<SystemError>* systemErrors =
+        new (&systemErrorBuffer) std::vector<SystemError>;
 
     MultiPartitionHMTable multiPartitionHMTableBuffer[100];
-    monotonic_buffer_resource multiPartitionHMTableBufferSrc{
-        std::data(multiPartitionHMTableBuffer), std::size(multiPartitionHMTableBuffer)};
+    std::vector<MultiPartitionHMTable>* multiPartitionHMTableBuffers =
+        new (&multiPartitionHMTableBuffer) std::vector<MultiPartitionHMTable>;
 
     ModuleHMTable moduleHMTableBuffer[100];
-    monotonic_buffer_resource moduleHMTableBufferSrc{
-        std::data(moduleHMTableBuffer), std::size(moduleHMTableBuffer)};
+    std::vector<ModuleHMTable>* moduleHMTableBuffers =
+        new (&moduleHMTableBuffer) std::vector<ModuleHMTable>;
 
     PartitionHMTable partitionHMBuffer[125];
-    monotonic_buffer_resource partitionHMBufferSrc{
-        std::data(partitionHMBuffer), std::size(partitionHMBuffer)};
+    std::vector<PartitionHMTable>* partitionHMBuffers =
+        new (&partitionHMBuffer) std::vector<PartitionHMTable>;
 
-    vector<Partition> partitions;                        /* required */
     vector<SystemError> systemErrorsTable;               /* required */
     vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
     vector<ModuleHMTable> moduleHMTable;                 /* required */
@@ -53,15 +52,23 @@ public:
                 std::initializer_list<MultiPartitionHMTable> multiPartTab,
                 std::initializer_list<ModuleHMTable> moduleHMTab,
                 std::initializer_list<PartitionHMTable> partitionHMTab)
-        : moduleName(name),
-          moduleVersion(version),
-          moduleId(id),
-          partitions(part, &partitionBufferSrc),
-          systemErrorsTable(err, &systemErrorBufferSrc),
-          multiPartitionHMTable(multiPartTab, &multiPartitionHMTableBufferSrc),
-          moduleHMTable(moduleHMTab, &moduleHMTableBufferSrc),
-          partitionHMTable(partitionHMTab, &partitionHMBufferSrc)
+        : moduleName(name), moduleVersion(version), moduleId(id)
     {
+        for (auto p : part) {
+            partitions->push_back(p);
+        }
+        for (auto s : err) {
+            systemErrors->push_back(s);
+        }
+        for (auto m : multiPartTab) {
+            multiPartitionHMTableBuffers->push_back(m);
+        }
+        for (auto m : moduleHMTab) {
+            moduleHMTableBuffers->push_back(m);
+        }
+        for (auto p : partitionHMTab) {
+            partitionHMBuffers->push_back(p);
+        }
     }
 
     const name_t& getModuleName() const;
