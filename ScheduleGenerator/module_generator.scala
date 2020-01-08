@@ -180,7 +180,7 @@ object ModuleGenerator {
 
         emitString = emitString +
           this.generatePartitionPorts(samplingPorts, false) +
-          this.emit("}\n", -1);
+          this.emit("},\n", -1);
       } else {
         emitString = emitString + this.emit("{},\n");
       }

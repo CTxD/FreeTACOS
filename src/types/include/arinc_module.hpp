@@ -36,16 +36,11 @@ private:
     monotonic_buffer_resource partitionHMBufferSrc{
         std::data(partitionHMBuffer), std::size(partitionHMBuffer)};
 
-    Process processBuffer[125];
-    monotonic_buffer_resource processBufferSrc{
-        std::data(processBuffer), std::size(processBuffer)};
-
     vector<Partition> partitions;                        /* required */
     vector<SystemError> systemErrorsTable;               /* required */
     vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
     vector<ModuleHMTable> moduleHMTable;                 /* required */
     vector<PartitionHMTable> partitionHMTable;           /* required */
-    vector<Process> process;
 
 public:
     ArincModule(){};
@@ -57,8 +52,7 @@ public:
                 std::initializer_list<SystemError> err,
                 std::initializer_list<MultiPartitionHMTable> multiPartTab,
                 std::initializer_list<ModuleHMTable> moduleHMTab,
-                std::initializer_list<PartitionHMTable> partitionHMTab,
-                std::initializer_list<Process> process)
+                std::initializer_list<PartitionHMTable> partitionHMTab)
         : moduleName(name),
           moduleVersion(version),
           moduleId(id),
@@ -66,8 +60,7 @@ public:
           systemErrorsTable(err, &systemErrorBufferSrc),
           multiPartitionHMTable(multiPartTab, &multiPartitionHMTableBufferSrc),
           moduleHMTable(moduleHMTab, &moduleHMTableBufferSrc),
-          partitionHMTable(partitionHMTab, &partitionHMBufferSrc),
-          process(process, &partitionHMBufferSrc)
+          partitionHMTable(partitionHMTab, &partitionHMBufferSrc)
     {
     }
 
