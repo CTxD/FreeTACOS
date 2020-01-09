@@ -3,16 +3,19 @@
 
 #include "port.hpp"
 
-class SamplingPort : Port
-{
-  private:
-    std::optional<float> refreshRate;  /* optional */
+class SamplingPort : Port {
+private:
+    std::optional<float> refreshRate; /* optional */
 
-  public:
-    SamplingPort() {}
+public:
+    SamplingPort()
+    {
+    }
 
-    SamplingPort(name_t name,APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, float refreshRate):
-      Port(name, msgSize, direction), refreshRate(refreshRate) {}
+    SamplingPort(name_t name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, float refreshRate)
+        : Port(name, msgSize, direction), refreshRate(refreshRate)
+    {
+    }
 
     const std::optional<float>& getRefreshRate() const;
 };
