@@ -22,7 +22,7 @@ const std::vector<SystemError>& ArincModule::getSystemErrorsTable() const
 
 const std::vector<PartitionHMTable>& ArincModule::getPartitionHMTable() const
 {
-  return *partitionHMs;
+  return *partitionHMTables;
 };
 
 const std::vector<Partition>& ArincModule::getPartitions() const

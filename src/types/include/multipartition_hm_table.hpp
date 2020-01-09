@@ -26,7 +26,7 @@ public:
     }
 
     MultiPartitionHMTable(const MultiPartitionHMTable& rhs)
-        : tableName(rhs.tableName), errorActions(rhs.errorActions)
+        : tableName(rhs.tableName)
     {
         for (auto a : rhs.getActions()) {
             multiPartitionErrorActions->push_back(a);

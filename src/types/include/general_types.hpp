@@ -1,7 +1,6 @@
 #ifndef GENERAL_TYPES
 #define GENERAL_TYPES
 
-#include <boost/container/pmr/monotonic_buffer_resource.hpp>
 #include <optional>
 #include <string>
 #include <utility>

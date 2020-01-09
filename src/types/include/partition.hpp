@@ -98,8 +98,7 @@ public:
           affinity(rhs.affinity),
           partitionName(rhs.partitionName),
           duration(rhs.duration),
-          period(rhs.period),
-          memoryRegions(rhs.memoryRegions)
+          period(rhs.period)
     {
         for (auto m : rhs.getMemoryRegions()) {
             memoryRegions->push_back(m);

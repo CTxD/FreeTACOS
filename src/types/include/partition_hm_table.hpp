@@ -10,7 +10,6 @@ private:
         new (&partitionErrorAction) std::vector<PartitionErrorAction>;
     name_t tableName;                     /* required */
     name_t multiPartitionTableName;       /* required */
-    std::vector<PartitionErrorAction> actions; /* required */
 
 public:
     PartitionHMTable()
@@ -29,8 +28,7 @@ public:
 
     PartitionHMTable(const PartitionHMTable& rhs)
         : tableName(rhs.tableName),
-          multiPartitionTableName(rhs.multiPartitionTableName),
-          actions(rhs.actions)
+          multiPartitionTableName(rhs.multiPartitionTableName)
     {
         for (auto a : rhs.getActions()) {
             partitionErrorActions->push_back(a);

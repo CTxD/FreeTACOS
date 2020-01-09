@@ -32,9 +32,9 @@ private:
     std::vector<ModuleHMTable>* moduleHMTables =
         new (&moduleHMTable) std::vector<ModuleHMTable>;
 
-    PartitionHMTable partitionHM[1];
-    std::vector<PartitionHMTable>* partitionHMs =
-        new (&partitionHM) std::vector<PartitionHMTable>;
+    PartitionHMTable partitionHMTable[1];
+    std::vector<PartitionHMTable>* partitionHMTables =
+        new (&partitionHMTable) std::vector<PartitionHMTable>;
 
 public:
     ArincModule(){};
@@ -62,7 +62,7 @@ public:
             moduleHMTables->push_back(m);
         }
         for (auto p : partitionHMTab) {
-            partitionHMs->push_back(p);
+            partitionHMTables->push_back(p);
         }
     }
 

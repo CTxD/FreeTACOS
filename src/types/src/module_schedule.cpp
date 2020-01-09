@@ -2,5 +2,5 @@
 
 const std::vector<PartitionSchedule>& ModuleSchedule::getMajorFrameSeconds() const
 {
-  return majorFrameSeconds;
+  return *majorFrameSeconds;
 }
