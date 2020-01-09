@@ -10,7 +10,7 @@ const std::optional<name_t>& PartitionMemory::getPartitionName() const
   return partitionName;
 }
 
-const vector<MemoryRegion>& PartitionMemory::getMemoryRegion() const
+const std::vector<MemoryRegion>& PartitionMemory::getMemoryRegion() const
 {
-  return memoryRegions;
+  return *memoryRegions;
 }

@@ -5,10 +5,10 @@
 
 class ModuleSchedule {
 private:
-    PartitionSchedule partitionSchedule[100];
+    PartitionSchedule partitionSchedule[1];
     std::vector<PartitionSchedule>* partitionSchedules =
         new (&partitionSchedule) std::vector<PartitionSchedule>;
-    vector<PartitionSchedule> majorFrameSeconds; /* required */
+    std::vector<PartitionSchedule> majorFrameSeconds; /* required */
 
 public:
     ModuleSchedule(std::initializer_list<PartitionSchedule> majorFrame)
@@ -18,7 +18,7 @@ public:
         }
     }
 
-    const vector<PartitionSchedule>& getMajorFrameSeconds() const;
+    const std::vector<PartitionSchedule>& getMajorFrameSeconds() const;
 };
 
 #endif

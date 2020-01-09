@@ -5,22 +5,21 @@
 
 class Channel {
 private:
-    PortMapping portMapping[100];
-    std::vector<PortMapping>* portMappings = new (&portMapping) std::vector<PortMapping>;
+    PortMapping destination[1];
+    std::vector<PortMapping>* destinations = new (&destination) std::vector<PortMapping>;
 
     identifier_t channelIdentifier;    /* required */
     std::optional<name_t> channelName; /* optional */
     PortMapping source;                /* required */
-    vector<PortMapping> destinations;  /* required */
 
 public:
     Channel(){};
 
-    Channel(identifier_t id, name_t name, PortMapping source, std::initializer_list<PortMapping> destinations)
+    Channel(identifier_t id, name_t name, PortMapping source, std::initializer_list<PortMapping> dest)
         : channelIdentifier(id), channelName(name), source(source)
     {
-        for (auto d : destinations) {
-            portMappings->push_back(d);
+        for (auto d : dest) {
+            destinations->push_back(d);
         }
     }
 
@@ -30,7 +29,7 @@ public:
 
     const PortMapping& getSource() const;
 
-    const vector<PortMapping>& getDestinations() const;
+    const std::vector<PortMapping>& getDestinations() const;
 };
 
 #endif

@@ -24,7 +24,7 @@ public:
 
     const std::optional<name_t>& getPartitionName() const;
 
-    const vector<MemoryRegion>& getMemoryRegion() const;
+    const std::vector<MemoryRegion>& getMemoryRegion() const;
 };
 
 #endif

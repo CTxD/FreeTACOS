@@ -17,29 +17,24 @@ private:
     std::optional<name_t> moduleVersion;  /* optional */
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
-    Partition partitionBuffer[100];
-    std::vector<Partition>* partitions = new (&partitionBuffer) std::vector<Partition>;
+    Partition partition[1];
+    std::vector<Partition>* partitions = new (&partition) std::vector<Partition>;
 
-    SystemError systemErrorBuffer[100];
+    SystemError systemError[1];
     std::vector<SystemError>* systemErrors =
-        new (&systemErrorBuffer) std::vector<SystemError>;
+        new (&systemError) std::vector<SystemError>;
 
-    MultiPartitionHMTable multiPartitionHMTableBuffer[100];
-    std::vector<MultiPartitionHMTable>* multiPartitionHMTableBuffers =
-        new (&multiPartitionHMTableBuffer) std::vector<MultiPartitionHMTable>;
+    MultiPartitionHMTable multiPartitionHMTable[1];
+    std::vector<MultiPartitionHMTable>* multiPartitionHMTables =
+        new (&multiPartitionHMTable) std::vector<MultiPartitionHMTable>;
 
-    ModuleHMTable moduleHMTableBuffer[100];
-    std::vector<ModuleHMTable>* moduleHMTableBuffers =
-        new (&moduleHMTableBuffer) std::vector<ModuleHMTable>;
+    ModuleHMTable moduleHMTable[1];
+    std::vector<ModuleHMTable>* moduleHMTables =
+        new (&moduleHMTable) std::vector<ModuleHMTable>;
 
-    PartitionHMTable partitionHMBuffer[125];
-    std::vector<PartitionHMTable>* partitionHMBuffers =
-        new (&partitionHMBuffer) std::vector<PartitionHMTable>;
-
-    vector<SystemError> systemErrorsTable;               /* required */
-    vector<MultiPartitionHMTable> multiPartitionHMTable; /* required */
-    vector<ModuleHMTable> moduleHMTable;                 /* required */
-    vector<PartitionHMTable> partitionHMTable;           /* required */
+    PartitionHMTable partitionHM[1];
+    std::vector<PartitionHMTable>* partitionHMs =
+        new (&partitionHM) std::vector<PartitionHMTable>;
 
 public:
     ArincModule(){};
@@ -61,13 +56,13 @@ public:
             systemErrors->push_back(s);
         }
         for (auto m : multiPartTab) {
-            multiPartitionHMTableBuffers->push_back(m);
+            multiPartitionHMTables->push_back(m);
         }
         for (auto m : moduleHMTab) {
-            moduleHMTableBuffers->push_back(m);
+            moduleHMTables->push_back(m);
         }
         for (auto p : partitionHMTab) {
-            partitionHMBuffers->push_back(p);
+            partitionHMs->push_back(p);
         }
     }
 
@@ -77,19 +72,17 @@ public:
 
     const std::optional<APEX_INTEGER>& getModuleId() const;
 
-    const vector<SystemError>& getSystemErrorsTable() const;
+    const std::vector<SystemError>& getSystemErrorsTable() const;
 
-    const vector<PartitionHMTable>& getPartitionHmTable() const;
+    const std::vector<PartitionHMTable>& getPartitionHMTable() const;
 
-    const vector<Partition>& getPartitions() const;
+    const std::vector<Partition>& getPartitions() const;
 
-    const vector<MultiPartitionHMTable>& getMultiPartitionHMTable() const;
+    const std::vector<MultiPartitionHMTable>& getMultiPartitionHMTable() const;
 
-    const vector<ModuleHMTable>& getModuleHmTable() const;
+    const std::vector<ModuleHMTable>& getModuleHmTable() const;
 
-    const vector<PartitionHMTable>& getPartitionHMTable() const;
-
-    const vector<Process>& getProcess() const;
+    const std::vector<Process>& getProcess() const;
 };
 
 #endif

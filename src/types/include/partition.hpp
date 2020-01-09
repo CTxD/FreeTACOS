@@ -27,16 +27,16 @@ private:
     bool systemPartition = false;                             /* required */
     name_t entryPoint;                                        /* required */
 
-    MemoryRegion memoryRegion[100];
+    MemoryRegion memoryRegion[1];
     std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
 
-    QueuingPort queuingPort[100];
+    QueuingPort queuingPort[1];
     std::vector<QueuingPort>* queuingPorts = new (&queuingPort) std::vector<QueuingPort>;
 
-    SamplingPort samplingPort[100];
+    SamplingPort samplingPort[1];
     std::vector<SamplingPort>* samplingPorts = new (&samplingPort) std::vector<SamplingPort>;
 
-    std::optional<Process> process[100];
+    std::optional<Process> process[1];
     std::vector<Process>* processes = new (&process) std::vector<Process>;
 
 public:
@@ -127,11 +127,11 @@ public:
 
     const decOrHex_t& getPeriod() const;
 
-    const vector<MemoryRegion>& getMemoryRegions() const;
+    const std::vector<MemoryRegion>& getMemoryRegions() const;
 
-    const vector<QueuingPort>& getQueuePorts() const;
+    const std::vector<QueuingPort>& getQueuePorts() const;
 
-    const vector<SamplingPort>& getSamplePorts() const;
+    const std::vector<SamplingPort>& getSamplePorts() const;
 
     void setMode(OPERATING_MODE_TYPE mode);
 
@@ -143,7 +143,7 @@ public:
 
     void addProcess(Process proc);
 
-    const vector<Process>& getProcesses() const;
+    const std::vector<Process>& getProcesses() const;
 
     void setCriticality(CRITICALITY_TYPE criticality);
 

@@ -6,17 +6,15 @@
 
 class SystemStateEntry {
 private:
-    ErrorLevel errorLevel[100];
+    ErrorLevel errorLevel[1];
     std::vector<ErrorLevel>* errorLevels = new (&errorLevel) std::vector<ErrorLevel>;
 
-    ModuleErrorAction moduleErrorAction[100];
+    ModuleErrorAction moduleErrorAction[1];
     std::vector<ModuleErrorAction>* moduleErrorActions =
         new (&moduleErrorAction) std::vector<ModuleErrorAction>;
 
     APEX_INTEGER systemState;          /* required */
     std::optional<name_t> description; /* optional */
-    vector<ErrorLevel> errorIdLevels;  /* required */
-    vector<ModuleErrorAction> actions; /* required */
 
 public:
     SystemStateEntry(){};
@@ -39,9 +37,9 @@ public:
 
     const std::optional<name_t> getDescription() const;
 
-    const vector<ErrorLevel>& getErrorIdLevels() const;
+    const std::vector<ErrorLevel>& getErrorIdLevels() const;
 
-    const vector<ModuleErrorAction>& getActions() const;
+    const std::vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

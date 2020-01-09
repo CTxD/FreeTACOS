@@ -17,5 +17,5 @@ const PortMapping& Channel::getSource() const
 
 const vector<PortMapping>& Channel::getDestinations() const
 {
-  return destinations;
+  return *destinations;
 }

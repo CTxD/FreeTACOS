@@ -10,12 +10,12 @@ const std::optional<name_t> SystemStateEntry::getDescription() const
   return description;
 }
 
-const vector<ErrorLevel>& SystemStateEntry::getErrorIdLevels() const
+const std::vector<ErrorLevel>& SystemStateEntry::getErrorIdLevels() const
 {
-  return errorIdLevels;
+  return *errorLevels;
 }
 
-const vector<ModuleErrorAction>& SystemStateEntry::getActions() const
+const std::vector<ModuleErrorAction>& SystemStateEntry::getActions() const
 {
-  return actions;
+  return *moduleErrorActions;
 }

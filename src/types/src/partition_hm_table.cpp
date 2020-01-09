@@ -18,7 +18,7 @@ const name_t& PartitionHMTable::getMultiPartitionTableName() const
   return multiPartitionTableName;
 }
 
-const vector<PartitionErrorAction>& PartitionHMTable::getActions() const
+const std::vector<PartitionErrorAction>& PartitionHMTable::getActions() const
 {
   return actions;
 }

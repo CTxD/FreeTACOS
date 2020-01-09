@@ -6,13 +6,12 @@
 
 class ModuleHMTable {
 private:
-    ModuleErrorAction moduleErrorAction[100];
+    ModuleErrorAction moduleErrorAction[1];
     std::vector<ModuleErrorAction>* moduleErrorActions =
         new (&moduleErrorAction) std::vector<ModuleErrorAction>;
 
     identifier_t stateIdentifier;      /* required */
     description_t description;         /* required */
-    vector<ModuleErrorAction> actions; /* required */
 
 public:
     ModuleHMTable(){};
@@ -27,7 +26,7 @@ public:
     }
 
     ModuleHMTable(const ModuleHMTable& rhs)
-        : stateIdentifier(rhs.stateIdentifier), actions(rhs.actions)
+        : stateIdentifier(rhs.stateIdentifier)
     {
         for (auto a : rhs.getActions()) {
             moduleErrorActions->push_back(a);
@@ -41,7 +40,7 @@ public:
 
     const description_t& getDescription() const;
 
-    const vector<ModuleErrorAction>& getActions() const;
+    const std::vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

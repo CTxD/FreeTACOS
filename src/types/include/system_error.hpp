@@ -2,6 +2,7 @@
 #define SYSTEM_ERROR
 
 #include "general_types.hpp"
+#include <string.h>
 
 class SystemError {
 private:

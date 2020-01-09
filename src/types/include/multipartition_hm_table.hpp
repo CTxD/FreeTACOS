@@ -5,12 +5,12 @@
 
 class MultiPartitionHMTable {
 private:
-    MultiPartitionErrorAction multiPartitionErrorAction[100];
+    MultiPartitionErrorAction multiPartitionErrorAction[1];
     std::vector<MultiPartitionErrorAction>* multiPartitionErrorActions =
         new (&multiPartitionErrorAction) std::vector<MultiPartitionErrorAction>;
 
     name_t tableName;                               /* required */
-    vector<MultiPartitionErrorAction> errorActions; /* required */
+    std::vector<MultiPartitionErrorAction> errorActions; /* required */
 
 public:
     MultiPartitionHMTable()
@@ -37,7 +37,7 @@ public:
 
     const name_t& getTableName() const;
 
-    const vector<MultiPartitionErrorAction>& getActions() const;
+    const std::vector<MultiPartitionErrorAction>& getActions() const;
 };
 
 #endif
