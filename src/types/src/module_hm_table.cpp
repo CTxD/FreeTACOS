@@ -4,7 +4,7 @@ ModuleHMTable& ModuleHMTable::operator=(const ModuleHMTable& rhs)
 {
     stateIdentifier = rhs.stateIdentifier;
     strcpy(description, rhs.description);
-    actions = rhs.actions;
+    moduleErrorActions = rhs.moduleErrorActions;
     return *this;
 }
 
@@ -18,7 +18,7 @@ const description_t& ModuleHMTable::getDescription() const
     return description;
 }
 
-const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& ModuleHMTable::getActions() const
+const std::vector<ModuleErrorAction>& ModuleHMTable::getActions() const
 {
-    return actions;
+    return *moduleErrorActions;
 }

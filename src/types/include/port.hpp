@@ -4,19 +4,21 @@
 #include "apex_types.h"
 #include "port_mapping.hpp"
 
+class Port {
+private:
+    name_t portName;               /* required */
+    APEX_INTEGER maxMessageSize;   /* required */
+    PORT_DIRECTION_TYPE direction; /* required */
 
-class Port
-{
-  private:
-    NAME_TYPE portName;                /* required */
-    APEX_INTEGER maxMessageSize;    /* required */
-    PORT_DIRECTION_TYPE direction;  /* required */
+public:
+    Port()
+    {
+    }
 
-  public:
-    Port() {}
-
-    Port(NAME_TYPE name,APEX_INTEGER msgSize, PORT_DIRECTION_TYPE dir):
-      portName(name), maxMessageSize(msgSize), direction(dir) {}
+    Port(name_t name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE dir)
+        : portName(name), maxMessageSize(msgSize), direction(dir)
+    {
+    }
 
     const NAME_TYPE& getPortName() const;
 

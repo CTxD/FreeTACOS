@@ -6,40 +6,40 @@
 
 class SystemStateEntry {
 private:
-    ErrorLevel errorLevel[100];
-    MemoryArea errorLevelArea{std::data(errorLevel), std::size(errorLevel)};
-    MonotonicMemoryResource<> errorLevelSrc{errorLevelArea};
-    MonotonicAllocator<ErrorLevel> errorLevelAllocator{errorLevelSrc};
+    ErrorLevel errorLevel[1];
+    std::vector<ErrorLevel>* errorLevels = new (&errorLevel) std::vector<ErrorLevel>;
 
-    ModuleErrorAction moduleErrorAction[100];
-    MemoryArea moduleErrorActionArea{std::data(moduleErrorAction),
-                                     std::size(moduleErrorAction)};
-    MonotonicMemoryResource<> moduleErrorActionSrc{moduleErrorActionArea};
-    MonotonicAllocator<ModuleErrorAction> moduleErrorActionAllocator{moduleErrorActionSrc};
-    APEX_INTEGER systemState;             /* required */
-    std::optional<NAME_TYPE> description; /* optional */
-    std::vector<ErrorLevel, MonotonicAllocator<ErrorLevel>> errorIdLevels{errorLevelAllocator}; /* required */
-    std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>> actions{
-        moduleErrorActionAllocator}; /* required */
+    ModuleErrorAction moduleErrorAction[1];
+    std::vector<ModuleErrorAction>* moduleErrorActions =
+        new (&moduleErrorAction) std::vector<ModuleErrorAction>;
+
+    APEX_INTEGER systemState;          /* required */
+    std::optional<name_t> description; /* optional */
 
 public:
     SystemStateEntry(){};
 
     SystemStateEntry(const int state,
-                     const NAME_TYPE descr,
+                     const name_t descr,
                      std::initializer_list<ErrorLevel> levels,
                      std::initializer_list<ModuleErrorAction> actions)
-        : systemState(state), description(descr), errorIdLevels(levels), actions(actions)
+        : systemState(state), description(descr)
     {
+        for (auto l : levels) {
+            errorLevels->push_back(l);
+        }
+        for (auto a : actions) {
+            moduleErrorActions->push_back(a);
+        }
     }
 
     const APEX_INTEGER& getSystemState() const;
 
-    const std::optional<NAME_TYPE> getDescription() const;
+    const std::optional<name_t> getDescription() const;
 
-    const std::vector<ErrorLevel, MonotonicAllocator<ErrorLevel>>& getErrorIdLevels() const;
+    const std::vector<ErrorLevel>& getErrorIdLevels() const;
 
-    const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& getActions() const;
+    const std::vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

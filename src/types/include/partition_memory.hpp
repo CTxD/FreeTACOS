@@ -6,25 +6,25 @@
 class PartitionMemory {
 private:
     MemoryRegion memoryRegion[100];
-    MemoryArea partitionMemoryArea{std::data(memoryRegion), std::size(memoryRegion)};
-    MonotonicMemoryResource<> memoryRegionSrc{partitionMemoryArea};
-    MonotonicAllocator<MemoryRegion> PartitionMemoryAllocator{memoryRegionSrc};
+    std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
 
-    identifier_t partitionIdentifier;       /* required */
-    std::optional<NAME_TYPE> partitionName; /* optional */
-    std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>> memoryRegions; /* required */
+    identifier_t partitionIdentifier;    /* required */
+    std::optional<name_t> partitionName; /* optional */
 
 public:
-    PartitionMemory(identifier_t id, NAME_TYPE name, std::initializer_list<MemoryRegion> memory)
-        : partitionIdentifier(id), partitionName(name), memoryRegions(memory)
+    PartitionMemory(identifier_t id, name_t name, std::initializer_list<MemoryRegion> memory)
+        : partitionIdentifier(id), partitionName(name)
     {
+        for (auto m : memory) {
+            memoryRegions->push_back(m);
+        }
     }
 
     const identifier_t& getPartitionIdentifier() const;
 
     const std::optional<NAME_TYPE>& getPartitionName() const;
 
-    const std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>>& getMemoryRegion() const;
+    const std::vector<MemoryRegion>& getMemoryRegion() const;
 };
 
 #endif

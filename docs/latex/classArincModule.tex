@@ -1,0 +1,127 @@
+\hypertarget{classArincModule}{}\section{Arinc\+Module Class Reference}
+\label{classArincModule}\index{Arinc\+Module@{Arinc\+Module}}
+
+
+{\ttfamily \#include $<$arinc\+\_\+module.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classArincModule_add5d508aa61f9682e7b0b08b7962a85e}{Arinc\+Module} ()
+\item 
+\hyperlink{classArincModule_a2d9dace604f363788f20c90f5a63350f}{Arinc\+Module} (\hyperlink{structname__t}{name\+\_\+t} name, std\+::optional$<$ \hyperlink{structname__t}{name\+\_\+t} $>$ version, std\+::optional$<$ \hyperlink{general__types_8hpp_a824b78b06da8112c2772bc666a63638d}{identifier\+\_\+t} $>$ id, std\+::initializer\+\_\+list$<$ \hyperlink{classPartition}{Partition} $>$ part, std\+::initializer\+\_\+list$<$ \hyperlink{classSystemError}{System\+Error} $>$ err, std\+::initializer\+\_\+list$<$ \hyperlink{classMultiPartitionHMTable}{Multi\+Partition\+H\+M\+Table} $>$ multi\+Part\+Tab, std\+::initializer\+\_\+list$<$ \hyperlink{classModuleHMTable}{Module\+H\+M\+Table} $>$ module\+H\+M\+Tab, std\+::initializer\+\_\+list$<$ \hyperlink{classPartitionHMTable}{Partition\+H\+M\+Table} $>$ partition\+H\+M\+Tab)
+\item 
+const \hyperlink{structname__t}{name\+\_\+t} \& \hyperlink{classArincModule_ab5717066ca1c51c462bd458d75d9b33d}{get\+Module\+Name} () const 
+\item 
+const std\+::optional$<$ \hyperlink{structname__t}{name\+\_\+t} $>$ \& \hyperlink{classArincModule_a1697cfd476ca1ff2580a79b2106907d7}{get\+Module\+Version} () const 
+\item 
+const std\+::optional$<$ \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} $>$ \& \hyperlink{classArincModule_a582c1d93e5963a5e04814a6ef5084233}{get\+Module\+Id} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classSystemError}{System\+Error} $>$ \& \hyperlink{classArincModule_ae775a3a084ffdcd8bfa4b18892dda5df}{get\+System\+Errors\+Table} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classPartitionHMTable}{Partition\+H\+M\+Table} $>$ \& \hyperlink{classArincModule_ae244d23d1a47efe1e86d605d92418c31}{get\+Partition\+H\+M\+Table} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classPartition}{Partition} $>$ \& \hyperlink{classArincModule_ac987d8d470eb4189878a0d20ed68a5ff}{get\+Partitions} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classMultiPartitionHMTable}{Multi\+Partition\+H\+M\+Table} $>$ \& \hyperlink{classArincModule_a8087a844977113a6ee74c54ac29a6ebd}{get\+Multi\+Partition\+H\+M\+Table} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classModuleHMTable}{Module\+H\+M\+Table} $>$ \& \hyperlink{classArincModule_aa10979a1a60b24c3dddcccf3fab6d62a}{get\+Module\+Hm\+Table} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classProcess}{Process} $>$ \& \hyperlink{classArincModule_a317a7cb355f9b2cafc19333250faa1a5}{get\+Process} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Arinc\+Module@{Arinc\+Module}!Arinc\+Module@{Arinc\+Module}}
+\index{Arinc\+Module@{Arinc\+Module}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{Arinc\+Module()}{ArincModule()}}]{\setlength{\rightskip}{0pt plus 5cm}Arinc\+Module\+::\+Arinc\+Module (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classArincModule_add5d508aa61f9682e7b0b08b7962a85e}{}\label{classArincModule_add5d508aa61f9682e7b0b08b7962a85e}
+\index{Arinc\+Module@{Arinc\+Module}!Arinc\+Module@{Arinc\+Module}}
+\index{Arinc\+Module@{Arinc\+Module}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{Arinc\+Module(name\+\_\+t name, std\+::optional$<$ name\+\_\+t $>$ version, std\+::optional$<$ identifier\+\_\+t $>$ id, std\+::initializer\+\_\+list$<$ Partition $>$ part, std\+::initializer\+\_\+list$<$ System\+Error $>$ err, std\+::initializer\+\_\+list$<$ Multi\+Partition\+H\+M\+Table $>$ multi\+Part\+Tab, std\+::initializer\+\_\+list$<$ Module\+H\+M\+Table $>$ module\+H\+M\+Tab, std\+::initializer\+\_\+list$<$ Partition\+H\+M\+Table $>$ partition\+H\+M\+Tab)}{ArincModule(name_t name, std::optional< name_t > version, std::optional< identifier_t > id, std::initializer_list< Partition > part, std::initializer_list< SystemError > err, std::initializer_list< MultiPartitionHMTable > multiPartTab, std::initializer_list< ModuleHMTable > moduleHMTab, std::initializer_list< PartitionHMTable > partitionHMTab)}}]{\setlength{\rightskip}{0pt plus 5cm}Arinc\+Module\+::\+Arinc\+Module (
+\begin{DoxyParamCaption}
+\item[{{\bf name\+\_\+t}}]{name, }
+\item[{std\+::optional$<$ {\bf name\+\_\+t} $>$}]{version, }
+\item[{std\+::optional$<$ {\bf identifier\+\_\+t} $>$}]{id, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Partition} $>$}]{part, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf System\+Error} $>$}]{err, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Multi\+Partition\+H\+M\+Table} $>$}]{multi\+Part\+Tab, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Module\+H\+M\+Table} $>$}]{module\+H\+M\+Tab, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Partition\+H\+M\+Table} $>$}]{partition\+H\+M\+Tab}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classArincModule_a2d9dace604f363788f20c90f5a63350f}{}\label{classArincModule_a2d9dace604f363788f20c90f5a63350f}
+
+
+\subsection{Member Function Documentation}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Module\+Hm\+Table@{get\+Module\+Hm\+Table}}
+\index{get\+Module\+Hm\+Table@{get\+Module\+Hm\+Table}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Module\+Hm\+Table() const }{getModuleHmTable() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Module\+H\+M\+Table} $>$ \& Arinc\+Module\+::get\+Module\+Hm\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_aa10979a1a60b24c3dddcccf3fab6d62a}{}\label{classArincModule_aa10979a1a60b24c3dddcccf3fab6d62a}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Module\+Id@{get\+Module\+Id}}
+\index{get\+Module\+Id@{get\+Module\+Id}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Module\+Id() const }{getModuleId() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::optional$<$ {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} $>$ \& Arinc\+Module\+::get\+Module\+Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_a582c1d93e5963a5e04814a6ef5084233}{}\label{classArincModule_a582c1d93e5963a5e04814a6ef5084233}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Module\+Name@{get\+Module\+Name}}
+\index{get\+Module\+Name@{get\+Module\+Name}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Module\+Name() const }{getModuleName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf name\+\_\+t} \& Arinc\+Module\+::get\+Module\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_ab5717066ca1c51c462bd458d75d9b33d}{}\label{classArincModule_ab5717066ca1c51c462bd458d75d9b33d}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Module\+Version@{get\+Module\+Version}}
+\index{get\+Module\+Version@{get\+Module\+Version}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Module\+Version() const }{getModuleVersion() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::optional$<$ {\bf name\+\_\+t} $>$ \& Arinc\+Module\+::get\+Module\+Version (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_a1697cfd476ca1ff2580a79b2106907d7}{}\label{classArincModule_a1697cfd476ca1ff2580a79b2106907d7}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Multi\+Partition\+H\+M\+Table@{get\+Multi\+Partition\+H\+M\+Table}}
+\index{get\+Multi\+Partition\+H\+M\+Table@{get\+Multi\+Partition\+H\+M\+Table}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Multi\+Partition\+H\+M\+Table() const }{getMultiPartitionHMTable() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Multi\+Partition\+H\+M\+Table} $>$ \& Arinc\+Module\+::get\+Multi\+Partition\+H\+M\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_a8087a844977113a6ee74c54ac29a6ebd}{}\label{classArincModule_a8087a844977113a6ee74c54ac29a6ebd}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Partition\+H\+M\+Table@{get\+Partition\+H\+M\+Table}}
+\index{get\+Partition\+H\+M\+Table@{get\+Partition\+H\+M\+Table}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Partition\+H\+M\+Table() const }{getPartitionHMTable() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Partition\+H\+M\+Table} $>$ \& Arinc\+Module\+::get\+Partition\+H\+M\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_ae244d23d1a47efe1e86d605d92418c31}{}\label{classArincModule_ae244d23d1a47efe1e86d605d92418c31}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Partitions@{get\+Partitions}}
+\index{get\+Partitions@{get\+Partitions}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Partitions() const }{getPartitions() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Partition} $>$ \& Arinc\+Module\+::get\+Partitions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_ac987d8d470eb4189878a0d20ed68a5ff}{}\label{classArincModule_ac987d8d470eb4189878a0d20ed68a5ff}
+\index{Arinc\+Module@{Arinc\+Module}!get\+Process@{get\+Process}}
+\index{get\+Process@{get\+Process}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+Process() const }{getProcess() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<${\bf Process}$>$\& Arinc\+Module\+::get\+Process (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_a317a7cb355f9b2cafc19333250faa1a5}{}\label{classArincModule_a317a7cb355f9b2cafc19333250faa1a5}
+\index{Arinc\+Module@{Arinc\+Module}!get\+System\+Errors\+Table@{get\+System\+Errors\+Table}}
+\index{get\+System\+Errors\+Table@{get\+System\+Errors\+Table}!Arinc\+Module@{Arinc\+Module}}
+\subsubsection[{\texorpdfstring{get\+System\+Errors\+Table() const }{getSystemErrorsTable() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf System\+Error} $>$ \& Arinc\+Module\+::get\+System\+Errors\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classArincModule_ae775a3a084ffdcd8bfa4b18892dda5df}{}\label{classArincModule_ae775a3a084ffdcd8bfa4b18892dda5df}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/types/include/\hyperlink{arinc__module_8hpp}{arinc\+\_\+module.\+hpp}\item 
+src/types/src/\hyperlink{types_2src_2arinc__module_8cpp}{arinc\+\_\+module.\+cpp}\end{DoxyCompactItemize}

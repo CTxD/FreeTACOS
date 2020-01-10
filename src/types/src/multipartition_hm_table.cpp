@@ -12,7 +12,7 @@ const NAME_TYPE& MultiPartitionHMTable::getTableName() const
     return tableName;
 }
 
-const std::vector<MultiPartitionErrorAction, MonotonicAllocator<MultiPartitionErrorAction>>& MultiPartitionHMTable::getActions() const
+const std::vector<MultiPartitionErrorAction>& MultiPartitionHMTable::getActions() const
 {
     return errorActions;
 }

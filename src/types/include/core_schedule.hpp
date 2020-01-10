@@ -1,12 +1,12 @@
 #ifndef __CORE_SCHEDULE__
 #define __CORE_SCHEDULE__
 
-#include "partition_schedule.hpp"
+#include <partition_schedule.hpp>
+#include <vector>
 
 // Define type aliases
-typedef std::vector<PartitionSchedule, MonotonicAllocator<PartitionSchedule>> PartitionIterable;
-typedef std::vector <
-    std::vector<PartitionIterable, MonotonicAllocator<PartitionIterable>> CoreIterable;
+typedef std::vector<PartitionSchedule> PartitionIterable;
+typedef std::vector<std::vector<PartitionIterable>> CoreIterable;
 
 class CoreSchedule {
 private:

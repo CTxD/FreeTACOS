@@ -10,12 +10,12 @@ const std::optional<NAME_TYPE> SystemStateEntry::getDescription() const
     return description;
 }
 
-const std::vector<ErrorLevel, MonotonicAllocator<ErrorLevel>>& SystemStateEntry::getErrorIdLevels() const
+const std::vector<ErrorLevel>& SystemStateEntry::getErrorIdLevels() const
 {
-    return errorIdLevels;
+    return *errorLevels;
 }
 
-const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& SystemStateEntry::getActions() const
+const std::vector<ModuleErrorAction>& SystemStateEntry::getActions() const
 {
-    return actions;
+    return *moduleErrorActions;
 }

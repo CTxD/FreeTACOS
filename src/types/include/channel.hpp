@@ -5,32 +5,31 @@
 
 class Channel {
 private:
-    PortMapping portMapping[100];
-    MemoryArea portMappingArea{std::data(portMapping), std::size(portMapping)};
-    MonotonicMemoryResource<> portBufferSrc{portMappingArea};
-    MonotonicAllocator<PortMapping> portMappingAllocator{portBufferSrc};
+    PortMapping destination[1];
+    std::vector<PortMapping>* destinations = new (&destination) std::vector<PortMapping>;
 
-    identifier_t channelIdentifier;       /* required */
-    std::optional<NAME_TYPE> channelName; /* optional */
-    PortMapping source;                   /* required */
-    std::vector<PortMapping, MonotonicAllocator<PortMapping>> destinations{
-        portMappingAllocator}; /* required */
+    identifier_t channelIdentifier;    /* required */
+    std::optional<name_t> channelName; /* optional */
+    PortMapping source;                /* required */
 
 public:
     Channel(){};
 
-    Channel(identifier_t id, NAME_TYPE name, PortMapping source, std::initializer_list<PortMapping> destinations)
-        : channelIdentifier(id), channelName(name), source(source), destinations(destinations)
+    Channel(identifier_t id, name_t name, PortMapping source, std::initializer_list<PortMapping> dest)
+        : channelIdentifier(id), channelName(name), source(source)
     {
+        for (auto d : dest) {
+            destinations->push_back(d);
+        }
     }
 
     const identifier_t& getChannelId() const;
 
-    const std::optional<NAME_TYPE>& getChannelName() const;
+    const std::optional<name_t>& getChannelName() const;
 
     const PortMapping& getSource() const;
 
-    const std::vector<PortMapping, MonotonicAllocator<PortMapping>>& getDestinations() const;
+    const std::vector<PortMapping>& getDestinations() const;
 };
 
 #endif

@@ -5,33 +5,33 @@
 
 class PartitionHMTable {
 private:
-    PartitionErrorAction partitionErrorAction[100];
-    MemoryArea PartitionErrorActionArea{std::data(partitionErrorAction),
-                                        std::size(partitionErrorAction)};
-    MonotonicMemoryResource<> partitionErrorActionSrc{PartitionErrorActionArea};
-    MonotonicAllocator<PartitionErrorAction> partitionErrorActionAllocator{partitionErrorActionSrc};
-    NAME_TYPE tableName;               /* required */
-    NAME_TYPE multiPartitionTableName; /* required */
-    std::vector<PartitionErrorAction, MonotonicAllocator<PartitionErrorAction>> actions{
-        partitionErrorActionAllocator}; /* required */
+    PartitionErrorAction partitionErrorAction[1];
+    std::vector<PartitionErrorAction>* partitionErrorActions =
+        new (&partitionErrorAction) std::vector<PartitionErrorAction>;
+    name_t tableName;               /* required */
+    name_t multiPartitionTableName; /* required */
 
 public:
     PartitionHMTable()
     {
     }
 
-    PartitionHMTable(NAME_TYPE name,
-                     NAME_TYPE multiPartitionHM,
+    PartitionHMTable(name_t name,
+                     name_t multiPartitionHM,
                      std::initializer_list<PartitionErrorAction> actions)
-        : tableName(name), multiPartitionTableName(multiPartitionHM), actions(actions)
+        : tableName(name), multiPartitionTableName(multiPartitionHM)
     {
+        for (auto a : actions) {
+            partitionErrorActions->push_back(a);
+        }
     }
 
     PartitionHMTable(const PartitionHMTable& rhs)
-        : tableName(rhs.tableName),
-          multiPartitionTableName(rhs.multiPartitionTableName),
-          actions(rhs.actions)
+        : tableName(rhs.tableName), multiPartitionTableName(rhs.multiPartitionTableName)
     {
+        for (auto a : rhs.getActions()) {
+            partitionErrorActions->push_back(a);
+        }
     }
 
     PartitionHMTable& operator=(const PartitionHMTable&);
@@ -40,7 +40,7 @@ public:
 
     const NAME_TYPE& getMultiPartitionTableName() const;
 
-    const std::vector<PartitionErrorAction, MonotonicAllocator<PartitionErrorAction>>& getActions() const;
+    const std::vector<PartitionErrorAction>& getActions() const;
 };
 
 #endif

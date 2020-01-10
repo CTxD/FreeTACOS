@@ -8,10 +8,10 @@ typedef std::size_t size_t;
 #include <circle/types.h>
 #endif
 
-#include "allocator.hpp"
 #include <optional>
 #include <string>
 #include <utility>
+#include <vector>
 
 #include <apex_types.h>
 
@@ -21,9 +21,10 @@ const APEX_INTEGER MAX_NUMBER_MEMORY_REQUIREMENTS = 100;
 
 const APEX_INTEGER MAX_NUMBER_SYSTEM_STATES = 2;
 
-const APEX_INTEGER MAX_NUMBER_WINDOWS = 200;s
+const APEX_INTEGER MAX_NUMBER_WINDOWS = 200;
+s
 
-const APEX_INTEGER WINDOW_NUMBER = 100;
+    const APEX_INTEGER WINDOW_NUMBER = 100;
 
 const APEX_INTEGER CHANNEL_NUMBER = 50;
 

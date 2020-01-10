@@ -1,0 +1,78 @@
+\hypertarget{classSystemStateEntry}{}\section{System\+State\+Entry Class Reference}
+\label{classSystemStateEntry}\index{System\+State\+Entry@{System\+State\+Entry}}
+
+
+{\ttfamily \#include $<$system\+\_\+state\+\_\+entry.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classSystemStateEntry_a621a38a75af548dcbbc5277a83e8deb6}{System\+State\+Entry} ()
+\item 
+\hyperlink{classSystemStateEntry_a0a74b9458cd8a013705d21ca55fbe8b6}{System\+State\+Entry} (const int state, const \hyperlink{structname__t}{name\+\_\+t} descr, std\+::initializer\+\_\+list$<$ \hyperlink{classErrorLevel}{Error\+Level} $>$ levels, std\+::initializer\+\_\+list$<$ \hyperlink{classModuleErrorAction}{Module\+Error\+Action} $>$ actions)
+\item 
+const \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \& \hyperlink{classSystemStateEntry_a5ebc8e3bee3c3c1d14dfaaaaa22a3aec}{get\+System\+State} () const 
+\item 
+const std\+::optional$<$ \hyperlink{structname__t}{name\+\_\+t} $>$ \hyperlink{classSystemStateEntry_af945076dacd4cca766689a9e78a3fcaa}{get\+Description} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classErrorLevel}{Error\+Level} $>$ \& \hyperlink{classSystemStateEntry_a6589d33fa37279644eb4ba95e2d7dd9c}{get\+Error\+Id\+Levels} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classModuleErrorAction}{Module\+Error\+Action} $>$ \& \hyperlink{classSystemStateEntry_af63741f0dadbf3fcb95b2c32e7b79886}{get\+Actions} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{System\+State\+Entry@{System\+State\+Entry}!System\+State\+Entry@{System\+State\+Entry}}
+\index{System\+State\+Entry@{System\+State\+Entry}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{System\+State\+Entry()}{SystemStateEntry()}}]{\setlength{\rightskip}{0pt plus 5cm}System\+State\+Entry\+::\+System\+State\+Entry (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSystemStateEntry_a621a38a75af548dcbbc5277a83e8deb6}{}\label{classSystemStateEntry_a621a38a75af548dcbbc5277a83e8deb6}
+\index{System\+State\+Entry@{System\+State\+Entry}!System\+State\+Entry@{System\+State\+Entry}}
+\index{System\+State\+Entry@{System\+State\+Entry}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{System\+State\+Entry(const int state, const name\+\_\+t descr, std\+::initializer\+\_\+list$<$ Error\+Level $>$ levels, std\+::initializer\+\_\+list$<$ Module\+Error\+Action $>$ actions)}{SystemStateEntry(const int state, const name_t descr, std::initializer_list< ErrorLevel > levels, std::initializer_list< ModuleErrorAction > actions)}}]{\setlength{\rightskip}{0pt plus 5cm}System\+State\+Entry\+::\+System\+State\+Entry (
+\begin{DoxyParamCaption}
+\item[{const int}]{state, }
+\item[{const {\bf name\+\_\+t}}]{descr, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Error\+Level} $>$}]{levels, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Module\+Error\+Action} $>$}]{actions}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classSystemStateEntry_a0a74b9458cd8a013705d21ca55fbe8b6}{}\label{classSystemStateEntry_a0a74b9458cd8a013705d21ca55fbe8b6}
+
+
+\subsection{Member Function Documentation}
+\index{System\+State\+Entry@{System\+State\+Entry}!get\+Actions@{get\+Actions}}
+\index{get\+Actions@{get\+Actions}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{get\+Actions() const }{getActions() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Module\+Error\+Action} $>$ \& System\+State\+Entry\+::get\+Actions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classSystemStateEntry_af63741f0dadbf3fcb95b2c32e7b79886}{}\label{classSystemStateEntry_af63741f0dadbf3fcb95b2c32e7b79886}
+\index{System\+State\+Entry@{System\+State\+Entry}!get\+Description@{get\+Description}}
+\index{get\+Description@{get\+Description}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{get\+Description() const }{getDescription() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::optional$<$ {\bf name\+\_\+t} $>$ System\+State\+Entry\+::get\+Description (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classSystemStateEntry_af945076dacd4cca766689a9e78a3fcaa}{}\label{classSystemStateEntry_af945076dacd4cca766689a9e78a3fcaa}
+\index{System\+State\+Entry@{System\+State\+Entry}!get\+Error\+Id\+Levels@{get\+Error\+Id\+Levels}}
+\index{get\+Error\+Id\+Levels@{get\+Error\+Id\+Levels}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{get\+Error\+Id\+Levels() const }{getErrorIdLevels() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Error\+Level} $>$ \& System\+State\+Entry\+::get\+Error\+Id\+Levels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classSystemStateEntry_a6589d33fa37279644eb4ba95e2d7dd9c}{}\label{classSystemStateEntry_a6589d33fa37279644eb4ba95e2d7dd9c}
+\index{System\+State\+Entry@{System\+State\+Entry}!get\+System\+State@{get\+System\+State}}
+\index{get\+System\+State@{get\+System\+State}!System\+State\+Entry@{System\+State\+Entry}}
+\subsubsection[{\texorpdfstring{get\+System\+State() const }{getSystemState() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \& System\+State\+Entry\+::get\+System\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classSystemStateEntry_a5ebc8e3bee3c3c1d14dfaaaaa22a3aec}{}\label{classSystemStateEntry_a5ebc8e3bee3c3c1d14dfaaaaa22a3aec}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/types/include/\hyperlink{system__state__entry_8hpp}{system\+\_\+state\+\_\+entry.\+hpp}\item 
+src/types/src/\hyperlink{system__state__entry_8cpp}{system\+\_\+state\+\_\+entry.\+cpp}\end{DoxyCompactItemize}

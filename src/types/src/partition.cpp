@@ -36,19 +36,19 @@ const NAME_TYPE& Partition::getPartitionName() const
     return partitionName;
 }
 
-const std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>>& Partition::getMemoryRegions() const
+const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
 {
-    return memoryRegions;
+    return *memoryRegions;
 }
 
-const std::vector<QueuingPort, MonotonicAllocator<QueuingPort>>& Partition::getQueuePorts() const
+const std::vector<QueuingPort>& Partition::getQueuePorts() const
 {
-    return queuePorts;
+    return *queuingPorts;
 }
 
-const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& Partition::getSamplePorts() const
+const std::vector<SamplingPort>& Partition::getSamplePorts() const
 {
-    return samplePorts;
+    return *samplingPorts;
 }
 
 void Partition::setMode(OPERATING_MODE_TYPE m)
@@ -73,7 +73,12 @@ const PARTITION_STATUS_TYPE& Partition::getStatus() const
 
 const std::vector<Process, MonotonicAllocator<Process>>& Partition::getProcesses() const
 {
-    return processes;
+    processes->push_back(proc);
+}
+
+const std::vector<Process>& Partition::getProcesses() const
+{
+    return *processes;
 }
 
 void Partition::setCriticality(CRITICALITY_TYPE criticality)
@@ -172,7 +177,7 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
 #ifdef HOST_TESTING
     t = clock();
 #else
-    t = CTimer::Get ()->GetTicks ();
+    t = CTimer::Get()->GetTicks();
 #endif
 
     processId = processes.size() + 1;

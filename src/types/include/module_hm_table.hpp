@@ -2,31 +2,35 @@
 #define MODULE_HM_TABLE
 
 #include "module_error_action.hpp"
+#include <string.h>
 
 class ModuleHMTable {
 private:
-    ModuleErrorAction moduleErrorAction[100];
-    MemoryArea moduleErrorActionArea{std::data(moduleErrorAction),
-                                     std::size(moduleErrorAction)};
-    MonotonicMemoryResource<> moduleErrorActionSrc{moduleErrorActionArea};
-    MonotonicAllocator<ModuleErrorAction> moduleErrorActionAllocator{moduleErrorActionSrc};
+    ModuleErrorAction moduleErrorAction[1];
+    std::vector<ModuleErrorAction>* moduleErrorActions =
+        new (&moduleErrorAction) std::vector<ModuleErrorAction>;
+
     identifier_t stateIdentifier; /* required */
     description_t description;    /* required */
-    std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>> actions{
-        moduleErrorActionAllocator}; /* required */
 
 public:
     ModuleHMTable(){};
 
     ModuleHMTable(identifier_t state, std::string descr, std::initializer_list<ModuleErrorAction> actions)
-        : stateIdentifier(state), actions(actions)
+        : stateIdentifier(state)
     {
+        for (auto a : actions) {
+            moduleErrorActions->push_back(a);
+        }
         strcpy(description, descr.c_str());
     }
 
     ModuleHMTable(const ModuleHMTable& rhs)
-        : stateIdentifier(rhs.stateIdentifier), actions(rhs.actions)
+        : stateIdentifier(rhs.stateIdentifier)
     {
+        for (auto a : rhs.getActions()) {
+            moduleErrorActions->push_back(a);
+        }
         strcpy(description, rhs.description);
     }
 
@@ -36,7 +40,7 @@ public:
 
     const description_t& getDescription() const;
 
-    const std::vector<ModuleErrorAction, MonotonicAllocator<ModuleErrorAction>>& getActions() const;
+    const std::vector<ModuleErrorAction>& getActions() const;
 };
 
 #endif

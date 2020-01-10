@@ -7,21 +7,21 @@
 class ErrorLevel {
 private:
     identifier_t errorIdentifier;              /* required */
-    std::optional<NAME_TYPE> description;      /* optional */
+    std::optional<name_t> description;         /* optional */
     ERROR_LEVEL_TYPE error_level;              /* required */
     std::optional<ERROR_CODE_TYPE> error_code; /* optional */
 
 public:
     ErrorLevel(){};
 
-    ErrorLevel(identifier_t id, NAME_TYPE description, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code)
+    ErrorLevel(identifier_t id, name_t description, ERROR_LEVEL_TYPE level, ERROR_CODE_TYPE code)
         : errorIdentifier(id), description(description), error_level(level), error_code(code)
     {
     }
 
     const identifier_t& getErrorIdentifier() const;
 
-    const std::optional<NAME_TYPE>& getDescription() const;
+    const std::optional<name_t>& getDescription() const;
 
     const ERROR_LEVEL_TYPE& getErrorLevel() const;
 

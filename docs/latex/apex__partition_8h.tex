@@ -1,0 +1,176 @@
+\hypertarget{apex__partition_8h}{}\section{src/libuser/apex/apex\+\_\+partition.h File Reference}
+\label{apex__partition_8h}\index{src/libuser/apex/apex\+\_\+partition.\+h@{src/libuser/apex/apex\+\_\+partition.\+h}}
+{\ttfamily \#include \char`\"{}apex\+\_\+process.\+h\char`\"{}}\\*
+Include dependency graph for apex\+\_\+partition.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{apex__partition_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{apex__partition_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structPARTITION__STATUS__TYPE}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apex__partition_8h_ab0b68c28521a9fbea124afb08bdd8821}{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}~\hyperlink{apex__types_8h_ab71efa6813c58f49b5346c0de365e0f6}{S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__partition_8h_a98710ee510022d5d100c8f2d320efad7}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a726035eccaa39def0941743569838551}{A\+P\+E\+X\+\_\+\+U\+N\+S\+I\+G\+N\+ED} \hyperlink{apex__partition_8h_a010e5f5601385be74052b2c419491e28}{N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1afd6a0e4343048b10646dd2976cc5ad18}{I\+D\+LE} = 0, 
+\hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1ae606cd01cea555f30f11958374ff8e76}{C\+O\+L\+D\+\_\+\+S\+T\+A\+RT} = 1, 
+\hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a11a17a5b0c80f9a17fac7f0934c58727}{W\+A\+R\+M\+\_\+\+S\+T\+A\+RT} = 2, 
+\hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a50d1448013c6f17125caee18aa418af7}{N\+O\+R\+M\+AL} = 3
+ \}
+\item 
+enum \hyperlink{apex__partition_8h_afefc0c2dc013745df97678ba67354324}{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__partition_8h_afefc0c2dc013745df97678ba67354324abca20722938852a1d96f3ec869b939cc}{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT} = 0, 
+\hyperlink{apex__partition_8h_afefc0c2dc013745df97678ba67354324a938e45a0001cd9d8ac414de6e1fa40ee}{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT} = 1, 
+\hyperlink{apex__partition_8h_afefc0c2dc013745df97678ba67354324a63bcb696d76829c61131f2b151854683}{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT} = 2, 
+\hyperlink{apex__partition_8h_afefc0c2dc013745df97678ba67354324a3dae294e4aed96ed2a9f72fbfb74a494}{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT} = 3
+ \}
+\item 
+enum \hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200c}{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE} \{ \\*
+\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca901c60517bd59f3c9d8f3c2e3f0da76b}{L\+E\+V\+E\+L\+\_\+A} = 0, 
+\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca7fbd58c6849e0860071086a8a63be6b7}{L\+E\+V\+E\+L\+\_\+B} = 1, 
+\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caf1f9042e05fed297d81c4d9e07b11e8f}{L\+E\+V\+E\+L\+\_\+C} = 2, 
+\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa0bbca4b4a746cb91e97bfce6d0fba0c}{L\+E\+V\+E\+L\+\_\+D} = 3, 
+\\*
+\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa61f32333af74dceeb5bffdacf54bea1}{L\+E\+V\+E\+L\+\_\+E} = 4
+ \}
+\item 
+enum \hyperlink{apex__partition_8h_a5a8608b0eca151b6428695117c94a677}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa2e843feab94ef623fea888f07c28696}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+I\+G\+N\+O\+RE} = 0, 
+\hyperlink{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa5daf7f2ebbba4975d61dab1c40188c7}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+I\+D\+LE} = 1, 
+\hyperlink{apex__partition_8h_a5a8608b0eca151b6428695117c94a677acf2b10952146263bef73a4d483328828}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT} = 2, 
+\hyperlink{apex__partition_8h_a5a8608b0eca151b6428695117c94a677a9ffdc2757b580135a013e46590754d4b}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E\+::\+C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT} = 3
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{apex__partition_8h_a0d233f3b76bc4a27a9daf824ad8813f9}{G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US} (\hyperlink{structPARTITION__STATUS__TYPE}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__partition_8h_a61e51dfcd634a41be4c24f8c4b73aa38}{S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE} (\hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE} O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+DE, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}}
+\index{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}{MAX_NUMBER_OF_PARTITIONS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS~{\bf S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+NS}}\hypertarget{apex__partition_8h_ab0b68c28521a9fbea124afb08bdd8821}{}\label{apex__partition_8h_ab0b68c28521a9fbea124afb08bdd8821}
+
+
+\subsection{Typedef Documentation}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE@{N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE}}
+\index{N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE@{N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE}{NUM_CORES_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+U\+N\+S\+I\+G\+N\+ED} {\bf N\+U\+M\+\_\+\+C\+O\+R\+E\+S\+\_\+\+T\+Y\+PE}}\hypertarget{apex__partition_8h_a010e5f5601385be74052b2c419491e28}{}\label{apex__partition_8h_a010e5f5601385be74052b2c419491e28}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}
+\index{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}{PARTITION_ID_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}\hypertarget{apex__partition_8h_a98710ee510022d5d100c8f2d320efad7}{}\label{apex__partition_8h_a98710ee510022d5d100c8f2d320efad7}
+
+
+\subsection{Enumeration Type Documentation}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE@{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE}}
+\index{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE@{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE}{CRITICALITY_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE}}\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200c}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{L\+E\+V\+E\+L\+\_\+A@{L\+E\+V\+E\+L\+\_\+A}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!L\+E\+V\+E\+L\+\_\+A@{L\+E\+V\+E\+L\+\_\+A}}\item[{\em 
+L\+E\+V\+E\+L\+\_\+A\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca901c60517bd59f3c9d8f3c2e3f0da76b}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca901c60517bd59f3c9d8f3c2e3f0da76b}
+}]\index{L\+E\+V\+E\+L\+\_\+B@{L\+E\+V\+E\+L\+\_\+B}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!L\+E\+V\+E\+L\+\_\+B@{L\+E\+V\+E\+L\+\_\+B}}\item[{\em 
+L\+E\+V\+E\+L\+\_\+B\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca7fbd58c6849e0860071086a8a63be6b7}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200ca7fbd58c6849e0860071086a8a63be6b7}
+}]\index{L\+E\+V\+E\+L\+\_\+C@{L\+E\+V\+E\+L\+\_\+C}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!L\+E\+V\+E\+L\+\_\+C@{L\+E\+V\+E\+L\+\_\+C}}\item[{\em 
+L\+E\+V\+E\+L\+\_\+C\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caf1f9042e05fed297d81c4d9e07b11e8f}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caf1f9042e05fed297d81c4d9e07b11e8f}
+}]\index{L\+E\+V\+E\+L\+\_\+D@{L\+E\+V\+E\+L\+\_\+D}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!L\+E\+V\+E\+L\+\_\+D@{L\+E\+V\+E\+L\+\_\+D}}\item[{\em 
+L\+E\+V\+E\+L\+\_\+D\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa0bbca4b4a746cb91e97bfce6d0fba0c}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa0bbca4b4a746cb91e97bfce6d0fba0c}
+}]\index{L\+E\+V\+E\+L\+\_\+E@{L\+E\+V\+E\+L\+\_\+E}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!L\+E\+V\+E\+L\+\_\+E@{L\+E\+V\+E\+L\+\_\+E}}\item[{\em 
+L\+E\+V\+E\+L\+\_\+E\hypertarget{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa61f32333af74dceeb5bffdacf54bea1}{}\label{apex__partition_8h_a35bef4a19040ba19b0272682b87d200caa61f32333af74dceeb5bffdacf54bea1}
+}]\end{description}
+\end{Desc}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE@{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}}
+\index{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE@{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}{OPERATING_MODE_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}{}\label{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+D\+LE@{I\+D\+LE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!I\+D\+LE@{I\+D\+LE}}\item[{\em 
+I\+D\+LE\hypertarget{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1afd6a0e4343048b10646dd2976cc5ad18}{}\label{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1afd6a0e4343048b10646dd2976cc5ad18}
+}]\index{C\+O\+L\+D\+\_\+\+S\+T\+A\+RT@{C\+O\+L\+D\+\_\+\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!C\+O\+L\+D\+\_\+\+S\+T\+A\+RT@{C\+O\+L\+D\+\_\+\+S\+T\+A\+RT}}\item[{\em 
+C\+O\+L\+D\+\_\+\+S\+T\+A\+RT\hypertarget{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1ae606cd01cea555f30f11958374ff8e76}{}\label{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1ae606cd01cea555f30f11958374ff8e76}
+}]\index{W\+A\+R\+M\+\_\+\+S\+T\+A\+RT@{W\+A\+R\+M\+\_\+\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!W\+A\+R\+M\+\_\+\+S\+T\+A\+RT@{W\+A\+R\+M\+\_\+\+S\+T\+A\+RT}}\item[{\em 
+W\+A\+R\+M\+\_\+\+S\+T\+A\+RT\hypertarget{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a11a17a5b0c80f9a17fac7f0934c58727}{}\label{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a11a17a5b0c80f9a17fac7f0934c58727}
+}]\index{N\+O\+R\+M\+AL@{N\+O\+R\+M\+AL}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!N\+O\+R\+M\+AL@{N\+O\+R\+M\+AL}}\item[{\em 
+N\+O\+R\+M\+AL\hypertarget{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a50d1448013c6f17125caee18aa418af7}{}\label{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1a50d1448013c6f17125caee18aa418af7}
+}]\end{description}
+\end{Desc}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}}
+\index{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}{PARTITION_RECOVERY_ACTION_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+C\+O\+V\+E\+R\+Y\+\_\+\+A\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{apex__partition_8h_a5a8608b0eca151b6428695117c94a677}{}\label{apex__partition_8h_a5a8608b0eca151b6428695117c94a677}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+G\+N\+O\+RE@{I\+G\+N\+O\+RE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!I\+G\+N\+O\+RE@{I\+G\+N\+O\+RE}}\item[{\em 
+I\+G\+N\+O\+RE\hypertarget{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa2e843feab94ef623fea888f07c28696}{}\label{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa2e843feab94ef623fea888f07c28696}
+}]\index{I\+D\+LE@{I\+D\+LE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!I\+D\+LE@{I\+D\+LE}}\item[{\em 
+I\+D\+LE\hypertarget{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa5daf7f2ebbba4975d61dab1c40188c7}{}\label{apex__partition_8h_a5a8608b0eca151b6428695117c94a677aa5daf7f2ebbba4975d61dab1c40188c7}
+}]\index{W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT@{W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT@{W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT}}\item[{\em 
+W\+A\+R\+M\+\_\+\+R\+E\+S\+T\+A\+RT\hypertarget{apex__partition_8h_a5a8608b0eca151b6428695117c94a677acf2b10952146263bef73a4d483328828}{}\label{apex__partition_8h_a5a8608b0eca151b6428695117c94a677acf2b10952146263bef73a4d483328828}
+}]\index{C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT@{C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT@{C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT}}\item[{\em 
+C\+O\+L\+D\+\_\+\+R\+E\+S\+T\+A\+RT\hypertarget{apex__partition_8h_a5a8608b0eca151b6428695117c94a677a9ffdc2757b580135a013e46590754d4b}{}\label{apex__partition_8h_a5a8608b0eca151b6428695117c94a677a9ffdc2757b580135a013e46590754d4b}
+}]\end{description}
+\end{Desc}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE@{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}}
+\index{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE@{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}{START_CONDITION_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf S\+T\+A\+R\+T\+\_\+\+C\+O\+N\+D\+I\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}\hspace{0.3cm}{\ttfamily [strong]}}\hypertarget{apex__partition_8h_afefc0c2dc013745df97678ba67354324}{}\label{apex__partition_8h_afefc0c2dc013745df97678ba67354324}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT@{N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT@{N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT}}\item[{\em 
+N\+O\+R\+M\+A\+L\+\_\+\+S\+T\+A\+RT\hypertarget{apex__partition_8h_afefc0c2dc013745df97678ba67354324abca20722938852a1d96f3ec869b939cc}{}\label{apex__partition_8h_afefc0c2dc013745df97678ba67354324abca20722938852a1d96f3ec869b939cc}
+}]\index{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT@{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT}}\item[{\em 
+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT\hypertarget{apex__partition_8h_afefc0c2dc013745df97678ba67354324a938e45a0001cd9d8ac414de6e1fa40ee}{}\label{apex__partition_8h_afefc0c2dc013745df97678ba67354324a938e45a0001cd9d8ac414de6e1fa40ee}
+}]\index{H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT@{H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT@{H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT}}\item[{\em 
+H\+M\+\_\+\+M\+O\+D\+U\+L\+E\+\_\+\+R\+E\+S\+T\+A\+RT\hypertarget{apex__partition_8h_afefc0c2dc013745df97678ba67354324a63bcb696d76829c61131f2b151854683}{}\label{apex__partition_8h_afefc0c2dc013745df97678ba67354324a63bcb696d76829c61131f2b151854683}
+}]\index{H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT@{H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT@{H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT}}\item[{\em 
+H\+M\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+R\+E\+S\+T\+A\+RT\hypertarget{apex__partition_8h_afefc0c2dc013745df97678ba67354324a3dae294e4aed96ed2a9f72fbfb74a494}{}\label{apex__partition_8h_afefc0c2dc013745df97678ba67354324a3dae294e4aed96ed2a9f72fbfb74a494}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US}}
+\index{G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S(\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E $\ast$\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_PARTITION_STATUS(PARTITION_STATUS_TYPE *PARTITION_STATUS, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$}]{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+US, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__partition_8h_a0d233f3b76bc4a27a9daf824ad8813f9}{}\label{apex__partition_8h_a0d233f3b76bc4a27a9daf824ad8813f9}
+\index{apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}!S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE@{S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE}}
+\index{S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE@{S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE}!apex\+\_\+partition.\+h@{apex\+\_\+partition.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+D\+E(\+O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+P\+E O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{SET_PARTITION_MODE(OPERATING_MODE_TYPE OPERATING_MODE, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+T\+\_\+\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+M\+O\+DE (
+\begin{DoxyParamCaption}
+\item[{{\bf O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}}]{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+DE, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__partition_8h_a61e51dfcd634a41be4c24f8c4b73aa38}{}\label{apex__partition_8h_a61e51dfcd634a41be4c24f8c4b73aa38}

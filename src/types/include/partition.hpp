@@ -9,31 +9,12 @@
 #include "process.hpp"
 #include "queuing_port.hpp"
 #include "sampling_port.hpp"
+#include <vector>
 
 const int MAX_PROCESS_NUM = 100;
 
 class Partition {
 private:
-    MemoryRegion memoryRegion[100];
-    MemoryArea memoryRegionArea{std::data(memoryRegion), std::size(memoryRegion)};
-    MonotonicMemoryResource<> memoryRegionSrc{memoryRegionArea};
-    MonotonicAllocator<MemoryRegion> memoryRegionAllocator{memoryRegionSrc};
-
-    QueuingPort queuingPort[100];
-    MemoryArea queuePortArea{std::data(queuingPort), std::size(queuingPort)};
-    MonotonicMemoryResource<> queuingPortSrc{queuePortArea};
-    MonotonicAllocator<QueuingPort> queuePortAllocator{queuingPortSrc};
-
-    SamplingPort samplingPort[100];
-    MemoryArea samplingPortArea{std::data(samplingPort), std::size(samplingPort)};
-    MonotonicMemoryResource<> samplingPortSrc{samplingPortArea};
-    MonotonicAllocator<SamplingPort> samplingPortAllocator{samplingPortSrc};
-
-    Process proc[MAX_PROCESS_NUM];
-    MemoryArea processArea{std::data(proc), std::size(proc)};
-    MonotonicMemoryResource<> processSrc{processArea};
-    MonotonicAllocator<Process> processAllocator{processSrc};
-
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
     NAME_TYPE partitionName; /* required */
@@ -41,19 +22,24 @@ private:
     decOrHex_t duration; /* required */
     decOrHex_t period;   /* required */
 
-    std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>> memoryRegions{
-        memoryRegionAllocator}; /* required */
-    std::vector<QueuingPort, MonotonicAllocator<QueuingPort>> queuePorts{queuePortAllocator}; /* required */
-    std::vector<SamplingPort, MonotonicAllocator<SamplingPort>> samplePorts{
-        samplingPortAllocator}; /* required */
-
     OPERATING_MODE_TYPE mode = OPERATING_MODE_TYPE::IDLE;
     PARTITION_STATUS_TYPE status;
 
-    std::vector<Process, MonotonicAllocator<Process>> processes{processAllocator};
     CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
     bool systemPartition = false;                             /* required */
     SYSTEM_ADDRESS_TYPE entryPoint;                           /* required */
+
+    MemoryRegion memoryRegion[1];
+    std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
+
+    QueuingPort queuingPort[1];
+    std::vector<QueuingPort>* queuingPorts = new (&queuingPort) std::vector<QueuingPort>;
+
+    SamplingPort samplingPort[1];
+    std::vector<SamplingPort>* samplingPorts = new (&samplingPort) std::vector<SamplingPort>;
+
+    std::optional<Process> process[1];
+    std::vector<Process>* processes = new (&process) std::vector<Process>;
 
 public:
     Partition(){};
@@ -72,18 +58,42 @@ public:
           duration(duration),
           period(period)
     {
-        for (auto reg : mem) {
-            memoryRegions.push_back(reg);
+        for (auto m : mem) {
+            memoryRegions->push_back(m);
         }
-        for (auto queue : queuing) {
-            queuePorts.push_back(queue);
+        for (auto q : queuing) {
+            queuingPorts->push_back(q);
         }
-        for (auto sample : sampling) {
-            samplePorts.push_back(sample);
+        for (auto s : sampling) {
+            samplingPorts->push_back(s);
         }
-
         mode = OPERATING_MODE_TYPE::COLD_START;
-        // CMemorySystem::Get()->nBaseAddress;
+    }
+
+    Partition(identifier_t id,
+              PROCESSOR_CORE_ID_TYPE affinity,
+              name_t name,
+              decOrHex_t duration,
+              decOrHex_t period,
+              std::initializer_list<MemoryRegion> mem,
+              std::initializer_list<QueuingPort> queuing,
+              std::initializer_list<SamplingPort> sampling,
+              std::initializer_list<Process> proc)
+        : partitionIdentifier(id),
+          affinity(affinity),
+          partitionName(name),
+          duration(duration),
+          period(period)
+    {
+        for (auto m : mem) {
+            memoryRegions->push_back(m);
+        }
+        for (auto q : queuing) {
+            queuingPorts->push_back(q);
+        }
+        for (auto p : proc) {
+            processes->push_back(p);
+        }
     }
 
     Partition(const Partition& rhs)
@@ -91,12 +101,20 @@ public:
           affinity(rhs.affinity),
           partitionName(rhs.partitionName),
           duration(rhs.duration),
-          period(rhs.period),
-          memoryRegions(rhs.memoryRegions),
-          queuePorts(rhs.queuePorts),
-          samplePorts(rhs.samplePorts),
-          processes(rhs.processes)
+          period(rhs.period)
     {
+        for (auto m : rhs.getMemoryRegions()) {
+            memoryRegions->push_back(m);
+        }
+        for (auto q : rhs.getQueuePorts()) {
+            queuingPorts->push_back(q);
+        }
+        for (auto s : rhs.getSamplePorts()) {
+            samplingPorts->push_back(s);
+        }
+        for (auto p : rhs.getProcesses()) {
+            processes->push_back(p);
+        }
     }
 
     Partition& operator=(const Partition& rhs);
@@ -111,11 +129,11 @@ public:
 
     const decOrHex_t& getPeriod() const;
 
-    const std::vector<MemoryRegion, MonotonicAllocator<MemoryRegion>>& getMemoryRegions() const;
+    const std::vector<MemoryRegion>& getMemoryRegions() const;
 
-    const std::vector<QueuingPort, MonotonicAllocator<QueuingPort>>& getQueuePorts() const;
+    const std::vector<QueuingPort>& getQueuePorts() const;
 
-    const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& getSamplePorts() const;
+    const std::vector<SamplingPort>& getSamplePorts() const;
 
     RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size, TTaskRegisters& regs);
 
@@ -131,7 +149,7 @@ public:
 
     void addProcess(Process proc);
 
-    const std::vector<Process, MonotonicAllocator<Process>>& getProcesses() const;
+    const std::vector<Process>& getProcesses() const;
 
     void getProcess(identifier_t processId, Process& proc, RETURN_CODE_TYPE& returnCode);
 
