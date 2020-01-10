@@ -5,7 +5,7 @@
 #include "general_types.hpp"
 
 #ifdef HOST_TESTING
-#include <catch2/taskRegisters.hpp>
+#include <taskRegisters.hpp>
 #else
 #include <circle/sched/taskswitch.h>
 #endif
@@ -37,9 +37,9 @@ public:
 
     const identifier_t& getId() const;
 
-    RETURN_CODE_TYPE setRegs(TTaskRegisters registers) const;
+    void setRegs(TTaskRegisters regs);
 
-    const TTaskRegisters& getRegs();
+    const TTaskRegisters& getRegs() const;
 };
 
 #endif

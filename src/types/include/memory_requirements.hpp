@@ -5,7 +5,7 @@
 #include "general_types.hpp"
 
 #ifdef HOST_TESTING
-#include <catch2/taskRegisters.hpp>
+#include <taskRegisters.hpp>
 #else
 #include <circle/sched/taskswitch.h>
 #endif
