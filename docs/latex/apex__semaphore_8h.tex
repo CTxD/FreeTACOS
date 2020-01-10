@@ -1,0 +1,125 @@
+\hypertarget{apex__semaphore_8h}{}\section{src/libuser/apex/apex\+\_\+semaphore.h File Reference}
+\label{apex__semaphore_8h}\index{src/libuser/apex/apex\+\_\+semaphore.\+h@{src/libuser/apex/apex\+\_\+semaphore.\+h}}
+{\ttfamily \#include \char`\"{}apex\+\_\+types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}apex\+\_\+process.\+h\char`\"{}}\\*
+Include dependency graph for apex\+\_\+semaphore.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{apex__semaphore_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{apex__semaphore_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSEMAPHORE__STATUS__TYPE}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apex__semaphore_8h_a1c89a323342b8d544c28fe03c8da4419}{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}~\hyperlink{apex__types_8h_a4b9f7ee92b0920570fbc1869ecc7804a}{S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}
+\item 
+\#define \hyperlink{apex__semaphore_8h_a6184c8c985d82490665a55485763c150}{M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE}~32767
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structNAME__TYPE}{N\+A\+M\+E\+\_\+\+T\+Y\+PE} \hyperlink{apex__semaphore_8h_af77b8d88f71bf0821c099b30a38e73a0}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__semaphore_8h_a6a4f4a98d5659e166b13ded30fd03d8e}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{apex__semaphore_8h_aee249fe2c19dd2c89d39d1a77c2b5348}{C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE} (\hyperlink{apex__semaphore_8h_af77b8d88f71bf0821c099b30a38e73a0}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+ME, \hyperlink{apex__semaphore_8h_a6a4f4a98d5659e166b13ded30fd03d8e}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE} C\+U\+R\+R\+E\+N\+T\+\_\+\+V\+A\+L\+UE, \hyperlink{apex__semaphore_8h_a6a4f4a98d5659e166b13ded30fd03d8e}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE} M\+A\+X\+I\+M\+U\+M\+\_\+\+V\+A\+L\+UE, \hyperlink{apex__types_8h_a35f7a2796e3b68b025d76be6805a1c53}{Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+PE} Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+NE, \hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__semaphore_8h_a834e202f3318bd50d51393b66f6aca5a}{W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE} (\hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, \hyperlink{apex__types_8h_a78cd52c2621ddf2eda68fcd4bedbc1a7}{S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE} T\+I\+M\+E\+\_\+\+O\+UT, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__semaphore_8h_a192a38c0bfad4ef438982446251a4cdf}{S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE} (\hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__semaphore_8h_a98177057074d856effdeecffd6c41a7b}{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID} (\hyperlink{apex__semaphore_8h_af77b8d88f71bf0821c099b30a38e73a0}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+ME, \hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__semaphore_8h_ac000ec6c3192a5f457b8877dec806f86}{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US} (\hyperlink{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, \hyperlink{structSEMAPHORE__STATUS__TYPE}{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}}
+\index{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}{MAX_NUMBER_OF_SEMAPHORES}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES~{\bf S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+ES}}\hypertarget{apex__semaphore_8h_a1c89a323342b8d544c28fe03c8da4419}{}\label{apex__semaphore_8h_a1c89a323342b8d544c28fe03c8da4419}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE@{M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE}}
+\index{M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE@{M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE}{MAX_SEMAPHORE_VALUE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+UE~32767}\hypertarget{apex__semaphore_8h_a6184c8c985d82490665a55485763c150}{}\label{apex__semaphore_8h_a6184c8c985d82490665a55485763c150}
+
+
+\subsection{Typedef Documentation}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}
+\index{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}{SEMAPHORE_ID_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}\hypertarget{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}{}\label{apex__semaphore_8h_a3abfa834ce89def3a2ba4c3a0e0c782d}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}
+\index{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}{SEMAPHORE_NAME_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf N\+A\+M\+E\+\_\+\+T\+Y\+PE} {\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__semaphore_8h_af77b8d88f71bf0821c099b30a38e73a0}{}\label{apex__semaphore_8h_af77b8d88f71bf0821c099b30a38e73a0}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}}
+\index{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE@{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}{SEMAPHORE_VALUE_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__semaphore_8h_a6a4f4a98d5659e166b13ded30fd03d8e}{}\label{apex__semaphore_8h_a6a4f4a98d5659e166b13ded30fd03d8e}
+
+
+\subsection{Function Documentation}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}}
+\index{C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E(\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E, S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+P\+E C\+U\+R\+R\+E\+N\+T\+\_\+\+V\+A\+L\+U\+E, S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+P\+E M\+A\+X\+I\+M\+U\+M\+\_\+\+V\+A\+L\+U\+E, Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+P\+E Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E, S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{CREATE_SEMAPHORE(SEMAPHORE_NAME_TYPE SEMAPHORE_NAME, SEMAPHORE_VALUE_TYPE CURRENT_VALUE, SEMAPHORE_VALUE_TYPE MAXIMUM_VALUE, QUEUING_DISCIPLINE_TYPE QUEUING_DISCIPLINE, SEMAPHORE_ID_TYPE *SEMAPHORE_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void C\+R\+E\+A\+T\+E\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+ME, }
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}}]{C\+U\+R\+R\+E\+N\+T\+\_\+\+V\+A\+L\+UE, }
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+V\+A\+L\+U\+E\+\_\+\+T\+Y\+PE}}]{M\+A\+X\+I\+M\+U\+M\+\_\+\+V\+A\+L\+UE, }
+\item[{{\bf Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+PE}}]{Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+NE, }
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__semaphore_8h_aee249fe2c19dd2c89d39d1a77c2b5348}{}\label{apex__semaphore_8h_aee249fe2c19dd2c89d39d1a77c2b5348}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID@{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID}}
+\index{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID@{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D(\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E, S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_SEMAPHORE_ID(SEMAPHORE_NAME_TYPE SEMAPHORE_NAME, SEMAPHORE_ID_TYPE *SEMAPHORE_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+N\+A\+ME, }
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__semaphore_8h_a98177057074d856effdeecffd6c41a7b}{}\label{apex__semaphore_8h_a98177057074d856effdeecffd6c41a7b}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US}}
+\index{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S(\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D, S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E $\ast$\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_SEMAPHORE_STATUS(SEMAPHORE_ID_TYPE SEMAPHORE_ID, SEMAPHORE_STATUS_TYPE *SEMAPHORE_STATUS, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, }
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+S\+T\+A\+T\+US, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__semaphore_8h_ac000ec6c3192a5f457b8877dec806f86}{}\label{apex__semaphore_8h_ac000ec6c3192a5f457b8877dec806f86}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}}
+\index{S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E(\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{SIGNAL_SEMAPHORE(SEMAPHORE_ID_TYPE SEMAPHORE_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+I\+G\+N\+A\+L\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__semaphore_8h_a192a38c0bfad4ef438982446251a4cdf}{}\label{apex__semaphore_8h_a192a38c0bfad4ef438982446251a4cdf}
+\index{apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}!W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}}
+\index{W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE@{W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE}!apex\+\_\+semaphore.\+h@{apex\+\_\+semaphore.\+h}}
+\subsubsection[{\texorpdfstring{W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+R\+E(\+S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D, S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+P\+E T\+I\+M\+E\+\_\+\+O\+U\+T, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{WAIT_SEMAPHORE(SEMAPHORE_ID_TYPE SEMAPHORE_ID, SYSTEM_TIME_TYPE TIME_OUT, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void W\+A\+I\+T\+\_\+\+S\+E\+M\+A\+P\+H\+O\+RE (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+E\+M\+A\+P\+H\+O\+R\+E\+\_\+\+ID, }
+\item[{{\bf S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE}}]{T\+I\+M\+E\+\_\+\+O\+UT, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__semaphore_8h_a834e202f3318bd50d51393b66f6aca5a}{}\label{apex__semaphore_8h_a834e202f3318bd50d51393b66f6aca5a}

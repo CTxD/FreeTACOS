@@ -1,0 +1,261 @@
+\hypertarget{classPartition}{}\section{Partition Class Reference}
+\label{classPartition}\index{Partition@{Partition}}
+
+
+{\ttfamily \#include $<$partition.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classPartition_aa8a055cfc129cee2a2ef024556fb6c0d}{Partition} ()
+\item 
+\hyperlink{classPartition_aa107f9e018df969f66596e35cef04aba}{Partition} (\hyperlink{general__types_8hpp_a824b78b06da8112c2772bc666a63638d}{identifier\+\_\+t} id, \hyperlink{apex__types_8h_ac081e44ca764e4d769f88a7f3bbc60de}{P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} affinity, \hyperlink{structname__t}{name\+\_\+t} name, \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} duration, \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} period, std\+::initializer\+\_\+list$<$ \hyperlink{classMemoryRegion}{Memory\+Region} $>$ mem, std\+::initializer\+\_\+list$<$ \hyperlink{classQueuingPort}{Queuing\+Port} $>$ queuing, std\+::initializer\+\_\+list$<$ \hyperlink{classSamplingPort}{Sampling\+Port} $>$ sampling)
+\item 
+\hyperlink{classPartition_ae7720ab349b46291bacc1a596dee2cd3}{Partition} (\hyperlink{general__types_8hpp_a824b78b06da8112c2772bc666a63638d}{identifier\+\_\+t} id, \hyperlink{apex__types_8h_ac081e44ca764e4d769f88a7f3bbc60de}{P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} affinity, \hyperlink{structname__t}{name\+\_\+t} name, \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} duration, \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} period, std\+::initializer\+\_\+list$<$ \hyperlink{classMemoryRegion}{Memory\+Region} $>$ mem, std\+::initializer\+\_\+list$<$ \hyperlink{classQueuingPort}{Queuing\+Port} $>$ queuing, std\+::initializer\+\_\+list$<$ \hyperlink{classSamplingPort}{Sampling\+Port} $>$ sampling, std\+::initializer\+\_\+list$<$ \hyperlink{classProcess}{Process} $>$ proc)
+\item 
+\hyperlink{classPartition_a7b73af2fd7f67503730f5c71c62fe6c6}{Partition} (const \hyperlink{classPartition}{Partition} \&rhs)
+\item 
+\hyperlink{classPartition}{Partition} \& \hyperlink{classPartition_a713dda6b4b83804b2a89acd80e1943c8}{operator=} (const \hyperlink{classPartition}{Partition} \&rhs)
+\item 
+const \hyperlink{general__types_8hpp_a824b78b06da8112c2772bc666a63638d}{identifier\+\_\+t} \& \hyperlink{classPartition_a9cc857400ee0e4f9ee8aa4b9a781c404}{get\+Partition\+Identifier} () const 
+\item 
+const \hyperlink{apex__types_8h_ac081e44ca764e4d769f88a7f3bbc60de}{P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} \& \hyperlink{classPartition_a4c2128f809210418d6c51b984a9eceac}{get\+Affinity} () const 
+\item 
+const \hyperlink{structname__t}{name\+\_\+t} \& \hyperlink{classPartition_a354db1a01962503fd33d2fd7aa52a46d}{get\+Partition\+Name} () const 
+\item 
+const \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} \& \hyperlink{classPartition_a018beb609fcd147efb7fd20594f6446d}{get\+Duration} () const 
+\item 
+const \hyperlink{general__types_8hpp_a0edc3a86ddf4aa205c6882b61cd7b4e9}{dec\+Or\+Hex\+\_\+t} \& \hyperlink{classPartition_af904def70aa07d2ba5b13d7cdd376c2c}{get\+Period} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classMemoryRegion}{Memory\+Region} $>$ \& \hyperlink{classPartition_aa408f64e917a3aa805a3beb2d0b2669f}{get\+Memory\+Regions} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classQueuingPort}{Queuing\+Port} $>$ \& \hyperlink{classPartition_a052021916099d1ca1dfeb44da62216df}{get\+Queue\+Ports} () const 
+\item 
+const std\+::vector$<$ \hyperlink{classSamplingPort}{Sampling\+Port} $>$ \& \hyperlink{classPartition_a04d5680e6be455ed8fcd96ce18ae1f79}{get\+Sample\+Ports} () const 
+\item 
+void \hyperlink{classPartition_affe5d93a0bfe4e8af9a3cdfc8bc80091}{set\+Mode} (\hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE} mode)
+\item 
+const \hyperlink{apex__partition_8h_a79d9616db80ce78328edcd1987aa90b1}{O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE} \& \hyperlink{classPartition_a2861314450a4ff0256d7b3e0b5640860}{get\+Mode} () const 
+\item 
+void \hyperlink{classPartition_aed0a52094368817b82384b6cb7ec73d6}{set\+Status} (\hyperlink{structPARTITION__STATUS__TYPE}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} status)
+\item 
+const \hyperlink{structPARTITION__STATUS__TYPE}{P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} \& \hyperlink{classPartition_ac2bcd024188150562d8f3c589254eb0d}{get\+Status} () const 
+\item 
+void \hyperlink{classPartition_af6cf1b68004cc5d8c0b01dd3b98af915}{add\+Process} (\hyperlink{classProcess}{Process} proc)
+\item 
+const std\+::vector$<$ \hyperlink{classProcess}{Process} $>$ \& \hyperlink{classPartition_a6b6da2b79e614c468c69c26def1f5394}{get\+Processes} () const 
+\item 
+void \hyperlink{classPartition_a1a5ced048aae9fabe24ffd61a1824151}{set\+Criticality} (\hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200c}{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE} criticality)
+\item 
+const \hyperlink{apex__partition_8h_a35bef4a19040ba19b0272682b87d200c}{C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE} \& \hyperlink{classPartition_a461e98f51321893eed11426720885c1e}{get\+Criticality} () const 
+\item 
+void \hyperlink{classPartition_a17d7fba34dd2fe6fb19985f0136b97ba}{set\+System\+Partition} (bool system\+Part)
+\item 
+const bool \& \hyperlink{classPartition_a409522daab48150242eba59a5f3f8b0d}{get\+System\+Partition} () const 
+\item 
+void \hyperlink{classPartition_a81513c0b6c3b94906ba87cadc46dcc7c}{set\+Entry\+Point} (\hyperlink{structname__t}{name\+\_\+t} entry)
+\item 
+const \hyperlink{structname__t}{name\+\_\+t} \& \hyperlink{classPartition_a8c56dbba844842a7e5dfb7ab387aed99}{get\+Entry\+Point} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{Partition@{Partition}!Partition@{Partition}}
+\index{Partition@{Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{Partition()}{Partition()}}]{\setlength{\rightskip}{0pt plus 5cm}Partition\+::\+Partition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classPartition_aa8a055cfc129cee2a2ef024556fb6c0d}{}\label{classPartition_aa8a055cfc129cee2a2ef024556fb6c0d}
+\index{Partition@{Partition}!Partition@{Partition}}
+\index{Partition@{Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{Partition(identifier\+\_\+t id, P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E affinity, name\+\_\+t name, dec\+Or\+Hex\+\_\+t duration, dec\+Or\+Hex\+\_\+t period, std\+::initializer\+\_\+list$<$ Memory\+Region $>$ mem, std\+::initializer\+\_\+list$<$ Queuing\+Port $>$ queuing, std\+::initializer\+\_\+list$<$ Sampling\+Port $>$ sampling)}{Partition(identifier_t id, PROCESSOR_CORE_ID_TYPE affinity, name_t name, decOrHex_t duration, decOrHex_t period, std::initializer_list< MemoryRegion > mem, std::initializer_list< QueuingPort > queuing, std::initializer_list< SamplingPort > sampling)}}]{\setlength{\rightskip}{0pt plus 5cm}Partition\+::\+Partition (
+\begin{DoxyParamCaption}
+\item[{{\bf identifier\+\_\+t}}]{id, }
+\item[{{\bf P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{affinity, }
+\item[{{\bf name\+\_\+t}}]{name, }
+\item[{{\bf dec\+Or\+Hex\+\_\+t}}]{duration, }
+\item[{{\bf dec\+Or\+Hex\+\_\+t}}]{period, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Memory\+Region} $>$}]{mem, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Queuing\+Port} $>$}]{queuing, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Sampling\+Port} $>$}]{sampling}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classPartition_aa107f9e018df969f66596e35cef04aba}{}\label{classPartition_aa107f9e018df969f66596e35cef04aba}
+\index{Partition@{Partition}!Partition@{Partition}}
+\index{Partition@{Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{Partition(identifier\+\_\+t id, P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E affinity, name\+\_\+t name, dec\+Or\+Hex\+\_\+t duration, dec\+Or\+Hex\+\_\+t period, std\+::initializer\+\_\+list$<$ Memory\+Region $>$ mem, std\+::initializer\+\_\+list$<$ Queuing\+Port $>$ queuing, std\+::initializer\+\_\+list$<$ Sampling\+Port $>$ sampling, std\+::initializer\+\_\+list$<$ Process $>$ proc)}{Partition(identifier_t id, PROCESSOR_CORE_ID_TYPE affinity, name_t name, decOrHex_t duration, decOrHex_t period, std::initializer_list< MemoryRegion > mem, std::initializer_list< QueuingPort > queuing, std::initializer_list< SamplingPort > sampling, std::initializer_list< Process > proc)}}]{\setlength{\rightskip}{0pt plus 5cm}Partition\+::\+Partition (
+\begin{DoxyParamCaption}
+\item[{{\bf identifier\+\_\+t}}]{id, }
+\item[{{\bf P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{affinity, }
+\item[{{\bf name\+\_\+t}}]{name, }
+\item[{{\bf dec\+Or\+Hex\+\_\+t}}]{duration, }
+\item[{{\bf dec\+Or\+Hex\+\_\+t}}]{period, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Memory\+Region} $>$}]{mem, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Queuing\+Port} $>$}]{queuing, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Sampling\+Port} $>$}]{sampling, }
+\item[{std\+::initializer\+\_\+list$<$ {\bf Process} $>$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classPartition_ae7720ab349b46291bacc1a596dee2cd3}{}\label{classPartition_ae7720ab349b46291bacc1a596dee2cd3}
+\index{Partition@{Partition}!Partition@{Partition}}
+\index{Partition@{Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{Partition(const Partition \&rhs)}{Partition(const Partition &rhs)}}]{\setlength{\rightskip}{0pt plus 5cm}Partition\+::\+Partition (
+\begin{DoxyParamCaption}
+\item[{const {\bf Partition} \&}]{rhs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\hypertarget{classPartition_a7b73af2fd7f67503730f5c71c62fe6c6}{}\label{classPartition_a7b73af2fd7f67503730f5c71c62fe6c6}
+
+
+\subsection{Member Function Documentation}
+\index{Partition@{Partition}!add\+Process@{add\+Process}}
+\index{add\+Process@{add\+Process}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{add\+Process(\+Process proc)}{addProcess(Process proc)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::add\+Process (
+\begin{DoxyParamCaption}
+\item[{{\bf Process}}]{proc}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_af6cf1b68004cc5d8c0b01dd3b98af915}{}\label{classPartition_af6cf1b68004cc5d8c0b01dd3b98af915}
+\index{Partition@{Partition}!get\+Affinity@{get\+Affinity}}
+\index{get\+Affinity@{get\+Affinity}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Affinity() const }{getAffinity() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+R\+O\+C\+E\+S\+S\+O\+R\+\_\+\+C\+O\+R\+E\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} \& Partition\+::get\+Affinity (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a4c2128f809210418d6c51b984a9eceac}{}\label{classPartition_a4c2128f809210418d6c51b984a9eceac}
+\index{Partition@{Partition}!get\+Criticality@{get\+Criticality}}
+\index{get\+Criticality@{get\+Criticality}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Criticality() const }{getCriticality() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE} \& Partition\+::get\+Criticality (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a461e98f51321893eed11426720885c1e}{}\label{classPartition_a461e98f51321893eed11426720885c1e}
+\index{Partition@{Partition}!get\+Duration@{get\+Duration}}
+\index{get\+Duration@{get\+Duration}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Duration() const }{getDuration() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf dec\+Or\+Hex\+\_\+t} \& Partition\+::get\+Duration (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a018beb609fcd147efb7fd20594f6446d}{}\label{classPartition_a018beb609fcd147efb7fd20594f6446d}
+\index{Partition@{Partition}!get\+Entry\+Point@{get\+Entry\+Point}}
+\index{get\+Entry\+Point@{get\+Entry\+Point}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Entry\+Point() const }{getEntryPoint() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf name\+\_\+t} \& Partition\+::get\+Entry\+Point (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a8c56dbba844842a7e5dfb7ab387aed99}{}\label{classPartition_a8c56dbba844842a7e5dfb7ab387aed99}
+\index{Partition@{Partition}!get\+Memory\+Regions@{get\+Memory\+Regions}}
+\index{get\+Memory\+Regions@{get\+Memory\+Regions}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Memory\+Regions() const }{getMemoryRegions() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Memory\+Region} $>$ \& Partition\+::get\+Memory\+Regions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_aa408f64e917a3aa805a3beb2d0b2669f}{}\label{classPartition_aa408f64e917a3aa805a3beb2d0b2669f}
+\index{Partition@{Partition}!get\+Mode@{get\+Mode}}
+\index{get\+Mode@{get\+Mode}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Mode() const }{getMode() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE} \& Partition\+::get\+Mode (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a2861314450a4ff0256d7b3e0b5640860}{}\label{classPartition_a2861314450a4ff0256d7b3e0b5640860}
+\index{Partition@{Partition}!get\+Partition\+Identifier@{get\+Partition\+Identifier}}
+\index{get\+Partition\+Identifier@{get\+Partition\+Identifier}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Partition\+Identifier() const }{getPartitionIdentifier() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf identifier\+\_\+t} \& Partition\+::get\+Partition\+Identifier (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a9cc857400ee0e4f9ee8aa4b9a781c404}{}\label{classPartition_a9cc857400ee0e4f9ee8aa4b9a781c404}
+\index{Partition@{Partition}!get\+Partition\+Name@{get\+Partition\+Name}}
+\index{get\+Partition\+Name@{get\+Partition\+Name}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Partition\+Name() const }{getPartitionName() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf name\+\_\+t} \& Partition\+::get\+Partition\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a354db1a01962503fd33d2fd7aa52a46d}{}\label{classPartition_a354db1a01962503fd33d2fd7aa52a46d}
+\index{Partition@{Partition}!get\+Period@{get\+Period}}
+\index{get\+Period@{get\+Period}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Period() const }{getPeriod() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf dec\+Or\+Hex\+\_\+t} \& Partition\+::get\+Period (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_af904def70aa07d2ba5b13d7cdd376c2c}{}\label{classPartition_af904def70aa07d2ba5b13d7cdd376c2c}
+\index{Partition@{Partition}!get\+Processes@{get\+Processes}}
+\index{get\+Processes@{get\+Processes}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Processes() const }{getProcesses() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Process} $>$ \& Partition\+::get\+Processes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a6b6da2b79e614c468c69c26def1f5394}{}\label{classPartition_a6b6da2b79e614c468c69c26def1f5394}
+\index{Partition@{Partition}!get\+Queue\+Ports@{get\+Queue\+Ports}}
+\index{get\+Queue\+Ports@{get\+Queue\+Ports}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Queue\+Ports() const }{getQueuePorts() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Queuing\+Port} $>$ \& Partition\+::get\+Queue\+Ports (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a052021916099d1ca1dfeb44da62216df}{}\label{classPartition_a052021916099d1ca1dfeb44da62216df}
+\index{Partition@{Partition}!get\+Sample\+Ports@{get\+Sample\+Ports}}
+\index{get\+Sample\+Ports@{get\+Sample\+Ports}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Sample\+Ports() const }{getSamplePorts() const }}]{\setlength{\rightskip}{0pt plus 5cm}const std\+::vector$<$ {\bf Sampling\+Port} $>$ \& Partition\+::get\+Sample\+Ports (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a04d5680e6be455ed8fcd96ce18ae1f79}{}\label{classPartition_a04d5680e6be455ed8fcd96ce18ae1f79}
+\index{Partition@{Partition}!get\+Status@{get\+Status}}
+\index{get\+Status@{get\+Status}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+Status() const }{getStatus() const }}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} \& Partition\+::get\+Status (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_ac2bcd024188150562d8f3c589254eb0d}{}\label{classPartition_ac2bcd024188150562d8f3c589254eb0d}
+\index{Partition@{Partition}!get\+System\+Partition@{get\+System\+Partition}}
+\index{get\+System\+Partition@{get\+System\+Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{get\+System\+Partition() const }{getSystemPartition() const }}]{\setlength{\rightskip}{0pt plus 5cm}const bool \& Partition\+::get\+System\+Partition (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}\hypertarget{classPartition_a409522daab48150242eba59a5f3f8b0d}{}\label{classPartition_a409522daab48150242eba59a5f3f8b0d}
+\index{Partition@{Partition}!operator=@{operator=}}
+\index{operator=@{operator=}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{operator=(const Partition \&rhs)}{operator=(const Partition &rhs)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Partition} \& Partition\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Partition} \&}]{rhs}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_a713dda6b4b83804b2a89acd80e1943c8}{}\label{classPartition_a713dda6b4b83804b2a89acd80e1943c8}
+\index{Partition@{Partition}!set\+Criticality@{set\+Criticality}}
+\index{set\+Criticality@{set\+Criticality}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{set\+Criticality(\+C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+P\+E criticality)}{setCriticality(CRITICALITY_TYPE criticality)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::set\+Criticality (
+\begin{DoxyParamCaption}
+\item[{{\bf C\+R\+I\+T\+I\+C\+A\+L\+I\+T\+Y\+\_\+\+T\+Y\+PE}}]{criticality}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_a1a5ced048aae9fabe24ffd61a1824151}{}\label{classPartition_a1a5ced048aae9fabe24ffd61a1824151}
+\index{Partition@{Partition}!set\+Entry\+Point@{set\+Entry\+Point}}
+\index{set\+Entry\+Point@{set\+Entry\+Point}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{set\+Entry\+Point(name\+\_\+t entry)}{setEntryPoint(name_t entry)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::set\+Entry\+Point (
+\begin{DoxyParamCaption}
+\item[{{\bf name\+\_\+t}}]{entry}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_a81513c0b6c3b94906ba87cadc46dcc7c}{}\label{classPartition_a81513c0b6c3b94906ba87cadc46dcc7c}
+\index{Partition@{Partition}!set\+Mode@{set\+Mode}}
+\index{set\+Mode@{set\+Mode}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{set\+Mode(\+O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+P\+E mode)}{setMode(OPERATING_MODE_TYPE mode)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::set\+Mode (
+\begin{DoxyParamCaption}
+\item[{{\bf O\+P\+E\+R\+A\+T\+I\+N\+G\+\_\+\+M\+O\+D\+E\+\_\+\+T\+Y\+PE}}]{mode}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_affe5d93a0bfe4e8af9a3cdfc8bc80091}{}\label{classPartition_affe5d93a0bfe4e8af9a3cdfc8bc80091}
+\index{Partition@{Partition}!set\+Status@{set\+Status}}
+\index{set\+Status@{set\+Status}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{set\+Status(\+P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E status)}{setStatus(PARTITION_STATUS_TYPE status)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::set\+Status (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+A\+R\+T\+I\+T\+I\+O\+N\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}}]{status}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_aed0a52094368817b82384b6cb7ec73d6}{}\label{classPartition_aed0a52094368817b82384b6cb7ec73d6}
+\index{Partition@{Partition}!set\+System\+Partition@{set\+System\+Partition}}
+\index{set\+System\+Partition@{set\+System\+Partition}!Partition@{Partition}}
+\subsubsection[{\texorpdfstring{set\+System\+Partition(bool system\+Part)}{setSystemPartition(bool systemPart)}}]{\setlength{\rightskip}{0pt plus 5cm}void Partition\+::set\+System\+Partition (
+\begin{DoxyParamCaption}
+\item[{bool}]{system\+Part}
+\end{DoxyParamCaption}
+)}\hypertarget{classPartition_a17d7fba34dd2fe6fb19985f0136b97ba}{}\label{classPartition_a17d7fba34dd2fe6fb19985f0136b97ba}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/types/include/\hyperlink{partition_8hpp}{partition.\+hpp}\item 
+src/types/src/\hyperlink{partition_8cpp}{partition.\+cpp}\end{DoxyCompactItemize}
