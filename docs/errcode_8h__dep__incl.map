@@ -1,9 +1,0 @@
-<map id="src/kernel/include/errcode.h" name="src/kernel/include/errcode.h">
-<area shape="rect" id="node2" href="$arch_8cpp.html" title="src/kernel/arch/rasp4\l/arch.cpp" alt="" coords="26,184,182,225"/>
-<area shape="rect" id="node3" href="$boot_8cpp.html" title="src/kernel/core/boot.cpp" alt="" coords="85,273,261,300"/>
-<area shape="rect" id="node4" href="$tacoskernel_8cpp.html" title="src/kernel/core/tacoskernel.cpp" alt="" coords="334,273,556,300"/>
-<area shape="rect" id="node5" href="$arch_8h.html" title="src/kernel/include\l/arch.h" alt="" coords="242,95,376,136"/>
-<area shape="rect" id="node8" href="$boot_8h.html" title="src/kernel/include\l/core/boot.h" alt="" coords="421,95,554,136"/>
-<area shape="rect" id="node6" href="$tacoskernel_8h.html" title="src/kernel/core/tacoskernel.h" alt="" coords="206,191,412,218"/>
-<area shape="rect" id="node7" href="$src_2kernel_2main_8cpp.html" title="src/kernel/main.cpp" alt="" coords="437,191,584,218"/>
-</map>

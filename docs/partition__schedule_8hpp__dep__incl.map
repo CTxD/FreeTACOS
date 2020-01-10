@@ -1,7 +1,0 @@
-<map id="src/types/include/partition_schedule.hpp" name="src/types/include/partition_schedule.hpp">
-<area shape="rect" id="node2" href="$core__schedule_8hpp.html" title="src/types/include/core\l_schedule.hpp" alt="" coords="31,95,192,136"/>
-<area shape="rect" id="node4" href="$module__schedule_8hpp.html" title="src/types/include/module\l_schedule.hpp" alt="" coords="221,95,402,136"/>
-<area shape="rect" id="node6" href="$partition__schedule_8cpp.html" title="src/types/src/partition\l_schedule.cpp" alt="" coords="426,95,586,136"/>
-<area shape="rect" id="node3" href="$core__schedule_8cpp.html" title="src/kernel/core_schedule.cpp" alt="" coords="5,191,212,218"/>
-<area shape="rect" id="node5" href="$module__schedule_8cpp.html" title="src/types/src/module\l_schedule.cpp" alt="" coords="237,184,391,225"/>
-</map>

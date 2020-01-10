@@ -1,7 +1,0 @@
-<map id="src/kernel/include/arch.h" name="src/kernel/include/arch.h">
-<area shape="rect" id="node2" href="$arch_8cpp.html" title="src/kernel/arch/rasp4\l/arch.cpp" alt="" coords="5,95,161,136"/>
-<area shape="rect" id="node3" href="$tacoskernel_8h.html" title="src/kernel/core/tacoskernel.h" alt="" coords="185,102,392,129"/>
-<area shape="rect" id="node6" href="$src_2kernel_2main_8cpp.html" title="src/kernel/main.cpp" alt="" coords="417,102,563,129"/>
-<area shape="rect" id="node4" href="$boot_8cpp.html" title="src/kernel/core/boot.cpp" alt="" coords="90,184,266,211"/>
-<area shape="rect" id="node5" href="$tacoskernel_8cpp.html" title="src/kernel/core/tacoskernel.cpp" alt="" coords="290,184,511,211"/>
-</map>
