@@ -1,0 +1,31 @@
+<map id="src/kernel/core/tacoskernel.cpp" name="src/kernel/core/tacoskernel.cpp">
+<area shape="rect" id="node2" href="$tacoskernel_8h.html" title="tacoskernel.h" alt="" coords="127,80,235,107"/>
+<area shape="rect" id="node5" href="$errcode_8h.html" title="errcode.h" alt="" coords="168,237,251,263"/>
+<area shape="rect" id="node6" href="$arinc__module_8hpp.html" title="arinc_module.hpp" alt="" coords="1137,80,1273,107"/>
+<area shape="rect" id="node29" href="$process_8hpp.html" title="process.hpp" alt="" coords="274,237,374,263"/>
+<area shape="rect" id="node3" href="$arch_8h.html" title="arch.h" alt="" coords="150,155,213,181"/>
+<area shape="rect" id="node7" href="$channel_8hpp.html" title="channel.hpp" alt="" coords="1177,319,1277,345"/>
+<area shape="rect" id="node17" href="$module__hm__table_8hpp.html" title="module_hm_table.hpp" alt="" coords="1529,237,1695,263"/>
+<area shape="rect" id="node23" href="$multipartition__hm__table_8hpp.html" title="multipartition_hm_table.hpp" alt="" coords="1035,155,1237,181"/>
+<area shape="rect" id="node26" href="$partition_8hpp.html" title="partition.hpp" alt="" coords="713,155,815,181"/>
+<area shape="rect" id="node33" href="$partition__hm__table_8hpp.html" title="partition_hm_table.hpp" alt="" coords="840,155,1011,181"/>
+<area shape="rect" id="node35" href="$partition__memory_8hpp.html" title="partition_memory.hpp" alt="" coords="1317,155,1480,181"/>
+<area shape="rect" id="node36" href="$system__error_8hpp.html" title="system_error.hpp" alt="" coords="1719,237,1854,263"/>
+<area shape="rect" id="node8" href="$port__mapping_8hpp.html" title="port_mapping.hpp" alt="" coords="1124,393,1263,420"/>
+<area shape="rect" id="node9" href="$pseudo__partition_8hpp.html" title="pseudo_partition.hpp" alt="" coords="1152,543,1309,569"/>
+<area shape="rect" id="node16" href="$standard__partition_8hpp.html" title="standard_partition.hpp" alt="" coords="1063,468,1230,495"/>
+<area shape="rect" id="node10" href="$general__types_8hpp.html" title="general_types.hpp" alt="" coords="1218,617,1358,644"/>
+<area shape="rect" id="node15" href="$apex__types_8h.html" title="apex_types.h" alt="" coords="499,692,605,719"/>
+<area shape="rect" id="node18" href="$module__error__action_8hpp.html" title="module_error_action.hpp" alt="" coords="1385,319,1567,345"/>
+<area shape="rect" id="node19" href="$apex__error_8h.html" title="apex_error.h" alt="" coords="818,393,921,420"/>
+<area shape="rect" id="node20" href="$apex__process_8h.html" title="apex_process.h" alt="" coords="676,468,799,495"/>
+<area shape="rect" id="node21" href="$processinterface_8h.html" title="processinterface.h" alt="" coords="667,543,807,569"/>
+<area shape="rect" id="node24" href="$multipartition__error__action_8hpp.html" title="multipartition_error\l_action.hpp" alt="" coords="1087,229,1233,271"/>
+<area shape="rect" id="node25" href="$error__level_8hpp.html" title="error_level.hpp" alt="" coords="928,319,1045,345"/>
+<area shape="rect" id="node27" href="$apex__partition_8h.html" title="apex_partition.h" alt="" coords="676,319,801,345"/>
+<area shape="rect" id="node28" href="$memory__requirements_8hpp.html" title="memory_requirements.hpp" alt="" coords="1308,237,1505,263"/>
+<area shape="rect" id="node30" href="$queuing__port_8hpp.html" title="queuing_port.hpp" alt="" coords="615,237,750,263"/>
+<area shape="rect" id="node32" href="$sampling__port_8hpp.html" title="sampling_port.hpp" alt="" coords="449,237,591,263"/>
+<area shape="rect" id="node31" href="$port_8hpp.html" title="port.hpp" alt="" coords="533,319,609,345"/>
+<area shape="rect" id="node34" href="$partition__error__action_8hpp.html" title="partition_error_action.hpp" alt="" coords="876,237,1063,263"/>
+</map>

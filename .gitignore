@@ -1,8 +1,113 @@
 # Ignore the build files
 aarch/rasp4
 deploy
-.idea/FreeTACOS.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
+
+.vscode
+
+# Circle stuff
+*.img
+*.lst
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+.idea
+
+# Ignore generated documentation
+docs
+
+# Docker related
+.docker-sync
+
+# Created by https://www.gitignore.io/api/c++,sbt,scala
+# Edit at https://www.gitignore.io/?templates=c++,sbt,scala
+
+### C++ ###
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.o
+*.obj
+*.ko
+.elf
+kernel8-rpi4.elf
+
+upload.sh
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Static libraries
+*.lai
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Compiled Dynamic libraries
+
+# Fortran module files
+*.mod
+*.smod
+
+### SBT ###
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+# Ignore generated schedule files
+gen.cpp
+src/kernel/config.cpp
+src/kernel/core_schedule.cpp
+src/kernel/arinc_module.cpp
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.history
+.cache
+.lib/
+
+### Scala ###
+.metals
+*.class
+*.log
+ScheduleGenerator/project
+ScheduleGenerator/target
+.scalafmt.conf
+bin/
+
+.vs/*
