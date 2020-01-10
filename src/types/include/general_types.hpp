@@ -8,9 +8,7 @@ typedef std::size_t size_t;
 #include <circle/types.h>
 #endif
 
-
 #include "allocator.hpp"
-#include "memory_area.hpp"
 #include <optional>
 #include <string>
 #include <utility>

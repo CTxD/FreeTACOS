@@ -1,9 +1,15 @@
 #ifndef MONOTONIC_MEMORY_RESOURCE
 #define MONOTONIC_MEMORY_RESOURCE
 
+#include "memory_area.hpp"
 #include <apex_types.h>
 #include <atomic>
-#include <include/general_types.hpp>
+
+#ifdef HOST_TESTING
+#include <cstring>
+#else
+#include <circle/types.h>
+#endif
 
 static const int MAX_ALLIGN = 16;
 
@@ -21,7 +27,8 @@ public:
 
     constexpr static auto alignment = align;
 
-    void* allocate(size_t size) noexcept{
+    void* allocate(size_t size) noexcept
+    {
         if (size >= freeSpace) {
             // Health monitor
         }
@@ -33,8 +40,9 @@ public:
         return ret;
     }
 
-
-    void deallocate(void*) noexcept {}
+    void deallocate(void*) noexcept
+    {
+    }
 };
 
 #endif

@@ -1,7 +1,12 @@
 #ifndef MEMORY_AREA
 #define MEMORY_AREA
 
-#include "general_types.hpp"
+#ifdef HOST_TESTING
+#include <cstring>
+#else
+#include <circle/types.h>
+#endif
+
 
 class MemoryArea {
 private:

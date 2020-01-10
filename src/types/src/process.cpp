@@ -14,3 +14,13 @@ const identifier_t& Process::getId() const
 {
     return id;
 }
+
+RETURN_CODE_TYPE setRegs(TTaskRegisters regs) const
+{
+	registers = regs;
+}
+
+const TTaskRegisters& getRegs()
+{
+	return registers;
+}

@@ -1,23 +1,21 @@
 #include "include/memory_area.hpp"
 
-
 #ifdef HOST_TESTING
+#include <cstring>
 #else
 #include <circle/alloc.h>
-#include <circle/memory.h>
+#include <circle/util.h>
 #endif
 
 MemoryArea::MemoryArea(void* ptr, size_t size)
 {
-	// filling with default value
+    // filling with default value
     _area = memset(ptr, 0, size);
-    if (_area == nullptr) {
-        // health monitoring
-    }
 }
 
 MemoryArea::~MemoryArea()
-{}
+{
+}
 
 size_t MemoryArea::size() const noexcept
 {

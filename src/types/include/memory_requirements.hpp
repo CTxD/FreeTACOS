@@ -4,6 +4,12 @@
 #include "apex_process.h"
 #include "general_types.hpp"
 
+#ifdef HOST_TESTING
+#include <catch2/taskRegisters.hpp>
+#else
+#include <circle/sched/taskswitch.h>
+#endif
+
 #include <cstdlib>
 
 class MemoryRegion {
@@ -62,7 +68,9 @@ public:
     const RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE entryPtr,
                                         STACK_SIZE_TYPE size) const;
 
-    RETURN_CODE_TYPE createContext(SYSTEM_ADDRESS_TYPE entryPtr, STACK_SIZE_TYPE size);
+    RETURN_CODE_TYPE createContext(SYSTEM_ADDRESS_TYPE entryPtr,
+                                   STACK_SIZE_TYPE size,
+                                   TTaskRegisters& m_Regs);
 };
 
 #endif

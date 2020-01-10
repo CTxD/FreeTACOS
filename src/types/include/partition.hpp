@@ -66,21 +66,24 @@ public:
               std::vector<MemoryRegion> mem,
               std::vector<QueuingPort> queuing,
               std::vector<SamplingPort> sampling)
-        : partitionIdentifier(id), affinity(affinity), partitionName(name), duration(duration),
+        : partitionIdentifier(id),
+          affinity(affinity),
+          partitionName(name),
+          duration(duration),
           period(period)
     {
-      for(auto reg: mem){
-        memoryRegions.push_back(reg);
-      }
-      for(auto queue: queuing){
-        queuePorts.push_back(queue);
-      }
-      for(auto sample: sampling){
-        samplePorts.push_back(sample);
-      }
+        for (auto reg : mem) {
+            memoryRegions.push_back(reg);
+        }
+        for (auto queue : queuing) {
+            queuePorts.push_back(queue);
+        }
+        for (auto sample : sampling) {
+            samplePorts.push_back(sample);
+        }
 
-      mode = OPERATING_MODE_TYPE::COLD_START;
-      // CMemorySystem::Get()->nBaseAddress;
+        mode = OPERATING_MODE_TYPE::COLD_START;
+        // CMemorySystem::Get()->nBaseAddress;
     }
 
     Partition(const Partition& rhs)
@@ -114,7 +117,7 @@ public:
 
     const std::vector<SamplingPort, MonotonicAllocator<SamplingPort>>& getSamplePorts() const;
 
-    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size);
+    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size, TTaskRegisters& regs);
 
     void setMode(OPERATING_MODE_TYPE m);
 

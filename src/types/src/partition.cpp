@@ -1,9 +1,10 @@
 #include "include/partition.hpp"
+
 #ifdef HOST_TESTING
 #include <iostream>
 #include <time.h>
 #else
-#include "arch.hpp"
+#include <circle/timer.h>
 #endif
 
 Partition& Partition::operator=(const Partition& rhs)
@@ -90,14 +91,16 @@ void Partition::setSystemPartition(bool systemPart)
     systemPartition = std::move(systemPart);
 }
 
-RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size)
+RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr,
+                                         STACK_SIZE_TYPE size,
+                                         TTaskRegisters& regs)
 {
     // check storage (insufficient storage capacity)
     // pok_check_ptr_in_partition
     for (auto& region : memoryRegions) {
         if (region.getAccessRights() == memory_access_t::READ_WRITE &&
             region.getType() == memory_region_t::RAM) {
-            if (region.createContext(ptr, size) == RETURN_CODE_TYPE::NO_ERROR)
+            if (region.createContext(ptr, size, regs) == RETURN_CODE_TYPE::NO_ERROR)
                 return RETURN_CODE_TYPE::NO_ERROR;
         }
     }
@@ -125,8 +128,9 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
 {
     returnCode = RETURN_CODE_TYPE::NO_ERROR;
     processId = NULL;
+    TTaskRegisters regs;
     // check if partition storage capacity is sufficient
-    returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE);
+    returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE, regs);
 
     if (processes.size() > MAX_PROCESS_NUM) {
         returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
@@ -168,13 +172,14 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
 #ifdef HOST_TESTING
     t = clock();
 #else
-    t = CKernel::GetTimer().GetTicks();
+    t = CTimer::Get ()->GetTicks ();
 #endif
 
     processId = processes.size() + 1;
     Process proc{processId,
                  {t + attributes.DEADLINE, attributes.BASE_PRIORITY,
-                  PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY}};
+                  PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY},
+                 regs};
     processes.push_back(proc);
 
     returnCode = RETURN_CODE_TYPE::NO_ERROR;
@@ -188,7 +193,6 @@ void Partition::getProcess(identifier_t processId, Process& process, RETURN_CODE
         process = proc;
     }
     returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
-    processId = NULL;
 }
 
 void Partition::getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& stat, RETURN_CODE_TYPE& returnCode)
