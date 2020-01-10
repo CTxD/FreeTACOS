@@ -1,0 +1,144 @@
+\hypertarget{apex__event_8h}{}\section{src/libuser/apex/apex\+\_\+event.h File Reference}
+\label{apex__event_8h}\index{src/libuser/apex/apex\+\_\+event.\+h@{src/libuser/apex/apex\+\_\+event.\+h}}
+{\ttfamily \#include \char`\"{}apex\+\_\+types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}apex\+\_\+process.\+h\char`\"{}}\\*
+Include dependency graph for apex\+\_\+event.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{apex__event_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{apex__event_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structEVENT__STATUS__TYPE}{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apex__event_8h_abca04dca9255f2d88f1abb9faf2679a3}{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}~\hyperlink{apex__types_8h_a265cbcc964d994355d0ea8eaf461eb39}{S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structNAME__TYPE}{N\+A\+M\+E\+\_\+\+T\+Y\+PE} \hyperlink{apex__event_8h_aa458f9711a99d4b2ac9e792dec24e4fa}{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5}{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5a9b0b4a95b99523966e0e34ffdadac9da}{D\+O\+WN} = 0, 
+\hyperlink{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5aba595d8bca8bc5e67c37c0a9d89becfa}{UP} = 1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{apex__event_8h_a1d28ad3d11df188992565db7009cc1d4}{C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT} (\hyperlink{apex__event_8h_aa458f9711a99d4b2ac9e792dec24e4fa}{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+N\+A\+ME, \hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__event_8h_a62df2caf7b5f9e29ade1528eefcf09d1}{S\+E\+T\+\_\+\+E\+V\+E\+NT} (\hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__event_8h_aee5cbc01d925f4541cc7aad0d6e19069}{R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT} (\hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__event_8h_af696752e7a3ad791885dae6189fff373}{W\+A\+I\+T\+\_\+\+E\+V\+E\+NT} (\hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a78cd52c2621ddf2eda68fcd4bedbc1a7}{S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE} T\+I\+M\+E\+\_\+\+O\+UT, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__event_8h_aea1767963d7ad9631df741bac1d0f11b}{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID} (\hyperlink{apex__event_8h_aa458f9711a99d4b2ac9e792dec24e4fa}{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+N\+A\+ME, \hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__event_8h_a3bd35a64d6fea1d56c2341dccdfe62a8}{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US} (\hyperlink{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} E\+V\+E\+N\+T\+\_\+\+ID, \hyperlink{structEVENT__STATUS__TYPE}{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}}
+\index{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}{MAX_NUMBER_OF_EVENTS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS~{\bf S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+E\+V\+E\+N\+TS}}\hypertarget{apex__event_8h_abca04dca9255f2d88f1abb9faf2679a3}{}\label{apex__event_8h_abca04dca9255f2d88f1abb9faf2679a3}
+
+
+\subsection{Typedef Documentation}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}
+\index{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}{EVENT_ID_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}\hypertarget{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}{}\label{apex__event_8h_aa1f2cbf50be092a2745bc35bbc254b20}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}
+\index{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}{EVENT_NAME_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf N\+A\+M\+E\+\_\+\+T\+Y\+PE} {\bf E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__event_8h_aa458f9711a99d4b2ac9e792dec24e4fa}{}\label{apex__event_8h_aa458f9711a99d4b2ac9e792dec24e4fa}
+
+
+\subsection{Enumeration Type Documentation}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}}
+\index{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE@{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}{EVENT_STATE_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5}{}\label{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{D\+O\+WN@{D\+O\+WN}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!D\+O\+WN@{D\+O\+WN}}\item[{\em 
+D\+O\+WN\hypertarget{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5a9b0b4a95b99523966e0e34ffdadac9da}{}\label{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5a9b0b4a95b99523966e0e34ffdadac9da}
+}]\index{UP@{UP}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!UP@{UP}}\item[{\em 
+UP\hypertarget{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5aba595d8bca8bc5e67c37c0a9d89becfa}{}\label{apex__event_8h_a2629ecda01c112ff228d24d2c19891b5aba595d8bca8bc5e67c37c0a9d89becfa}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT@{C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT}}
+\index{C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT@{C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+N\+T(\+E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E, E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+E\+V\+E\+N\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{CREATE_EVENT(EVENT_NAME_TYPE EVENT_NAME, EVENT_ID_TYPE *EVENT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void C\+R\+E\+A\+T\+E\+\_\+\+E\+V\+E\+NT (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+N\+A\+ME, }
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_a1d28ad3d11df188992565db7009cc1d4}{}\label{apex__event_8h_a1d28ad3d11df188992565db7009cc1d4}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID@{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID}}
+\index{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID@{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+I\+D(\+E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E, E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+E\+V\+E\+N\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_EVENT_ID(EVENT_NAME_TYPE EVENT_NAME, EVENT_ID_TYPE *EVENT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+N\+A\+ME, }
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_aea1767963d7ad9631df741bac1d0f11b}{}\label{apex__event_8h_aea1767963d7ad9631df741bac1d0f11b}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US}}
+\index{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S(\+E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+I\+D, E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E $\ast$\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_EVENT_STATUS(EVENT_ID_TYPE EVENT_ID, EVENT_STATUS_TYPE *EVENT_STATUS, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$}]{E\+V\+E\+N\+T\+\_\+\+S\+T\+A\+T\+US, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_a3bd35a64d6fea1d56c2341dccdfe62a8}{}\label{apex__event_8h_a3bd35a64d6fea1d56c2341dccdfe62a8}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT@{R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT}}
+\index{R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT@{R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+N\+T(\+E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{RESET_EVENT(EVENT_ID_TYPE EVENT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void R\+E\+S\+E\+T\+\_\+\+E\+V\+E\+NT (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_aee5cbc01d925f4541cc7aad0d6e19069}{}\label{apex__event_8h_aee5cbc01d925f4541cc7aad0d6e19069}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!S\+E\+T\+\_\+\+E\+V\+E\+NT@{S\+E\+T\+\_\+\+E\+V\+E\+NT}}
+\index{S\+E\+T\+\_\+\+E\+V\+E\+NT@{S\+E\+T\+\_\+\+E\+V\+E\+NT}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{S\+E\+T\+\_\+\+E\+V\+E\+N\+T(\+E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{SET_EVENT(EVENT_ID_TYPE EVENT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void S\+E\+T\+\_\+\+E\+V\+E\+NT (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_a62df2caf7b5f9e29ade1528eefcf09d1}{}\label{apex__event_8h_a62df2caf7b5f9e29ade1528eefcf09d1}
+\index{apex\+\_\+event.\+h@{apex\+\_\+event.\+h}!W\+A\+I\+T\+\_\+\+E\+V\+E\+NT@{W\+A\+I\+T\+\_\+\+E\+V\+E\+NT}}
+\index{W\+A\+I\+T\+\_\+\+E\+V\+E\+NT@{W\+A\+I\+T\+\_\+\+E\+V\+E\+NT}!apex\+\_\+event.\+h@{apex\+\_\+event.\+h}}
+\subsubsection[{\texorpdfstring{W\+A\+I\+T\+\_\+\+E\+V\+E\+N\+T(\+E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E E\+V\+E\+N\+T\+\_\+\+I\+D, S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+P\+E T\+I\+M\+E\+\_\+\+O\+U\+T, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{WAIT_EVENT(EVENT_ID_TYPE EVENT_ID, SYSTEM_TIME_TYPE TIME_OUT, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void W\+A\+I\+T\+\_\+\+E\+V\+E\+NT (
+\begin{DoxyParamCaption}
+\item[{{\bf E\+V\+E\+N\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{E\+V\+E\+N\+T\+\_\+\+ID, }
+\item[{{\bf S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE}}]{T\+I\+M\+E\+\_\+\+O\+UT, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__event_8h_af696752e7a3ad791885dae6189fff373}{}\label{apex__event_8h_af696752e7a3ad791885dae6189fff373}

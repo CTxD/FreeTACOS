@@ -1,3 +1,6 @@
 [submodule "aarch/circle-stdlib"]
 	path = aarch/circle-stdlib
 	url = https://github.com/smuehlst/circle-stdlib.git
+[submodule "FreeTACOS.wiki"]
+	path = FreeTACOS.wiki
+	url = https://github.com/CTxD/FreeTACOS.wiki.git

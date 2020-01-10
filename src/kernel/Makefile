@@ -1,4 +1,5 @@
 export ROOT=$(CURDIR)/../../
+export KERNEL=$(ROOT)/src/kernel
 export CORE=$(ROOT)/src/kernel/core
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 
@@ -6,7 +7,15 @@ export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
-		$(ROOT)/src/kernel/arch/rasp4/arch.o
+		$(CORE)/processchedule.o \
+		$(ROOT)/src/kernel/arch/rasp4/arch.o \
+		$(ROOT)/src/types/src/partition.o \
+		$(ROOT)/src/types/src/system_error.o \
+		$(ROOT)/src/types/src/multipartition_hm_table.o \
+		$(ROOT)/src/types/src/module_hm_table.o \
+		$(ROOT)/src/types/src/partition_hm_table.o \
+		$(ROOT)/src/types/src/arinc_module.o
+
 
 include $(CIRCLELIB)/Config.mk
 
@@ -14,11 +23,11 @@ CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
-INCLUDE += -I $(ROOT)/src/types
-INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/types/include
+INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
+INCLUDE += -I $(ROOT)/src/kernel
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
 

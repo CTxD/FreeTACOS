@@ -1,0 +1,160 @@
+\hypertarget{apex__mutex_8h}{}\section{src/libuser/apex/apex\+\_\+mutex.h File Reference}
+\label{apex__mutex_8h}\index{src/libuser/apex/apex\+\_\+mutex.\+h@{src/libuser/apex/apex\+\_\+mutex.\+h}}
+{\ttfamily \#include \char`\"{}apex\+\_\+types.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}apex\+\_\+process.\+h\char`\"{}}\\*
+Include dependency graph for apex\+\_\+mutex.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{apex__mutex_8h__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structMUTEX__STATUS__TYPE}{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apex__mutex_8h_aef4a48d6a948dad973978b5213f9721e}{N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED}~-\/2
+\item 
+\#define \hyperlink{apex__mutex_8h_af25bc7a8d75409cb424eacc4e90f9b7c}{P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX}~-\/3
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structNAME__TYPE}{N\+A\+M\+E\+\_\+\+T\+Y\+PE} \hyperlink{apex__mutex_8h_ab2278144ab9c2ea707d8d63c56e73f70}{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__mutex_8h_ad68b7b1abc606e7ce90da2f125951a71}{L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382c}{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca1e229ccb8b53a57de4ebb11c2d15272e}{A\+V\+A\+I\+L\+A\+B\+LE} = 0, 
+\hyperlink{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca4c938bc4b7d93afde3479bc7f1d15ff9}{O\+W\+N\+ED} = 1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{apex__mutex_8h_a6ef16f2b306aa613ad2670156f3db413}{C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX} (\hyperlink{apex__mutex_8h_ab2278144ab9c2ea707d8d63c56e73f70}{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+N\+A\+ME, \hyperlink{apex__process_8h_a2185443fe5bfda31ff9cce2071f1b18c}{P\+R\+I\+O\+R\+I\+T\+Y\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+P\+R\+I\+O\+R\+I\+TY, \hyperlink{apex__types_8h_a35f7a2796e3b68b025d76be6805a1c53}{Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+PE} Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+NE, \hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_a39af4ff0d0d794f176820df73af9df9b}{A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX} (\hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__types_8h_a78cd52c2621ddf2eda68fcd4bedbc1a7}{S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE} T\+I\+M\+E\+\_\+\+O\+UT, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_a96a0ba27c8297ef8e2bf489e015fcd5a}{R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX} (\hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_a76bbba0c53214f5320a797994edf853d}{R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX} (\hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__process_8h_a7a2c8e8d542c23599ac16fd978b241c4}{P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} P\+R\+O\+C\+E\+S\+S\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_a4ad246399e65461e7daaa948ed3288c3}{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID} (\hyperlink{apex__mutex_8h_ab2278144ab9c2ea707d8d63c56e73f70}{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+N\+A\+ME, \hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_aa2e3bbbe45fad9309a6a58fbcfd239fd}{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US} (\hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{structMUTEX__STATUS__TYPE}{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__mutex_8h_a156fa13e41f0247eafc936f8d096d62d}{G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE} (\hyperlink{apex__process_8h_a7a2c8e8d542c23599ac16fd978b241c4}{P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} P\+R\+O\+C\+E\+S\+S\+\_\+\+ID, \hyperlink{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} M\+U\+T\+E\+X\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED@{N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED}}
+\index{N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED@{N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED}{NO_MUTEX_OWNED}}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\+O\+\_\+\+M\+U\+T\+E\+X\+\_\+\+O\+W\+N\+ED~-\/2}\hypertarget{apex__mutex_8h_aef4a48d6a948dad973978b5213f9721e}{}\label{apex__mutex_8h_aef4a48d6a948dad973978b5213f9721e}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX@{P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX}}
+\index{P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX@{P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX}{PREEMPTION_LOCK_MUTEX}}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\+R\+E\+E\+M\+P\+T\+I\+O\+N\+\_\+\+L\+O\+C\+K\+\_\+\+M\+U\+T\+EX~-\/3}\hypertarget{apex__mutex_8h_af25bc7a8d75409cb424eacc4e90f9b7c}{}\label{apex__mutex_8h_af25bc7a8d75409cb424eacc4e90f9b7c}
+
+
+\subsection{Typedef Documentation}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE@{L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE}}
+\index{L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE@{L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE}{LOCK_COUNT_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf L\+O\+C\+K\+\_\+\+C\+O\+U\+N\+T\+\_\+\+T\+Y\+PE}}\hypertarget{apex__mutex_8h_ad68b7b1abc606e7ce90da2f125951a71}{}\label{apex__mutex_8h_ad68b7b1abc606e7ce90da2f125951a71}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}
+\index{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}{MUTEX_ID_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}\hypertarget{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}{}\label{apex__mutex_8h_aa91718fe0f90eaaf506e05dadab423f1}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}
+\index{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}{MUTEX_NAME_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf N\+A\+M\+E\+\_\+\+T\+Y\+PE} {\bf M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__mutex_8h_ab2278144ab9c2ea707d8d63c56e73f70}{}\label{apex__mutex_8h_ab2278144ab9c2ea707d8d63c56e73f70}
+
+
+\subsection{Enumeration Type Documentation}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}}
+\index{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE@{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}{MUTEX_STATE_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382c}{}\label{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382c}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{A\+V\+A\+I\+L\+A\+B\+LE@{A\+V\+A\+I\+L\+A\+B\+LE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!A\+V\+A\+I\+L\+A\+B\+LE@{A\+V\+A\+I\+L\+A\+B\+LE}}\item[{\em 
+A\+V\+A\+I\+L\+A\+B\+LE\hypertarget{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca1e229ccb8b53a57de4ebb11c2d15272e}{}\label{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca1e229ccb8b53a57de4ebb11c2d15272e}
+}]\index{O\+W\+N\+ED@{O\+W\+N\+ED}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!O\+W\+N\+ED@{O\+W\+N\+ED}}\item[{\em 
+O\+W\+N\+ED\hypertarget{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca4c938bc4b7d93afde3479bc7f1d15ff9}{}\label{apex__mutex_8h_a1a59e4fac7b528fcbd7f53ff27ce382ca4c938bc4b7d93afde3479bc7f1d15ff9}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX@{A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX}}
+\index{A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX@{A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+E\+X(\+M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+P\+E T\+I\+M\+E\+\_\+\+O\+U\+T, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{ACQUIRE_MUTEX(MUTEX_ID_TYPE MUTEX_ID, SYSTEM_TIME_TYPE TIME_OUT, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void A\+C\+Q\+U\+I\+R\+E\+\_\+\+M\+U\+T\+EX (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE}}]{T\+I\+M\+E\+\_\+\+O\+UT, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a39af4ff0d0d794f176820df73af9df9b}{}\label{apex__mutex_8h_a39af4ff0d0d794f176820df73af9df9b}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX@{C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX}}
+\index{C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX@{C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+E\+X(\+M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E, P\+R\+I\+O\+R\+I\+T\+Y\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+P\+R\+I\+O\+R\+I\+T\+Y, Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+P\+E Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E, M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{CREATE_MUTEX(MUTEX_NAME_TYPE MUTEX_NAME, PRIORITY_TYPE MUTEX_PRIORITY, QUEUING_DISCIPLINE_TYPE QUEUING_DISCIPLINE, MUTEX_ID_TYPE MUTEX_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void C\+R\+E\+A\+T\+E\+\_\+\+M\+U\+T\+EX (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+N\+A\+ME, }
+\item[{{\bf P\+R\+I\+O\+R\+I\+T\+Y\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+P\+R\+I\+O\+R\+I\+TY, }
+\item[{{\bf Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+N\+E\+\_\+\+T\+Y\+PE}}]{Q\+U\+E\+U\+I\+N\+G\+\_\+\+D\+I\+S\+C\+I\+P\+L\+I\+NE, }
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a6ef16f2b306aa613ad2670156f3db413}{}\label{apex__mutex_8h_a6ef16f2b306aa613ad2670156f3db413}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID@{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID}}
+\index{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID@{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+I\+D(\+M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E, M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_MUTEX_ID(MUTEX_NAME_TYPE MUTEX_NAME, MUTEX_ID_TYPE MUTEX_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+N\+A\+ME, }
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a4ad246399e65461e7daaa948ed3288c3}{}\label{apex__mutex_8h_a4ad246399e65461e7daaa948ed3288c3}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US}}
+\index{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S(\+M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_MUTEX_STATUS(MUTEX_ID_TYPE MUTEX_ID, MUTEX_STATUS_TYPE MUTEX_STATUS, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+US, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_aa2e3bbbe45fad9309a6a58fbcfd239fd}{}\label{apex__mutex_8h_aa2e3bbbe45fad9309a6a58fbcfd239fd}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE@{G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE}}
+\index{G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE@{G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+T\+E(\+P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D, M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_PROCESS_MUTEX_STATE(PROCESS_ID_TYPE PROCESS_ID, MUTEX_ID_TYPE MUTEX_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+P\+R\+O\+C\+E\+S\+S\+\_\+\+M\+U\+T\+E\+X\+\_\+\+S\+T\+A\+TE (
+\begin{DoxyParamCaption}
+\item[{{\bf P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{P\+R\+O\+C\+E\+S\+S\+\_\+\+ID, }
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a156fa13e41f0247eafc936f8d096d62d}{}\label{apex__mutex_8h_a156fa13e41f0247eafc936f8d096d62d}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX@{R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX}}
+\index{R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX@{R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+E\+X(\+M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{RELEASE_MUTEX(MUTEX_ID_TYPE MUTEX_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void R\+E\+L\+E\+A\+S\+E\+\_\+\+M\+U\+T\+EX (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a96a0ba27c8297ef8e2bf489e015fcd5a}{}\label{apex__mutex_8h_a96a0ba27c8297ef8e2bf489e015fcd5a}
+\index{apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}!R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX@{R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX}}
+\index{R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX@{R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX}!apex\+\_\+mutex.\+h@{apex\+\_\+mutex.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+E\+X(\+M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E M\+U\+T\+E\+X\+\_\+\+I\+D, P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{RESET_MUTEX(MUTEX_ID_TYPE MUTEX_ID, PROCESS_ID_TYPE PROCESS_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void R\+E\+S\+E\+T\+\_\+\+M\+U\+T\+EX (
+\begin{DoxyParamCaption}
+\item[{{\bf M\+U\+T\+E\+X\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{M\+U\+T\+E\+X\+\_\+\+ID, }
+\item[{{\bf P\+R\+O\+C\+E\+S\+S\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{P\+R\+O\+C\+E\+S\+S\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__mutex_8h_a76bbba0c53214f5320a797994edf853d}{}\label{apex__mutex_8h_a76bbba0c53214f5320a797994edf853d}

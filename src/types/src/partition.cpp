@@ -8,8 +8,8 @@ Partition& Partition::operator=(const Partition& rhs)
   duration = rhs.duration;
   period = rhs.period;
   memoryRegions = rhs.memoryRegions;
-  queuePorts = rhs.queuePorts;
-  samplePorts = rhs.samplePorts;
+  queuingPorts = rhs.queuingPorts;
+  samplingPorts = rhs.samplingPorts;
   mode = rhs.mode;
   status = rhs.status;
   processes = rhs.processes;
@@ -44,19 +44,19 @@ const decOrHex_t& Partition::getPeriod() const
   return period;
 }
 
-const vector<MemoryRegion>& Partition::getMemoryRegions() const
+const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
 {
-  return memoryRegions;
+  return *memoryRegions;
 }
 
-const vector<QueuingPort>& Partition::getQueuePorts() const
+const std::vector<QueuingPort>& Partition::getQueuePorts() const
 {
-  return queuePorts;
+  return *queuingPorts;
 }
 
-const vector<SamplingPort>& Partition::getSamplePorts() const
+const std::vector<SamplingPort>& Partition::getSamplePorts() const
 {
-  return samplePorts;
+  return *samplingPorts;
 }
 
 void Partition::setMode(OPERATING_MODE_TYPE mode)
@@ -81,12 +81,12 @@ const PARTITION_STATUS_TYPE& Partition::getStatus() const
 
 void Partition::addProcess(Process proc)
 {
-  processes.push_back(proc);
+  processes->push_back(proc);
 }
 
-const vector<Process>& Partition::getProcesses() const
+const std::vector<Process>& Partition::getProcesses() const
 {
-  return processes;
+  return *processes;
 }
 
 void Partition::setCriticality(CRITICALITY_TYPE criticality)

@@ -1,16 +1,16 @@
 #include "tacoskernel.h"
 #include <errcode.h>
-#include <arinc_module.hpp>
-#include <process.hpp>
+#include "processchedule.hpp"
 
 CTacosKernel::CTacosKernel()
 {
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    while (1) {
+    ProcessSchedule();
         mLogger.Write(GetKernelName(), LogNotice,
                       "C Standard Library stdin/stdout/stderr Demo");
+    while (1) {
     }
 
     return ShutdownHalt;

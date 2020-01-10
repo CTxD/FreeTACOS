@@ -7,5 +7,10 @@ const PROCESS_STATUS_TYPE& Process::getStatus() const
 
 const PROCESS_ATTRIBUTE_TYPE& Process::getAttributes() const
 {
-  return attributes;
+  return status.ATTRIBUTES;
+}
+
+const decOrHex_t& Process::getProcessIdentifier() const
+{
+  return processIdentifier;
 }

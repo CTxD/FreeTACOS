@@ -3,31 +3,33 @@
 
 #include "port_mapping.hpp"
 
+class Channel {
+private:
+    PortMapping destination[1];
+    std::vector<PortMapping>* destinations = new (&destination) std::vector<PortMapping>;
 
-class Channel
-{
-	private:
-		PortMapping portMapping[100];
-    	monotonic_buffer_resource portMappingSrc{std::data(portMapping),
-                                               std::size(portMapping)};
-		identifier_t channelIdentifier;			/* required */
-		std::optional<name_t> channelName;	/* optional */
-		PortMapping source;									/* required */
-		vector<PortMapping> destinations; 	/* required */
+    identifier_t channelIdentifier;    /* required */
+    std::optional<name_t> channelName; /* optional */
+    PortMapping source;                /* required */
 
-	public:
-		Channel() {};
+public:
+    Channel(){};
 
-		Channel(identifier_t id, name_t name, PortMapping source, std::initializer_list<PortMapping> destinations):
-			channelIdentifier(id), channelName(name), source(source), destinations(destinations, &portMappingSrc) {}
+    Channel(identifier_t id, name_t name, PortMapping source, std::initializer_list<PortMapping> dest)
+        : channelIdentifier(id), channelName(name), source(source)
+    {
+        for (auto d : dest) {
+            destinations->push_back(d);
+        }
+    }
 
-		const identifier_t& getChannelId() const;
+    const identifier_t& getChannelId() const;
 
-		const std::optional<name_t>& getChannelName() const;
+    const std::optional<name_t>& getChannelName() const;
 
-		const PortMapping& getSource() const;
+    const PortMapping& getSource() const;
 
-		const vector<PortMapping>& getDestinations() const;
+    const std::vector<PortMapping>& getDestinations() const;
 };
 
 #endif
