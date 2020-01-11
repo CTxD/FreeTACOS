@@ -1,21 +1,20 @@
 export ROOT=$(CURDIR)/../../
 export KERNEL=$(ROOT)/src/kernel
 export CORE=$(ROOT)/src/kernel/core
+export APPS=$(ROOT)/src/apps
+export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
-		$(CORE)/processchedule.o \
-		$(ROOT)/src/kernel/arch/rasp4/arch.o \
-		$(ROOT)/src/types/src/partition.o \
-		$(ROOT)/src/types/src/system_error.o \
-		$(ROOT)/src/types/src/multipartition_hm_table.o \
-		$(ROOT)/src/types/src/module_hm_table.o \
-		$(ROOT)/src/types/src/partition_hm_table.o \
-		$(ROOT)/src/types/src/arinc_module.o
-
+		$(TYPES)/src/partition.o \
+		$(TYPES)/src/multipartition_hm_table.o \
+		$(TYPES)/src/module_hm_table.o \
+		$(TYPES)/src/partition_hm_table.o \
+		$(APPS)/fibpart.o \
+		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
 include $(CIRCLELIB)/Config.mk
 
@@ -23,6 +22,8 @@ CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
+INCLUDE += -I $(APPS)
+INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/libuser/apex
