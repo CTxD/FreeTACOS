@@ -15,7 +15,7 @@ const PortMapping& Channel::getSource() const
     return source;
 }
 
-const std::vector<PortMapping, MonotonicAllocator<PortMapping>>& Channel::getDestinations() const
+const std::vector<PortMapping>& Channel::getDestinations() const
 {
     return *destinations;
 }

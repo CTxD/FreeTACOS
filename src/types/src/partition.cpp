@@ -15,8 +15,8 @@ Partition& Partition::operator=(const Partition& rhs)
     duration = rhs.duration;
     period = rhs.period;
     memoryRegions = rhs.memoryRegions;
-    queuePorts = rhs.queuePorts;
-    samplePorts = rhs.samplePorts;
+    queuingPorts = rhs.queuingPorts;
+    samplingPorts = rhs.samplingPorts;
     mode = rhs.mode;
     status = rhs.status;
     processes = rhs.processes;
@@ -71,11 +71,6 @@ const PARTITION_STATUS_TYPE& Partition::getStatus() const
     return status;
 }
 
-const std::vector<Process, MonotonicAllocator<Process>>& Partition::getProcesses() const
-{
-    processes->push_back(proc);
-}
-
 const std::vector<Process>& Partition::getProcesses() const
 {
     return *processes;
@@ -102,7 +97,7 @@ RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr,
 {
     // check storage (insufficient storage capacity)
     // pok_check_ptr_in_partition
-    for (auto& region : memoryRegions) {
+    for (auto& region : (*memoryRegions)) {
         if (region.getAccessRights() == memory_access_t::READ_WRITE &&
             region.getType() == memory_region_t::RAM) {
             if (region.createContext(ptr, size, regs) == RETURN_CODE_TYPE::NO_ERROR)
@@ -137,11 +132,11 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
     // check if partition storage capacity is sufficient
     returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE, regs);
 
-    if (processes.size() > MAX_PROCESS_NUM) {
+    if (processes->size() > MAX_PROCESS_NUM) {
         returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
     }
     // process must have a unique name
-    for (const auto& proc : processes) {
+    for (auto const& proc : (*processes)) {
         if (strcmp(proc.getAttributes().NAME.name, attributes.NAME.name) == 0) {
             returnCode = RETURN_CODE_TYPE::NO_ACTION;
         }
@@ -180,19 +175,19 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
     t = CTimer::Get()->GetTicks();
 #endif
 
-    processId = processes.size() + 1;
-    Process proc{processId,
+    processId = processes->size() + 1;
+    Process proc(processId,
                  {t + attributes.DEADLINE, attributes.BASE_PRIORITY,
-                  PROCESS_STATE_TYPE::DORMANT, attributes, DEFAULT_PROCESS_CORE_AFFINITY},
-                 regs};
-    processes.push_back(proc);
-
+                  PROCESS_STATE_TYPE::DORMANT, attributes},
+                 regs);
+    processes->push_back(proc);
+    // initialize addinity to DEFAULT_PROCESS_CORE_AFFINITY
     returnCode = RETURN_CODE_TYPE::NO_ERROR;
 }
 
 void Partition::getProcess(identifier_t processId, Process& process, RETURN_CODE_TYPE& returnCode)
 {
-    for (const auto& proc : processes) {
+    for (const auto& proc : (*processes)) {
         if (proc.getId() == processId)
             returnCode = RETURN_CODE_TYPE::NO_ERROR;
         process = proc;

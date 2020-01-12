@@ -22,9 +22,8 @@ const APEX_INTEGER MAX_NUMBER_MEMORY_REQUIREMENTS = 100;
 const APEX_INTEGER MAX_NUMBER_SYSTEM_STATES = 2;
 
 const APEX_INTEGER MAX_NUMBER_WINDOWS = 200;
-s
 
-    const APEX_INTEGER WINDOW_NUMBER = 100;
+const APEX_INTEGER WINDOW_NUMBER = 100;
 
 const APEX_INTEGER CHANNEL_NUMBER = 50;
 
@@ -42,9 +41,7 @@ typedef APEX_UNSIGNED identifier_t;
 
 typedef APEX_INTEGER decOrHex_t;
 
-typedef struct {
-    NAME_TYPE x;
-} name_t;
+typedef NAME_TYPE name_t;
 
 typedef char description_t[MAX_DESCRIPTION_LENGTH];
 
