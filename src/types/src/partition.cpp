@@ -1,120 +1,203 @@
 #include "include/partition.hpp"
 
+#ifdef HOST_TESTING
+#include <iostream>
+#include <time.h>
+#else
+#include <circle/timer.h>
+#endif
+
 Partition& Partition::operator=(const Partition& rhs)
 {
-  partitionIdentifier = rhs.partitionIdentifier;
-  affinity = rhs.affinity;
-  partitionName = rhs.partitionName;
-  duration = rhs.duration;
-  period = rhs.period;
-  memoryRegions = rhs.memoryRegions;
-  queuingPorts = rhs.queuingPorts;
-  samplingPorts = rhs.samplingPorts;
-  mode = rhs.mode;
-  status = rhs.status;
-  processes = rhs.processes;
-  criticality = rhs.criticality;
-  systemPartition = rhs.systemPartition;
-  entryPoint = rhs.entryPoint;
-  return *this;
-}
-
-const identifier_t& Partition::getPartitionIdentifier() const
-{
-  return partitionIdentifier;
+    partitionIdentifier = rhs.partitionIdentifier;
+    affinity = rhs.affinity;
+    partitionName = rhs.partitionName;
+    duration = rhs.duration;
+    period = rhs.period;
+    memoryRegions = rhs.memoryRegions;
+    queuingPorts = rhs.queuingPorts;
+    samplingPorts = rhs.samplingPorts;
+    mode = rhs.mode;
+    status = rhs.status;
+    processes = rhs.processes;
+    criticality = rhs.criticality;
+    systemPartition = rhs.systemPartition;
+    entryPoint = rhs.entryPoint;
+    return *this;
 }
 
 const PROCESSOR_CORE_ID_TYPE& Partition::getAffinity() const
 {
-  return affinity;
+    return affinity;
 }
 
-const name_t& Partition::getPartitionName() const
+const NAME_TYPE& Partition::getPartitionName() const
 {
-  return partitionName;
-}
-
-const decOrHex_t& Partition::getDuration() const
-{
-  return duration;
-}
-
-const decOrHex_t& Partition::getPeriod() const
-{
-  return period;
+    return partitionName;
 }
 
 const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
 {
-  return *memoryRegions;
+    return *memoryRegions;
 }
 
 const std::vector<QueuingPort>& Partition::getQueuePorts() const
 {
-  return *queuingPorts;
+    return *queuingPorts;
 }
 
 const std::vector<SamplingPort>& Partition::getSamplePorts() const
 {
-  return *samplingPorts;
+    return *samplingPorts;
 }
 
-void Partition::setMode(OPERATING_MODE_TYPE mode)
+void Partition::setMode(OPERATING_MODE_TYPE m)
 {
-    mode = std::move(mode);
+    mode = std::move(m);
 }
 
 const OPERATING_MODE_TYPE& Partition::getMode() const
 {
-  return mode;
+    return mode;
 }
 
-void Partition::setStatus(PARTITION_STATUS_TYPE status)
+void Partition::setStatus(PARTITION_STATUS_TYPE s)
 {
-  status = std::move(status);
+    status = std::move(s);
 }
 
 const PARTITION_STATUS_TYPE& Partition::getStatus() const
 {
-  return status;
-}
-
-void Partition::addProcess(Process proc)
-{
-  processes->push_back(proc);
+    return status;
 }
 
 const std::vector<Process>& Partition::getProcesses() const
 {
-  return *processes;
+    return *processes;
 }
 
 void Partition::setCriticality(CRITICALITY_TYPE criticality)
 {
-  criticality = std::move(criticality);
+    criticality = std::move(criticality);
 }
 
 const CRITICALITY_TYPE& Partition::getCriticality() const
 {
-  return criticality;
+    return criticality;
 }
 
 void Partition::setSystemPartition(bool systemPart)
 {
-  systemPartition = std::move(systemPart);
+    systemPartition = std::move(systemPart);
+}
+
+RETURN_CODE_TYPE Partition::checkPointer(SYSTEM_ADDRESS_TYPE ptr,
+                                         STACK_SIZE_TYPE size,
+                                         TTaskRegisters& regs)
+{
+    // check storage (insufficient storage capacity)
+    // pok_check_ptr_in_partition
+    for (auto& region : (*memoryRegions)) {
+        if (region.getAccessRights() == memory_access_t::READ_WRITE &&
+            region.getType() == memory_region_t::RAM) {
+            if (region.createContext(ptr, size, regs) == RETURN_CODE_TYPE::NO_ERROR)
+                return RETURN_CODE_TYPE::NO_ERROR;
+        }
+    }
+    return RETURN_CODE_TYPE::INVALID_CONFIG;
 }
 
 const bool& Partition::getSystemPartition() const
 {
-  return systemPartition;
+    return systemPartition;
 }
 
-void Partition::setEntryPoint(name_t entry)
+void Partition::setEntryPoint(SYSTEM_ADDRESS_TYPE entry)
 {
-  entryPoint = std::move(entry);
+    entryPoint = std::move(entry);
 }
 
-const name_t& Partition::getEntryPoint() const
+const SYSTEM_ADDRESS_TYPE& Partition::getEntryPoint() const
 {
-  return entryPoint;
+    return entryPoint;
+}
+
+void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
+                              identifier_t& processId,
+                              RETURN_CODE_TYPE& returnCode)
+{
+    returnCode = RETURN_CODE_TYPE::NO_ERROR;
+    processId = NULL;
+    TTaskRegisters regs;
+    // check if partition storage capacity is sufficient
+    returnCode = checkPointer(attributes.ENTRY_POINT, attributes.STACK_SIZE, regs);
+
+    if (processes->size() > MAX_PROCESS_NUM) {
+        returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
+    }
+    // process must have a unique name
+    for (auto const& proc : (*processes)) {
+        if (strcmp(proc.getAttributes().NAME.name, attributes.NAME.name) == 0) {
+            returnCode = RETURN_CODE_TYPE::NO_ACTION;
+        }
+    }
+    if (attributes.STACK_SIZE <= 0) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    if (attributes.BASE_PRIORITY > MAX_PRIORITY_VALUE ||
+        attributes.BASE_PRIORITY < MIN_PRIORITY_VALUE) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    if ((period % attributes.PERIOD) != 0) {
+        returnCode = RETURN_CODE_TYPE::INVALID_CONFIG;
+    }
+    else if (attributes.PERIOD <= 0 && attributes.PERIOD != INFINITE_TIME_VALUE) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    if (attributes.TIME_CAPACITY <= 0 && attributes.TIME_CAPACITY != INFINITE_TIME_VALUE) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    else if (attributes.PERIOD != INFINITE_TIME_VALUE &&
+             attributes.TIME_CAPACITY > attributes.PERIOD) {
+        returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+    }
+    // process must be created during partition initialization
+    if (mode == OPERATING_MODE_TYPE::NORMAL) {
+        returnCode = RETURN_CODE_TYPE::INVALID_MODE;
+    }
+    if (returnCode != RETURN_CODE_TYPE::NO_ERROR)
+        return;
+
+    int t;
+#ifdef HOST_TESTING
+    t = clock();
+#else
+    t = CTimer::Get()->GetTicks();
+#endif
+
+    processId = processes->size() + 1;
+    Process proc(processId,
+                 {t + attributes.DEADLINE, attributes.BASE_PRIORITY,
+                  PROCESS_STATE_TYPE::DORMANT, attributes},
+                 regs);
+    processes->push_back(proc);
+    // initialize affinity to DEFAULT_PROCESS_CORE_AFFINITY
+    returnCode = RETURN_CODE_TYPE::NO_ERROR;
+}
+
+void Partition::getProcess(identifier_t processId, Process& process, RETURN_CODE_TYPE& returnCode)
+{
+    for (const auto& proc : (*processes)) {
+        if (proc.getId() == processId)
+            returnCode = RETURN_CODE_TYPE::NO_ERROR;
+        process = proc;
+    }
+    returnCode = RETURN_CODE_TYPE::INVALID_PARAM;
+}
+
+void Partition::getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& stat, RETURN_CODE_TYPE& returnCode)
+{
+    Process proc;
+    getProcess(id, proc, returnCode);
+    stat = proc.getStatus();
 }

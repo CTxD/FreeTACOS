@@ -1,17 +1,18 @@
 #include "include/multipartition_hm_table.hpp"
 
-MultiPartitionHMTable& MultiPartitionHMTable::operator=(const MultiPartitionHMTable& rhs) {
-  tableName = rhs.tableName;
-  errorActions = rhs.errorActions;
-  return *this;
+MultiPartitionHMTable& MultiPartitionHMTable::operator=(const MultiPartitionHMTable& rhs)
+{
+    tableName = rhs.tableName;
+    errorActions = rhs.errorActions;
+    return *this;
 }
 
-const name_t& MultiPartitionHMTable::getTableName() const
+const NAME_TYPE& MultiPartitionHMTable::getTableName() const
 {
-  return tableName;
+    return tableName;
 }
 
 const std::vector<MultiPartitionErrorAction>& MultiPartitionHMTable::getActions() const
 {
-  return errorActions;
+    return errorActions;
 }

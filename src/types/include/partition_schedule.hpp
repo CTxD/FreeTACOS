@@ -1,14 +1,15 @@
 #ifndef PARTITON_SCHEDULE
 #define PARTITON_SCHEDULE
 
+#include "general_types.hpp"
+
 #include <apex_types.h>
-#include <general_types.hpp>
 
 class PartitionSchedule {
 private:
     bool partitionPeriodStart;        /* required */
     decOrHex_t periodDurationSeconds; /* required */
-    name_t partitionName;             /* required */
+    NAME_TYPE partitionName;          /* required */
     decOrHex_t offset;                /* required */
     decOrHex_t period;                /* required */
     PROCESSOR_CORE_ID_TYPE affinity;  /* required */
@@ -19,9 +20,10 @@ public:
     PartitionSchedule()
     {
     }
+
     PartitionSchedule(bool periodicStart,
                       decOrHex_t duration,
-                      name_t name,
+                      NAME_TYPE name,
                       decOrHex_t offset,
                       decOrHex_t period,
                       PROCESSOR_CORE_ID_TYPE affinity)
@@ -38,7 +40,7 @@ public:
 
     const decOrHex_t& getPeriodDuration() const;
 
-    const name_t& getPartitionName() const;
+    const NAME_TYPE& getPartitionName() const;
 
     const decOrHex_t& getOffset() const;
 

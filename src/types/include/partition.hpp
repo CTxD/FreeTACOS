@@ -11,21 +11,23 @@
 #include "sampling_port.hpp"
 #include <vector>
 
+const int MAX_PROCESS_NUM = 100;
+
 class Partition {
 private:
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
-    name_t partitionName; /* required */
+    NAME_TYPE partitionName; /* required */
 
     decOrHex_t duration; /* required */
     decOrHex_t period;   /* required */
 
-    OPERATING_MODE_TYPE mode;
+    OPERATING_MODE_TYPE mode = OPERATING_MODE_TYPE::IDLE;
     PARTITION_STATUS_TYPE status;
 
     CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
     bool systemPartition = false;                             /* required */
-    name_t entryPoint;                                        /* required */
+    SYSTEM_ADDRESS_TYPE entryPoint;                           /* required */
 
     MemoryRegion memoryRegion[1];
     std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
@@ -44,12 +46,12 @@ public:
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              name_t name,
+              std::string name,
               decOrHex_t duration,
               decOrHex_t period,
-              std::initializer_list<MemoryRegion> mem,
-              std::initializer_list<QueuingPort> queuing,
-              std::initializer_list<SamplingPort> sampling)
+              std::vector<MemoryRegion> mem,
+              std::vector<QueuingPort> queuing,
+              std::vector<SamplingPort> sampling)
         : partitionIdentifier(id),
           affinity(affinity),
           partitionName(name),
@@ -65,11 +67,12 @@ public:
         for (auto s : sampling) {
             samplingPorts->push_back(s);
         }
+        mode = OPERATING_MODE_TYPE::COLD_START;
     }
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              name_t name,
+              NAME_TYPE name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
@@ -120,7 +123,7 @@ public:
 
     const PROCESSOR_CORE_ID_TYPE& getAffinity() const;
 
-    const name_t& getPartitionName() const;
+    const NAME_TYPE& getPartitionName() const;
 
     const decOrHex_t& getDuration() const;
 
@@ -132,17 +135,27 @@ public:
 
     const std::vector<SamplingPort>& getSamplePorts() const;
 
-    void setMode(OPERATING_MODE_TYPE mode);
+    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size, TTaskRegisters& regs);
+
+    void setMode(OPERATING_MODE_TYPE m);
 
     const OPERATING_MODE_TYPE& getMode() const;
 
-    void setStatus(PARTITION_STATUS_TYPE status);
+    void setStatus(PARTITION_STATUS_TYPE s);
+
+    void getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& s, RETURN_CODE_TYPE& returnCode);
 
     const PARTITION_STATUS_TYPE& getStatus() const;
 
     void addProcess(Process proc);
 
     const std::vector<Process>& getProcesses() const;
+
+    void getProcess(identifier_t processId, Process& proc, RETURN_CODE_TYPE& returnCode);
+
+    void createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
+                       identifier_t& processId,
+                       RETURN_CODE_TYPE& returnCode);
 
     void setCriticality(CRITICALITY_TYPE criticality);
 
@@ -152,9 +165,9 @@ public:
 
     const bool& getSystemPartition() const;
 
-    void setEntryPoint(name_t entry);
+    void setEntryPoint(SYSTEM_ADDRESS_TYPE entry);
 
-    const name_t& getEntryPoint() const;
+    const SYSTEM_ADDRESS_TYPE& getEntryPoint() const;
 };
 
 #endif

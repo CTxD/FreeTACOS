@@ -2,15 +2,15 @@
 
 const identifier_t& PartitionMemory::getPartitionIdentifier() const
 {
-  return partitionIdentifier;
+    return partitionIdentifier;
 }
 
-const std::optional<name_t>& PartitionMemory::getPartitionName() const
+const std::optional<NAME_TYPE>& PartitionMemory::getPartitionName() const
 {
-  return partitionName;
+    return partitionName;
 }
 
 const std::vector<MemoryRegion>& PartitionMemory::getMemoryRegion() const
 {
-  return *memoryRegions;
+    return *memoryRegions;
 }

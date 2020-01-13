@@ -2,23 +2,23 @@
 
 PartitionHMTable& PartitionHMTable::operator=(const PartitionHMTable& rhs)
 {
-  tableName = rhs.tableName;
-  multiPartitionTableName = rhs.multiPartitionTableName;
-  partitionErrorActions = rhs.partitionErrorActions;
-  return *this;
+    tableName = rhs.tableName;
+    multiPartitionTableName = rhs.multiPartitionTableName;
+    partitionErrorActions = rhs.partitionErrorActions;
+    return *this;
 }
 
-const name_t& PartitionHMTable::getTableName() const
+const NAME_TYPE& PartitionHMTable::getTableName() const
 {
-  return tableName;
+    return tableName;
 }
 
-const name_t& PartitionHMTable::getMultiPartitionTableName() const
+const NAME_TYPE& PartitionHMTable::getMultiPartitionTableName() const
 {
-  return multiPartitionTableName;
+    return multiPartitionTableName;
 }
 
 const std::vector<PartitionErrorAction>& PartitionHMTable::getActions() const
 {
-  return *partitionErrorActions;
+    return *partitionErrorActions;
 }

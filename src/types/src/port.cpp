@@ -1,6 +1,6 @@
 #include "include/port.hpp"
 
-const name_t& Port::getPortName() const
+const NAME_TYPE& Port::getPortName() const
 {
   return portName;
 }

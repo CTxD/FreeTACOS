@@ -1,41 +1,41 @@
 #include "include/arinc_module.hpp"
 
-const name_t& ArincModule::getModuleName() const
+const NAME_TYPE& ArincModule::getModuleName() const
 {
-  return moduleName;
-};
+    return moduleName;
+}
 
-const std::optional<name_t>& ArincModule::getModuleVersion() const
+const std::optional<NAME_TYPE>& ArincModule::getModuleVersion() const
 {
-  return moduleVersion;
-};
+    return moduleVersion;
+}
 
 const std::optional<APEX_INTEGER>& ArincModule::getModuleId() const
 {
-  return moduleId;
-};
+    return moduleId;
+}
 
 const std::vector<SystemError>& ArincModule::getSystemErrorsTable() const
 {
-  return *systemErrors;
+    return *systemErrors;
 };
 
 const std::vector<PartitionHMTable>& ArincModule::getPartitionHMTable() const
 {
-  return *partitionHMTables;
+    return *partitionHMTables;
 };
 
 const std::vector<Partition>& ArincModule::getPartitions() const
 {
-  return *partitions;
+    return *partitions;
 };
 
 const std::vector<MultiPartitionHMTable>& ArincModule::getMultiPartitionHMTable() const
 {
-  return *multiPartitionHMTables;
+    return *multiPartitionHMTables;
 };
 
 const std::vector<ModuleHMTable>& ArincModule::getModuleHmTable() const
 {
-  return *moduleHMTables;
+    return *moduleHMTables;
 };

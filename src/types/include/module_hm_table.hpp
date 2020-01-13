@@ -10,8 +10,8 @@ private:
     std::vector<ModuleErrorAction>* moduleErrorActions =
         new (&moduleErrorAction) std::vector<ModuleErrorAction>;
 
-    identifier_t stateIdentifier;      /* required */
-    description_t description;         /* required */
+    identifier_t stateIdentifier; /* required */
+    description_t description;    /* required */
 
 public:
     ModuleHMTable(){};
