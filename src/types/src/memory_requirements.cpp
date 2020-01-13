@@ -1,5 +1,4 @@
 #include "include/memory_requirements.hpp"
-// #include <circle/sysconfig.h>
 
 #ifdef HOST_TESTING
 #include <cstring>
@@ -58,7 +57,7 @@ RETURN_CODE_TYPE MemoryRegion::createContext(SYSTEM_ADDRESS_TYPE entryPtr,
         freeMemory += size;
         memset(&m_Regs, 0, sizeof(m_Regs));
 
-        m_Regs.x0 = (u64)entryPtr; // pParam for TaskEntry()
+        m_Regs.x0 = (u64)entryPtr;
         m_Regs.sp = (u64) new u8[TASK_STACK_SIZE] + stack_addr;
         m_Regs.x30 = (u64)&entryPtr;
 
