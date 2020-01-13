@@ -41,8 +41,6 @@ typedef APEX_UNSIGNED identifier_t;
 
 typedef APEX_INTEGER decOrHex_t;
 
-typedef NAME_TYPE name_t;
-
 typedef char description_t[MAX_DESCRIPTION_LENGTH];
 
 enum memory_region_t {

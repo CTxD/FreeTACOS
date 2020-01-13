@@ -63,9 +63,9 @@ RETURN_CODE_TYPE MemoryRegion::createContext(SYSTEM_ADDRESS_TYPE entryPtr,
         m_Regs.x30 = (u64)&entryPtr;
 
         u32 nFPCR;
-        #ifndef HOST_TESTING
+#ifndef HOST_TESTING
         asm volatile("mrs %0, fpcr" : "=r"(nFPCR));
-        #endif
+#endif
         m_Regs.fpcr = nFPCR;
     }
     return RETURN_CODE_TYPE::NO_ERROR;

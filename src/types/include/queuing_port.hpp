@@ -12,7 +12,7 @@ public:
     {
     }
 
-    QueuingPort(name_t name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, APEX_INTEGER maxMessages)
+    QueuingPort(NAME_TYPE name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, APEX_INTEGER maxMessages)
         : Port(name, msgSize, direction), maxNumMessages(maxMessages)
     {
     }

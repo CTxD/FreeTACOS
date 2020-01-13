@@ -6,7 +6,7 @@
 
 class Port {
 private:
-    name_t portName;               /* required */
+    NAME_TYPE portName;            /* required */
     APEX_INTEGER maxMessageSize;   /* required */
     PORT_DIRECTION_TYPE direction; /* required */
 
@@ -15,7 +15,7 @@ public:
     {
     }
 
-    Port(name_t name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE dir)
+    Port(NAME_TYPE name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE dir)
         : portName(name), maxMessageSize(msgSize), direction(dir)
     {
     }

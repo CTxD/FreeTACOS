@@ -9,7 +9,7 @@ private:
     std::vector<MultiPartitionErrorAction>* multiPartitionErrorActions =
         new (&multiPartitionErrorAction) std::vector<MultiPartitionErrorAction>;
 
-    name_t tableName;                                    /* required */
+    NAME_TYPE tableName;                                 /* required */
     std::vector<MultiPartitionErrorAction> errorActions; /* required */
 
 public:
@@ -17,7 +17,7 @@ public:
     {
     }
 
-    MultiPartitionHMTable(name_t name, std::initializer_list<MultiPartitionErrorAction> actions)
+    MultiPartitionHMTable(NAME_TYPE name, std::initializer_list<MultiPartitionErrorAction> actions)
         : tableName(name)
     {
         for (auto a : actions) {

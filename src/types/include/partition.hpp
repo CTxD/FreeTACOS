@@ -72,7 +72,7 @@ public:
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              name_t name,
+              NAME_TYPE name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
