@@ -181,7 +181,7 @@ void Partition::createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
                   PROCESS_STATE_TYPE::DORMANT, attributes},
                  regs);
     processes->push_back(proc);
-    // initialize addinity to DEFAULT_PROCESS_CORE_AFFINITY
+    // initialize affinity to DEFAULT_PROCESS_CORE_AFFINITY
     returnCode = RETURN_CODE_TYPE::NO_ERROR;
 }
 
