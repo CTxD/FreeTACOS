@@ -9,9 +9,10 @@
 #include "process.hpp"
 #include "queuing_port.hpp"
 #include "sampling_port.hpp"
+#include <circle/sched/task.h>
 #include <vector>
 
-class Partition {
+class Partition : CTask {
 private:
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
@@ -27,16 +28,16 @@ private:
     bool systemPartition = false;                             /* required */
     name_t entryPoint;                                        /* required */
 
-    MemoryRegion memoryRegion[1];
+    MemoryRegion memoryRegion[10];
     std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
 
-    QueuingPort queuingPort[1];
+    QueuingPort queuingPort[10];
     std::vector<QueuingPort>* queuingPorts = new (&queuingPort) std::vector<QueuingPort>;
 
-    SamplingPort samplingPort[1];
+    SamplingPort samplingPort[10];
     std::vector<SamplingPort>* samplingPorts = new (&samplingPort) std::vector<SamplingPort>;
 
-    std::optional<Process> process[1];
+    std::optional<Process> process[10];
     std::vector<Process>* processes = new (&process) std::vector<Process>;
 
 public:

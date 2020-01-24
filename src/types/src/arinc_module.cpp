@@ -1,4 +1,4 @@
-#include "include/arinc_module.hpp"
+#include "arinc_module.hpp"
 
 const name_t& ArincModule::getModuleName() const
 {
