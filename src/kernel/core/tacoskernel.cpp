@@ -16,11 +16,13 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     new FibPart(&mLogger);
     new FibPart(&mLogger);
 
+    mEvent.Clear();
+    mTimer.StartKernelTimer(60 * HZ, TimerHandler, this);
     while (1) {
-        mLogger.Write(GetKernelName(), LogNotice,
-                      "C Standard Library stdin/stdout/stderr Demo");
-        return ShutdownHalt;
+        mEvent.Wait();
     }
+    return ShutdownHalt;
+}
 }
 
 void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pContext)
