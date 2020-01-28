@@ -13,7 +13,10 @@ OBJS = main.o \
 		$(TYPES)/src/multipartition_hm_table.o \
 		$(TYPES)/src/module_hm_table.o \
 		$(TYPES)/src/partition_hm_table.o \
-		$(APPS)/fibpart.o \
+		$(TYPES)/src/queuing_port.o \
+		$(APPS)/consumer_part.o \
+		$(APPS)/fib_part.o \
+		$(APPS)/dummy_part.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
 include $(CIRCLELIB)/Config.mk

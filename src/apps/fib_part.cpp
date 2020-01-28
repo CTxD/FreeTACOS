@@ -1,17 +1,19 @@
-#include "fibpart.h"
+#include "fib_part.h"
 #include "circle/logger.h"
 
-auto nameRef = "Fib Partition";
-
-FibPart::FibPart(CLogger* logger) : mLogger(logger)
+FibPart::FibPart(CLogger* logger, QueuingPort* q) : mLogger(logger), sendPort(q)
 {
 }
 
 void FibPart::Run()
 {
     mLogger->Write(nameRef, LogNotice, "Running Fib(10) times...");
+
     for (int i = 0; i < 10; i++) {
-        mLogger->Write(nameRef, LogNotice, "fib(%i): %i", i, fib(i));
+        char* mes = (char*)malloc(10);
+        sprintf(mes, "%d", fib(i));
+        mLogger->Write(nameRef, LogNotice, "Producing - %s", mes);
+        sendPort->addMessage(mes);
     }
 }
 

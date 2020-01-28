@@ -3,7 +3,7 @@
 
 #include "port.hpp"
 
-class SamplingPort : Port {
+class SamplingPort : public Port {
 private:
     std::optional<float> refreshRate; /* optional */
 
@@ -12,7 +12,7 @@ public:
     {
     }
 
-    SamplingPort(name_t name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, float refreshRate)
+    SamplingPort(NAME_TYPE name, APEX_INTEGER msgSize, PORT_DIRECTION_TYPE direction, float refreshRate)
         : Port(name, msgSize, direction), refreshRate(refreshRate)
     {
     }

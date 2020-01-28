@@ -6,14 +6,12 @@
 #include <circle/util.h>
 #include <partition.hpp>
 
-class FibPart : public CTask {
+class DummyPart : public CTask {
 protected:
-    CLogger* mLogger;
+    const char* nameRef = "Dummy Partition";
 
 public:
-    FibPart(CLogger* logger);
-    ~FibPart(){};
+    DummyPart(){};
+    ~DummyPart(){};
     void Run();
-
-    int fib(int n);
 };

@@ -1,9 +1,11 @@
 #include "tacoskernel.h"
-#include "../arinc_module.cpp"
-#include <arinc_module.hpp>
+#include "port.hpp"
+#include <consumer_part.h>
+#include <dummy_part.h>
 #include <errcode.h>
-#include <fibpart.h>
+#include <fib_part.h>
 #include <process.hpp>
+#include <queuing_port.hpp>
 
 CTacosKernel::CTacosKernel()
 {
@@ -11,17 +13,18 @@ CTacosKernel::CTacosKernel()
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
     // Cyclic schedule
+    QueuingPort* q1 = new QueuingPort({"Q1"}, 8, PORT_DIRECTION_TYPE::SOURCE, 10);
 
-    new FibPart(&mLogger);
-    new FibPart(&mLogger);
-    new FibPart(&mLogger);
-    new FibPart(&mLogger);
-
-    mEvent.Clear();
-    mTimer.StartKernelTimer(60 * HZ, TimerHandler, this);
+    int i = 0;
+    mTimer.StartKernelTimer(7 * HZ, TimerHandler, this);
+    while (1) {
+        mEvent.Clear();
+        new FibPart(&mLogger, q1);
+        new ConsumerPart(&mLogger, q1);
+        mEvent.Wait();
+    }
     while (1) {
         CLogger::Get()->Write("FreeTACOS", LogNotice, "In busy loop");
-        mEvent.Wait();
     }
     return ShutdownHalt;
 }
@@ -30,6 +33,6 @@ void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* p
 {
     CTacosKernel* pThis = (CTacosKernel*)pParam;
     assert(pThis != 0);
-
+    CTimer::Get()->StartKernelTimer(7 * HZ, TimerHandler, pThis);
     pThis->mEvent.Set();
 }
