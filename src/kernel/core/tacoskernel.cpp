@@ -12,15 +12,14 @@ CTacosKernel::CTacosKernel()
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    // Cyclic schedule
     QueuingPort* q1 = new QueuingPort({"Q1"}, 8, PORT_DIRECTION_TYPE::SOURCE, 10);
-
-    int i = 0;
     mTimer.StartKernelTimer(7 * HZ, TimerHandler, this);
     while (1) {
         mEvent.Clear();
+        // Cyclic schedule
         new FibPart(&mLogger, q1);
         new ConsumerPart(&mLogger, q1);
+        //
         mEvent.Wait();
     }
     while (1) {
