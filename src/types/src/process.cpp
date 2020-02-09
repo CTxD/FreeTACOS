@@ -1,4 +1,4 @@
-#include "include/process.hpp"
+#include "process.hpp"
 
 const PROCESS_STATUS_TYPE& Process::getStatus() const
 {
