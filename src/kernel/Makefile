@@ -55,4 +55,6 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
 clean all: 
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
+	cd $(CURDIR)/../apps && $(MAKE) clean
+	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
