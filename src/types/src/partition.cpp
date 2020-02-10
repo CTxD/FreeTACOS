@@ -1,4 +1,4 @@
-#include "include/partition.hpp"
+#include "partition.hpp"
 
 Partition& Partition::operator=(const Partition& rhs)
 {

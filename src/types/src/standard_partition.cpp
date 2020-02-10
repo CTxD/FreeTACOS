@@ -1,4 +1,4 @@
-#include "include/standard_partition.hpp"
+#include "standard_partition.hpp"
 
 const identifier_t& StandardPartition::getPartitionIdentifier() const
 {

@@ -1,4 +1,4 @@
-#include "include/multipartition_error_action.hpp"
+#include "multipartition_error_action.hpp"
 
 const identifier_t& MultiPartitionErrorAction::getErrorId() const
 {
