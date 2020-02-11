@@ -1,4 +1,4 @@
-#include "include/channel.hpp"
+#include "channel.hpp"
 
 const identifier_t& Channel::getChannelId() const
 {
@@ -15,7 +15,7 @@ const PortMapping& Channel::getSource() const
   return source;
 }
 
-const vector<PortMapping>& Channel::getDestinations() const
+const std::vector<PortMapping>& Channel::getDestinations() const
 {
-  return destinations;
+  return *destinations;
 }

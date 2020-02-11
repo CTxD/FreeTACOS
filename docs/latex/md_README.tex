@@ -1,0 +1,45 @@
+Free Transparent Arinc Compliant Operating System
+
+\section*{Getting Started}
+
+Follow this guide for setting up Docker, Docker-\/\+Compose and Docker-\/\+Sync.
+
+\subsection*{Installation}
+
+{\bfseries Install this\+:}
+
+{\bfseries Docker}\+: \href{https://docs.docker.com/install/}{\tt https\+://docs.\+docker.\+com/install/}
+
+{\bfseries Docker-\/\+Compose}\+: \href{https://docs.docker.com/v17.09/compose/install/}{\tt https\+://docs.\+docker.\+com/v17.\+09/compose/install/}
+
+{\bfseries Docker-\/\+Sync}\+: \href{https://docker-sync.readthedocs.io/en/latest/getting-started/installation.html}{\tt https\+://docker-\/sync.\+readthedocs.\+io/en/latest/getting-\/started/installation.\+html}
+
+\#\# Start Containers 
+\begin{DoxyCode}
+1 $ make start # This will start the containers, including the sync (let this run in a terminal by itself -
+       you can not terminate)
+2 $ make enter # This will 'go into' the container, allowing you to compile the dependencies + project :)
+\end{DoxyCode}
+
+
+\subsubsection*{Circle Setup (Only required first time)}
+
+\#\#\#\# Use Make 
+\begin{DoxyCode}
+1 $ make build-boot # Build boot files
+2 $ make enter # Enter docker container
+3 $ cd aarch/rasp4 # Navigate to circle library
+4 $ ./makeall clean # Clear dependencies
+5 $ ./makeall # Compile dependencies - This must be done within the container
+\end{DoxyCode}
+
+
+Done.
+
+\#\# Stop Containers 
+\begin{DoxyCode}
+1 # From circle/ root
+2 $ docker-compose down # Closes the arinc\_circle container
+3 $ docker-sync stop # Closes the docker-sync container
+\end{DoxyCode}
+ OR Interrupt C\+T\+R\+L+C the running docker-\/sync process 

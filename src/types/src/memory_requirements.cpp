@@ -1,4 +1,4 @@
-#include "include/memory_requirements.hpp"
+#include "memory_requirements.hpp"
 
 const name_t& MemoryRegion::getRegionName() const
 {

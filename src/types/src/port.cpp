@@ -1,16 +1,16 @@
-#include "include/port.hpp"
+#include "port.hpp"
 
-const name_t& Port::getPortName() const
+const NAME_TYPE& Port::getPortName() const
 {
-  return portName;
+    return portName;
 }
 
-const APEX_INTEGER& Port::getMaxMessageSize() const
+const APEX_INTEGER Port::getMaxMessageSize() const
 {
-  return maxMessageSize;
+    return maxMessageSize;
 }
 
 const PORT_DIRECTION_TYPE& Port::getDirection() const
 {
-  return direction;
+    return direction;
 }

@@ -2,11 +2,7 @@
 #define __CORE_SCHEDULE__
 
 #include <partition_schedule.hpp>
-
-#include <boost/container/pmr/vector.hpp>
-
-// Boost vector type
-using namespace boost::container::pmr;
+#include <vector>
 
 // Define type aliases
 typedef vector<PartitionSchedule> PartitionIterable;

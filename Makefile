@@ -8,11 +8,9 @@ enter:
 	docker exec -it --workdir /app tacos bash
 
 start:
-	docker-sync start
 	docker-compose up -d
 
 stop:
-	docker-sync stop
 	docker-compose down
 
 generate-config:

@@ -1,0 +1,140 @@
+\hypertarget{apex__sampling__port_8h}{}\section{src/libuser/apex/apex\+\_\+sampling\+\_\+port.h File Reference}
+\label{apex__sampling__port_8h}\index{src/libuser/apex/apex\+\_\+sampling\+\_\+port.\+h@{src/libuser/apex/apex\+\_\+sampling\+\_\+port.\+h}}
+{\ttfamily \#include \char`\"{}apex\+\_\+types.\+h\char`\"{}}\\*
+Include dependency graph for apex\+\_\+sampling\+\_\+port.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{apex__sampling__port_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=198pt]{apex__sampling__port_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structSAMPLING__PORT__STATUS__TYPE}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{apex__sampling__port_8h_a932ae5041e50cf0679cd5ade3c1fe2c2}{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}~\hyperlink{apex__types_8h_a64cacabb9f1f38c465353baf839c99fb}{S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \hyperlink{structNAME__TYPE}{N\+A\+M\+E\+\_\+\+T\+Y\+PE} \hyperlink{apex__sampling__port_8h_a27ac4f05910e56153af14099e769ccb3}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}
+\item 
+typedef \hyperlink{apex__types_8h_a4e13487a80a5740717e19f7f693e06c3}{A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} \hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499}{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE} \{ \hyperlink{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499aef2863a469df3ea6871d640e3669a2f2}{I\+N\+V\+A\+L\+ID} = 0, 
+\hyperlink{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499acf0713491d9b887eaccfd80c18abca47}{V\+A\+L\+ID} = 1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{apex__sampling__port_8h_ada2192f02e63413337aad3cf4287e7b5}{C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT} (\hyperlink{apex__sampling__port_8h_a27ac4f05910e56153af14099e769ccb3}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+ME, \hyperlink{apex__types_8h_ae09494a8d78c38c94f0cc5a80e69785a}{M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE} M\+A\+X\+\_\+\+M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+ZE, \hyperlink{apex__types_8h_ae82fcf2f7f6f7966d59d9569049531a4}{P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE} P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+ON, \hyperlink{apex__types_8h_a78cd52c2621ddf2eda68fcd4bedbc1a7}{S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE} R\+E\+F\+R\+E\+S\+H\+\_\+\+P\+E\+R\+I\+OD, \hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__sampling__port_8h_ac312d7ba15a373aec7e01212ed5cbcba}{W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE} (\hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a1c9c3acbb8c99c2cbc7751db5226b1fc}{M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+PE} M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+DR, \hyperlink{apex__types_8h_ae09494a8d78c38c94f0cc5a80e69785a}{M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE} L\+E\+N\+G\+TH, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__sampling__port_8h_afd0e3d121be6e494759bc0b8ce5f862c}{R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE} (\hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a1c9c3acbb8c99c2cbc7751db5226b1fc}{M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+PE} M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+DR, \hyperlink{apex__types_8h_ae09494a8d78c38c94f0cc5a80e69785a}{M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE} $\ast$L\+E\+N\+G\+TH, \hyperlink{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499}{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE} $\ast$V\+A\+L\+I\+D\+I\+TY, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__sampling__port_8h_ae11092f8f3aaafb8f4d3ebc9e582e231}{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID} (\hyperlink{apex__sampling__port_8h_a27ac4f05910e56153af14099e769ccb3}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE} S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+ME, \hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\item 
+void \hyperlink{apex__sampling__port_8h_a266f0b40fb5e72c4e4dd07c8a67dc7e1}{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US} (\hyperlink{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, \hyperlink{structSAMPLING__PORT__STATUS__TYPE}{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US, \hyperlink{apex__types_8h_a5cd52791e89e2513bef42ff9193691aa}{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}}
+\index{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS@{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}{MAX_NUMBER_OF_SAMPLING_PORTS}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS~{\bf S\+Y\+S\+T\+E\+M\+\_\+\+L\+I\+M\+I\+T\+\_\+\+N\+U\+M\+B\+E\+R\+\_\+\+O\+F\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+TS}}\hypertarget{apex__sampling__port_8h_a932ae5041e50cf0679cd5ade3c1fe2c2}{}\label{apex__sampling__port_8h_a932ae5041e50cf0679cd5ade3c1fe2c2}
+
+
+\subsection{Typedef Documentation}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}
+\index{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE@{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}{SAMPLING_PORT_ID_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf A\+P\+E\+X\+\_\+\+I\+N\+T\+E\+G\+ER} {\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}\hypertarget{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}{}\label{apex__sampling__port_8h_acd7ba0b5b86b83304c97c5cd4845339a}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}
+\index{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE@{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}{SAMPLING_PORT_NAME_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}typedef {\bf N\+A\+M\+E\+\_\+\+T\+Y\+PE} {\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}\hypertarget{apex__sampling__port_8h_a27ac4f05910e56153af14099e769ccb3}{}\label{apex__sampling__port_8h_a27ac4f05910e56153af14099e769ccb3}
+
+
+\subsection{Enumeration Type Documentation}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE@{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE}}
+\index{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE@{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE}{VALIDITY_TYPE}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE}}\hypertarget{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499}{}\label{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499}
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{I\+N\+V\+A\+L\+ID@{I\+N\+V\+A\+L\+ID}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!I\+N\+V\+A\+L\+ID@{I\+N\+V\+A\+L\+ID}}\item[{\em 
+I\+N\+V\+A\+L\+ID\hypertarget{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499aef2863a469df3ea6871d640e3669a2f2}{}\label{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499aef2863a469df3ea6871d640e3669a2f2}
+}]\index{V\+A\+L\+ID@{V\+A\+L\+ID}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!V\+A\+L\+ID@{V\+A\+L\+ID}}\item[{\em 
+V\+A\+L\+ID\hypertarget{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499acf0713491d9b887eaccfd80c18abca47}{}\label{apex__sampling__port_8h_a00855980da372cfa6572e3e3f57ef499acf0713491d9b887eaccfd80c18abca47}
+}]\end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT@{C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT}}
+\index{C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT@{C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T(\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E, M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+P\+E M\+A\+X\+\_\+\+M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E, P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+P\+E P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+O\+N, S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+P\+E R\+E\+F\+R\+E\+S\+H\+\_\+\+P\+E\+R\+I\+O\+D, S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{CREATE_SAMPLING_PORT(SAMPLING_PORT_NAME_TYPE SAMPLING_PORT_NAME, MESSAGE_SIZE_TYPE MAX_MESSAGE_SIZE, PORT_DIRECTION_TYPE PORT_DIRECTION, SYSTEM_TIME_TYPE REFRESH_PERIOD, SAMPLING_PORT_ID_TYPE *SAMPLING_PORT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void C\+R\+E\+A\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+RT (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+ME, }
+\item[{{\bf M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE}}]{M\+A\+X\+\_\+\+M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+ZE, }
+\item[{{\bf P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+O\+N\+\_\+\+T\+Y\+PE}}]{P\+O\+R\+T\+\_\+\+D\+I\+R\+E\+C\+T\+I\+ON, }
+\item[{{\bf S\+Y\+S\+T\+E\+M\+\_\+\+T\+I\+M\+E\+\_\+\+T\+Y\+PE}}]{R\+E\+F\+R\+E\+S\+H\+\_\+\+P\+E\+R\+I\+OD, }
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__sampling__port_8h_ada2192f02e63413337aad3cf4287e7b5}{}\label{apex__sampling__port_8h_ada2192f02e63413337aad3cf4287e7b5}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID@{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID}}
+\index{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID@{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D(\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+P\+E S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E, S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E $\ast$\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_SAMPLING_PORT_ID(SAMPLING_PORT_NAME_TYPE SAMPLING_PORT_NAME, SAMPLING_PORT_ID_TYPE *SAMPLING_PORT_ID, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+M\+E\+\_\+\+T\+Y\+PE}}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+N\+A\+ME, }
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE} $\ast$}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__sampling__port_8h_ae11092f8f3aaafb8f4d3ebc9e582e231}{}\label{apex__sampling__port_8h_ae11092f8f3aaafb8f4d3ebc9e582e231}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US}}
+\index{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US@{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S(\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D, S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+P\+E $\ast$\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{GET_SAMPLING_PORT_STATUS(SAMPLING_PORT_ID_TYPE SAMPLING_PORT_ID, SAMPLING_PORT_STATUS_TYPE *SAMPLING_PORT_STATUS, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void G\+E\+T\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, }
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+U\+S\+\_\+\+T\+Y\+PE} $\ast$}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+S\+T\+A\+T\+US, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__sampling__port_8h_a266f0b40fb5e72c4e4dd07c8a67dc7e1}{}\label{apex__sampling__port_8h_a266f0b40fb5e72c4e4dd07c8a67dc7e1}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE@{R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE}}
+\index{R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE@{R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+G\+E(\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D, M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+P\+E M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R, M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+P\+E $\ast$\+L\+E\+N\+G\+T\+H, V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+P\+E $\ast$\+V\+A\+L\+I\+D\+I\+T\+Y, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{READ_SAMPLING_MESSAGE(SAMPLING_PORT_ID_TYPE SAMPLING_PORT_ID, MESSAGE_ADDR_TYPE MESSAGE_ADDR, MESSAGE_SIZE_TYPE *LENGTH, VALIDITY_TYPE *VALIDITY, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void R\+E\+A\+D\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, }
+\item[{{\bf M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+PE}}]{M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+DR, }
+\item[{{\bf M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE} $\ast$}]{L\+E\+N\+G\+TH, }
+\item[{{\bf V\+A\+L\+I\+D\+I\+T\+Y\+\_\+\+T\+Y\+PE} $\ast$}]{V\+A\+L\+I\+D\+I\+TY, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__sampling__port_8h_afd0e3d121be6e494759bc0b8ce5f862c}{}\label{apex__sampling__port_8h_afd0e3d121be6e494759bc0b8ce5f862c}
+\index{apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}!W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE@{W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE}}
+\index{W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE@{W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE}!apex\+\_\+sampling\+\_\+port.\+h@{apex\+\_\+sampling\+\_\+port.\+h}}
+\subsubsection[{\texorpdfstring{W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+G\+E(\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+P\+E S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D, M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+P\+E M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R, M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+P\+E L\+E\+N\+G\+T\+H, R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+P\+E $\ast$\+R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E)}{WRITE_SAMPLING_MESSAGE(SAMPLING_PORT_ID_TYPE SAMPLING_PORT_ID, MESSAGE_ADDR_TYPE MESSAGE_ADDR, MESSAGE_SIZE_TYPE LENGTH, RETURN_CODE_TYPE *RETURN_CODE)}}]{\setlength{\rightskip}{0pt plus 5cm}void W\+R\+I\+T\+E\+\_\+\+S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+M\+E\+S\+S\+A\+GE (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+I\+D\+\_\+\+T\+Y\+PE}}]{S\+A\+M\+P\+L\+I\+N\+G\+\_\+\+P\+O\+R\+T\+\_\+\+ID, }
+\item[{{\bf M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+D\+R\+\_\+\+T\+Y\+PE}}]{M\+E\+S\+S\+A\+G\+E\+\_\+\+A\+D\+DR, }
+\item[{{\bf M\+E\+S\+S\+A\+G\+E\+\_\+\+S\+I\+Z\+E\+\_\+\+T\+Y\+PE}}]{L\+E\+N\+G\+TH, }
+\item[{{\bf R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+D\+E\+\_\+\+T\+Y\+PE} $\ast$}]{R\+E\+T\+U\+R\+N\+\_\+\+C\+O\+DE}
+\end{DoxyParamCaption}
+)}\hypertarget{apex__sampling__port_8h_ac312d7ba15a373aec7e01212ed5cbcba}{}\label{apex__sampling__port_8h_ac312d7ba15a373aec7e01212ed5cbcba}

@@ -2,22 +2,22 @@
 #define SYSTEM_ERROR
 
 #include "general_types.hpp"
+#include <string.h>
 
-
-class SystemError
-{
-  private:
+class SystemError {
+private:
     identifier_t errorIdentifier; /* required */
-    description_t description;      /* required */
+    description_t description;    /* required */
 
-  public:
-    SystemError() {}
+public:
+    SystemError()
+    {
+    }
 
-    SystemError(identifier_t id, std::string descr):
-      errorIdentifier(id)
-      {
+    SystemError(identifier_t id, std::string descr) : errorIdentifier(id)
+    {
         strcpy(description, descr.c_str());
-      }
+    }
 
     const identifier_t& getErrorId() const;
 

@@ -1,4 +1,4 @@
-#include "include/partition_error_action.hpp"
+#include "partition_error_action.hpp"
 
 const identifier_t& PartitionErrorAction::getErrorIdentifier() const
 {

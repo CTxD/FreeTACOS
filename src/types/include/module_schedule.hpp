@@ -5,18 +5,19 @@
 
 class ModuleSchedule {
 private:
-    PartitionSchedule partitionSchedule[100];
-    monotonic_buffer_resource partitionScheduleSrc{
-        std::data(partitionSchedule), std::size(partitionSchedule)};
-    vector<PartitionSchedule> majorFrameSeconds; /* required */
+    PartitionSchedule majorFrameSecond[1];
+    std::vector<PartitionSchedule>* majorFrameSeconds =
+        new (&majorFrameSecond) std::vector<PartitionSchedule>;
 
 public:
     ModuleSchedule(std::initializer_list<PartitionSchedule> majorFrame)
-        : majorFrameSeconds(majorFrame)
     {
+        for (auto m : majorFrame) {
+            majorFrameSeconds->push_back(m);
+        }
     }
 
-    const vector<PartitionSchedule>& getMajorFrameSeconds() const;
+    const std::vector<PartitionSchedule>& getMajorFrameSeconds() const;
 };
 
 #endif
