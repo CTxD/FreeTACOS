@@ -5,8 +5,8 @@
 #include <vector>
 
 // Define type aliases
-typedef std::vector<PartitionSchedule> PartitionIterable;
-typedef std::vector<std::vector<PartitionIterable>> CoreIterable;
+typedef vector<PartitionSchedule> PartitionIterable;
+typedef vector<PartitionIterable> CoreIterable;
 
 class CoreSchedule {
 private:
