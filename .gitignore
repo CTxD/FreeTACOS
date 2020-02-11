@@ -35,8 +35,9 @@ docs
 *.ko
 .elf
 kernel8-rpi4.elf
-upload.sh
 
+
+move.sh
 upload.sh
 # Precompiled Headers
 *.gch
