@@ -3,7 +3,7 @@
 
 #include "port.hpp"
 
-class SamplingPort : Port {
+class SamplingPort : public Port {
 private:
     std::optional<float> refreshRate; /* optional */
 

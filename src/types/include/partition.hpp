@@ -9,36 +9,35 @@
 #include "process.hpp"
 #include "queuing_port.hpp"
 #include "sampling_port.hpp"
+#include <circle/sched/task.h>
 #include <vector>
 
-const int MAX_PROCESS_NUM = 100;
-
-class Partition {
+class Partition : CTask {
 private:
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;
-    NAME_TYPE partitionName; /* required */
+    name_t partitionName; /* required */
 
     decOrHex_t duration; /* required */
     decOrHex_t period;   /* required */
 
-    OPERATING_MODE_TYPE mode = OPERATING_MODE_TYPE::IDLE;
+    OPERATING_MODE_TYPE mode;
     PARTITION_STATUS_TYPE status;
 
     CRITICALITY_TYPE criticality = CRITICALITY_TYPE::LEVEL_A; /* required */
     bool systemPartition = false;                             /* required */
-    SYSTEM_ADDRESS_TYPE entryPoint;                           /* required */
+    name_t entryPoint;                                        /* required */
 
-    MemoryRegion memoryRegion[1];
+    MemoryRegion memoryRegion[10];
     std::vector<MemoryRegion>* memoryRegions = new (&memoryRegion) std::vector<MemoryRegion>;
 
-    QueuingPort queuingPort[1];
+    QueuingPort queuingPort[10];
     std::vector<QueuingPort>* queuingPorts = new (&queuingPort) std::vector<QueuingPort>;
 
-    SamplingPort samplingPort[1];
+    SamplingPort samplingPort[10];
     std::vector<SamplingPort>* samplingPorts = new (&samplingPort) std::vector<SamplingPort>;
 
-    std::optional<Process> process[1];
+    std::optional<Process> process[10];
     std::vector<Process>* processes = new (&process) std::vector<Process>;
 
 public:
@@ -46,12 +45,12 @@ public:
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              std::string name,
+              name_t name,
               decOrHex_t duration,
               decOrHex_t period,
-              std::vector<MemoryRegion> mem,
-              std::vector<QueuingPort> queuing,
-              std::vector<SamplingPort> sampling)
+              std::initializer_list<MemoryRegion> mem,
+              std::initializer_list<QueuingPort> queuing,
+              std::initializer_list<SamplingPort> sampling)
         : partitionIdentifier(id),
           affinity(affinity),
           partitionName(name),
@@ -67,12 +66,11 @@ public:
         for (auto s : sampling) {
             samplingPorts->push_back(s);
         }
-        mode = OPERATING_MODE_TYPE::COLD_START;
     }
 
     Partition(identifier_t id,
               PROCESSOR_CORE_ID_TYPE affinity,
-              NAME_TYPE name,
+              name_t name,
               decOrHex_t duration,
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
@@ -123,7 +121,7 @@ public:
 
     const PROCESSOR_CORE_ID_TYPE& getAffinity() const;
 
-    const NAME_TYPE& getPartitionName() const;
+    const name_t& getPartitionName() const;
 
     const decOrHex_t& getDuration() const;
 
@@ -135,27 +133,17 @@ public:
 
     const std::vector<SamplingPort>& getSamplePorts() const;
 
-    RETURN_CODE_TYPE checkPointer(SYSTEM_ADDRESS_TYPE ptr, STACK_SIZE_TYPE size, TTaskRegisters& regs);
-
-    void setMode(OPERATING_MODE_TYPE m);
+    void setMode(OPERATING_MODE_TYPE mode);
 
     const OPERATING_MODE_TYPE& getMode() const;
 
-    void setStatus(PARTITION_STATUS_TYPE s);
-
-    void getProcessStatus(identifier_t id, PROCESS_STATUS_TYPE& s, RETURN_CODE_TYPE& returnCode);
+    void setStatus(PARTITION_STATUS_TYPE status);
 
     const PARTITION_STATUS_TYPE& getStatus() const;
 
     void addProcess(Process proc);
 
     const std::vector<Process>& getProcesses() const;
-
-    void getProcess(identifier_t processId, Process& proc, RETURN_CODE_TYPE& returnCode);
-
-    void createProcess(PROCESS_ATTRIBUTE_TYPE attributes,
-                       identifier_t& processId,
-                       RETURN_CODE_TYPE& returnCode);
 
     void setCriticality(CRITICALITY_TYPE criticality);
 
@@ -165,9 +153,9 @@ public:
 
     const bool& getSystemPartition() const;
 
-    void setEntryPoint(SYSTEM_ADDRESS_TYPE entry);
+    void setEntryPoint(name_t entry);
 
-    const SYSTEM_ADDRESS_TYPE& getEntryPoint() const;
+    const name_t& getEntryPoint() const;
 };
 
 #endif

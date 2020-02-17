@@ -1,4 +1,4 @@
-#include "include/multipartition_hm_table.hpp"
+#include "multipartition_hm_table.hpp"
 
 MultiPartitionHMTable& MultiPartitionHMTable::operator=(const MultiPartitionHMTable& rhs)
 {

@@ -1,4 +1,4 @@
-#include "include/module_error_action.hpp"
+#include "module_error_action.hpp"
 
 const identifier_t& ModuleErrorAction::getErrorIdentifier() const
 {

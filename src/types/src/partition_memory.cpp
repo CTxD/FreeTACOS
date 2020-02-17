@@ -1,4 +1,4 @@
-#include "include/partition_memory.hpp"
+#include "partition_memory.hpp"
 
 const identifier_t& PartitionMemory::getPartitionIdentifier() const
 {

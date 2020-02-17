@@ -17,13 +17,6 @@
 #ifndef APEX_TYPES
 #define APEX_TYPES
 
-#include <string>
-#ifdef HOST_TESTING
-#include <cstring>
-#else
-#include <circle/util.h>
-#endif
-
 /*---------------------------*/
 /* Domain limits             */
 /*---------------------------*/
@@ -53,7 +46,6 @@
 
 #define INFINITE_TIME_VALUE -1
 
-// only applies to the error handler process
 #define CORE_AFFINITY_NO_PREFERENCE -1
 
 const int MAX_NAME_LENGTH = 30;
@@ -88,13 +80,9 @@ typedef enum {
     TIMED_OUT = 6       /* time-out tied up with request has expired */
 } RETURN_CODE_TYPE;
 
-struct NAME_TYPE {
-    char name[MAX_NAME_LENGTH];
-    NAME_TYPE() {}
-    NAME_TYPE(std::string str){
-      memcpy(name, str.c_str(), MAX_NAME_LENGTH);
-    }
-};
+typedef struct {
+    const char* x[MAX_NAME_LENGTH];
+} NAME_TYPE;
 
 typedef void(*SYSTEM_ADDRESS_TYPE);
 

@@ -4,30 +4,28 @@
 #include "apex_process.h"
 #include "general_types.hpp"
 
-#ifdef HOST_TESTING
-#include <taskRegisters.hpp>
-#else
-#include <circle/sched/taskswitch.h>
-#endif
-
 class Process {
 private:
-    identifier_t id;
     PROCESS_STATUS_TYPE status;
-    TTaskRegisters registers;
+    name_t processName;
+    decOrHex_t processIdentifier;
+    decOrHex_t processPriority;
+    decOrHex_t processPeriod;
 
 public:
+    Process(name_t name, decOrHex_t identifier, decOrHex_t priority, decOrHex_t period)
+        : processName(name),
+          processIdentifier(identifier),
+          processPriority(priority),
+          processPeriod(period)
+    {
+    }
+
     Process()
     {
     }
 
-    Process(identifier_t id, PROCESS_STATUS_TYPE status, TTaskRegisters regs)
-        : id(id), status(status), registers(regs)
-    {
-    }
-
-    Process(const Process& rhs)
-        : id(rhs.id), status(rhs.status), registers(rhs.registers)
+    Process(PROCESS_STATUS_TYPE status) : status(std::move(status))
     {
     }
 
@@ -35,11 +33,7 @@ public:
 
     const PROCESS_ATTRIBUTE_TYPE& getAttributes() const;
 
-    const identifier_t& getId() const;
-
-    void setRegs(TTaskRegisters regs);
-
-    const TTaskRegisters& getRegs() const;
+    const decOrHex_t& getProcessIdentifier() const;
 };
 
 #endif

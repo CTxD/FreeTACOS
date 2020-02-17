@@ -1,4 +1,4 @@
-#include "include/system_state_entry.hpp"
+#include "system_state_entry.hpp"
 
 const APEX_INTEGER& SystemStateEntry::getSystemState() const
 {

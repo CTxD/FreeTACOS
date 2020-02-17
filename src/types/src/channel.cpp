@@ -1,4 +1,4 @@
-#include "include/channel.hpp"
+#include "channel.hpp"
 
 const identifier_t& Channel::getChannelId() const
 {

@@ -1,4 +1,4 @@
-#include "include/partition_schedule.hpp"
+#include "partition_schedule.hpp"
 
 const bool& PartitionSchedule::getPartitionPeriodStart() const
 {
