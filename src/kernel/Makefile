@@ -9,6 +9,7 @@ export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
+		$(CORE)/scheduling/context.o \
 		$(TYPES)/src/partition.o \
 		$(TYPES)/src/multipartition_hm_table.o \
 		$(TYPES)/src/module_hm_table.o \
@@ -26,6 +27,7 @@ NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(APPS)
+INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/../boost_1_72_0
