@@ -1,6 +1,4 @@
 #include <circle/logger.h>
-#include <processinterface.h>
-
 #include <circle/sched/scheduler.h>
 #include <circle/string.h>
 #include <circle/util.h>

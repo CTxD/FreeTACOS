@@ -8,7 +8,6 @@
 #define APEX_PROCESS
 
 #include "apex_types.h"
-#include <processinterface.h>
 
 #define MAX_NUMBER_OF_PROCESSES SYSTEM_LIMIT_NUMBER_OF_PROCESSES
 
@@ -59,7 +58,6 @@ typedef struct {
 typedef struct {
     SYSTEM_TIME_TYPE PERIOD;
     SYSTEM_TIME_TYPE TIME_CAPACITY;
-    IProcess& PROCESS;
     STACK_SIZE_TYPE STACK_SIZE;
     PRIORITY_TYPE BASE_PRIORITY;
     DEADLINE_TYPE DEADLINE;
