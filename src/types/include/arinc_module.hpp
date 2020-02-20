@@ -17,22 +17,22 @@ private:
     std::optional<name_t> moduleVersion;  /* optional */
     std::optional<APEX_INTEGER> moduleId; /* optional */
 
-    Partition partition[1];
+    Partition partition[10];
     std::vector<Partition>* partitions = new (&partition) std::vector<Partition>;
 
-    SystemError systemError[1];
+    SystemError systemError[10];
     std::vector<SystemError>* systemErrors =
         new (&systemError) std::vector<SystemError>;
 
-    MultiPartitionHMTable multiPartitionHMTable[1];
+    MultiPartitionHMTable multiPartitionHMTable[10];
     std::vector<MultiPartitionHMTable>* multiPartitionHMTables =
         new (&multiPartitionHMTable) std::vector<MultiPartitionHMTable>;
 
-    ModuleHMTable moduleHMTable[1];
+    ModuleHMTable moduleHMTable[10];
     std::vector<ModuleHMTable>* moduleHMTables =
         new (&moduleHMTable) std::vector<ModuleHMTable>;
 
-    PartitionHMTable partitionHMTable[1];
+    PartitionHMTable partitionHMTable[10];
     std::vector<PartitionHMTable>* partitionHMTables =
         new (&partitionHMTable) std::vector<PartitionHMTable>;
 
@@ -49,7 +49,7 @@ public:
                 std::initializer_list<PartitionHMTable> partitionHMTab)
         : moduleName(name), moduleVersion(version), moduleId(id)
     {
-        for (auto p : part) {
+         for (auto p : part) {
             partitions->push_back(p);
         }
         for (auto s : err) {
@@ -63,7 +63,7 @@ public:
         }
         for (auto p : partitionHMTab) {
             partitionHMTables->push_back(p);
-        }
+        } 
     }
 
     const name_t& getModuleName() const;

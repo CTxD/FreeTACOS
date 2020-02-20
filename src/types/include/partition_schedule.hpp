@@ -45,6 +45,8 @@ public:
     void setPartitionIdentifier(identifier_t id);
 
     const identifier_t& getPartitionIdentifier() const;
+
+    const PROCESSOR_CORE_ID_TYPE& getCoreAffinity() const;
 };
 
 #endif
