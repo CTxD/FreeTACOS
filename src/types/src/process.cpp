@@ -8,9 +8,8 @@ Process::Process(PROCESS_ATTRIBUTE_TYPE& attributes)
     processStatus.PROCESS_STATE = PROCESS_STATE_TYPE::DORMANT;
 }
 
-Process::Process(PROCESS_STATUS_TYPE& status)
+Process::Process(PROCESS_STATUS_TYPE& status) : processStatus(status)
 {
-    processStatus = status;
 }
 
 const PROCESS_STATUS_TYPE& Process::getStatus() const

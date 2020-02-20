@@ -3,6 +3,19 @@
 #include <process.hpp>
 #include <task.hpp>
 
+Task::Task(PROCESS_ATTRIBUTE_TYPE attributes) : Process(attributes)
+{
+    nStackSize = TASK_STACK_SIZE;
+
+    if (nStackSize != 0) {
+        assert(nStackSize >= 1024);
+        pStack = new u8[nStackSize];
+        assert(pStack != 0);
+
+        InitializeRegs();
+    }
+}
+
 Task::~Task(void)
 {
     // Deconstructing Task
@@ -11,6 +24,11 @@ Task::~Task(void)
 void Task::Run(void)
 {
     // Base case Task::Run function
+}
+
+NAME_TYPE Task::getIdentifier()
+{
+    return getProcessIdentifier();
 }
 
 void Task::Terminate(void)

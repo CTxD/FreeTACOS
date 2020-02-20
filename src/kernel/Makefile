@@ -4,18 +4,15 @@ export CORE=$(ROOT)/src/kernel/core
 export APPS=$(ROOT)/src/apps
 export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
+export APEX=$(ROOT)/src/libuser/apex
 
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
-		$(TYPES)/src/partition.o \
-		$(TYPES)/src/multipartition_hm_table.o \
-		$(TYPES)/src/module_hm_table.o \
-		$(TYPES)/src/partition_hm_table.o \
-		$(TYPES)/src/queuing_port.o \
-		$(TYPES)/src/task.o \
 		$(TYPES)/src/process.o \
+		$(TYPES)/src/task.o \
+		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
@@ -25,7 +22,7 @@ CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
-INCLUDE += -I $(APPS)
+INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
