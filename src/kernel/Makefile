@@ -14,9 +14,9 @@ OBJS = main.o \
 		$(TYPES)/src/module_hm_table.o \
 		$(TYPES)/src/partition_hm_table.o \
 		$(TYPES)/src/queuing_port.o \
-		$(APPS)/consumer_part.o \
-		$(APPS)/fib_part.o \
-		$(APPS)/dummy_part.o \
+		$(TYPES)/src/task.o \
+		$(TYPES)/src/process.o \
+		$(APPS)/test_app.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
 include $(CIRCLELIB)/Config.mk
@@ -26,9 +26,7 @@ NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(APPS)
-INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
-INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel
