@@ -6,34 +6,21 @@
 
 class Process {
 private:
-    PROCESS_STATUS_TYPE status;
-    name_t processName;
-    decOrHex_t processIdentifier;
-    decOrHex_t processPriority;
-    decOrHex_t processPeriod;
+    PROCESS_STATUS_TYPE processStatus;
+    PROCESS_ATTRIBUTE_TYPE processAttributes;
 
 public:
-    Process(name_t name, decOrHex_t identifier, decOrHex_t priority, decOrHex_t period)
-        : processName(name),
-          processIdentifier(identifier),
-          processPriority(priority),
-          processPeriod(period)
-    {
-    }
-
-    Process()
-    {
-    }
-
-    Process(PROCESS_STATUS_TYPE status) : status(std::move(status))
-    {
-    }
+    Process(PROCESS_ATTRIBUTE_TYPE& attributes);
+    Process(PROCESS_STATUS_TYPE& status);
 
     const PROCESS_STATUS_TYPE& getStatus() const;
-
     const PROCESS_ATTRIBUTE_TYPE& getAttributes() const;
+    const PROCESS_NAME_TYPE& getProcessIdentifier() const;
 
-    const decOrHex_t& getProcessIdentifier() const;
+    PROCESS_STATE_TYPE& getProcessState();
+    void setProcessState(PROCESS_STATE_TYPE& state);
+
+    name_t getProcessName();
 };
 
 #endif
