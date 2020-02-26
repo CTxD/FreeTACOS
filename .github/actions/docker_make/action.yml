@@ -12,4 +12,4 @@ runs:
   using: "docker"
   image: "ctxd/tacos:path-fix"
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.who-to-greet}}
