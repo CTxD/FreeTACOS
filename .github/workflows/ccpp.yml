@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Project Build
     steps:
+      - uses: actions/checkout@v1
       - name: Build Greeting Step
         id: builder
-        uses: ./actions
+        uses: ./.github/actions/
         with:
           who-to-greet: "Example Argument"
 
