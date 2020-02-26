@@ -23,4 +23,4 @@ jobs:
         run: docker ps -a
 
       - name: Clean
-        run: docker exec -i tacos make -C /app/src/kernel
+        run: docker exec -i tacos make -C /app/src/kernel clean
