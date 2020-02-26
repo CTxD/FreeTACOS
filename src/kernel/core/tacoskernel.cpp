@@ -1,5 +1,7 @@
 #include "tacoskernel.h"
 #include "port.hpp"
+#include "scheduling/partitionscheduling.hpp"
+#include <circle/time.h>
 #include <consumer_part.h>
 #include <dummy_part.h>
 #include <errcode.h>
@@ -10,20 +12,11 @@
 CTacosKernel::CTacosKernel()
 {
 }
+
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    QueuingPort* q1 = new QueuingPort({"Q1"}, 8, PORT_DIRECTION_TYPE::SOURCE, 10);
-    mTimer.StartKernelTimer(7 * HZ, TimerHandler, this);
+    partitionScheduler();
     while (1) {
-        mEvent.Clear();
-        // Cyclic schedule
-        new FibPart(&mLogger, q1);
-        new ConsumerPart(&mLogger, q1);
-        //
-        mEvent.Wait();
-    }
-    while (1) {
-        CLogger::Get()->Write("FreeTACOS", LogNotice, "In busy loop");
     }
     return ShutdownHalt;
 }
