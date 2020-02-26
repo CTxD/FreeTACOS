@@ -16,5 +16,7 @@ jobs:
         id: builder
         uses: ./.github/actions/docker_make
 
+      - name: Docker Step
+        run: docker ps -a
       - name: Second step
         run: echo 'Second Step Output'
