@@ -19,6 +19,9 @@ jobs:
       - name: Where are we?
         run: ls -a
 
+      - name: compose
+        run: docker-compose up -d
+
       - name: Docker Run
         run: docker run --name tacos -v src:/app -d ctxd/tacos:path-fix
 
