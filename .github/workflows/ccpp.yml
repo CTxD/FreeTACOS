@@ -1,21 +1,16 @@
-name: C/C++ CI
-
-on:
-  push:
-    branches:
-      - master
-      - develop
+name: Greeting from Casper
+on: push
 
 jobs:
-  build_job:
+  my-job:
+    name: My Job
     runs-on: ubuntu-latest
-    name: Project Build
     steps:
-      - name: Build Greeting Step
-        id: builder
-        uses: docker_make
-        with:
-          who-to-greet: "Example Argument"
-
-      - name: Second step
-        run: echo 'Second Step Output'
+      - name: Print a greeting
+        env:
+          MY_VAR: Hi there! My name is
+          FIRST_NAME: Casper
+          MIDDLE_NAME: The
+          LAST_NAME: Octocat
+        run: |
+          echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
