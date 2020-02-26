@@ -1,4 +1,5 @@
 # docker_make.yml
+version: v1
 inputs:
   who-to-greet: # id of input
     description: "Who to greet"
