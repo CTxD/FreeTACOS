@@ -15,8 +15,10 @@ jobs:
       - name: Build Greeting Step
         id: builder
         uses: ./.github/actions/docker_make
-
       - name: Docker Step
-        run: docker ps -a
+        run:
+          - docker run ctxd/tacos:path-fix
+          - docker ps -a
+
       - name: Second step
         run: echo 'Second Step Output'
