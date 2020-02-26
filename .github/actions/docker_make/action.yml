@@ -3,3 +3,4 @@ version: v1
 runs:
   using: "docker"
   image: "ctxd/tacos:path-fix"
+  run: echo "Echo inside!"

@@ -15,7 +15,6 @@ jobs:
       - name: Build Greeting Step
         id: builder
         uses: ./.github/actions/docker_make
-        run: echo "Works?"
 
       - name: Second step
         run: echo 'Second Step Output'
