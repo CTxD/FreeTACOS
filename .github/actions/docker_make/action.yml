@@ -3,5 +3,3 @@ version: v1
 runs:
   using: "docker"
   image: "ctxd/tacos:path-fix"
-  args:
-    - echo 'hello world'
