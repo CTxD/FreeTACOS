@@ -16,20 +16,11 @@ jobs:
         id: builder
         uses: ./.github/actions/docker_make
 
-      - name: Where are we?
-        run: ls -a
-
       - name: compose
         run: docker-compose up -d
-
-      - name: Docker Run
-        run: docker run --name tacos -v src:/app -d ctxd/tacos:path-fix
 
       - name: Docker Check
         run: docker ps -a
 
       - name: Clean
-        run: docker exec --workdir /app/kernel tacos make clean
-
-      - name: Second step
-        run: echo 'Second Step Output'
+        run: make clean

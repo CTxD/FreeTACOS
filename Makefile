@@ -21,3 +21,9 @@ test-config:
 
 docs:
 	docker exec -it --workdir /data tacos_doxygen doxygen .doxygen
+
+clean:
+	docker exec -it --workdir /app/src/kernel tacos make clean
+
+build:
+	docker exec -it tacos make -C /app/src/kernel 
