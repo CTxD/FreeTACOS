@@ -2,21 +2,20 @@ name: C/C++ CI
 
 on:
   push:
-    branches: 
+    branches:
       - master
       - develop
 
 jobs:
-  build:
+  build_job:
     runs-on: ubuntu-latest
-    
+    name: Project Build
     steps:
-    - uses: actions/docker_make
-    - name: make_project
-      run: make clean && make
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+      - name: Build Greeting Step
+        id: builder
+        uses: actions/docker_make@v1
+        with:
+          who-to-greet: "Example Argument"
+
+      - name: Second step
+        run: echo 'Second Step Output'
