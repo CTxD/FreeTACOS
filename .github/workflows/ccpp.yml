@@ -17,7 +17,7 @@ jobs:
         uses: ./.github/actions/docker_make
 
       - name: Docker Run
-        run: docker run ctxd/tacos:path-fix
+        run: docker run ctxd/tacos:path-fix -d
 
       - name: Docker Check
         run: docker ps -a
