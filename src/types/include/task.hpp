@@ -3,8 +3,6 @@
 
 #include <process.hpp>
 
-#include <apex_process.h>
-
 #include <circle/sched/synchronizationevent.h>
 #include <circle/sched/taskswitch.h>
 #include <circle/sysconfig.h>

@@ -4,7 +4,7 @@ export CORE=$(ROOT)/src/kernel/core
 export APPS=$(ROOT)/src/apps
 export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
-export APEX=$(ROOT)/src/libuser/apex
+export APEX=$(ROOT)/src/libuser
 
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
@@ -13,6 +13,7 @@ OBJS = main.o \
 		$(TYPES)/src/process.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
+		$(APEX)/src/apex_process.o \
 		$(CORE)/apex_kernel.o \
 		$(APPS)/test_app.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
@@ -26,6 +27,7 @@ INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
+INCLUDE += -I $(APEX)/src
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(ROOT)/src/kernel

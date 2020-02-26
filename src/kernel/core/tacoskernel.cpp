@@ -1,4 +1,5 @@
 #include "tacoskernel.h"
+#include "apex_kernel.hpp"
 #include "port.hpp"
 #include <errcode.h>
 #include <queuing_port.hpp>
@@ -9,8 +10,33 @@ CTacosKernel::CTacosKernel()
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    auto app = TestApp(&mLogger);
-    app.Run();
+    Task* app = new TestApp(&mLogger);
+
+    auto a = numProcesses;
+    addToProcessList(app);
+    auto b = numProcesses;
+
+    mLogger.Write("APP RUNNER", LogNotice, "------RUNNING MASTER-------");
+    Task* pMaster = static_cast<Task*>(processPool[0]);
+    pMaster->Run();
+    mLogger.Write("APP RUNNER", LogNotice, "------MASTER FINISHED------");
+
+    auto c = numProcesses;
+
+    if (c >= 2) {
+        mLogger.Write("APP RUNNER", LogNotice, "------RUNNING SLAVE-------");
+        Task* pSlave = static_cast<Task*>(processPool[1]);
+
+        pSlave->Run();
+        mLogger.Write("APP RUNNER", LogNotice, "------SLAVE FINISHED------");
+    }
+    else {
+        mLogger.Write("WARNING", LogWarning,
+                      "Pool Size: %i - process wasn't added", numProcesses);
+    }
+
+    mLogger.Write("RECAP", LogNotice,
+                  "First: %i\nAfter app: %i\nAfter spawn: %i", a, b, c);
 
     while (1) {
     }

@@ -1,8 +1,9 @@
 ROOT=		../../
 
-OBJS=		consumer_part.o \
+OBJS=	consumer_part.o \
 			dummy_part.o \
-			fib_part.o \ 
+			fib_part.o \
+			test_app.o 
 
 all: $(TARGET)
 

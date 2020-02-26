@@ -7,7 +7,7 @@
 
 #include "apex_process.h"
 
-class TestApp : Task {
+class TestApp : public Task {
 public:
     TestApp(CLogger* logger);
     ~TestApp(void);

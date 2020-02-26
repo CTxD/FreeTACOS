@@ -1,4 +1,5 @@
 #include "process.hpp"
+#include "apex_kernel.hpp"
 
 Process::Process(PROCESS_ATTRIBUTE_TYPE& attributes)
 {
@@ -35,4 +36,15 @@ PROCESS_STATE_TYPE& Process::getProcessState()
 void Process::setProcessState(PROCESS_STATE_TYPE& state)
 {
     processStatus.PROCESS_STATE = state;
+}
+
+/* APEX Functionality Below */
+void Process::CREATE_PROCESS(
+    /*in */ PROCESS_ATTRIBUTE_TYPE* ATTRIBUTES,
+    /*out*/ PROCESS_ID_TYPE* PROCESS_ID,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
+{
+    addToProcessList(static_cast<Task*>(ATTRIBUTES->ENTRY_POINT));
+    *PROCESS_ID = 10;
+    *RETURN_CODE = NO_ERROR;
 }
