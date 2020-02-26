@@ -17,10 +17,13 @@ jobs:
         uses: ./.github/actions/docker_make
 
       - name: Docker Run
-        run: docker run --name tacos -d ctxd/tacos:path-fix
+        run: docker run --name tacos --volume .:/app -d ctxd/tacos:path-fix
 
       - name: Docker Check
         run: docker ps -a
+
+      - name: Clean
+        run: docker exec --workdir /app/src/kernel tacos make clean
 
       - name: Second step
         run: echo 'Second Step Output'
