@@ -12,12 +12,12 @@ jobs:
     name: Project Build
     steps:
       - uses: actions/checkout@v1
-      - name: Build Greeting Step
+      - name: Download Docker Image
         id: builder
         uses: ./.github/actions/docker_make
 
       - name: Docker Run
-        run: docker run ctxd/tacos:path-fix -d
+        run: docker run --name tacos -d ctxd/tacos:path-fix
 
       - name: Docker Check
         run: docker ps -a
