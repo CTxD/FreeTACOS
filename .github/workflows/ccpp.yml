@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build Greeting Step
         id: builder
-        uses: ctxd/FreeTACOS/.github/actions/docker_make
+        uses: ctxd/FreeTACOS/.github/actions/docker_make/action
         with:
           who-to-greet: "Example Argument"
 
