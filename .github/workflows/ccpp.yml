@@ -16,6 +16,9 @@ jobs:
         id: builder
         uses: ./.github/actions/docker_make
 
+      - name: Where are we?
+        run: ls -a
+
       - name: Docker Run
         run: docker run --name tacos --volume .:/app -d ctxd/tacos:path-fix
 
