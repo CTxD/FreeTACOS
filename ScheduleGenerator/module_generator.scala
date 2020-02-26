@@ -38,13 +38,16 @@ object ModuleGenerator {
   def handleNodeLabels(node: Node): String = node.head.label match {
     // Initial setup
     case "MODULE" => {
+      val defs: String = 
+        this.emit("#ifndef __GENERATED_ARINC_MODULE__\n") +
+        this.emit("#define __GENERATED_ARINC_MODULE__\n");
       val includes: String = this.emitIncludes(
         List(
           "arinc_module.hpp"
         )
       );
 
-      var emitString: String = includes + this.emit(
+      var emitString: String = defs + includes + this.emit(
         "extern ArincModule arincModule {\n"
       );
 
@@ -62,7 +65,7 @@ object ModuleGenerator {
 
       return emitString +
         this.generate(node.child) +
-        this.emit("};\n", -1);
+        this.emit("};\n", -1) + this.emit("#endif");
     }
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {

@@ -29,6 +29,8 @@ object PartitionScheduleGenerator {
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
     // Emit includes first
     var emitString =
+      this.emit("#ifndef __GENERATED_CORE_SCHEDULE__\n") +
+      this.emit("#define __GENERATED_CORE_SCHEDULE__\n") +
       this.emit(this.mapStringToInclude("core_schedule.hpp")) +
         "\n\n";
 
@@ -44,7 +46,7 @@ object PartitionScheduleGenerator {
       this.traverseCores(scheduleTable) +
       this.emit("}\n", -1);
 
-    return emitString + this.emit("};", -1);
+    return emitString + this.emit("}; \n", -1) + this.emit("#endif");
   }
 
   // Generate code for each core and further traverse
