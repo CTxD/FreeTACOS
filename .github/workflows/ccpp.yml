@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Build Greeting Step
         id: builder
-        uses: actions/docker_make@v1
+        uses: actions/docker_make
         with:
           who-to-greet: "Example Argument"
 
