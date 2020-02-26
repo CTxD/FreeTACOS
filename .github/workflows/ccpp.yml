@@ -20,7 +20,7 @@ jobs:
         run: ls -a
 
       - name: Docker Run
-        run: docker run --name tacos --volume .:/app -d ctxd/tacos:path-fix
+        run: docker run --name tacos --mount source=.,target=/app -d ctxd/tacos:path-fix
 
       - name: Docker Check
         run: docker ps -a
