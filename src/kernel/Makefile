@@ -10,11 +10,11 @@ export APEX=$(ROOT)/src/libuser
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
+		$(CORE)/apex_kernel.o \
 		$(TYPES)/src/process.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APEX)/src/apex_process.o \
-		$(CORE)/apex_kernel.o \
 		$(APPS)/test_app.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 

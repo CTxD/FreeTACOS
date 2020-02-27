@@ -21,7 +21,7 @@ void TestApp::Run(void)
         10, 10, new TestApp(logger), 0x8000, 10, DEADLINE_TYPE::HARD, {"Test Application {SLAVE}"}};
 
     CREATE_PROCESS(newProcess, id, returnCode);
-    addToProcessList(static_cast<Task*>(newProcess->ENTRY_POINT));
+    ApexKernel::addToProcessList(static_cast<Task*>(newProcess->ENTRY_POINT));
 
     if (*returnCode == RETURN_CODE_TYPE::NO_ERROR) {
         logger->Write(*getIdentifier().x, LogNotice,

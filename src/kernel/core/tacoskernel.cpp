@@ -10,29 +10,31 @@ CTacosKernel::CTacosKernel()
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
+    ApexKernel apex = ApexKernel{};
+
     Task* app = new TestApp(&mLogger);
 
-    auto a = numProcesses;
-    addToProcessList(app);
-    auto b = numProcesses;
+    auto a = ApexKernel::numProcesses;
+    apex.addToProcessList(app);
+    auto b = ApexKernel::numProcesses;
 
     mLogger.Write("APP RUNNER", LogNotice, "------RUNNING MASTER-------");
-    Task* pMaster = static_cast<Task*>(processPool[0]);
+    Task* pMaster = static_cast<Task*>(ApexKernel::processPool[0]);
     pMaster->Run();
     mLogger.Write("APP RUNNER", LogNotice, "------MASTER FINISHED------");
 
-    auto c = numProcesses;
+    auto c = ApexKernel::numProcesses;
 
     if (c >= 2) {
         mLogger.Write("APP RUNNER", LogNotice, "------RUNNING SLAVE-------");
-        Task* pSlave = static_cast<Task*>(processPool[1]);
+        Task* pSlave = static_cast<Task*>(ApexKernel::processPool[1]);
 
         pSlave->Run();
         mLogger.Write("APP RUNNER", LogNotice, "------SLAVE FINISHED------");
     }
     else {
         mLogger.Write("WARNING", LogWarning,
-                      "Pool Size: %i - process wasn't added", numProcesses);
+                      "Pool Size: %i - process wasn't added", ApexKernel::numProcesses);
     }
 
     mLogger.Write("RECAP", LogNotice,
