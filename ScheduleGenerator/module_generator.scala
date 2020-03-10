@@ -92,11 +92,12 @@ object ModuleGenerator {
           // Append emit string with partition definition info
           partitionString = partitionString +
             this.emit("{ // Partition\n") +
+            this.emitNodeAttributeOptional(head, List(("Name", this.s))) +
             this.emitNodeAttributesRequired(
               head,
               List(("Identifier", this.k), ("Affinity", this.k)),
               true
-            ) +
+            );
             this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         } else if (this.checkAttributeValidity("Period", region)) {
           // Populate the remaining attributes to the validator
