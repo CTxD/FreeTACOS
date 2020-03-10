@@ -3,7 +3,10 @@
 #include <process.hpp>
 #include <task.hpp>
 
-Task::Task(PROCESS_ATTRIBUTE_TYPE attributes) : Process(attributes)
+/**
+ * Init task with only attributes
+ */
+Task::Task(PROCESS_ATTRIBUTE_TYPE& attributes) : Process(attributes)
 {
     nStackSize = TASK_STACK_SIZE;
 
@@ -16,29 +19,55 @@ Task::Task(PROCESS_ATTRIBUTE_TYPE attributes) : Process(attributes)
     }
 }
 
+/**
+ * More simple constructer
+ * Automatically set atts and status from few values
+ */
+Task::Task(SYSTEM_TIME_TYPE period,
+           SYSTEM_TIME_TYPE timeCapacity,
+           PRIORITY_TYPE priority,
+           DEADLINE_TYPE deadline,
+           PROCESS_NAME_TYPE name)
+{
+    PROCESS_ATTRIBUTE_TYPE atts = PROCESS_ATTRIBUTE_TYPE{
+        period, timeCapacity, this, TASK_STACK_SIZE, priority, deadline, name};
+
+    PROCESS_STATUS_TYPE status = PROCESS_STATUS_TYPE{deadline, priority, DORMANT, atts};
+
+    setStatus(status);
+
+    initRegs();
+}
+
+/**
+ * Init a Task with whole custom status
+ */
+Task::Task(PROCESS_STATUS_TYPE& status) : Process(status)
+{
+    initRegs();
+}
+
 Task::~Task(void)
 {
     // Deconstructing Task
 }
 
+void Task::initRegs()
+{
+    nStackSize = TASK_STACK_SIZE;
+
+    if (nStackSize != 0) {
+        assert(nStackSize >= 1024);
+        pStack = new u8[nStackSize];
+        assert(pStack != 0);
+
+        InitializeRegs();
+    }
+}
+
 void Task::Run(void)
 {
     // Base case Task::Run function
-}
-
-NAME_TYPE Task::getIdentifier()
-{
-    return getProcessIdentifier();
-}
-
-void Task::Terminate(void)
-{
-    // Terminate task
-}
-
-void Task::WaitForTermination(void)
-{
-    // Wait for task termination
 }
 
 TTaskRegisters* Task::GetRegs(void)

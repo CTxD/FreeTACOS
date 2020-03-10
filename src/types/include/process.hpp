@@ -7,21 +7,21 @@
 
 class Process {
 private:
-    PROCESS_STATUS_TYPE processStatus;
-    PROCESS_ATTRIBUTE_TYPE processAttributes;
+    PROCESS_STATUS_TYPE status;
+    PROCESS_ID_TYPE id;
 
 public:
     Process(PROCESS_ATTRIBUTE_TYPE& attributes);
     Process(PROCESS_STATUS_TYPE& status);
+    Process();
+
+    PROCESS_NAME_TYPE& getProcessName();
 
     PROCESS_STATUS_TYPE& getStatus();
-    PROCESS_ATTRIBUTE_TYPE& getAttributes();
-    PROCESS_NAME_TYPE& getProcessIdentifier();
+    void setStatus(PROCESS_STATUS_TYPE& status);
 
-    PROCESS_STATE_TYPE& getProcessState();
-    void setProcessState(PROCESS_STATE_TYPE& state);
-
-    name_t getProcessName();
+    PROCESS_ID_TYPE getId();
+    void setId(PROCESS_ID_TYPE pId);
 
     void CREATE_PROCESS(
         /*in */ PROCESS_ATTRIBUTE_TYPE* ATTRIBUTES,

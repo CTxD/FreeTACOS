@@ -28,6 +28,8 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     if (c >= 2) {
         mLogger.Write("APP RUNNER", LogNotice, "------RUNNING SLAVE-------");
         Task* pSlave = static_cast<Task*>(ApexKernel::processPool[1]);
+        mLogger.Write("APP RUNNER", LogNotice, "Slave Name: %s",
+                      *(pSlave->getProcessName().x));
 
         pSlave->Run();
         mLogger.Write("APP RUNNER", LogNotice, "------SLAVE FINISHED------");
@@ -39,6 +41,15 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 
     mLogger.Write("RECAP", LogNotice,
                   "First: %i\nAfter app: %i\nAfter spawn: %i", a, b, c);
+
+    mLogger.Write("RECAP", LogWarning, "Process Test");
+    auto* p0 = static_cast<Task*>(ApexKernel::processPool[0]);
+    auto* p1 = static_cast<Task*>(ApexKernel::processPool[1]);
+    auto* p2 = static_cast<Task*>(ApexKernel::processPool[2]);
+
+    mLogger.Write("RECAP", LogWarning, "P0: %s", *(p0->getProcessName().x));
+    mLogger.Write("RECAP", LogWarning, "P1: %s", *(p1->getProcessName().x));
+    mLogger.Write("RECAP", LogWarning, "P2: %s", *(p2->getProcessName().x));
 
     while (1) {
     }

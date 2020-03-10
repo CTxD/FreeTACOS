@@ -10,4 +10,7 @@ public:
     static u32 numProcesses;
     static Task* processPool[MAX_PROCESSES];
     static RETURN_CODE_TYPE addToProcessList(Task* process);
+
+    static PROCESS_STATUS_TYPE& getProcessById(PROCESS_ID_TYPE id);
+    static void getProcessIdByName(PROCESS_NAME_TYPE name, PROCESS_ID_TYPE* returnId);
 };

@@ -14,7 +14,6 @@ OBJS = main.o \
 		$(TYPES)/src/process.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
-		$(APEX)/src/apex_process.o \
 		$(APPS)/test_app.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
@@ -27,7 +26,6 @@ INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
-INCLUDE += -I $(APEX)/src
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(ROOT)/src/kernel

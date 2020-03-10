@@ -19,3 +19,25 @@ RETURN_CODE_TYPE ApexKernel::addToProcessList(Task* process)
 
     return RETURN_CODE_TYPE::NO_ERROR;
 }
+
+PROCESS_STATUS_TYPE& ApexKernel::getProcessById(PROCESS_ID_TYPE id)
+{
+    return processPool[id]->getStatus();
+}
+
+void ApexKernel::getProcessIdByName(PROCESS_NAME_TYPE name, PROCESS_ID_TYPE* returnId)
+{
+    auto doesProcessExist = false;
+    for (u32 i = 0; i < numProcesses; i++) {
+        auto& currentProcess = processPool[i];
+
+        if (currentProcess->getStatus().ATTRIBUTES.NAME.x == name.x) {
+            *returnId = i;
+            doesProcessExist = true;
+        }
+    }
+
+    if (!doesProcessExist) {
+        returnId = nullptr;
+    }
+}

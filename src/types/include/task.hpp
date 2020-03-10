@@ -12,13 +12,16 @@
 
 class Task : public Process {
 public:
-    Task(PROCESS_ATTRIBUTE_TYPE attributes);
-
+    Task(PROCESS_ATTRIBUTE_TYPE& attributes);
+    Task(SYSTEM_TIME_TYPE period,
+         SYSTEM_TIME_TYPE timeCapacity,
+         PRIORITY_TYPE priority,
+         DEADLINE_TYPE deadline,
+         PROCESS_NAME_TYPE name);
+    Task(PROCESS_STATUS_TYPE& status);
     virtual ~Task(void);
 
     virtual void Run(void);
-
-    virtual NAME_TYPE getIdentifier();
 
     void Terminate(void);
     void WaitForTermination(void);
@@ -30,6 +33,8 @@ public:
 
 private:
     unsigned nStackSize;
+
+    void initRegs();
 
     TTaskRegisters registers;
     u8* pStack;

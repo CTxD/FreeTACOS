@@ -1,41 +1,50 @@
 #include "process.hpp"
 #include "apex_kernel.hpp"
 
+#define INVALID_PROCESS_ID (MAX_NUMBER_OF_PROCESSES + 1)
+
 Process::Process(PROCESS_ATTRIBUTE_TYPE& attributes)
 {
-    processStatus.ATTRIBUTES = attributes;
-    processStatus.CURRENT_PRIORITY = attributes.BASE_PRIORITY;
-    processStatus.DEADLINE_TIME = attributes.TIME_CAPACITY;
-    processStatus.PROCESS_STATE = PROCESS_STATE_TYPE::DORMANT;
+    // Initialise PROCESS_STATUS
+    status.ATTRIBUTES = attributes;
+    status.CURRENT_PRIORITY = attributes.BASE_PRIORITY;
+    status.DEADLINE_TIME = attributes.TIME_CAPACITY;
+    status.PROCESS_STATE = PROCESS_STATE_TYPE::DORMANT;
+    id = INVALID_PROCESS_ID;
 }
 
-Process::Process(PROCESS_STATUS_TYPE& status) : processStatus(status)
+Process::Process(PROCESS_STATUS_TYPE& status) : status(status)
 {
+    id = INVALID_PROCESS_ID;
+}
+
+Process::Process()
+{
+}
+
+PROCESS_NAME_TYPE& Process::getProcessName()
+{
+    return this->status.ATTRIBUTES.NAME;
 }
 
 PROCESS_STATUS_TYPE& Process::getStatus()
 {
-    return processStatus;
+    return this->status;
 }
 
-PROCESS_ATTRIBUTE_TYPE& Process::getAttributes()
+void Process::setStatus(PROCESS_STATUS_TYPE& status)
 {
-    return processStatus.ATTRIBUTES;
+    this->status = status;
 }
 
-PROCESS_NAME_TYPE& Process::getProcessIdentifier()
+PROCESS_ID_TYPE Process::getId()
 {
-    return processStatus.ATTRIBUTES.NAME;
+    return this->id;
 }
 
-PROCESS_STATE_TYPE& Process::getProcessState()
+void Process::setId(PROCESS_ID_TYPE pId)
 {
-    return processStatus.PROCESS_STATE;
-}
-
-void Process::setProcessState(PROCESS_STATE_TYPE& state)
-{
-    processStatus.PROCESS_STATE = state;
+    this->id = pId;
 }
 
 /* APEX Functionality Below */
@@ -44,8 +53,21 @@ void Process::CREATE_PROCESS(
     /*out*/ PROCESS_ID_TYPE* PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    ApexKernel::addToProcessList(static_cast<Task*>(ATTRIBUTES->ENTRY_POINT));
-    *PROCESS_ID = 10;
+    // Init new process with attributes (Create the process)
+    auto* proc = static_cast<Task*>(ATTRIBUTES->ENTRY_POINT);
+    proc->getStatus().ATTRIBUTES = *ATTRIBUTES;
+
+    // Add the process to the apex_kernel process list
+    ApexKernel::addToProcessList(proc);
+
+    // Get the process id
+    PROCESS_ID_TYPE pId;
+    pId = ApexKernel::numProcesses - 1;
+
+    // Set id and return
+    static_cast<Task*>(ATTRIBUTES->ENTRY_POINT)->setId(pId);
+
+    *PROCESS_ID = pId;
     *RETURN_CODE = NO_ERROR;
 }
 void Process::SET_PRIORITY(
@@ -53,14 +75,14 @@ void Process::SET_PRIORITY(
     /*in */ PRIORITY_TYPE PRIORITY,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
     if (process.CURRENT_PRIORITY == PRIORITY) {
         // No action, since the prioties are the same
         *RETURN_CODE = NO_ACTION;
         return;
     }
 
-    ApexKernel::getProcessById(PROCESS_ID).CURRENT_PRIORITY = PRIORITY;
+    status.CURRENT_PRIORITY = PRIORITY;
     *RETURN_CODE = NO_ERROR;
 }
 
@@ -71,35 +93,35 @@ void Process::SUSPEND_SELF(
     // Do some timing here, and set the mode to suspended, until time has passed.
 
     // Get own process id
-    PROCESS_ID_TYPE* myId = nullptr;
-    RETURN_CODE_TYPE* myCode = nullptr;
-    GET_MY_ID(myId, myCode);
+    PROCESS_ID_TYPE myId;
+    RETURN_CODE_TYPE myCode;
+    GET_MY_ID(&myId, &myCode);
 
     // Check if i exist
-    if (*myCode != NO_ERROR) {
+    if (myCode != NO_ERROR) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }
 
     // Suspend myself
-    RETURN_CODE_TYPE* returnCode = nullptr;
-    SUSPEND(*myId, returnCode);
+    RETURN_CODE_TYPE returnCode;
+    SUSPEND(myId, &returnCode);
 
     // Check if SUSPEND was successful
-    if (returnCode == nullptr) {
-        *returnCode = RETURN_CODE_TYPE::NOT_AVAILABLE;
+    if (returnCode != NO_ERROR) {
+        returnCode = RETURN_CODE_TYPE::NOT_AVAILABLE;
         return;
     }
 
     // Should be NO_ERROR, if SUSPEND was successful
-    RETURN_CODE = returnCode;
+    *RETURN_CODE = returnCode;
 }
 
 void Process::SUSPEND(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
     if (process.PROCESS_STATE == WAITING) {
         // No action, since we are already waiting for something
         *RETURN_CODE = NO_ACTION;
@@ -116,7 +138,7 @@ void Process::RESUME(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
     if (process.PROCESS_STATE == PROCESS_STATE_TYPE::RUNNING) {
         // No action, since we are already running
         *RETURN_CODE = NO_ACTION;
@@ -132,18 +154,24 @@ void Process::RESUME(
 void Process::STOP_SELF()
 {
     // Get own process id
-    PROCESS_ID_TYPE* myId = nullptr;
-    RETURN_CODE_TYPE* myCode = nullptr;
-    GET_MY_ID(myId, myCode);
+    PROCESS_ID_TYPE myId;
+    RETURN_CODE_TYPE myCode;
+    GET_MY_ID(&myId, &myCode);
 
-    STOP(*myId, nullptr);
+    if (myCode != NO_ERROR) {
+        // This means we haven't registered as a process
+        return;
+    }
+
+    RETURN_CODE_TYPE stopReturn;
+    STOP(myId, &stopReturn);
 }
 
 void Process::STOP(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
     if (process.PROCESS_STATE != PROCESS_STATE_TYPE::RUNNING) {
         // No action, is not running
         *RETURN_CODE = NO_ACTION;
@@ -160,7 +188,7 @@ void Process::START(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
     if (process.PROCESS_STATE == PROCESS_STATE_TYPE::RUNNING) {
         // No action, already running
         *RETURN_CODE = NO_ACTION;
@@ -180,17 +208,17 @@ void Process::DELAYED_START(
 {
     // TODO: Delay functionality here, for DELAY_TIME ticks
 
-    RETURN_CODE_TYPE* returnCode = nullptr;
-    START(PROCESS_ID, returnCode);
+    RETURN_CODE_TYPE returnCode;
+    START(PROCESS_ID, &returnCode);
 
     // If something went wrong
-    if (returnCode == nullptr) {
+    if (returnCode != NO_ERROR) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }
 
     // Return the START code
-    RETURN_CODE = returnCode;
+    *RETURN_CODE = returnCode;
 }
 
 void Process::LOCK_PREEMPTION(
@@ -211,15 +239,12 @@ void Process::GET_MY_ID(
     /*out*/ PROCESS_ID_TYPE* PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    PROCESS_ID_TYPE* returnId = nullptr;
-
-    ApexKernel::getProcessIdByName(getAttributes().NAME, returnId);
-
-    if (returnId == nullptr) {
-        *RETURN_CODE = INVALID_PARAM;
+    if (id == INVALID_PROCESS_ID) {
+        // The process has not been registered yet
+        *RETURN_CODE = NOT_AVAILABLE;
     }
 
-    PROCESS_ID = returnId;
+    *PROCESS_ID = id;
     *RETURN_CODE = NO_ERROR;
 }
 
@@ -228,15 +253,15 @@ void Process::GET_PROCESS_ID(
     /*out*/ PROCESS_ID_TYPE* PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    PROCESS_ID_TYPE* returnId = nullptr;
+    PROCESS_ID_TYPE returnId;
 
-    ApexKernel::getProcessIdByName(PROCESS_NAME, returnId);
+    ApexKernel::getProcessIdByName(PROCESS_NAME, &returnId);
 
-    if (returnId == nullptr) {
+    if (returnId != NO_ERROR) {
         *RETURN_CODE = INVALID_PARAM;
     }
 
-    PROCESS_ID = returnId;
+    *PROCESS_ID = returnId;
     *RETURN_CODE = NO_ERROR;
 }
 
@@ -245,7 +270,7 @@ void Process::GET_PROCESS_STATUS(
     /*out*/ PROCESS_STATUS_TYPE* PROCESS_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto& process = ApexKernel::getProcessById(PROCESS_ID);
+    auto& process = status;
 
     if (process.ATTRIBUTES.ENTRY_POINT == nullptr) {
         *RETURN_CODE = INVALID_PARAM;
