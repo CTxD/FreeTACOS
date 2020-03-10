@@ -21,8 +21,7 @@ private:
     std::vector<Partition>* partitions = new (&partition) std::vector<Partition>;
 
     SystemError systemError[10];
-    std::vector<SystemError>* systemErrors =
-        new (&systemError) std::vector<SystemError>;
+    std::vector<SystemError>* systemErrors = new (&systemError) std::vector<SystemError>;
 
     MultiPartitionHMTable multiPartitionHMTable[10];
     std::vector<MultiPartitionHMTable>* multiPartitionHMTables =
@@ -49,7 +48,7 @@ public:
                 std::initializer_list<PartitionHMTable> partitionHMTab)
         : moduleName(name), moduleVersion(version), moduleId(id)
     {
-         for (auto p : part) {
+        for (auto p : part) {
             partitions->push_back(p);
         }
         for (auto s : err) {
@@ -63,7 +62,7 @@ public:
         }
         for (auto p : partitionHMTab) {
             partitionHMTables->push_back(p);
-        } 
+        }
     }
 
     const name_t& getModuleName() const;

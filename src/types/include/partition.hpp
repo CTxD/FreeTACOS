@@ -1,9 +1,9 @@
 #ifndef PARTITION_H
 #define PARTITION_H
 
-#include "apex_error.h"
+#include "apex_error.hpp"
 #include "apex_partition.hpp"
-#include "apex_types.h"
+#include "apex_types.hpp"
 
 #include "memory_requirements.hpp"
 #include "process.hpp"

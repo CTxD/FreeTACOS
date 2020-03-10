@@ -1,7 +1,7 @@
 #ifndef MODULE_ERROR_ACTION
 #define MODULE_ERROR_ACTION
 
-#include "apex_error.h"
+#include "apex_error.hpp"
 #include "general_types.hpp"
 
 class ModuleErrorAction {

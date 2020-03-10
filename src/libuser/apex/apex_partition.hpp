@@ -7,7 +7,7 @@
 #ifndef APEX_PARTITION
 #define APEX_PARTITION
 
-#include "apex_process.h"
+#include "apex_process.hpp"
 
 #define MAX_NUMBER_OF_PARTITIONS SYSTEM_LIMIT_NUMBER_OF_PARTITIONS
 

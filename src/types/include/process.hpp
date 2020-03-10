@@ -1,7 +1,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-#include "apex_process.h"
+#include "apex_process.hpp"
 #include "general_types.hpp"
 
 class Process {
@@ -25,8 +25,7 @@ public:
     {
     }
 
-    Process(PROCESS_STATUS_TYPE status)
-        : status(std::move(status))
+    Process(PROCESS_STATUS_TYPE status) : status(std::move(status))
     {
     }
 

@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-#include <apex_types.h>
+#include <apex_types.hpp>
 
 const APEX_INTEGER PARTITION_NUMBER = 128;
 

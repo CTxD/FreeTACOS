@@ -1,7 +1,7 @@
 #ifndef PARTITON_SCHEDULE
 #define PARTITON_SCHEDULE
 
-#include <apex_types.h>
+#include <apex_types.hpp>
 #include <general_types.hpp>
 
 class PartitionSchedule {
