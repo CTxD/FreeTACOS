@@ -8,7 +8,8 @@ OBJS=		arinc_module.o \
 			partition_schedule.o \
 			partition.o \
 			queuing_port.o \
-			system_error.o
+			system_error.o \
+			task.o
 
 all: $(TARGET)
 
