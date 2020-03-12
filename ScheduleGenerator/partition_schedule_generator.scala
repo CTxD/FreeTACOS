@@ -31,8 +31,8 @@ object PartitionScheduleGenerator {
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
     // Emit includes first
     var emitString =
-      this.emit("#ifndef __GENERATED_CORE_SCHEDULE__\n") +
-      this.emit("#define __GENERATED_CORE_SCHEDULE__\n") +
+      this.emit("#ifndef __GENERATED_PARTITION_SCHEDULE__\n") +
+      this.emit("#define __GENERATED_PARTITION_SCHEDULE__\n") +
       this.emit(this.mapStringToInclude("core_schedule.hpp")) +
         "\n\n";
 

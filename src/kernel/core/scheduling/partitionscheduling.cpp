@@ -4,7 +4,7 @@
 #include <circle/time.h>
 #include <core_schedule.hpp>
 #include <generated_arinc_module.hpp>
-#include <generated_core_schedule.hpp>
+#include <generated_partition_schedule.hpp>
 #include <partition.hpp>
 #include <partition_schedule.hpp>
 
