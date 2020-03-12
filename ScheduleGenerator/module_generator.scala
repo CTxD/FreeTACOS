@@ -116,17 +116,6 @@ object ModuleGenerator {
       return partitionString + this.generate(node.child) +
         this.emit("},\n", -1);
     }
-    // Parse process attributes
-    case "Processes" => {
-      // Loop through all Process Tags
-      val processes =
-        node.child.filter(child => this.checkAttributeValidity("Identifier", child));
-      var emitString: String = this.emit(f"{ // Processes\n");
-      this.level += 1;
-      return emitString +
-        this.generateProcesses(processes) +
-        this.emit("},\n", -1);
-    }
 
     // Parse memory region attributes
     case "MemoryRegions" => {
@@ -676,39 +665,6 @@ object ModuleGenerator {
         this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
         this.emit("},\n", -1) +
         this.generateMemoryRegion(xs);
-  }
-
-  // Recursively generate the process code
-  def generateProcesses(nodes: Seq[Node]): String = nodes match {
-    // If we have a valid node, but there is no more valid nodes in the rest of the list
-    case x :: xs if xs == Nil =>
-      this.emit("{ // Process\n") +
-        this.emitNodeAttributesRequired(
-          x,
-          List(
-            ("Name", this.s),
-            ("Identifier", this.k),
-            ("Priority", this.k),
-            ("Period", this.k)
-          ),
-          true
-        ) +
-        this.emit("}\n", -1);
-    // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
-    case x :: xs if xs != Nil =>
-      this.emit("{ // Process\n") +
-        this.emitNodeAttributesRequired(
-          x,
-          List(
-            ("Name", this.s),
-            ("Identifier", this.k),
-            ("Priority", this.k),
-            ("Period", this.k)
-          ),
-          true
-        ) +
-        this.emit("},\n", -1) +
-          this.generateProcesses(xs);
   }
 
   def retrieveNodeAttributeString(node: Node, attr: String): String =

@@ -22,11 +22,6 @@
                <QueuingPort MaxMessageSize="30 " Name="Stat_5Dq" MaxNbMessage="30" Direction="DESTINATION" />
             </PartitionPort>
          </PartitionPorts>
-         <Processes>
-            <Process Name="ProcessOne" Identifier="1" Priority="1" Period="20" />
-            <Process Name="ProcessTwo" Identifier="2" Priority="3" Period="5" />
-            <Process Name="ProcessThree" Identifier="3" Priority="2" Period="10" />
-         </Processes>
       </Partition>
       <Partition>
          <PartitionDefinition Name="flightControls" Identifier="2" Affinity="1" />
@@ -52,11 +47,6 @@
                <QueuingPort MaxMessageSize="30 " Name="Stat_2Sq" MaxNbMessage="30" Direction="SOURCE" />
             </PartitionPort>
          </PartitionPorts>
-         <Processes>
-            <Process Name="ProcessOne" Identifier="1" Priority="1" Period="20" />
-            <Process Name="ProcessTwo" Identifier="2" Priority="3" Period="5" />
-            <Process Name="ProcessThree" Identifier="3" Priority="2" Period="10" />
-         </Processes>
       </Partition>
       <Partition>
          <PartitionDefinition Name="flightManagement" Identifier="3" Affinity="0" />
@@ -73,11 +63,6 @@
                <QueuingPort MaxMessageSize="30 " Name="Stat_3Sq" MaxNbMessage="30" Direction="SOURCE" />
             </PartitionPort>
          </PartitionPorts>
-         <Processes>
-            <Process Name="ProcessOne" Identifier="1" Priority="1" Period="20" />
-            <Process Name="ProcessTwo" Identifier="2" Priority="3" Period="5" />
-            <Process Name="ProcessThree" Identifier="3" Priority="2" Period="10" />
-         </Processes>
       </Partition>
       <Partition>
          <PartitionDefinition Name="IOProcessing" Identifier="4" Affinity="0" />
@@ -92,11 +77,6 @@
                <QueuingPort MaxMessageSize="30 " Name="Stat_4Sq" MaxNbMessage="30" Direction="SOURCE" />
             </PartitionPort>
          </PartitionPorts>
-         <Processes>
-            <Process Name="ProcessOne" Identifier="1" Priority="1" Period="20" />
-            <Process Name="ProcessTwo" Identifier="2" Priority="3" Period="5" />
-            <Process Name="ProcessThree" Identifier="3" Priority="2" Period="10" />
-         </Processes>
       </Partition>
       <Partition>
          <PartitionDefinition Name="IHVM " Identifier="5" Affinity="0" />
@@ -116,11 +96,6 @@
                <QueuingPort MaxMessageSize="30 " Name="Stat_5Sq" MaxNbMessage="30" Direction="SOURCE" />
             </PartitionPort>
          </PartitionPorts>
-         <Processes>
-            <Process Name="ProcessOne" Identifier="1" Priority="1" Period="20" />
-            <Process Name="ProcessTwo" Identifier="2" Priority="3" Period="5" />
-            <Process Name="ProcessThree" Identifier="3" Priority="2" Period="10" />
-         </Processes>
       </Partition>
    </Partitions>
    <Schedules>

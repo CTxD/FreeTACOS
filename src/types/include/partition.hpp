@@ -52,8 +52,7 @@ public:
               decOrHex_t period,
               std::initializer_list<MemoryRegion> mem,
               std::initializer_list<QueuingPort> queuing,
-              std::initializer_list<SamplingPort> sampling,
-              std::initializer_list<Process> proc)
+              std::initializer_list<SamplingPort> sampling)
     {
         this->partitionName = name;
         status = {id, affinity, duration, period};
@@ -63,9 +62,6 @@ public:
         }
         for (auto q : queuing) {
             queuingPorts->push_back(q);
-        }
-        for (auto p : proc) {
-            processes->push_back(p);
         }
     }
 
