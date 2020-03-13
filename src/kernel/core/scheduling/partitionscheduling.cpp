@@ -3,6 +3,7 @@
 #include <arinc_module.hpp>
 #include <circle/time.h>
 #include <core_schedule.hpp>
+#include <defines.hpp>
 #include <generated_arinc_module.hpp>
 #include <generated_partition_schedule.hpp>
 #include <partition.hpp>
@@ -67,14 +68,44 @@ runningPartition* getNextPartition(runningPartition* running_partition, int size
         }
     }
 
+#if KERNEL_DEBUG()
+    for (int i = 0; i < size; i++) {
+        CLogger::Get()->Write("FreeTACOS", LogNotice,
+                              "---------- CORE %d ----------", i);
+        CLogger::Get()->Write("FreeTACOS", LogNotice,
+                              "----- Running partition -----");
+        CLogger::Get()->Write("FreeTACOS", LogNotice, "partition name = %s",
+                              running_partition[i].partitionName.x.x[0]);
+        CLogger::Get()->Write("FreeTACOS", LogNotice,
+                              "partition start time = %d", running_partition[i].startTime);
+        CLogger::Get()->Write("FreeTACOS", LogNotice, "partition end time = %d",
+                              running_partition[i].endTime);
+        CLogger::Get()->Write("FreeTACOS", LogNotice,
+                              "-----------------------------");
+    }
+#endif
+
+    // TODO: preemption
+
     return running_partition;
 }
 
 void partitionScheduler()
 {
+#if KERNEL_PROCESSER(IS_MULTICORE)
     int size = 4;
     runningPartition running_partition[size] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
                                                 "", 0, 0, 0, 0, "", 0, 0, 0, 0};
+#elif KERNEL_PROCESSER(IS_SINGLECORE)
+    int size = 1;
+    runningPartition running_partition[size] = {"", 0, 0, 0, 0};
+#else
+    assert(0); // abort
+#endif
+
+#if KERNEL_DEBUG()
+    CLogger::Get()->Write("FreeTACOS", LogNotice, "Starting partition schedule");
+#endif
     getNextPartition(running_partition, size);
     while (1) {
         for (int i = 0; i < size; i++) {
@@ -83,5 +114,6 @@ void partitionScheduler()
                 break;
             }
         }
+        // TODO: call process scheduler her
     }
 }
