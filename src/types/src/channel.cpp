@@ -2,20 +2,20 @@
 
 const identifier_t& Channel::getChannelId() const
 {
-  return channelIdentifier;
+    return channelIdentifier;
 }
 
-const std::optional<name_t>& Channel::getChannelName() const
+const std::optional<NAME_TYPE>& Channel::getChannelName() const
 {
-  return channelName;
+    return channelName;
 }
 
 const PortMapping& Channel::getSource() const
 {
-  return source;
+    return source;
 }
 
 const std::vector<PortMapping>& Channel::getDestinations() const
 {
-  return *destinations;
+    return *destinations;
 }

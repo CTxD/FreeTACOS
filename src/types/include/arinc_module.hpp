@@ -1,21 +1,24 @@
 #ifndef ARINC_MODULE
 #define ARINC_MODULE
 
+#include <vector>
+
 #include "channel.hpp"
 #include "module_hm_table.hpp"
 #include "multipartition_hm_table.hpp"
-#include "partition.hpp"
 #include "partition_hm_table.hpp"
 #include "partition_memory.hpp"
-#include "process.hpp"
 #include "system_error.hpp"
+#include <module_schedule.hpp>
+#include <partition.hpp>
+#include <process.hpp>
 #include <vector>
 
 class ArincModule {
 private:
-    name_t moduleName;                    /* required */
-    std::optional<name_t> moduleVersion;  /* optional */
-    std::optional<APEX_INTEGER> moduleId; /* optional */
+    NAME_TYPE moduleName;                   /* required */
+    std::optional<NAME_TYPE> moduleVersion; /* optional */
+    std::optional<APEX_INTEGER> moduleId;   /* optional */
 
     Partition partition[10];
     std::vector<Partition>* partitions = new (&partition) std::vector<Partition>;
@@ -36,10 +39,12 @@ private:
         new (&partitionHMTable) std::vector<PartitionHMTable>;
 
 public:
-    ArincModule(){};
+    ArincModule()
+    {
+    }
 
-    ArincModule(name_t name,
-                std::optional<name_t> version,
+    ArincModule(NAME_TYPE name,
+                std::optional<NAME_TYPE> version,
                 std::optional<identifier_t> id,
                 std::initializer_list<Partition> part,
                 std::initializer_list<SystemError> err,
@@ -65,9 +70,9 @@ public:
         }
     }
 
-    const name_t& getModuleName() const;
+    const NAME_TYPE& getModuleName() const;
 
-    const std::optional<name_t>& getModuleVersion() const;
+    const std::optional<NAME_TYPE>& getModuleVersion() const;
 
     const std::optional<APEX_INTEGER>& getModuleId() const;
 

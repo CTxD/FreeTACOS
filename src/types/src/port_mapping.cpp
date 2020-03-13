@@ -2,10 +2,10 @@
 
 const std::optional<PseudoPartition>& PortMapping::getPseudoPartition() const
 {
-  return pseudoPartition;
+    return pseudoPartition;
 }
 
 const std::optional<StandardPartition>& PortMapping::getStandardPartition() const
 {
-  return standardPartition;
+    return standardPartition;
 }

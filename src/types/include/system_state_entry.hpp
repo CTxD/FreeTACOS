@@ -13,14 +13,14 @@ private:
     std::vector<ModuleErrorAction>* moduleErrorActions =
         new (&moduleErrorAction) std::vector<ModuleErrorAction>;
 
-    APEX_INTEGER systemState;          /* required */
-    std::optional<name_t> description; /* optional */
+    APEX_INTEGER systemState;             /* required */
+    std::optional<NAME_TYPE> description; /* optional */
 
 public:
     SystemStateEntry(){};
 
     SystemStateEntry(const int state,
-                     const name_t descr,
+                     const NAME_TYPE descr,
                      std::initializer_list<ErrorLevel> levels,
                      std::initializer_list<ModuleErrorAction> actions)
         : systemState(state), description(descr)
@@ -35,7 +35,7 @@ public:
 
     const APEX_INTEGER& getSystemState() const;
 
-    const std::optional<name_t> getDescription() const;
+    const std::optional<NAME_TYPE> getDescription() const;
 
     const std::vector<ErrorLevel>& getErrorIdLevels() const;
 

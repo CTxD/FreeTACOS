@@ -10,7 +10,7 @@
 #include <partition_schedule.hpp>
 
 struct runningPartition {
-    name_t partitionName;
+    NAME_TYPE partitionName;
     APEX_INTEGER startTime;
     APEX_INTEGER endTime;
     int index;
@@ -75,7 +75,7 @@ runningPartition* getNextPartition(runningPartition* running_partition, int size
         CLogger::Get()->Write("FreeTACOS", LogNotice,
                               "----- Running partition -----");
         CLogger::Get()->Write("FreeTACOS", LogNotice, "partition name = %s",
-                              running_partition[i].partitionName.x.x[0]);
+                              running_partition[i].partitionName.x[0]);
         CLogger::Get()->Write("FreeTACOS", LogNotice,
                               "partition start time = %d", running_partition[i].startTime);
         CLogger::Get()->Write("FreeTACOS", LogNotice, "partition end time = %d",

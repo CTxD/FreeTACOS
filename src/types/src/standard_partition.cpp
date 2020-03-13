@@ -5,7 +5,7 @@ const identifier_t& StandardPartition::getPartitionIdentifier() const
   return partitionIdentifier;
 }
 
-const name_t& StandardPartition::getPortName() const
+const NAME_TYPE& StandardPartition::getPortName() const
 {
   return portName;
 }

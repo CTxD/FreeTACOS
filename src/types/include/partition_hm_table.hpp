@@ -8,16 +8,16 @@ private:
     PartitionErrorAction partitionErrorAction[1];
     std::vector<PartitionErrorAction>* partitionErrorActions =
         new (&partitionErrorAction) std::vector<PartitionErrorAction>;
-    name_t tableName;                     /* required */
-    name_t multiPartitionTableName;       /* required */
+    NAME_TYPE tableName;               /* required */
+    NAME_TYPE multiPartitionTableName; /* required */
 
 public:
     PartitionHMTable()
     {
     }
 
-    PartitionHMTable(name_t name,
-                     name_t multiPartitionHM,
+    PartitionHMTable(NAME_TYPE name,
+                     NAME_TYPE multiPartitionHM,
                      std::initializer_list<PartitionErrorAction> actions)
         : tableName(name), multiPartitionTableName(multiPartitionHM)
     {
@@ -27,8 +27,7 @@ public:
     }
 
     PartitionHMTable(const PartitionHMTable& rhs)
-        : tableName(rhs.tableName),
-          multiPartitionTableName(rhs.multiPartitionTableName)
+        : tableName(rhs.tableName), multiPartitionTableName(rhs.multiPartitionTableName)
     {
         for (auto a : rhs.getActions()) {
             partitionErrorActions->push_back(a);
@@ -37,9 +36,9 @@ public:
 
     PartitionHMTable& operator=(const PartitionHMTable&);
 
-    const name_t& getTableName() const;
+    const NAME_TYPE& getTableName() const;
 
-    const name_t& getMultiPartitionTableName() const;
+    const NAME_TYPE& getMultiPartitionTableName() const;
 
     const std::vector<PartitionErrorAction>& getActions() const;
 };

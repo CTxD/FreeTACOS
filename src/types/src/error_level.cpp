@@ -5,7 +5,7 @@ const identifier_t& ErrorLevel::getErrorIdentifier() const
   return errorIdentifier;
 }
 
-const std::optional<name_t>& ErrorLevel::getDescription() const
+const std::optional<NAME_TYPE>& ErrorLevel::getDescription() const
 {
   return description;
 }

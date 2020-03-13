@@ -2,25 +2,25 @@
 
 const name_t& MemoryRegion::getRegionName() const
 {
-  return regionName;
+    return regionName;
 }
 
 const memory_region_t& MemoryRegion::getType() const
 {
-  return type;
+    return type;
 }
 
 const decOrHex_t& MemoryRegion::getSize() const
 {
-  return size;
+    return size;
 }
 
 const memory_access_t& MemoryRegion::getAccessRights() const
 {
-  return accessRights;
+    return accessRights;
 }
 
 const std::optional<decOrHex_t>& MemoryRegion::getAddress() const
 {
-  return address;
+    return address;
 }

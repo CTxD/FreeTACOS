@@ -113,3 +113,5 @@ ScheduleGenerator/target
 bin/
 
 .vs/*
+
+docs/html/index.html
