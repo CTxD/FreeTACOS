@@ -42,13 +42,13 @@ object Main {
       var generatedSchedule : String = generateSchedule(schedule._2, validator.entities);
 
       println(Console.YELLOW + "Writing to file");
-      val moduleWriter = new PrintWriter(new File("../src/kernel/arinc_module.cpp"));
+      val moduleWriter = new PrintWriter(new File("../src/kernel/generated_arinc_module.hpp"));
       moduleWriter.write(generatedString);
       moduleWriter.close();
 
       println(Console.GREEN + "ArincModule successfully written");
 
-      val scheduleWriter = new PrintWriter(new File("../src/kernel/core_schedule.cpp"));
+      val scheduleWriter = new PrintWriter(new File("../src/kernel/generated_partition_schedule.hpp"));
       scheduleWriter.write(generatedSchedule);
       scheduleWriter.close();
 

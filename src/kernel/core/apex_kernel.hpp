@@ -1,5 +1,8 @@
-#include <apex_process.h>
-#include <apex_types.h>
+#ifndef __APEX_KERNEL__
+#define __APEX_KERNEL__
+
+#include <apex_process.hpp>
+#include <apex_types.hpp>
 
 #include <task.hpp>
 
@@ -14,3 +17,5 @@ public:
     static PROCESS_STATUS_TYPE& getProcessById(PROCESS_ID_TYPE id);
     static void getProcessIdByName(PROCESS_NAME_TYPE name, PROCESS_ID_TYPE* returnId);
 };
+
+#endif

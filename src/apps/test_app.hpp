@@ -5,7 +5,7 @@
 
 #include <circle/logger.h>
 
-#include "apex_process.h"
+#include <apex_process.hpp>
 
 class TestApp : public Task {
 public:

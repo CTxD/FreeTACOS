@@ -1,15 +1,21 @@
 #include "tacoskernel.h"
-#include "apex_kernel.hpp"
 #include "port.hpp"
+#include "scheduling/partitionscheduling.hpp"
+#include <apex_kernel.hpp>
+#include <circle/time.h>
+#include <consumer_part.h>
+#include <dummy_part.h>
 #include <errcode.h>
 #include <queuing_port.hpp>
-#include <test_app.h>
+#include <test_app.hpp>
 
 CTacosKernel::CTacosKernel()
 {
 }
+
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
+    partitionScheduler();
     ApexKernel apex = ApexKernel{};
 
     Task* app = new TestApp(&mLogger);
@@ -53,21 +59,6 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 
     while (1) {
     }
-
-    /*
-    QueuingPort* q1 = new QueuingPort({"Q1"}, 8, PORT_DIRECTION_TYPE::SOURCE,
-    10); mTimer.StartKernelTimer(7 * HZ, TimerHandler, this); while (1) {
-        mEvent.Clear();
-        // Cyclic schedule
-        new FibPart(&mLogger, q1);
-        new ConsumerPart(&mLogger, q1);
-        //
-        mEvent.Wait();
-    }
-    while (1) {
-        CLogger::Get()->Write("FreeTACOS", LogNotice, "In busy loop");
-    }
-    */
     return ShutdownHalt;
 }
 

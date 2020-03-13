@@ -1,8 +1,8 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-#include "apex_process.h"
-#include "apex_types.h"
+#include "apex_process.hpp"
+#include "apex_types.hpp"
 #include "general_types.hpp"
 
 class Process {

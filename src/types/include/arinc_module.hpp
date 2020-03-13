@@ -5,13 +5,13 @@
 
 #include "channel.hpp"
 #include "module_hm_table.hpp"
-#include "module_schedule.hpp"
 #include "multipartition_hm_table.hpp"
-#include "partition.hpp"
 #include "partition_hm_table.hpp"
 #include "partition_memory.hpp"
-#include "process.hpp"
 #include "system_error.hpp"
+#include <module_schedule.hpp>
+#include <partition.hpp>
+#include <process.hpp>
 #include <vector>
 
 class ArincModule {
@@ -20,21 +20,21 @@ private:
     std::optional<NAME_TYPE> moduleVersion; /* optional */
     std::optional<APEX_INTEGER> moduleId;   /* optional */
 
-    Partition partition[1];
+    Partition partition[10];
     std::vector<Partition>* partitions = new (&partition) std::vector<Partition>;
 
-    SystemError systemError[1];
+    SystemError systemError[10];
     std::vector<SystemError>* systemErrors = new (&systemError) std::vector<SystemError>;
 
-    MultiPartitionHMTable multiPartitionHMTable[1];
+    MultiPartitionHMTable multiPartitionHMTable[10];
     std::vector<MultiPartitionHMTable>* multiPartitionHMTables =
         new (&multiPartitionHMTable) std::vector<MultiPartitionHMTable>;
 
-    ModuleHMTable moduleHMTable[1];
+    ModuleHMTable moduleHMTable[10];
     std::vector<ModuleHMTable>* moduleHMTables =
         new (&moduleHMTable) std::vector<ModuleHMTable>;
 
-    PartitionHMTable partitionHMTable[1];
+    PartitionHMTable partitionHMTable[10];
     std::vector<PartitionHMTable>* partitionHMTables =
         new (&partitionHMTable) std::vector<PartitionHMTable>;
 
