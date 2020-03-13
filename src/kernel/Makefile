@@ -11,12 +11,12 @@ OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o \
-        $(TYPES)/src/process.o \
-        $(TYPES)/src/partition.o \
-        $(TYPES)/src/arinc_module.o \
-        $(TYPES)/src/multipartition_hm_table.o \
-        $(TYPES)/src/module_hm_table.o \
-        $(TYPES)/src/partition_hm_table.o \
+		$(TYPES)/src/process.o \
+		$(TYPES)/src/partition.o \
+		$(TYPES)/src/arinc_module.o \
+		$(TYPES)/src/multipartition_hm_table.o \
+		$(TYPES)/src/module_hm_table.o \
+		$(TYPES)/src/partition_hm_table.o \
 		$(TYPES)/src/core_schedule.o \
 		$(TYPES)/src/partition_schedule.o \
 		$(ROOT)/src/kernel/core/scheduling/partitionscheduling.o \

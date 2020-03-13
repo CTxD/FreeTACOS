@@ -9,7 +9,7 @@
 #include <partition.hpp>
 #include <partition_schedule.hpp>
 
-struct runningPartition {
+struct RunningPartition {
     NAME_TYPE partitionName;
     APEX_INTEGER startTime;
     APEX_INTEGER endTime;
@@ -17,22 +17,22 @@ struct runningPartition {
     int partitionAmount;
 };
 
-runningPartition* getNextPartition(runningPartition* running_partition, int size)
+RunningPartition* getNextPartition(RunningPartition* runningPartition, int size)
 {
     // Get first partitions
-    if (running_partition[0].endTime == 0) {
+    if (runningPartition[0].endTime == 0) {
         auto currentTime = CTimer::Get()->GetClockTicks();
         for (int i = 0; i < size; i++) {
             auto partitions = coreSchedule.getPartitions(i);
             auto amountOfPartitions = coreSchedule.getPartitions(i).size();
-            running_partition[i].partitionAmount = amountOfPartitions;
+            runningPartition[i].partitionAmount = amountOfPartitions;
             // If the core array is not empty
             if (amountOfPartitions > 0) {
-                running_partition[i].partitionName = partitions[0].getPartitionName();
-                running_partition[i].startTime = currentTime + partitions[0].getOffset();
-                running_partition[i].endTime =
+                runningPartition[i].partitionName = partitions[0].getPartitionName();
+                runningPartition[i].startTime = currentTime + partitions[0].getOffset();
+                runningPartition[i].endTime =
                     currentTime + partitions[0].getPeriodDuration();
-                running_partition[i].index = 0;
+                runningPartition[i].index = 0;
             }
         }
     }
@@ -42,27 +42,27 @@ runningPartition* getNextPartition(runningPartition* running_partition, int size
         for (int i = 0; i < size; i++) {
             auto partitions = coreSchedule.getPartitions(i);
             // If the a partition has past it's duration
-            if (currentTime >= running_partition[i].endTime) {
-                running_partition[i].index += 1;
+            if (currentTime >= runningPartition[i].endTime) {
+                runningPartition[i].index += 1;
                 // If it is the last partition in the core array (then gets the first partition of the core array again)
-                if (running_partition[i].index == running_partition[i].partitionAmount) {
-                    running_partition[i].partitionName = partitions[0].getPartitionName();
-                    running_partition[i].startTime =
+                if (runningPartition[i].index == runningPartition[i].partitionAmount) {
+                    runningPartition[i].partitionName = partitions[0].getPartitionName();
+                    runningPartition[i].startTime =
                         currentTime + partitions[0].getOffset();
-                    running_partition[i].endTime =
+                    runningPartition[i].endTime =
                         currentTime + partitions[0].getPeriodDuration();
-                    running_partition[i].index = 0;
+                    runningPartition[i].index = 0;
                 }
                 else {
                     // If it not the last partition in the core array
-                    int nextIndex = running_partition[i].index;
-                    running_partition[i].partitionName =
+                    int nextIndex = runningPartition[i].index;
+                    runningPartition[i].partitionName =
                         partitions[nextIndex].getPartitionName();
-                    running_partition[i].startTime =
+                    runningPartition[i].startTime =
                         currentTime + partitions[nextIndex].getOffset();
-                    running_partition[i].endTime =
+                    runningPartition[i].endTime =
                         currentTime + partitions[nextIndex].getPeriodDuration();
-                    running_partition[i].index = nextIndex;
+                    runningPartition[i].index = nextIndex;
                 }
             }
         }
@@ -75,11 +75,11 @@ runningPartition* getNextPartition(runningPartition* running_partition, int size
         CLogger::Get()->Write("FreeTACOS", LogNotice,
                               "----- Running partition -----");
         CLogger::Get()->Write("FreeTACOS", LogNotice, "partition name = %s",
-                              running_partition[i].partitionName.x[0]);
+                              runningPartition[i].partitionName.x[0]);
         CLogger::Get()->Write("FreeTACOS", LogNotice,
-                              "partition start time = %d", running_partition[i].startTime);
+                              "partition start time = %d", runningPartition[i].startTime);
         CLogger::Get()->Write("FreeTACOS", LogNotice, "partition end time = %d",
-                              running_partition[i].endTime);
+                              runningPartition[i].endTime);
         CLogger::Get()->Write("FreeTACOS", LogNotice,
                               "-----------------------------");
     }
@@ -87,18 +87,18 @@ runningPartition* getNextPartition(runningPartition* running_partition, int size
 
     // TODO: preemption
 
-    return running_partition;
+    return runningPartition;
 }
 
 void partitionScheduler()
 {
 #if KERNEL_PROCESSER(IS_MULTICORE)
     int size = 4;
-    runningPartition running_partition[size] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
+    RunningPartition running_partition[size] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
                                                 "", 0, 0, 0, 0, "", 0, 0, 0, 0};
 #elif KERNEL_PROCESSER(IS_SINGLECORE)
     int size = 1;
-    runningPartition running_partition[size] = {"", 0, 0, 0, 0};
+    RunningPartition runningPartition[size] = {"", 0, 0, 0, 0};
 #else
     assert(0); // abort
 #endif
@@ -106,11 +106,11 @@ void partitionScheduler()
 #if KERNEL_DEBUG()
     CLogger::Get()->Write("FreeTACOS", LogNotice, "Starting partition schedule");
 #endif
-    getNextPartition(running_partition, size);
+    getNextPartition(runningPartition, size);
     while (1) {
         for (int i = 0; i < size; i++) {
-            if (CTimer::Get()->GetClockTicks() >= running_partition[i].endTime) {
-                getNextPartition(running_partition, size);
+            if (CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
+                getNextPartition(runningPartition, size);
                 break;
             }
         }
