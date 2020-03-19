@@ -15,7 +15,8 @@ OBJS = main.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
-		$(ROOT)/src/kernel/arch/rasp4/arch.o
+		$(ROOT)/src/kernel/arch/rasp4/arch.o \
+		$(CORE)/scheduling/process_schedule.o
 
 include $(CIRCLELIB)/Config.mk
 
@@ -29,6 +30,7 @@ INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(ROOT)/src/kernel
+INCLUDE += -I $(CORE)/scheduling
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
 

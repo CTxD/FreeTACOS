@@ -1,3 +1,6 @@
+#ifndef _TACOS_TACOS_KERNEL
+#define _TACOS_TACOS_KERNEL
+
 #include <apex_process.h>
 #include <apex_types.h>
 
@@ -14,3 +17,5 @@ public:
     static PROCESS_STATUS_TYPE& getProcessById(PROCESS_ID_TYPE id);
     static void getProcessIdByName(PROCESS_NAME_TYPE name, PROCESS_ID_TYPE* returnId);
 };
+
+#endif
