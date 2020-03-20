@@ -1,5 +1,5 @@
 #include <apex_kernel.hpp>
-#include <test_app.h>
+#include <test_app.hpp>
 
 TestApp::TestApp(CLogger* logger) : Task(10, 10, 10, HARD, {"MASTER"})
 {

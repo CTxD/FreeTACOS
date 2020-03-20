@@ -4,6 +4,8 @@ object PartitionScheduleGenerator {
   type CoreIterable = Array[Array[Array[Integer]]];
   type EntityIterable = Array[Array[Integer]];
 
+  var IsMulticore = false;
+
   // Initialise indentation level value
   var level: Integer = 0;
   var INDENTATION_SPACE: Integer = 2;
@@ -29,6 +31,8 @@ object PartitionScheduleGenerator {
   def initCodeGeneration(scheduleTable: CoreIterable): String = {
     // Emit includes first
     var emitString =
+      this.emit("#ifndef __GENERATED_PARTITION_SCHEDULE__\n") +
+      this.emit("#define __GENERATED_PARTITION_SCHEDULE__\n") +
       this.emit(this.mapStringToInclude("core_schedule.hpp")) +
         "\n\n";
 
@@ -40,37 +44,71 @@ object PartitionScheduleGenerator {
       this.emit("{\n", 1);
 
     this.level += 1;
-    emitString = emitString +
-      this.traverseCores(scheduleTable) +
-      this.emit("}\n", -1);
+    if(IsMulticore == true)
+      {
+        emitString = emitString +
+        this.traverseCores(scheduleTable) +
+        this.emit("}\n", -1);
+      }
+    else
+    {
+      emitString = emitString +
+        this.emit("{ // Core\n") +
+        this.traverseCores(scheduleTable) +
+        this.emit("}\n", -1);
+    }
 
-    return emitString + this.emit("};", -1);
+    return emitString + this.emit("}; \n", -1) + this.emit("#endif");
   }
 
+  
   // Generate code for each core and further traverse
   def traverseCores(cores: CoreIterable): String = cores.toList match {
     // If there are more cores to traverse
     case x :: xs if xs != Nil => {
-      var emitString = this.emit("{ // Core\n");
-      this.level += 1;
+      if(IsMulticore == true)
+      {
+        var emitString = this.emit("{ // Core\n");
+        this.level += 1;
 
-      emitString = emitString +
-        this.traversePartitions(x);
+        emitString = emitString + this.traversePartitions(x);
 
-      emitString = emitString +
-        this.emit("},\n", -1);
+        emitString = emitString + this.emit("},\n", -1);
 
-      return emitString + this.traverseCores(xs.toArray);
+        return emitString + this.traverseCores(xs.toArray);
+      }
+      else
+      {
+        var emitString = this.emit("");
+        this.level += 1;
+
+        emitString = emitString + this.traversePartitions(x) + this.emit(",");
+
+        emitString = emitString + this.emit("\n", -1);
+
+        return emitString + this.traverseCores(xs.toArray);
+      }
     }
     // If we are at the last core
     case x :: xs if xs == Nil => {
+      if(IsMulticore == true)
+      {
       var emitString = this.emit("{ // Core\n");
       this.level += 1;
 
-      emitString = emitString +
-        this.traversePartitions(x);
+      emitString = emitString + this.traversePartitions(x);
 
       return emitString + this.emit("}\n", -1);
+      }
+      else
+      {
+        var emitString = this.emit("");
+        this.level += 1;
+
+        emitString = emitString + this.traversePartitions(x);
+
+        return emitString + this.emit("}\n", -1);
+      }
     }
     // Something went wrong
     case _ =>
@@ -89,9 +127,17 @@ object PartitionScheduleGenerator {
       case x :: xs if xs != Nil && xs.head.head != null => {
         val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
-        var emitString = this.emit("// Partition \n") +
-          this.emitPartitionValues(partition) +
-          this.emit(",\n", -1);
+        var emitString = this.emitPartitionValues(partition) +
+          this.emit(",\n", -1); 
+        if(IsMulticore == true)
+        {
+          emitString = this.emit("// Partition \n") + emitString;
+        }
+        else
+        {
+          emitString = this.emit("\n") + emitString;
+        }
+        
 
         return emitString + this.traversePartitions(xs.toArray);
       }
@@ -100,9 +146,16 @@ object PartitionScheduleGenerator {
       case x :: xs if xs == Nil || xs.head.head == null => {
         val partition: TimeEntity = this.mapIdToPartitionO(x.head);
 
-        var emitString = this.emit("// Partition \n") +
-          this.emitPartitionValues(partition) +
-          this.emit("\n", -1);
+        var emitString = this.emitPartitionValues(partition);
+        
+        if(IsMulticore == true)
+        {
+          emitString = this.emit("// Partition \n") + emitString + this.emit("\n", -1);
+        }
+        else
+        {
+          emitString = this.emit("\n") + emitString + this.emit("",-1);;
+        }
 
         return emitString;
       }
@@ -127,7 +180,14 @@ object PartitionScheduleGenerator {
       this.emit(f"${partition.offset}, // Offset \n") +
       this.emit(f"${partition.period}, // Period \n") +
       this.emit(f"${partition.affinity} // Affinity \n") +
-      this.emit("}\n", -1);
+      (if(IsMulticore == true)
+      {
+        this.emit("}\n", -1);
+      }
+      else
+      {
+        this.emit("}", -1);
+      });
   }
 
   def mapStringToUsingNameSpace(string: String): String =

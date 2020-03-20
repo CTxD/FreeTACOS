@@ -3,8 +3,8 @@
 
 #include <apex_kernel.hpp>
 
-#include <apex_process.h>
-#include <apex_types.h>
+#include <apex_process.hpp>
+#include <apex_types.hpp>
 #include <vector>
 
 class ProcessSchedule {

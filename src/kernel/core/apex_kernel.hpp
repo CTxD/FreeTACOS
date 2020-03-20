@@ -1,8 +1,8 @@
-#ifndef _TACOS_TACOS_KERNEL
-#define _TACOS_TACOS_KERNEL
+#ifndef __APEX_KERNEL__
+#define __APEX_KERNEL__
 
-#include <apex_process.h>
-#include <apex_types.h>
+#include <apex_process.hpp>
+#include <apex_types.hpp>
 
 #include <task.hpp>
 

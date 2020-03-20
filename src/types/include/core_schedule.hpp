@@ -5,17 +5,25 @@
 #include <vector>
 
 // Define type aliases
-typedef vector<PartitionSchedule> PartitionIterable;
-typedef vector<PartitionIterable> CoreIterable;
+typedef std::vector<PartitionSchedule> PartitionIterable;
+typedef std::vector<PartitionIterable> CoreIterable;
 
 class CoreSchedule {
 private:
-    CoreIterable cores;
+    PartitionSchedule partitionIterable[4][30];
+    CoreIterable* coreIterable = new (&partitionIterable) CoreIterable;
 
 public:
-    CoreSchedule(CoreIterable cores) : cores(cores)
+    CoreSchedule(std::initializer_list<std::initializer_list<PartitionSchedule>> coreIter)
     {
+        for (auto core : coreIter) {
+            coreIterable->push_back(core);
+        }
     }
+
+    const CoreIterable& getCores() const;
+
+    const PartitionIterable& getPartitions(unsigned core) const;
 };
 
 #endif

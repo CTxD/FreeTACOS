@@ -10,8 +10,17 @@ export APEX=$(ROOT)/src/libuser
 OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
-		$(CORE)/apex_kernel.o \
+		$(ROOT)/src/kernel/arch/rasp4/arch.o \
 		$(TYPES)/src/process.o \
+		$(TYPES)/src/partition.o \
+		$(TYPES)/src/arinc_module.o \
+		$(TYPES)/src/multipartition_hm_table.o \
+		$(TYPES)/src/module_hm_table.o \
+		$(TYPES)/src/partition_hm_table.o \
+		$(TYPES)/src/core_schedule.o \
+		$(TYPES)/src/partition_schedule.o \
+		$(ROOT)/src/kernel/core/scheduling/partitionscheduling.o \
+		$(CORE)/apex_kernel.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
@@ -24,13 +33,17 @@ CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
-INCLUDE += -I $(APPS)/
+INCLUDE += -I $(ROOT)/src/types
+INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
+INCLUDE += -I $(ROOT)/src/kernel/core/schedulig
+INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(ROOT)/src/kernel
 INCLUDE += -I $(CORE)/scheduling
+INCLUDE += -I $(ROOT)/src
 
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
