@@ -21,11 +21,15 @@ private:
 
     PROCESS_STATUS_TYPE* getNextProcess();
 
+    static bool isInitalised;
+
 public:
     ProcessSchedule(NAME_TYPE partitionType);
 
     void addProcess(PROCESS_STATUS_TYPE* process);
     void interruptHandler();
+
+    static void initialiseSchedules();
 };
 
 #endif

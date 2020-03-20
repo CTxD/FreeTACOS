@@ -1,4 +1,5 @@
 #include "process_schedule.hpp"
+#include "arinc_module.cpp"
 
 ProcessSchedule::ProcessSchedule(NAME_TYPE partitionName)
     : partitionName(partitionName)
@@ -45,7 +46,6 @@ PROCESS_STATUS_TYPE* ProcessSchedule::getNextProcess()
         return nullptr;
 
     SYSTEM_TIME_TYPE deadline = INFINITE_TIME_VALUE; // High number (infinite)
-    unsigned int id = 0;
 
     PROCESS_STATUS_TYPE* returnProcess = nullptr;
 
@@ -130,4 +130,26 @@ void ProcessSchedule::interruptHandler()
 
     // else iterate
     iterate();
+}
+
+/**
+ * Static function to initialise process schedules from XML file
+ * USAGE: ProcessSchedule::initialiseSchedules(), fom anywhere.
+ */
+void ProcessSchedule::initialiseSchedules()
+{
+    // Check if we already did initialised the process schedules
+    if (isInitalised) {
+        return;
+    }
+
+    // Retrive all partitions from XML
+
+    // Get all names of partitions
+
+    // Create a processSchedule from each partition
+
+    // Add each processSchedule to list of processSchedules
+
+    // Check everything succeeded
 }

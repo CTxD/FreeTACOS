@@ -32,6 +32,7 @@ INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(ROOT)/src/kernel
 INCLUDE += -I $(CORE)/scheduling
 
+
 CPPFLAGS+= $(CFLAGS) -std=c++17
 
 include $(CIRCLEHOME)/Rules.mk
@@ -45,13 +46,13 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
  	$(CIRCLEHOME)/lib/fs/libfs.a \
   	$(CIRCLEHOME)/lib/net/libnet.a \
   	$(CIRCLEHOME)/lib/sched/libsched.a \
-  	$(CIRCLEHOME)/lib/libcircle.a 
+  	$(CIRCLEHOME)/lib/libcircle.a
 
 # ---
 
 .PHONY: all clean
 
-clean all: 
+clean all:
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
 	cd $(CURDIR)/../apps && $(MAKE) clean

@@ -12,7 +12,7 @@
 #include <circle/sched/task.h>
 #include <vector>
 
-class Partition : CTask {
+class Partition {
 private:
     identifier_t partitionIdentifier; /* required */
     PROCESSOR_CORE_ID_TYPE affinity = CORE_AFFINITY_NO_PREFERENCE;

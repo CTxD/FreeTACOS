@@ -115,3 +115,6 @@ bin/
 .vs/*
 
 docs/html/index.html
+
+## Internal Scripts ##
+deploy.sh
