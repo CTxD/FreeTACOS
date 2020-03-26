@@ -24,7 +24,7 @@ OBJS = main.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
-		$(ROOT)/src/kernel/arch/rasp4/arch.o \
+		$(APPS)/entry.o \
 		$(CORE)/scheduling/process_schedule.o
 
 include $(CIRCLELIB)/Config.mk
@@ -34,14 +34,13 @@ NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(ROOT)/src/types
-INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel/core/schedulig
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/kernel/core/
-INCLUDE += -I $(ROOT)/src/kernel
+INCLUDE += -I $(KERNEL)/
 INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/src
 

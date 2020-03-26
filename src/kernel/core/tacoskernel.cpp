@@ -6,6 +6,7 @@
 #include <circle/time.h>
 #include <consumer_part.h>
 #include <dummy_part.h>
+#include <entry.hpp>
 #include <errcode.h>
 #include <queuing_port.hpp>
 #include <test_app.hpp>
@@ -16,10 +17,38 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    partitionScheduler();
+    mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
+    mLogger.Write("ProcessSchedule", LogNotice,
+                  "Initialising schedules from XML");
+
+    ProcessSchedule::initialiseSchedules();
+
+    mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
+    auto* schedule = ProcessSchedule::scheduleList->at(0);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(1);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(2);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(3);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(4);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+
+    // Running Entry Process
+    auto entry = new Entry(&mLogger);
+    entry->Run();
+
+    while (1) {
+    }
+
+    /*partitionScheduler();
     ApexKernel apex = ApexKernel{};
-    ProcessSchedule schedule =
-        ProcessSchedule({"PartitionRef Name - Disregard"});
 
     Task* app = new TestApp(&mLogger);
 
@@ -40,9 +69,6 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
         Task* pSlave = static_cast<Task*>(ApexKernel::processPool[1]);
         mLogger.Write("APP RUNNER", LogNotice, "Slave Name: %s",
                       *(pSlave->getProcessName().x));
-
-        schedule.addProcess(&pSlave->getStatus());
-        schedule.interruptHandler();
     }
     else {
         mLogger.Write("WARNING", LogWarning,
@@ -63,6 +89,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 
     while (1) {
     }
+    */
     return ShutdownHalt;
 }
 
