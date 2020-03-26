@@ -4,6 +4,7 @@
 */
 
 #include <apex_kernel.hpp>
+#include <process_schedule.hpp>
 
 u32 ApexKernel::numProcesses = 0;
 Task* ApexKernel::processPool[MAX_PROCESSES]{};
@@ -15,10 +16,29 @@ RETURN_CODE_TYPE ApexKernel::addToProcessList(Task* process)
         return RETURN_CODE_TYPE::NOT_AVAILABLE;
     }
 
+    // Add process to schedule
+    addToProcessSchedule(process);
+
     processPool[numProcesses] = process;
     numProcesses++;
 
     return RETURN_CODE_TYPE::NO_ERROR;
+}
+
+void ApexKernel::addToProcessSchedule(Task* process)
+{
+    // Retrieve the name of the partition
+    // TODO: Change the getProcessName to getPartitionName instead.
+    auto& partitionNameRef = process->getPartitionNameRef();
+
+    // Get mathing process schedule
+    auto* schedule = ProcessSchedule::getProcessScheduleByName(partitionNameRef);
+
+    // Check whether one was found or not
+    assert(schedule != nullptr && "The partition name of process is invalid");
+
+    // Add the process to the schedules ready list
+    schedule->addProcess(&process->getStatus());
 }
 
 PROCESS_STATUS_TYPE& ApexKernel::getProcessById(PROCESS_ID_TYPE id)

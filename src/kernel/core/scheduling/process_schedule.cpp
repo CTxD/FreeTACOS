@@ -1,8 +1,11 @@
-#include "process_schedule.hpp"
-#include "arinc_module.cpp"
+#ifndef _PROCESS_SCHEDULE_
+#define _PROCESS_SCHEDULE_
 
-ProcessSchedule::ProcessSchedule(NAME_TYPE partitionName)
-    : partitionName(partitionName)
+#include "process_schedule.hpp"
+#include "generated_arinc_module.hpp"
+
+ProcessSchedule::ProcessSchedule(name_t scheduleName)
+    : scheduleName(scheduleName)
 {
     // Instantiate empty queues
     blockedQueue = {};
@@ -117,6 +120,15 @@ bool ProcessSchedule::checkIteration()
 }
 
 /**
+ * Get the name of the processSchedule
+ * RETURN: name_t
+ */
+name_t* ProcessSchedule::getProcessScheduleName()
+{
+    return &scheduleName;
+}
+
+/**
  * Is called through preemption, in order to check the next process
  */
 void ProcessSchedule::interruptHandler()
@@ -132,24 +144,52 @@ void ProcessSchedule::interruptHandler()
     iterate();
 }
 
+// Initialise scheduleList and isInitialised
+std::vector<ProcessSchedule*> ProcessSchedule::scheduleList[MAX_NUMBER_OF_PARTITIONS]{};
+bool ProcessSchedule::isInitialised = false;
+
+/**
+ * Get a processSchedule by name
+ * RETURN: ProcessSchedule* || nullptr
+ */
+ProcessSchedule* ProcessSchedule::getProcessScheduleByName(name_t& scheduleName)
+{
+    ProcessSchedule* returnSchedule = nullptr;
+
+    for (int i = 0; i < scheduleList->size(); i++) {
+        // Get this schedules name
+        auto& name = *(scheduleList->at(i)->getProcessScheduleName()->x.x);
+
+        // Check if this is what we are looking for
+        if (strcmp(*scheduleName.x.x, name) == 0) {
+            returnSchedule = scheduleList->at(i);
+            break;
+        }
+    }
+
+    return returnSchedule;
+}
+
 /**
  * Static function to initialise process schedules from XML file
  * USAGE: ProcessSchedule::initialiseSchedules(), fom anywhere.
  */
 void ProcessSchedule::initialiseSchedules()
 {
-    // Check if we already did initialised the process schedules
-    if (isInitalised) {
-        return;
-    }
+    // Check that we have not initialised schedules before
+    assert(isInitialised == false &&
+           "Schedules have already been initialised!");
 
     // Retrive all partitions from XML
-
-    // Get all names of partitions
+    const std::vector<Partition> partitions = arincModule.getPartitions();
 
     // Create a processSchedule from each partition
+    for (auto& partition : partitions) {
+        // Add each processSchedule to list of processSchedules
+        scheduleList->push_back(new ProcessSchedule(partition.getPartitionName()));
+    }
 
-    // Add each processSchedule to list of processSchedules
-
-    // Check everything succeeded
+    isInitialised = true; // All ok - everything was initialised
 }
+
+#endif
