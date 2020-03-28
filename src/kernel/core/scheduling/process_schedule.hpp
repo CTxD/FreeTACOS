@@ -17,12 +17,12 @@ private:
     PROCESS_STATUS_TYPE* runningProcess;
     PROCESS_STATUS_TYPE* terminatedProcess;
 
-    void iterate();
     bool checkIteration();
 
     PROCESS_STATUS_TYPE* getNextProcess();
 
 public:
+    void iterate();
     ProcessSchedule(name_t partitionType);
 
     void addProcess(PROCESS_STATUS_TYPE* process);

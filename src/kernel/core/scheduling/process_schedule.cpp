@@ -16,10 +16,10 @@ void ProcessSchedule::iterate()
 {
     // Get next process
     auto* nextProcess = getNextProcess();
-
     // If there is no processes in the ready queue
-    if (nextProcess == nullptr)
+    if (nextProcess == nullptr) {
         return;
+    }
 
     // Terminate running process or put to blocked list
     if (runningProcess->PROCESS_STATE == RUNNING || runningProcess->PROCESS_STATE == WAITING) {
@@ -45,16 +45,18 @@ void ProcessSchedule::iterate()
 PROCESS_STATUS_TYPE* ProcessSchedule::getNextProcess()
 {
     // If there is no processes in the schedule
-    if (readyQueue.size() < 1)
+    if (readyQueue.size() < 1) {
         return nullptr;
+    }
 
     SYSTEM_TIME_TYPE deadline = INFINITE_TIME_VALUE; // High number (infinite)
 
     PROCESS_STATUS_TYPE* returnProcess = nullptr;
 
     // Initilise the deadline to the currently running process' deadline
-    if (runningProcess != nullptr)
+    if (runningProcess != nullptr) {
         deadline = runningProcess->DEADLINE_TIME;
+    }
 
     // Check for earlier deadlines
     for (unsigned int i = 0; i < readyQueue.size(); i++) {
@@ -93,14 +95,16 @@ void ProcessSchedule::addProcess(PROCESS_STATUS_TYPE* status)
 bool ProcessSchedule::checkIteration()
 {
     // Check if we have any ready processes
-    if (readyQueue.size() == 0)
+    if (readyQueue.size() == 0) {
         return false;
+    }
 
     SYSTEM_TIME_TYPE deadline = INFINITE_TIME_VALUE; // High number (infinite)
 
     // Initilise the deadline to the currently running process' deadline
-    if (runningProcess != nullptr)
+    if (runningProcess != nullptr) {
         deadline = runningProcess->DEADLINE_TIME;
+    }
 
     for (unsigned int i = 0; i < readyQueue.size(); i++) {
         auto* readyProc = readyQueue[i];
@@ -137,8 +141,9 @@ void ProcessSchedule::interruptHandler()
     auto isHigher = checkIteration();
 
     // FALSE -> continue
-    if (!isHigher)
+    if (!isHigher) {
         return;
+    }
 
     // else iterate
     iterate();
@@ -156,7 +161,7 @@ ProcessSchedule* ProcessSchedule::getProcessScheduleByName(name_t& scheduleName)
 {
     ProcessSchedule* returnSchedule = nullptr;
 
-    for (int i = 0; i < scheduleList->size(); i++) {
+    for (long unsigned int i = 0; i < scheduleList->size(); i++) {
         // Get this schedules name
         auto& name = *(scheduleList->at(i)->getProcessScheduleName()->x.x);
 
