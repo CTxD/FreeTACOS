@@ -1,6 +1,22 @@
 #ifndef __PARTITION_SCHEDULING__
 #define __PARTITION_SCHEDULING__
 
-void partitionScheduler();
+#include <apex_types.hpp>
+
+struct RunningPartition {
+    NAME_TYPE partitionName;
+    APEX_INTEGER startTime;
+    APEX_INTEGER endTime;
+    int index;
+    int partitionAmount;
+};
+
+class CyclicExecutiveSchedule {
+private:
+    RunningPartition* getNextPartition(RunningPartition* runningPartition, int size);
+
+public:
+    void partitionScheduler();
+};
 
 #endif
