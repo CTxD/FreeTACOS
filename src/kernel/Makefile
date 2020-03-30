@@ -10,14 +10,7 @@ OBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
 		$(CORE)/scheduling/context.o \
-		$(TYPES)/src/partition.o \
-		$(TYPES)/src/multipartition_hm_table.o \
-		$(TYPES)/src/module_hm_table.o \
-		$(TYPES)/src/partition_hm_table.o \
-		$(TYPES)/src/queuing_port.o \
-		$(APPS)/consumer_part.o \
-		$(APPS)/fib_part.o \
-		$(APPS)/dummy_part.o \
+		$(CORE)/scheduling/exceptionstub64.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o
 
 include $(CIRCLELIB)/Config.mk
@@ -35,7 +28,7 @@ INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel
 
-CPPFLAGS+= $(CFLAGS) -std=c++17
+CPPFLAGS+= $(CFLAGS) -std=c++17 -O0
 
 include $(CIRCLEHOME)/Rules.mk
 
@@ -57,6 +50,7 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
 clean all: 
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
+	cd $(CURDIR)/core/scheduling && $(MAKE) clean
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean

@@ -28,7 +28,7 @@ extern "C" {
 #endif
 
 // see: "Procedure Call Standard for the ARM 64-bit Architecture (AArch64)"
-struct TTaskRegisters {
+struct TRegisters {
     u64 x0; // parameter for CTask::TaskEntry()
 
     u64 x16; // unknown role (on this platform)
@@ -63,8 +63,10 @@ struct TTaskRegisters {
     u64 fpsr; // floating-point status register
 } PACKED;
 
-void StoreContext(TTaskRegisters* pRegs);
-void LoadContext(TTaskRegisters* pRegs);
+void StoreContext(TRegisters* pRegs);
+void LoadContext(TRegisters* pRegs);
+void Switch();
+void SContext(TRegisters* oldRegs, TRegisters* newRegs);
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,8 @@
 ROOT=		../../../../
 
-OBJS=		context.o  
+OBJS=		context.o  \
+			exceptionstub64.o
+
 
 all: $(TARGET)
 
