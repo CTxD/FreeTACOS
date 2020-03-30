@@ -44,6 +44,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     // Running Entry Process
     auto entry = new Entry(&mLogger);
     entry->Run();
+
     partitionSchedule.partitionScheduler();
 
     while (1) {
