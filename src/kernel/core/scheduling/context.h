@@ -63,9 +63,21 @@ struct TRegisters {
     u64 fpsr; // floating-point status register
 } PACKED;
 
+struct TSysRegs {
+    u64 esr;
+    u64 spsr;
+    u64 lr;
+    u64 elr;
+    u64 spel0;
+    u64 sp;
+    u64 far;
+
+} PACKED;
+
 void StoreContext(TRegisters* pRegs);
 void LoadContext(TRegisters* pRegs);
 void Switch();
+void SaveRegs(TSysRegs* pRegs);
 void SContext(TRegisters* oldRegs, TRegisters* newRegs);
 
 #ifdef __cplusplus

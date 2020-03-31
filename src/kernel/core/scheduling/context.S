@@ -3,8 +3,11 @@
 	.extern nextProcess
 	.globl StoreContext
 	.globl LoadContext
+	.globl SaveRegs
 	.globl SContext
 	.globl Switch
+
+
 
 .macro SAVE_CONTEXT
 
@@ -94,6 +97,22 @@ Switch:
 	RESTORE_CONTEXT
 	ret
 
+SaveRegs:
+	mrs	x8, esr_el1
+	mrs	x1, spsr_el1
+	STP x8, x1, [x0], #16
+	
+	mov	x2, x30				/* lr */
+	mrs	x3, elr_el1
+
+	STP x2, x3, [x0], #16
+	mrs	x4, sp_el0
+	mov	x5, sp
+
+	STP x4, x5, [x0], #16
+	mrs	x6, far_el1
+	str x6, [x0], #16
+	ret
 	
 StoreContext:				/* x0: pOldRegs */
 	add	x0, x0, #8			

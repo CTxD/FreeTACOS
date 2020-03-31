@@ -161,6 +161,7 @@ IRQStub:
 	mrs	x30, spsr_el1
 
 	stp	x29, x30, [sp, #-16]!
+
 	msr	DAIFClr, #1			/* enable FIQ */
 
 #ifdef SAVE_VFP_REGS_ON_IRQ
@@ -197,7 +198,7 @@ IRQStub:
 	STP 	X24, X25, [SP, #-0x10]!
 	STP 	X26, X27, [SP, #-0x10]!
 	str 	X28, [SP, #-0x10]!
-	
+
 	bl	InterruptHandler
 
     LDR		X0, switchRequired

@@ -120,7 +120,10 @@ PCB* AllocPCB(run_func code)
 }
 
 u64 volatile* pCurrentPCB;
+
 u64 volatile switchRequired = 0;
+
+TSysRegs sysRegs;
 
 PCB* pA_PCB;
 PCB* pB_PCB;
@@ -149,6 +152,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
                               *(pCurrentPCB + 29), *(pCurrentPCB + 30));
         CTimer::Get()->MsDelay(1000);
     }
+
     return ShutdownHalt;
 }
 
@@ -160,5 +164,15 @@ void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* p
     // pCurrentPCB = (pCurrentPCB == pB_PCB->pTopOfStack) ? pB_PCB->pTopOfStack
     //                                                    : pA_PCB->pTopOfStack;
     switchRequired = 1;
+
+    /* DEBUG SYS REGS
+    SaveRegs(&sysRegs);
+    CLogger::Get()->Write("Inside Handler", LogDebug,
+                          "Regs: (PC 0x%lX, SP "
+                          "0x%lX, LR 0x%lX, SPSR 0x%lX)",
+                          sysRegs.elr, sysRegs.sp, sysRegs.lr, sysRegs.spsr);
+
+    */
+
     CTimer::Get()->StartKernelTimer(3 * HZ, TimerHandler, pThis);
 }
