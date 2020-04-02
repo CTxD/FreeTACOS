@@ -148,16 +148,18 @@ ProcessScheduleInfo* ProcessSchedule::getNextProcess(PROCESS_ID_TYPE& procId)
 
     procId = 0;
     ProcessScheduleInfo* returnProcess = readyQueue.at(procId);
-    SYSTEM_TIME_TYPE deadline = returnProcess->process->DEADLINE_TIME;
+    SYSTEM_TIME_TYPE deadline =
+        returnProcess->period - CTimer::Get()->GetClockTicks(); // Get time left
 
     // Check for earlier deadlines
     for (unsigned int i = 0; i < readyQueue.size(); i++) {
-        auto& readyProc = readyQueue[i];
+        auto* readyProc = readyQueue.at(i);
+        SYSTEM_TIME_TYPE rDeadline = readyProc->period - CTimer::Get()->GetClockTicks();
 
         // If the process has an earlier deadline
-        if (deadline > readyProc->process->DEADLINE_TIME) {
+        if (deadline > rDeadline) {
             // Update deadline
-            deadline = readyProc->process->DEADLINE_TIME;
+            deadline = rDeadline;
 
             // Update return process
             returnProcess = readyProc;
