@@ -6,27 +6,40 @@
 #include <apex_process.hpp>
 #include <apex_types.hpp>
 
+#include <partitionscheduling.hpp>
+
 #include <vector>
+
+#include <circle/timer.h>
+
+struct ProcessScheduleInfo {
+    SYSTEM_TIME_TYPE period;
+    SYSTEM_TIME_TYPE startTime;
+    SYSTEM_TIME_TYPE endTime;
+    PROCESS_STATUS_TYPE* process;
+};
 
 class ProcessSchedule {
 private:
     name_t scheduleName;
-    std::vector<PROCESS_STATUS_TYPE*> readyQueue;
-    std::vector<PROCESS_STATUS_TYPE*> blockedQueue;
+    std::vector<ProcessScheduleInfo*> readyQueue;
+    std::vector<ProcessScheduleInfo*> blockedQueue;
 
-    PROCESS_STATUS_TYPE* runningProcess;
-    PROCESS_STATUS_TYPE* terminatedProcess;
+    ProcessScheduleInfo* runningProcess;
+    ProcessScheduleInfo* terminatedProcess;
 
-    bool checkIteration();
+    void iterate();
+    void reReadyProcesses();
+    void runNextProcess();
 
-    PROCESS_STATUS_TYPE* getNextProcess();
+    ProcessScheduleInfo* getNextProcess(PROCESS_ID_TYPE& procId);
 
 public:
-    void iterate();
+    void startScheduler();
+
     ProcessSchedule(name_t partitionType);
 
     void addProcess(PROCESS_STATUS_TYPE* process);
-    void interruptHandler();
     name_t* getProcessScheduleName();
 
     static void initialiseSchedules();
