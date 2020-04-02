@@ -7,7 +7,8 @@
 #include <generated_partition_schedule.hpp>
 #include <partition.hpp>
 #include <partition_schedule.hpp>
-#include <process_schedule.hpp>
+
+RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
 RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* runningPartition,
                                                             int size)
@@ -79,6 +80,8 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
 #endif
 
     // TODO: preemption
+    // Set currentPartition
+    CyclicExecutiveSchedule::currentPartition = runningPartition;
 
     return runningPartition;
 }
@@ -105,8 +108,21 @@ void CyclicExecutiveSchedule::partitionScheduler()
             if (runningPartition[0].endTime == 0 ||
                 CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
                 getNextPartition(runningPartition, size);
+
+                // Run the next partition's process
+                name_t partitionName = {*runningPartition[0].partitionName.x};
+                auto* processSchedule =
+                    ProcessSchedule::getProcessScheduleByName(partitionName);
+
+                processSchedule->startScheduler();
+
                 break;
             }
         }
     }
+}
+
+RunningPartition* CyclicExecutiveSchedule::getCurrentPartition()
+{
+    return currentPartition;
 }
