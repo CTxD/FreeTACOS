@@ -25,16 +25,19 @@ void Entry::Run(void)
 
     // Define process attributes
     PROCESS_ATTRIBUTE_TYPE flightManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        10,   10,         new TestApp(logger, {"flightManagement"}), 0x8000, 10,
-        HARD, {"TestApp"}};
+        15000 * HZ,  10, new TestApp(logger, {"flightManagement"}),
+        0x8000,      10, HARD,
+        {"TestApp1"}};
 
     PROCESS_ATTRIBUTE_TYPE systemManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        10,   10,         new TestApp(logger, {"systemManagement"}), 0x8000, 10,
-        HARD, {"TestApp"}};
+        15000 * HZ,  10, new TestApp(logger, {"systemManagement"}),
+        0x8000,      10, HARD,
+        {"TestApp2"}};
 
     PROCESS_ATTRIBUTE_TYPE flightControlsProcess = PROCESS_ATTRIBUTE_TYPE{
-        10,   10,         new TestApp(logger, {"flightControls"}), 0x8000, 10,
-        HARD, {"TestApp"}};
+        15000 * HZ,  10, new TestApp(logger, {"IOProcessing"}),
+        0x8000,      10, HARD,
+        {"TestApp3"}};
 
     // Create the process
     PROCESS_ID_TYPE returnId1, returnId2, returnId3;
