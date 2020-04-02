@@ -178,6 +178,15 @@ void ProcessSchedule::addProcess(PROCESS_STATUS_TYPE* status)
     readyQueue.push_back(new ProcessScheduleInfo{status->ATTRIBUTES.PERIOD, 0, 0, status});
 }
 
+/**
+ * Get the name of the processSchedule
+ * RETURN: name_t
+ */
+name_t* ProcessSchedule::getProcessScheduleName()
+{
+    return &scheduleName;
+}
+
 // Initialise scheduleList and isInitialised
 std::vector<ProcessSchedule*> ProcessSchedule::scheduleList[MAX_NUMBER_OF_PARTITIONS]{};
 bool ProcessSchedule::isInitialised = false;
