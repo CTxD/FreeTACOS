@@ -5,6 +5,7 @@
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
+#include <defines.hpp>
 #include <dummy_part.h>
 #include <entry.hpp>
 #include <errcode.h>
@@ -18,12 +19,15 @@ CTacosKernel::CTacosKernel()
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
     CyclicExecutiveSchedule partitionSchedule;
+#if KERNEL_DEBUG()
     mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
     mLogger.Write("ProcessSchedule", LogNotice,
                   "Initialising schedules from XML");
+#endif
 
     ProcessSchedule::initialiseSchedules();
 
+#if KERNEL_DEBUG()
     mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
     auto* schedule = ProcessSchedule::scheduleList->at(0);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
@@ -40,6 +44,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     schedule = ProcessSchedule::scheduleList->at(4);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
                   *(schedule->getProcessScheduleName()->x.x));
+#endif
 
     // Running Entry Process
     auto entry = new Entry(&mLogger);

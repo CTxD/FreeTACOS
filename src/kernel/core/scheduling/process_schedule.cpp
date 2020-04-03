@@ -108,9 +108,6 @@ void ProcessSchedule::reReadyProcesses()
     if (blockedQueue.size() < 1)
         return;
 
-    // Get current running partition
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
-
     // Retrieve current clock ticks
     auto currentTime = abs((long double)CTimer::Get()->GetClockTicks());
 

@@ -70,4 +70,4 @@ clean all:
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
-	cd $(CORE)/shceduling && $(MAKE) clean
+	cd $(CORE)/scheduling && $(MAKE) clean

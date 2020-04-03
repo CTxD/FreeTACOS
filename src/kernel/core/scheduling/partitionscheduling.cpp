@@ -10,6 +10,10 @@
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
+/**
+ * DESCRIPTION: Gets the next partition to run
+ * RETURN: RunningPartition*
+ */
 RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* runningPartition,
                                                             int size)
 {
@@ -62,6 +66,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
         }
     }
 
+    // prints runningPartition to the screen
 #if KERNEL_DEBUG()
     for (int i = 0; i < size; i++) {
         CLogger::Get()->Write("FreeTACOS", LogNotice,
@@ -86,8 +91,12 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
     return runningPartition;
 }
 
+/**
+ * DESCRIPTION: Starts and runs the Cyclic Executive schedule
+ */
 void CyclicExecutiveSchedule::partitionScheduler()
 {
+    // initialize RunningPartition array
 #if KERNEL_PROCESSER(IS_MULTICORE)
     int size = 4;
     RunningPartition running_partition[size] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
@@ -99,6 +108,7 @@ void CyclicExecutiveSchedule::partitionScheduler()
     assert(0); // abort
 #endif
 
+    // prints debug info to the screen
 #if KERNEL_DEBUG()
     CLogger::Get()->Write("FreeTACOS", LogNotice, "Starting partition schedule");
 #endif
@@ -122,6 +132,10 @@ void CyclicExecutiveSchedule::partitionScheduler()
     }
 }
 
+/**
+ * DESCRIPTION: Gets the currently running partition
+ * RETURN: RunningPartition*
+ */
 RunningPartition* CyclicExecutiveSchedule::getCurrentPartition()
 {
     return currentPartition;
