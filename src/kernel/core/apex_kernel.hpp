@@ -1,6 +1,7 @@
 #ifndef __APEX_KERNEL__
 #define __APEX_KERNEL__
 
+#include <apex_blackboard.hpp>
 #include <apex_process.hpp>
 #include <apex_types.hpp>
 

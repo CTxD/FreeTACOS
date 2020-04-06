@@ -1,6 +1,6 @@
 ROOT=		../../../
 
-OBJS=		arinc_module.o \
+OBJS=	arinc_module.o \
 			channel.o \
 			module_hm_table.o \
 			multipartition_hm_table.o \

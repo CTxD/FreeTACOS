@@ -6,6 +6,7 @@
 
 u32 ApexKernel::numProcesses = 0;
 Task* ApexKernel::processPool[MAX_PROCESSES]{};
+
 RETURN_CODE_TYPE ApexKernel::addToProcessList(Task* process)
 {
     // Check if we exceed max number of processes
