@@ -9,7 +9,7 @@
 
 class TestApp : public Task {
 public:
-    TestApp(CLogger* logger);
+    TestApp(CLogger* logger, name_t partitionRef);
     ~TestApp(void);
 
     void Run(void);

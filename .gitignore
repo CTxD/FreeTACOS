@@ -111,7 +111,12 @@ ScheduleGenerator/project
 ScheduleGenerator/target
 .scalafmt.conf
 bin/
+generated_arinc_module.hpp
+generated_partition_schedule.hpp
 
 .vs/*
 
 docs/html/index.html
+
+## Internal Scripts ##
+deploy.sh

@@ -3,7 +3,8 @@ ROOT=		../../
 OBJS=	consumer_part.o \
 			dummy_part.o \
 			fib_part.o \
-			test_app.o 
+			test_app.o \
+			entry.o
 
 all: $(TARGET)
 

@@ -4,20 +4,14 @@
 #include <circle/time.h>
 #include <core_schedule.hpp>
 #include <defines.hpp>
-#include <generated_arinc_module.hpp>
 #include <generated_partition_schedule.hpp>
 #include <partition.hpp>
 #include <partition_schedule.hpp>
 
-struct RunningPartition {
-    NAME_TYPE partitionName;
-    APEX_INTEGER startTime;
-    APEX_INTEGER endTime;
-    int index;
-    int partitionAmount;
-};
+RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
-RunningPartition* getNextPartition(RunningPartition* runningPartition, int size)
+RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* runningPartition,
+                                                            int size)
 {
     // Get first partitions
     if (runningPartition[0].endTime == 0) {
@@ -86,11 +80,13 @@ RunningPartition* getNextPartition(RunningPartition* runningPartition, int size)
 #endif
 
     // TODO: preemption
+    // Set currentPartition
+    CyclicExecutiveSchedule::currentPartition = runningPartition;
 
     return runningPartition;
 }
 
-void partitionScheduler()
+void CyclicExecutiveSchedule::partitionScheduler()
 {
 #if KERNEL_PROCESSER(IS_MULTICORE)
     int size = 4;
@@ -106,14 +102,27 @@ void partitionScheduler()
 #if KERNEL_DEBUG()
     CLogger::Get()->Write("FreeTACOS", LogNotice, "Starting partition schedule");
 #endif
-    getNextPartition(runningPartition, size);
+
     while (1) {
         for (int i = 0; i < size; i++) {
-            if (CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
+            if (runningPartition[0].endTime == 0 ||
+                CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
                 getNextPartition(runningPartition, size);
+
+                // Run the next partition's process
+                name_t partitionName = {*runningPartition[0].partitionName.x};
+                auto* processSchedule =
+                    ProcessSchedule::getProcessScheduleByName(partitionName);
+
+                processSchedule->startScheduler();
+
                 break;
             }
         }
-        // TODO: call process scheduler her
     }
+}
+
+RunningPartition* CyclicExecutiveSchedule::getCurrentPartition()
+{
+    return currentPartition;
 }

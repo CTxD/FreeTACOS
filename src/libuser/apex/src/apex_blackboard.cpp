@@ -1,8 +1,6 @@
 #include <apex_blackboard.hpp>
 #include <circle/logger.h>
 
-#include "partitionscheduling.hpp"
-
 std::vector<BLACKBOARD_STATUS_TYPE> ApexBlackboard::blackboardStatuses[MAX_NUMBER_OF_BLACKBOARDS]{};
 std::map<char*, void*> ApexBlackboard::blackboards[MAX_NUMBER_OF_BLACKBOARDS]{}; // Void* to take any message
 

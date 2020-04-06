@@ -9,7 +9,6 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-
     while (1) {
     }
 

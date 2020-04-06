@@ -12,16 +12,19 @@
 
 class Task : public Process {
 public:
-    Task(PROCESS_ATTRIBUTE_TYPE& attributes);
+    Task(PROCESS_ATTRIBUTE_TYPE& attributes, name_t partitionNameRef);
     Task(SYSTEM_TIME_TYPE period,
          SYSTEM_TIME_TYPE timeCapacity,
          PRIORITY_TYPE priority,
          DEADLINE_TYPE deadline,
-         PROCESS_NAME_TYPE name);
+         PROCESS_NAME_TYPE name,
+         name_t partitionNameRef);
     Task(PROCESS_STATUS_TYPE& status);
     virtual ~Task(void);
 
     virtual void Run(void);
+
+    name_t& getPartitionNameRef();
 
     void Terminate(void);
     void WaitForTermination(void);
@@ -35,6 +38,8 @@ private:
     unsigned nStackSize;
 
     void initRegs();
+
+    name_t partitionNameRef;
 
     TTaskRegisters registers;
     u8* pStack;

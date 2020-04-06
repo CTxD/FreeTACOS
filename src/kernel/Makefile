@@ -30,6 +30,7 @@ GENERALOBJS = main.o \
 		$(CORE)/tacoskernel.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o \
 		$(ROOT)/src/kernel/core/scheduling/partitionscheduling.o \
+		$(ROOT)/src/kernel/core/scheduling/process_schedule.o \
 		$(CORE)/apex_kernel.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o
@@ -47,9 +48,9 @@ INCLUDE += -I $(APEX)/include
 INCLUDE += -I $(ROOT)/src/kernel/core/scheduling
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/kernel/core/
-INCLUDE += -I $(ROOT)/src/kernel
+INCLUDE += -I $(KERNEL)/
+INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/src
-INCLUDE += -I $(APPS)
 
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
