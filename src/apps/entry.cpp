@@ -25,36 +25,43 @@ void Entry::Run(void)
 
     // Define process attributes
     PROCESS_ATTRIBUTE_TYPE flightManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        15000 * HZ,  10, new TestApp(logger, {"flightManagement"}),
+        150000 * HZ, 10, new TestApp(logger, {"flightManagement"}),
         0x8000,      10, HARD,
         {"TestApp1"}};
 
     PROCESS_ATTRIBUTE_TYPE systemManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        15000 * HZ,  10, new TestApp(logger, {"systemManagement"}),
+        150000 * HZ, 10, new TestApp(logger, {"systemManagement"}),
         0x8000,      10, HARD,
         {"TestApp2"}};
 
     PROCESS_ATTRIBUTE_TYPE IOProcessingProcess11 = PROCESS_ATTRIBUTE_TYPE{
-        15000 * HZ,   10, new TestApp(logger, {"IOProcessing"}),
+        200000 * HZ,  3,  new TestApp(logger, {"IOProcessing"}),
         0x8000,       10, HARD,
         {"TestApp31"}};
 
     PROCESS_ATTRIBUTE_TYPE IOProcessingProcess12 = PROCESS_ATTRIBUTE_TYPE{
-        500 * HZ,     10, new TestApp(logger, {"IOProcessing"}),
+        5000 * HZ,    2,  new TestApp(logger, {"IOProcessing"}),
         0x8000,       10, HARD,
         {"TestApp32"}};
 
+    PROCESS_ATTRIBUTE_TYPE IOProcessingProcess13 = PROCESS_ATTRIBUTE_TYPE{
+        10000 * HZ,   2,  new TestApp(logger, {"IOProcessing"}),
+        0x8000,       10, HARD,
+        {"TestApp33"}};
+
     // Create the process
-    PROCESS_ID_TYPE returnId1, returnId2, returnId31, returnId32;
-    RETURN_CODE_TYPE returnCode1, returnCode2, returnCode31, returnCode32;
+    PROCESS_ID_TYPE returnId1, returnId2, returnId31, returnId32, returnId33;
+    RETURN_CODE_TYPE returnCode1, returnCode2, returnCode31, returnCode32, returnCode33;
     CREATE_PROCESS(&flightManagementProcess, &returnId1, &returnCode1);
     CREATE_PROCESS(&systemManagementProcess, &returnId2, &returnCode2);
     CREATE_PROCESS(&IOProcessingProcess11, &returnId31, &returnCode31);
     CREATE_PROCESS(&IOProcessingProcess12, &returnId32, &returnCode32);
+    CREATE_PROCESS(&IOProcessingProcess13, &returnId33, &returnCode33);
 
     if (returnCode1 == RETURN_CODE_TYPE::NO_ERROR && returnCode2 == RETURN_CODE_TYPE::NO_ERROR &&
         returnCode31 == RETURN_CODE_TYPE::NO_ERROR &&
-        returnCode32 == RETURN_CODE_TYPE::NO_ERROR) {
+        returnCode32 == RETURN_CODE_TYPE::NO_ERROR &&
+        returnCode33 == RETURN_CODE_TYPE::NO_ERROR) {
         logger->Write(*getProcessName().x, LogNotice,
                       "All Processes was successfully created");
     }
