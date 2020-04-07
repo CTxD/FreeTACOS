@@ -30,7 +30,7 @@ typedef struct processControlBlock {
     u64* pStack;
 } PCB;
 
-const uint16_t stackDepth = 100;
+const uint16_t stackDepth = 1024;
 PCB* pA_PCB = NULL;
 PCB* pB_PCB = NULL;
 
@@ -154,7 +154,9 @@ PCB* AllocPCB(PCB* p, run_func code)
 extern "C" void nextProcess()
 {
     PrintBottomOfStack("Inside NP - pA", pCurrentPCBStack);
-    pCurrentPCBStack = pB_PCB->pTopOfStack;
+
+    pCurrentPCBStack = (pB_PCB->pTopOfStack == pCurrentPCBStack) ? pA_PCB->pTopOfStack
+                                                                 : pB_PCB->pTopOfStack;
     PrintBottomOfStack("Inside NP - pB", pCurrentPCBStack);
 
     switchRequired = 0;
@@ -175,48 +177,6 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     }
     return ShutdownHalt;
 }
-
-// CStdlibApp::TShutdownMode CTacosKernel::Run(void)
-// {
-//     CyclicExecutiveSchedule partitionSchedule;
-// #if KERNEL_DEBUG()
-//     mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
-//     mLogger.Write("ProcessSchedule", LogNotice,
-//                   "Initialising schedules from XML");
-// #endif
-
-//     ProcessSchedule::initialiseSchedules();
-
-// #if KERNEL_DEBUG()
-//     mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
-//     auto* schedule = ProcessSchedule::scheduleList->at(0);
-//     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-//                   *(schedule->getProcessScheduleName()->x.x));
-//     schedule = ProcessSchedule::scheduleList->at(1);
-//     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-//                   *(schedule->getProcessScheduleName()->x.x));
-//     schedule = ProcessSchedule::scheduleList->at(2);
-//     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-//                   *(schedule->getProcessScheduleName()->x.x));
-//     schedule = ProcessSchedule::scheduleList->at(3);
-//     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-//                   *(schedule->getProcessScheduleName()->x.x));
-//     schedule = ProcessSchedule::scheduleList->at(4);
-//     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-//                   *(schedule->getProcessScheduleName()->x.x));
-// #endif
-
-//     // Running Entry Process
-//     auto entry = new Entry(&mLogger);
-//     entry->Run();
-
-//     partitionSchedule.partitionScheduler();
-
-//     while (1) {
-//     }
-
-//     return ShutdownHalt;
-// }
 
 void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pContext)
 {

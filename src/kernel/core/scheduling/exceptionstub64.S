@@ -118,7 +118,6 @@ VectorTable:
 	STP 	X26, X27, [SP, #-0x10]!
 	STP 	X28, XZR, [SP, #-0x10]!
 
-
     LDR 	X0, pCurrentPCBStack
 	MOV 	X0, SP
 
@@ -210,12 +209,15 @@ IRQStub:
 	STP 	X26, X27, [SP, #-0x10]!
 	STP 	X28, XZR, [SP, #-0x10]!
 
+	LDR 	X0, pCurrentPCBStack
+	MOV 	X0, SP
+
 	bl	InterruptHandler
+
 
     LDR		X0, switchRequired
 	CMP		X0, #0
 	B.EQ	EXIT_IRQ_NO_SWITCH
-
 
 	bl 		nextProcess
     RESTORE_CONTEXT
