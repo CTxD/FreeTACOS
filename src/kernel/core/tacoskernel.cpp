@@ -30,7 +30,7 @@ typedef struct processControlBlock {
     u64* pStack;
 } PCB;
 
-const uint16_t stackDepth = 1024;
+const uint16_t stackDepth = 2048;
 PCB* pA_PCB = NULL;
 PCB* pB_PCB = NULL;
 

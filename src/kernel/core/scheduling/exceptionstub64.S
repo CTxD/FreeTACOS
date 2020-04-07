@@ -127,7 +127,7 @@ VectorTable:
 
 .macro RESTORE_CONTEXT
 	
-	MSR 	SPSEL, #0
+	MSR 	SPSEL, #1
 	/* Set the SP to point to the stack of the task being restored. */
 	LDR		X0, pCurrentPCBStack
 	MOV		SP, X0
@@ -155,7 +155,6 @@ VectorTable:
 
 	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
 
-	MSR 	SPSEL, #1
 	ERET
 
 	.endm
@@ -165,6 +164,8 @@ VectorTable:
  */
 	.globl	IRQStub
 IRQStub:
+
+	MSR 	SPSEL, #0
 	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
 
 	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
@@ -209,15 +210,15 @@ IRQStub:
 	STP 	X26, X27, [SP, #-0x10]!
 	STP 	X28, XZR, [SP, #-0x10]!
 
-	LDR 	X0, pCurrentPCBStack
-	MOV 	X0, SP
-
 	bl	InterruptHandler
-
 
     LDR		X0, switchRequired
 	CMP		X0, #0
 	B.EQ	EXIT_IRQ_NO_SWITCH
+
+
+	LDR 	X0, pCurrentPCBStack
+	MOV 	X0, SP
 
 	bl 		nextProcess
     RESTORE_CONTEXT
