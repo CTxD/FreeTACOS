@@ -6,7 +6,8 @@
 /**
  * Init task with only attributes
  */
-Task::Task(PROCESS_ATTRIBUTE_TYPE& attributes) : Process(attributes)
+Task::Task(PROCESS_ATTRIBUTE_TYPE& attributes, name_t partitionNameRef)
+    : Process(attributes), partitionNameRef(partitionNameRef)
 {
     nStackSize = TASK_STACK_SIZE;
 
@@ -27,7 +28,9 @@ Task::Task(SYSTEM_TIME_TYPE period,
            SYSTEM_TIME_TYPE timeCapacity,
            PRIORITY_TYPE priority,
            DEADLINE_TYPE deadline,
-           PROCESS_NAME_TYPE name)
+           PROCESS_NAME_TYPE name,
+           name_t partitionNameRef)
+    : partitionNameRef(partitionNameRef)
 {
     PROCESS_ATTRIBUTE_TYPE atts = PROCESS_ATTRIBUTE_TYPE{
         period, timeCapacity, this, TASK_STACK_SIZE, priority, deadline, name};
@@ -50,6 +53,11 @@ Task::Task(PROCESS_STATUS_TYPE& status) : Process(status)
 Task::~Task(void)
 {
     // Deconstructing Task
+}
+
+name_t& Task::getPartitionNameRef()
+{
+    return partitionNameRef;
 }
 
 void Task::initRegs()

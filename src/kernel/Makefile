@@ -23,7 +23,9 @@ OBJS = main.o \
 		$(CORE)/apex_kernel.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o \
-		$(APPS)/test_app.o
+		$(APPS)/test_app.o \
+		$(APPS)/entry.o \
+		$(CORE)/scheduling/process_schedule.o
 
 include $(CIRCLELIB)/Config.mk
 
@@ -32,16 +34,15 @@ NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
 INCLUDE += -I $(ROOT)/src/types
-INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
 INCLUDE += -I $(ROOT)/src/kernel/core/schedulig
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/kernel/core/
-INCLUDE += -I $(ROOT)/src/kernel
+INCLUDE += -I $(KERNEL)/
+INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/src
-INCLUDE += -I $(APPS)
 
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
@@ -57,15 +58,16 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
  	$(CIRCLEHOME)/lib/fs/libfs.a \
   	$(CIRCLEHOME)/lib/net/libnet.a \
   	$(CIRCLEHOME)/lib/sched/libsched.a \
-  	$(CIRCLEHOME)/lib/libcircle.a 
+  	$(CIRCLEHOME)/lib/libcircle.a
 
 # ---
 
 .PHONY: all clean
 
-clean all: 
+clean all:
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
+	cd $(CORE)/scheduling && $(MAKE) clean
