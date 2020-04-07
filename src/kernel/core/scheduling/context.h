@@ -78,6 +78,7 @@ void StoreContext(TRegisters* pRegs);
 void LoadContext(TRegisters* pRegs);
 void Switch();
 void SaveRegs(TSysRegs* pRegs);
+void SaveReg(u64* reg);
 void SContext(TRegisters* oldRegs, TRegisters* newRegs);
 
 #ifdef __cplusplus

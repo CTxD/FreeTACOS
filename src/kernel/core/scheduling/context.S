@@ -1,9 +1,10 @@
 	.text
-	.extern pCurrentPCB
+	.extern pCurrentPCBStack
 	.extern nextProcess
 	.globl StoreContext
 	.globl LoadContext
 	.globl SaveRegs
+	.globl SaveReg
 	.globl SContext
 	.globl Switch
 
@@ -62,7 +63,7 @@
 	MSR 	SPSEL, #1
 
 	/* Set the SP to point to the stack of the task being restored. */
-	LDR		X0, pCurrentPCB
+	LDR		X0, pCurrentPCBStack
 	MOV		SP, X0
 
 	LDR 	X28, [SP], #0x10  /* restore x0-x28 from stack */
@@ -112,6 +113,13 @@ SaveRegs:
 	STP x4, x5, [x0], #16
 	mrs	x6, far_el1
 	str x6, [x0], #16
+	ret
+
+SaveReg:
+	
+	mrs	x1, spsr_el1
+	STR x1, [x0], #16
+
 	ret
 	
 StoreContext:				/* x0: pOldRegs */

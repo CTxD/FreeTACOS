@@ -92,6 +92,15 @@ VectorTable:
 
 .macro SAVE_CONTEXT
 
+	MSR 	SPSEL, #0
+
+	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
+
+	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
+	mrs	x30, spsr_el1
+
+	stp	x29, x30, [sp, #-16]!
+
 	/* Save the entire context. */ /* save x0-x28 onto stack */
 	STP 	X0, X1, [SP, #-0x10]!
 	STP 	X2, X3, [SP, #-0x10]!
@@ -107,22 +116,24 @@ VectorTable:
 	STP 	X22, X23, [SP, #-0x10]!
 	STP 	X24, X25, [SP, #-0x10]!
 	STP 	X26, X27, [SP, #-0x10]!
-	str 	X28, [SP, #-0x10]!
+	STP 	X28, XZR, [SP, #-0x10]!
 
 
-    LDR 	X0, pCurrentPCB
+    LDR 	X0, pCurrentPCBStack
 	MOV 	X0, SP
 
+
+	MSR 	SPSEL, #1
     .endm
 
 .macro RESTORE_CONTEXT
 	
-
+	MSR 	SPSEL, #0
 	/* Set the SP to point to the stack of the task being restored. */
-	LDR		X0, pCurrentPCB
+	LDR		X0, pCurrentPCBStack
 	MOV		SP, X0
 
-    LDR 	X28, [SP], #0x10  /* restore x0-x28 from stack */
+    LDP		X28, XZR, [SP], #0x10  /* restore x0-x28 from stack */
 	LDP 	X26, X27, [SP], #0x10
 	LDP 	X24, X25, [SP], #0x10
 	LDP 	X22, X23, [SP], #0x10
@@ -145,6 +156,7 @@ VectorTable:
 
 	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
 
+	MSR 	SPSEL, #1
 	ERET
 
 	.endm
@@ -154,7 +166,6 @@ VectorTable:
  */
 	.globl	IRQStub
 IRQStub:
-
 	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
 
 	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
@@ -197,7 +208,7 @@ IRQStub:
 	STP 	X22, X23, [SP, #-0x10]!
 	STP 	X24, X25, [SP, #-0x10]!
 	STP 	X26, X27, [SP, #-0x10]!
-	str 	X28, [SP, #-0x10]!
+	STP 	X28, XZR, [SP, #-0x10]!
 
 	bl	InterruptHandler
 
@@ -205,16 +216,12 @@ IRQStub:
 	CMP		X0, #0
 	B.EQ	EXIT_IRQ_NO_SWITCH
 
-    MOV		X2, #0
-	STR		X2, [X0]
 
-	LDR 	X0, pCurrentPCB
-	MOV 	X0, SP
-
+	bl 		nextProcess
     RESTORE_CONTEXT
 
 EXIT_IRQ_NO_SWITCH:
-	LDR 	X28, [SP], #0x10  /* restore x0-x28 from stack */
+	LDP 	X28, XZR, [SP], #0x10  /* restore x0-x28 from stack */
 	LDP 	X26, X27, [SP], #0x10
 	LDP 	X24, X25, [SP], #0x10
 	LDP 	X22, X23, [SP], #0x10
@@ -256,8 +263,6 @@ EXIT_IRQ_NO_SWITCH:
 	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
 
 	eret
-
-
 
 /*
  * FIQ stub

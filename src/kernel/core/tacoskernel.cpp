@@ -8,22 +8,14 @@
 #include <process.hpp>
 #include <queuing_port.hpp>
 
-CTacosKernel::CTacosKernel()
-{
-}
-static void A()
-{
-    while (1) {
-        CLogger::Get()->Write("A running", LogNotice, " ... ");
-    }
-}
-static void B()
-{
-    CLogger::Get()->Write("B running", LogNotice, " ... ");
-    while (1) {
-        CLogger::Get()->Write("B running", LogNotice, " ... ");
-    }
-}
+// Preemption
+u64 volatile switchRequired = 0;
+volatile u64* pCurrentPCBStack = NULL;
+
+// Debug
+TSysRegs sysRegs;
+
+// Allocation of PCBS
 
 typedef void (*run_func)();
 
@@ -32,17 +24,51 @@ typedef struct processControlBlock {
     u64* pStack;
 } PCB;
 
+const uint16_t stackDepth = 100;
+PCB* pA_PCB = NULL;
+PCB* pB_PCB = NULL;
+
+CTacosKernel::CTacosKernel()
+{
+}
+
+void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopStack)
+{
+    CLogger::Get()->Write(
+        stackDescription, LogNotice,
+        "R0 - %lX, R1 - %lX, SPSR - %lX, ELR - %lX, R29 - %lX, R30 - %lX",
+        *(pTopStack + 28), *(pTopStack + 29), *(pTopStack + 30),
+        *(pTopStack + 31), *(pTopStack + 32), *(pTopStack + 33));
+}
+
+static void A()
+{
+    PrintBottomOfStack("Inside A - pCurrent", pCurrentPCBStack);
+    while (1) {
+        CLogger::Get()->Write("A running", LogNotice, " ...");
+        CTimer::Get()->MsDelay(1000);
+    }
+}
+static void B()
+{
+    PrintBottomOfStack("Inside B - pCurrent", pCurrentPCBStack);
+    while (1) {
+        CLogger::Get()->Write("B running", LogNotice, " ... ");
+        CTimer::Get()->MsDelay(1000);
+    }
+}
+
 u64* init_stack(u64* pTopOfStack, run_func pCode)
 {
     pTopOfStack--;
     *pTopOfStack = (u64)0x30303030ULL; /* R30 - procedure call link register. */
     pTopOfStack--;
-    *pTopOfStack = (u64)pCode; /* R29 */
+    *pTopOfStack = (u64)0x0ULL; /* R29 */
     pTopOfStack--;
 
-    *pTopOfStack = (u64)pCode; /// ELR_EL    30
+    *pTopOfStack = (u64)pCode; /// ELR_EL    31
     pTopOfStack--;
-    *pTopOfStack = (u64)(0x0c); // SPSR_EL   29
+    *pTopOfStack = (u64)(0x4); // SPSR_EL   30
     pTopOfStack--;
 
     *pTopOfStack = 0x0101010101010101ULL; /* R1 */
@@ -102,54 +128,43 @@ u64* init_stack(u64* pTopOfStack, run_func pCode)
     *pTopOfStack = 0x2626262626262626ULL; /* R26 */
     pTopOfStack--;
     *pTopOfStack = 0x2828282828282828ULL; /* R28 */
+    pTopOfStack--;
+    *pTopOfStack = 0x0; /* XZR */
 
     return pTopOfStack;
 }
 
-const uint16_t stackDepth = 100;
-
-PCB* AllocPCB(run_func code)
+PCB* AllocPCB(PCB* p, run_func code)
 {
-    PCB* p = (PCB*)malloc(sizeof(PCB));
+    p = (PCB*)malloc(sizeof(PCB));
     u64* pStack = (u64*)malloc((((size_t)stackDepth) * sizeof(u64)));
     u64* pTopOfStack = &(pStack[stackDepth - 1]);
-    pTopOfStack = init_stack(pTopOfStack, code);
     p->pStack = pStack;
+    pTopOfStack = init_stack(pTopOfStack, code);
     p->pTopOfStack = pTopOfStack;
     return p;
 }
 
-u64 volatile* pCurrentPCB;
-
-u64 volatile switchRequired = 0;
-
-TSysRegs sysRegs;
-
-PCB* pA_PCB;
-PCB* pB_PCB;
-
 extern "C" void nextProcess()
 {
-    pCurrentPCB = pB_PCB->pTopOfStack;
-    CLogger::Get()->Write(
-        "FreeTACOS", LogNotice, "SP 1 - %lX, SP 2 - %lX, SPSR - %lX, ELR - %lX",
-        *pCurrentPCB, *(pCurrentPCB + 1), *(pCurrentPCB + 29), *(pCurrentPCB + 30));
+    PrintBottomOfStack("Inside NP - pA", pCurrentPCBStack);
+    pCurrentPCBStack = pB_PCB->pTopOfStack;
+    PrintBottomOfStack("Inside NP - pB", pCurrentPCBStack);
 
+    switchRequired = 0;
     return;
 }
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    pA_PCB = AllocPCB(&A);
-    pB_PCB = AllocPCB(&B);
+    pB_PCB = AllocPCB(pB_PCB, &B);
+    pA_PCB = AllocPCB(pA_PCB, &A);
 
-    pCurrentPCB = pA_PCB->pTopOfStack;
+    pCurrentPCBStack = pA_PCB->pTopOfStack;
 
     CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
+    PrintBottomOfStack("Inside Run - pA", pCurrentPCBStack);
     while (1) {
-        CLogger::Get()->Write("FreeTACOS", LogNotice,
-                              "SP 1 - %lX, SP 2 - %lX, SPSR - %lX, ELR - %lX",
-                              *pCurrentPCB, *(pCurrentPCB + 1),
-                              *(pCurrentPCB + 29), *(pCurrentPCB + 30));
+        CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
         CTimer::Get()->MsDelay(1000);
     }
 
@@ -159,20 +174,9 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pContext)
 {
     CLogger::Get()->Write("Inside Handler", LogNotice, " ... ");
+
     CTacosKernel* pThis = (CTacosKernel*)pParam;
     assert(pThis != 0);
-    // pCurrentPCB = (pCurrentPCB == pB_PCB->pTopOfStack) ? pB_PCB->pTopOfStack
-    //                                                    : pA_PCB->pTopOfStack;
     switchRequired = 1;
-
-    /* DEBUG SYS REGS
-    SaveRegs(&sysRegs);
-    CLogger::Get()->Write("Inside Handler", LogDebug,
-                          "Regs: (PC 0x%lX, SP "
-                          "0x%lX, LR 0x%lX, SPSR 0x%lX)",
-                          sysRegs.elr, sysRegs.sp, sysRegs.lr, sysRegs.spsr);
-
-    */
-
     CTimer::Get()->StartKernelTimer(3 * HZ, TimerHandler, pThis);
 }
