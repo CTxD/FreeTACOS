@@ -4,6 +4,7 @@ export CORE=$(ROOT)/src/kernel/core
 export APPS=$(ROOT)/src/apps
 export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
+export APEX=$(ROOT)/src/libuser
 
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
@@ -23,10 +24,15 @@ INCLUDE += -I $(APPS)
 INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
-INCLUDE += -I $(ROOT)/../boost_1_72_0
 INCLUDE += -I $(ROOT)/src/libuser/apex
 INCLUDE += -I $(ROOT)/src/kernel/core/process
-INCLUDE += -I $(ROOT)/src/kernel
+INCLUDE += -I $(ROOT)/src/kernel/core/schedulig
+INCLUDE += -I $(APPS)/
+INCLUDE += -I $(ROOT)/src/kernel/core/
+INCLUDE += -I $(KERNEL)/
+INCLUDE += -I $(CORE)/scheduling
+INCLUDE += -I $(ROOT)/src
+
 
 CPPFLAGS+= $(CFLAGS) -std=c++17 -O0
 
@@ -41,16 +47,17 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
  	$(CIRCLEHOME)/lib/fs/libfs.a \
   	$(CIRCLEHOME)/lib/net/libnet.a \
   	$(CIRCLEHOME)/lib/sched/libsched.a \
-  	$(CIRCLEHOME)/lib/libcircle.a 
+  	$(CIRCLEHOME)/lib/libcircle.a
 
 # ---
 
 .PHONY: all clean
 
-clean all: 
+clean all:
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
 	cd $(CURDIR)/core/scheduling && $(MAKE) clean
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
+	cd $(CORE)/scheduling && $(MAKE) clean

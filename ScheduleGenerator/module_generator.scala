@@ -38,13 +38,16 @@ object ModuleGenerator {
   def handleNodeLabels(node: Node): String = node.head.label match {
     // Initial setup
     case "MODULE" => {
+      val defs: String = 
+        this.emit("#ifndef __GENERATED_ARINC_MODULE__\n") +
+        this.emit("#define __GENERATED_ARINC_MODULE__\n");
       val includes: String = this.emitIncludes(
         List(
           "arinc_module.hpp"
         )
       );
 
-      var emitString: String = includes + this.emit(
+      var emitString: String = defs + includes + this.emit(
         "extern ArincModule arincModule {\n"
       );
 
@@ -62,7 +65,7 @@ object ModuleGenerator {
 
       return emitString +
         this.generate(node.child) +
-        this.emit("};\n", -1);
+        this.emit("};\n", -1) + this.emit("#endif");
     }
     // Partition Specifics here - Get the number of subpartitions for allocating the size of the array
     case "Partitions" => {
@@ -89,11 +92,12 @@ object ModuleGenerator {
           // Append emit string with partition definition info
           partitionString = partitionString +
             this.emit("{ // Partition\n") +
+            this.emitNodeAttributeOptional(head, List(("Name", this.s))) +
             this.emitNodeAttributesRequired(
               head,
               List(("Identifier", this.k), ("Affinity", this.k)),
               true
-            ) +
+            );
             this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         } else if (this.checkAttributeValidity("Period", region)) {
           // Populate the remaining attributes to the validator
@@ -110,17 +114,6 @@ object ModuleGenerator {
       }
 
       return partitionString + this.generate(node.child) +
-        this.emit("},\n", -1);
-    }
-    // Parse process attributes
-    case "Processes" => {
-      // Loop through all Process Tags
-      val processes =
-        node.child.filter(child => this.checkAttributeValidity("Identifier", child));
-      var emitString: String = this.emit(f"{ // Processes\n");
-      this.level += 1;
-      return emitString +
-        this.generateProcesses(processes) +
         this.emit("},\n", -1);
     }
 
@@ -672,39 +665,6 @@ object ModuleGenerator {
         this.emitNodeAttributeOptional(x, List(("Address", this.k)), true) +
         this.emit("},\n", -1) +
         this.generateMemoryRegion(xs);
-  }
-
-  // Recursively generate the process code
-  def generateProcesses(nodes: Seq[Node]): String = nodes match {
-    // If we have a valid node, but there is no more valid nodes in the rest of the list
-    case x :: xs if xs == Nil =>
-      this.emit("{ // Process\n") +
-        this.emitNodeAttributesRequired(
-          x,
-          List(
-            ("Name", this.s),
-            ("Identifier", this.k),
-            ("Priority", this.k),
-            ("Period", this.k)
-          ),
-          true
-        ) +
-        this.emit("}\n", -1);
-    // For all valid tags (Sometimes the attribute nodes are bloated) - and there are more valid nodes in the list
-    case x :: xs if xs != Nil =>
-      this.emit("{ // Process\n") +
-        this.emitNodeAttributesRequired(
-          x,
-          List(
-            ("Name", this.s),
-            ("Identifier", this.k),
-            ("Priority", this.k),
-            ("Period", this.k)
-          ),
-          true
-        ) +
-        this.emit("},\n", -1) +
-          this.generateProcesses(xs);
   }
 
   def retrieveNodeAttributeString(node: Node, attr: String): String =

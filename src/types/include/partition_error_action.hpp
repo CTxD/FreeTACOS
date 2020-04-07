@@ -1,7 +1,7 @@
 #ifndef PARTITION_ERROR_ACTION
 #define PARTITION_ERROR_ACTION
 
-#include "apex_partition.h"
+#include "apex_partition.hpp"
 #include "error_level.hpp"
 
 class PartitionErrorAction {

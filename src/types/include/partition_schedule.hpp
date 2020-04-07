@@ -1,9 +1,8 @@
 #ifndef PARTITON_SCHEDULE
 #define PARTITON_SCHEDULE
 
-#include "general_types.hpp"
-
-#include <apex_types.h>
+#include <apex_types.hpp>
+#include <general_types.hpp>
 
 class PartitionSchedule {
 private:
@@ -47,6 +46,8 @@ public:
     void setPartitionIdentifier(identifier_t id);
 
     const identifier_t& getPartitionIdentifier() const;
+
+    const PROCESSOR_CORE_ID_TYPE& getCoreAffinity() const;
 };
 
 #endif
