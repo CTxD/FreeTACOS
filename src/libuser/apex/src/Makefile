@@ -1,6 +1,7 @@
 ROOT=		../../../
 
-OBJS= apex_blackboard.o
+OBJS= apex_blackboard.o \
+	apex_time.o
 
 all: $(TARGET)
 
