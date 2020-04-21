@@ -15,14 +15,18 @@
 #include <test_app.hpp>
 
 // Preemption
-u64 volatile switchRequired = 0;
+volatile u64 switchR = 0;
+volatile u64* switchRequired = &switchR;
+
+volatile u64* context = 0;
+volatile u64** pSavedContext = &context;
+
 volatile u64* pCurrentPCBStack = NULL;
 
 // Debug
 TSysRegs sysRegs;
 
 // Allocation of PCBS
-
 typedef void (*run_func)();
 
 typedef struct processControlBlock {
@@ -33,6 +37,8 @@ typedef struct processControlBlock {
 const uint16_t stackDepth = 2048;
 PCB* pA_PCB = NULL;
 PCB* pB_PCB = NULL;
+PCB* pKernel_PCB = NULL;
+PCB* pCurrent_PCB = NULL;
 
 CTacosKernel::CTacosKernel()
 {
@@ -42,24 +48,24 @@ void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopStack)
 {
     CLogger::Get()->Write(
         stackDescription, LogNotice,
-        "R0 - %lX, R1 - %lX, SPSR - %lX, ELR - %lX, R29 - %lX, R30 - %lX",
+        "R0 - %lX, R1 - %lX, ELR - %lX, SPSR - %lX, R29 - %lX, R30 - %lX",
         *(pTopStack + 28), *(pTopStack + 29), *(pTopStack + 30),
         *(pTopStack + 31), *(pTopStack + 32), *(pTopStack + 33));
 }
 
 static void A()
 {
-    PrintBottomOfStack("Inside A - pCurrent", pCurrentPCBStack);
+    int i = 0;
     while (1) {
-        CLogger::Get()->Write("A running", LogNotice, " ...");
+        CLogger::Get()->Write("A running", LogNotice, " ... Iteration - %d", i++);
         CTimer::Get()->MsDelay(1000);
     }
 }
 static void B()
 {
-    PrintBottomOfStack("Inside B - pCurrent", pCurrentPCBStack);
+    int i = 0;
     while (1) {
-        CLogger::Get()->Write("B running", LogNotice, " ... ");
+        CLogger::Get()->Write("B running", LogNotice, " ... Iteration - %d", i++);
         CTimer::Get()->MsDelay(1000);
     }
 }
@@ -72,9 +78,9 @@ u64* init_stack(u64* pTopOfStack, run_func pCode)
     *pTopOfStack = (u64)0x0ULL; /* R29 */
     pTopOfStack--;
 
-    *pTopOfStack = (u64)pCode; /// ELR_EL    31
+    *pTopOfStack = (u64)(0x20000304); // SPSR_EL   30
     pTopOfStack--;
-    *pTopOfStack = (u64)(0x4); // SPSR_EL   30
+    *pTopOfStack = (u64)pCode; /// ELR_EL    31
     pTopOfStack--;
 
     *pTopOfStack = 0x0101010101010101ULL; /* R1 */
@@ -150,27 +156,34 @@ PCB* AllocPCB(PCB* p, run_func code)
     p->pTopOfStack = pTopOfStack;
     return p;
 }
+TSysRegs regs;
 
+bool firstSchedule = 1;
 extern "C" void nextProcess()
 {
-    PrintBottomOfStack("Inside NP - pA", pCurrentPCBStack);
+    pCurrent_PCB->pTopOfStack = *pSavedContext;
+    if (pA_PCB->pTopOfStack == pCurrentPCBStack) {
+        pCurrentPCBStack = pB_PCB->pTopOfStack;
+        pCurrent_PCB = pB_PCB;
+    }
+    else {
+        pCurrentPCBStack = pA_PCB->pTopOfStack;
+        pCurrent_PCB = pA_PCB;
+    }
 
-    pCurrentPCBStack = (pB_PCB->pTopOfStack == pCurrentPCBStack) ? pA_PCB->pTopOfStack
-                                                                 : pB_PCB->pTopOfStack;
-    PrintBottomOfStack("Inside NP - pB", pCurrentPCBStack);
-
-    switchRequired = 0;
     return;
 }
+
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    pB_PCB = AllocPCB(pB_PCB, &B);
     pA_PCB = AllocPCB(pA_PCB, &A);
+    pB_PCB = AllocPCB(pB_PCB, &B);
+    pKernel_PCB = AllocPCB(pKernel_PCB, NULL);
 
-    pCurrentPCBStack = pA_PCB->pTopOfStack;
+    pCurrentPCBStack = pKernel_PCB->pTopOfStack;
+    pCurrent_PCB = pKernel_PCB;
 
     CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
-    PrintBottomOfStack("Inside Run - pA", pCurrentPCBStack);
     while (1) {
         CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
         CTimer::Get()->MsDelay(1000);
@@ -178,12 +191,12 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     return ShutdownHalt;
 }
 
-void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pContext)
+void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
 {
     CLogger::Get()->Write("Inside Handler", LogNotice, " ... ");
 
     CTacosKernel* pThis = (CTacosKernel*)pParam;
     assert(pThis != 0);
-    switchRequired = 1;
+    *switchRequired = 1;
     CTimer::Get()->StartKernelTimer(3 * HZ, TimerHandler, pThis);
 }

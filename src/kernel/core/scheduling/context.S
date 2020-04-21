@@ -99,6 +99,7 @@ Switch:
 	ret
 
 SaveRegs:
+	MSR 	SPSEL, #1
 	mrs	x8, esr_el1
 	mrs	x1, spsr_el1
 	STP x8, x1, [x0], #16
@@ -113,12 +114,35 @@ SaveRegs:
 	STP x4, x5, [x0], #16
 	mrs	x6, far_el1
 	str x6, [x0], #16
+	MSR 	SPSEL, #0
 	ret
 
 SaveReg:
-	
-	mrs	x1, spsr_el1
-	STR x1, [x0], #16
+
+	MSR 	SPSEL, #0
+	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
+
+	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
+	mrs	x30, spsr_el1
+
+	stp	x29, x30, [sp, #-16]!
+
+	/* Save the entire context. */ /* save x0-x28 onto stack */
+	STP 	X0, X1, [SP, #-0x10]!
+	STP 	X2, X3, [SP, #-0x10]!
+	STP 	X4, X5, [SP, #-0x10]!
+	STP 	X6, X7, [SP, #-0x10]!
+	STP 	X8, X9, [SP, #-0x10]!
+	STP 	X10, X11, [SP, #-0x10]!
+	STP 	X12, X13, [SP, #-0x10]!
+	STP 	X14, X15, [SP, #-0x10]!
+	STP 	X16, X17, [SP, #-0x10]!
+	STP 	X18, X19, [SP, #-0x10]!
+	STP 	X20, X21, [SP, #-0x10]!
+	STP 	X22, X23, [SP, #-0x10]!
+	STP 	X24, X25, [SP, #-0x10]!
+	STP 	X26, X27, [SP, #-0x10]!
+	STP 	X28, XZR, [SP, #-0x10]!
 
 	ret
 	

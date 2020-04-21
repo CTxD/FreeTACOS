@@ -21,6 +21,11 @@
 #include <circle/exception.h>
 #include <circle/bcm2835.h>
 
+	.extern pCurrentPCBStack
+	.extern switchRequired
+	.extern pSavedContext
+	.extern elrVal
+
 	.macro	vector handler
 
 	.align	7
@@ -90,6 +95,8 @@ VectorTable:
 	stub	SynchronousStub,	EXCEPTION_SYNCHRONOUS
 	stub	SErrorStub,		EXCEPTION_SYSTEM_ERROR
 
+
+
 .macro SAVE_CONTEXT
 
 	MSR 	SPSEL, #0
@@ -118,19 +125,21 @@ VectorTable:
 	STP 	X26, X27, [SP, #-0x10]!
 	STP 	X28, XZR, [SP, #-0x10]!
 
-    LDR 	X0, pCurrentPCBStack
-	MOV 	X0, SP
-
+    LDR 	X0, pSavedContext
+	MOV 	X1, SP
+	STR		X1, [X0]
 
 	MSR 	SPSEL, #1
+
     .endm
 
 .macro RESTORE_CONTEXT
 	
-	MSR 	SPSEL, #1
+	MSR 	SPSEL, #0
 	/* Set the SP to point to the stack of the task being restored. */
-	LDR		X0, pCurrentPCBStack
-	MOV		SP, X0
+
+	LDR 	X0, pCurrentPCBStack
+	MOV 	SP, X0
 
     LDP		X28, XZR, [SP], #0x10  /* restore x0-x28 from stack */
 	LDP 	X26, X27, [SP], #0x10
@@ -150,10 +159,12 @@ VectorTable:
 
     msr	DAIFSet, #1			/* disable FIQ */
 	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
-	msr	elr_el1, x30
-	msr	spsr_el1, x29
+	msr	elr_el1, x29
+	msr	spsr_el1, x30
 
 	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
+
+	MSR 	SPSEL, #1
 
 	ERET
 
@@ -164,8 +175,6 @@ VectorTable:
  */
 	.globl	IRQStub
 IRQStub:
-
-	MSR 	SPSEL, #0
 	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
 
 	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
@@ -213,14 +222,37 @@ IRQStub:
 	bl	InterruptHandler
 
     LDR		X0, switchRequired
-	CMP		X0, #0
+	LDR		X1, [X0]
+	CMP		X1, #0
 	B.EQ	EXIT_IRQ_NO_SWITCH
 
+	MOV		X2, #0
+	STR		X2, [X0]
 
-	LDR 	X0, pCurrentPCBStack
-	MOV 	X0, SP
+	LDP 	X28, XZR, [SP], #0x10  /* restore x0-x28 from stack */
+	LDP 	X26, X27, [SP], #0x10
+	LDP 	X24, X25, [SP], #0x10
+	LDP 	X22, X23, [SP], #0x10
+	LDP 	X20, X21, [SP], #0x10
+	LDP 	X18, X19, [SP], #0x10
+	LDP 	X16, X17, [SP], #0x10
+	LDP 	X14, X15, [SP], #0x10
+	LDP 	X12, X13, [SP], #0x10
+	LDP 	X10, X11, [SP], #0x10
+	LDP 	X8, X9, [SP], #0x10
+	LDP 	X6, X7, [SP], #0x10
+	LDP 	X4, X5, [SP], #0x10
+	LDP 	X2, X3, [SP], #0x10
+	LDP 	X0, X1, [SP], #0x10
 
-	bl 		nextProcess
+	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
+	msr	elr_el1, x29
+	msr	spsr_el1, x30
+	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
+
+
+	SAVE_CONTEXT
+	BL nextProcess
     RESTORE_CONTEXT
 
 EXIT_IRQ_NO_SWITCH:
@@ -356,6 +388,8 @@ FIQStub:
 	str	w0, [x1]
 	b	1b
 
+
+
 /*
  * HVC stub
  */
@@ -369,7 +403,10 @@ HVCStub:					/* return to EL2h mode */
 
 	.data
 
+
 	.align	3
+	
+
 
 	.globl	FIQData
 FIQData:					/* matches TFIQData: */
@@ -377,4 +414,9 @@ FIQData:					/* matches TFIQData: */
 	.quad	0				/* pParam */
 	.word	0				/* nFIQNumber (unused) */
 
-/* End */
+
+
+
+.end
+
+
