@@ -19,8 +19,10 @@ private:
     static RunningPartition* currentPartition;
 
 public:
-    void partitionScheduler();
-
+    int coreSize;
+    static RunningPartition runningPartition[];
+    void partitionHandler();
+    void startPartitionScheduler();
     static RunningPartition* getCurrentPartition();
 };
 

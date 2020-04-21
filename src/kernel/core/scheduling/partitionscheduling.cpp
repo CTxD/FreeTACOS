@@ -10,6 +10,16 @@
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
+void CyclicExecutiveSchedule::partitionHandler()
+{
+    for (int i = 0; i < coreSize; i++) {
+        if (runningPartition[0].endTime == 0 ||
+            CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
+            getNextPartition(runningPartition, coreSize);
+        }
+    }
+}
+
 /**
  * DESCRIPTION: Gets the next partition to run
  * RETURN: RunningPartition*
@@ -94,40 +104,35 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
 /**
  * DESCRIPTION: Starts and runs the Cyclic Executive schedule
  */
-void CyclicExecutiveSchedule::partitionScheduler()
+void CyclicExecutiveSchedule::startPartitionScheduler()
 {
-    // initialize RunningPartition array
-#if KERNEL_PROCESSER(IS_MULTICORE)
-    int size = 4;
-    RunningPartition running_partition[size] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
-                                                "", 0, 0, 0, 0, "", 0, 0, 0, 0};
-#elif KERNEL_PROCESSER(IS_SINGLECORE)
-    int size = 1;
-    RunningPartition runningPartition[size] = {"", 0, 0, 0, 0};
-#else
-    assert(0); // abort
-#endif
-
     // prints debug info to the screen
 #if KERNEL_DEBUG()
     CLogger::Get()->Write("FreeTACOS", LogNotice, "Starting partition schedule");
 #endif
+    // initialize RunningPartition array
+#if KERNEL_PROCESSER(IS_MULTICORE)
+    coreSize = 4;
+    running_partition[coreSize] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
+                                   "", 0, 0, 0, 0, "", 0, 0, 0, 0};
+#elif KERNEL_PROCESSER(IS_SINGLECORE)
+    coreSize = 1;
+    runningPartition[coreSize] = {"", 0, 0, 0, 0};
+#else
+    assert(0); // abort
+#endif
+    for (int i = 0; i < coreSize; i++) {
+        if (runningPartition[0].endTime == 0 ||
+            CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
+            getNextPartition(runningPartition, coreSize);
 
-    while (1) {
-        for (int i = 0; i < size; i++) {
-            if (runningPartition[0].endTime == 0 ||
-                CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
-                getNextPartition(runningPartition, size);
+            // Run the next partition's process
+            name_t partitionName = {*runningPartition[0].partitionName.x};
+            auto* processSchedule = ProcessSchedule::getProcessScheduleByName(partitionName);
 
-                // Run the next partition's process
-                name_t partitionName = {*runningPartition[0].partitionName.x};
-                auto* processSchedule =
-                    ProcessSchedule::getProcessScheduleByName(partitionName);
+            processSchedule->startScheduler();
 
-                processSchedule->startScheduler();
-
-                break;
-            }
+            break;
         }
     }
 }
