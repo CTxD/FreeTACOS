@@ -22,17 +22,36 @@ typedef APEX_INTEGER BLACKBOARD_ID_TYPE;
 typedef enum { EMPTY = 0, OCCUPIED = 1 } EMPTY_INDICATOR_TYPE;
 
 typedef struct {
+    BLACKBOARD_NAME_TYPE blackboardName;
+    MESSAGE_ADDR_TYPE* message;
+} Blackboard;
+
+typedef struct {
+    const char* partitionName;
+    std::vector<Blackboard*> blackboards;
+} PartitionBlackboard;
+
+typedef struct {
     EMPTY_INDICATOR_TYPE EMPTY_INDICATOR;
     MESSAGE_SIZE_TYPE MAX_MESSAGE_SIZE;
     WAITING_RANGE_TYPE WAITING_PROCESSES;
 } BLACKBOARD_STATUS_TYPE;
 
+typedef struct {
+    const char* partitionName;
+    std::vector<BLACKBOARD_STATUS_TYPE*> statuses;
+} PartitionStatus;
+
 class ApexBlackboard {
+private:
+    static bool initialised;
+
 protected:
-    static std::vector<BLACKBOARD_STATUS_TYPE> blackboardStatuses[MAX_NUMBER_OF_BLACKBOARDS];
-    static std::map<char*, void*> blackboards[MAX_NUMBER_OF_BLACKBOARDS]; // Void* to take any message
+    static std::vector<PartitionBlackboard*> partitionBlackboards;
+    static std::vector<PartitionStatus*> partitionStatuses;
 
 public:
+    static void initPartitionBlackboards();
     static void CREATE_BLACKBOARD(
         /*in */ BLACKBOARD_NAME_TYPE BLACKBOARD_NAME,
         /*in */ MESSAGE_SIZE_TYPE MAX_MESSAGE_SIZE,
@@ -41,14 +60,14 @@ public:
 
     static void DISPLAY_BLACKBOARD(
         /*in */ BLACKBOARD_ID_TYPE BLACKBOARD_ID,
-        /*in */ MESSAGE_ADDR_TYPE MESSAGE_ADDR, /* by reference */
+        /*in */ MESSAGE_ADDR_TYPE* MESSAGE_ADDR, /* by reference */
         /*in */ MESSAGE_SIZE_TYPE LENGTH,
         /*out*/ RETURN_CODE_TYPE* RETURN_CODE);
 
     static void READ_BLACKBOARD(
         /*in */ BLACKBOARD_ID_TYPE BLACKBOARD_ID,
         /*in */ SYSTEM_TIME_TYPE TIME_OUT,
-        /*out*/ MESSAGE_ADDR_TYPE MESSAGE_ADDR,
+        /*out*/ MESSAGE_ADDR_TYPE* MESSAGE_ADDR,
         /*out*/ MESSAGE_SIZE_TYPE* LENGTH,
         /*out*/ RETURN_CODE_TYPE* RETURN_CODE);
 
