@@ -1,6 +1,5 @@
 #ifndef __PARTITION_SCHEDULING__
 #define __PARTITION_SCHEDULING__
-
 #include <apex_types.hpp>
 #include <process_schedule.hpp>
 
@@ -11,11 +10,9 @@ struct RunningPartition {
     int index;
     int partitionAmount;
 };
-
 class CyclicExecutiveSchedule {
 private:
     RunningPartition* getNextPartition(RunningPartition* runningPartition, int size);
-
     static RunningPartition* currentPartition;
 
 public:
@@ -25,5 +22,4 @@ public:
     void startPartitionScheduler();
     static RunningPartition* getCurrentPartition();
 };
-
 #endif

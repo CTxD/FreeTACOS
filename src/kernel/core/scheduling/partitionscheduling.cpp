@@ -9,7 +9,6 @@
 #include <partition_schedule.hpp>
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
-
 void CyclicExecutiveSchedule::partitionHandler()
 {
     for (int i = 0; i < coreSize; i++) {
@@ -19,7 +18,6 @@ void CyclicExecutiveSchedule::partitionHandler()
         }
     }
 }
-
 /**
  * DESCRIPTION: Gets the next partition to run
  * RETURN: RunningPartition*
@@ -75,7 +73,6 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
             }
         }
     }
-
     // prints runningPartition to the screen
 #if KERNEL_DEBUG()
     for (int i = 0; i < size; i++) {
@@ -93,14 +90,11 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
                               "-----------------------------");
     }
 #endif
-
     // TODO: preemption
     // Set currentPartition
     CyclicExecutiveSchedule::currentPartition = runningPartition;
-
     return runningPartition;
 }
-
 /**
  * DESCRIPTION: Starts and runs the Cyclic Executive schedule
  */
@@ -125,18 +119,14 @@ void CyclicExecutiveSchedule::startPartitionScheduler()
         if (runningPartition[0].endTime == 0 ||
             CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
             getNextPartition(runningPartition, coreSize);
-
             // Run the next partition's process
             name_t partitionName = {*runningPartition[0].partitionName.x};
             auto* processSchedule = ProcessSchedule::getProcessScheduleByName(partitionName);
-
             processSchedule->startScheduler();
-
             break;
         }
     }
 }
-
 /**
  * DESCRIPTION: Gets the currently running partition
  * RETURN: RunningPartition*
