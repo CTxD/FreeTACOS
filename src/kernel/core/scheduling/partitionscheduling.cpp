@@ -9,6 +9,7 @@
 #include <partition_schedule.hpp>
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
+
 void CyclicExecutiveSchedule::partitionHandler()
 {
     for (int i = 0; i < coreSize; i++) {
@@ -107,11 +108,11 @@ void CyclicExecutiveSchedule::startPartitionScheduler()
     // initialize RunningPartition array
 #if KERNEL_PROCESSER(IS_MULTICORE)
     coreSize = 4;
-    running_partition[coreSize] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
-                                   "", 0, 0, 0, 0, "", 0, 0, 0, 0};
+    running_partition[0] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
+                            "", 0, 0, 0, 0, "", 0, 0, 0, 0};
 #elif KERNEL_PROCESSER(IS_SINGLECORE)
     coreSize = 1;
-    runningPartition[coreSize] = {"", 0, 0, 0, 0};
+    runningPartition[0] = {"", 0, 0, 0, 0};
 #else
     assert(0); // abort
 #endif
