@@ -1,7 +1,7 @@
 #include "tacoskernel.h"
+#include "partitionscheduling.hpp"
 #include "port.hpp"
 #include "process_schedule.hpp"
-#include "scheduling/partitionscheduling.hpp"
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
@@ -158,7 +158,6 @@ PCB* AllocPCB(PCB* p, run_func code)
 }
 TSysRegs regs;
 
-bool firstSchedule = 1;
 extern "C" void nextProcess()
 {
     pCurrent_PCB->pTopOfStack = *pSavedContext;
@@ -170,24 +169,62 @@ extern "C" void nextProcess()
         pCurrentPCBStack = pA_PCB->pTopOfStack;
         pCurrent_PCB = pA_PCB;
     }
-
     return;
 }
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    pA_PCB = AllocPCB(pA_PCB, &A);
-    pB_PCB = AllocPCB(pB_PCB, &B);
-    pKernel_PCB = AllocPCB(pKernel_PCB, NULL);
+    // pA_PCB = AllocPCB(pA_PCB, &A);
+    // pB_PCB = AllocPCB(pB_PCB, &B);
+    // pKernel_PCB = AllocPCB(pKernel_PCB, NULL);
 
-    pCurrentPCBStack = pKernel_PCB->pTopOfStack;
-    pCurrent_PCB = pKernel_PCB;
+    // pCurrentPCBStack = pKernel_PCB->pTopOfStack;
+    // pCurrent_PCB = pKernel_PCB;
 
-    CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
+    // CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
+    // while (1) {
+    //     CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
+    //     CTimer::Get()->MsDelay(1000);
+    // }
+    // return ShutdownHalt;
+
+    CyclicExecutiveSchedule partitionSchedule;
+#if KERNEL_DEBUG()
+    mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
+    mLogger.Write("ProcessSchedule", LogNotice,
+                  "Initialising schedules from XML");
+#endif
+
+    ProcessSchedule::initialiseSchedules();
+
+#if KERNEL_DEBUG()
+    mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
+    auto* schedule = ProcessSchedule::scheduleList->at(0);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(1);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(2);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(3);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+    schedule = ProcessSchedule::scheduleList->at(4);
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+                  *(schedule->getProcessScheduleName()->x.x));
+#endif
+
+    // Running Entry Process
+    auto entry = new Entry(&mLogger);
+    entry->Run();
+
+    partitionSchedule.startPartitionScheduler();
+
     while (1) {
-        CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
-        CTimer::Get()->MsDelay(1000);
     }
+
     return ShutdownHalt;
 }
 
