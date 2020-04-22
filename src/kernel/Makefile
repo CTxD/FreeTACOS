@@ -29,6 +29,7 @@ TYPEOBJS = $(TYPES)/src/process.o \
 GENERALOBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
+		$(KERNEL)/generated_arinc_module.o \
 		$(ROOT)/src/kernel/arch/rasp4/arch.o \
 		$(ROOT)/src/kernel/core/scheduling/partitionscheduling.o \
 		$(ROOT)/src/kernel/core/scheduling/process_schedule.o \

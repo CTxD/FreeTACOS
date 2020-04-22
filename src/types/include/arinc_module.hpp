@@ -14,6 +14,17 @@
 #include <process.hpp>
 #include <vector>
 
+typedef struct {
+    NAME_TYPE name;
+    std::optional<NAME_TYPE> version;
+    std::optional<identifier_t> id;
+    std::initializer_list<Partition> partitions;
+    std::initializer_list<SystemError> systemErrors;
+    std::initializer_list<MultiPartitionHMTable> multiPartatitionTables;
+    std::initializer_list<ModuleHMTable> moduleHMTables;
+    std::initializer_list<PartitionHMTable> partitionHMTables;
+} GeneratedArincModule;
+
 class ArincModule {
 private:
     NAME_TYPE moduleName;                   /* required */
@@ -87,6 +98,8 @@ public:
     const std::vector<ModuleHMTable>& getModuleHmTable() const;
 
     const std::vector<Process>& getProcess() const;
+
+    static GeneratedArincModule generatedArincModule;
 };
 
 #endif
