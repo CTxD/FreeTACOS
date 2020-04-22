@@ -38,9 +38,9 @@ object ModuleGenerator {
   def handleNodeLabels(node: Node): String = node.head.label match {
     // Initial setup
     case "MODULE" => {
-      val defs: String = 
+      val defs: String =
         this.emit("#ifndef __GENERATED_ARINC_MODULE__\n") +
-        this.emit("#define __GENERATED_ARINC_MODULE__\n");
+          this.emit("#define __GENERATED_ARINC_MODULE__\n");
       val includes: String = this.emitIncludes(
         List(
           "arinc_module.hpp"
@@ -48,7 +48,7 @@ object ModuleGenerator {
       );
 
       var emitString: String = defs + includes + this.emit(
-        "extern ArincModule arincModule {\n"
+        "GeneratedArincModule ArincModule::generatedArincModule = {\n"
       );
 
       this.level += 1;
@@ -98,7 +98,7 @@ object ModuleGenerator {
               List(("Identifier", this.k), ("Affinity", this.k)),
               true
             );
-            this.emitNodeAttributeOptional(head, List(("Name", this.s)));
+          this.emitNodeAttributeOptional(head, List(("Name", this.s)));
         } else if (this.checkAttributeValidity("Period", region)) {
           // Populate the remaining attributes to the validator
           this.validator.populatePartitionRemainder(
@@ -510,7 +510,7 @@ object ModuleGenerator {
     case x :: xs if xs != Nil => {
       // Create a new TimeSchedule object for the validator
       if (this.checkAttributeValidity("PartitionNameRef", x)) {
-          this.validator.appendSchedule(
+        this.validator.appendSchedule(
           this.retrieveNodeAttributeString(x, "PartitionNameRef"),
           this.retrieveNodeAttributeString(x, "Duration").toInt,
           this.retrieveNodeAttributeString(x, "Offset").toInt,
