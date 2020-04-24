@@ -238,4 +238,9 @@ void ProcessSchedule::initialiseSchedules()
     isInitialised = true; // All ok - everything was initialised
 }
 
+ProcessScheduleInfo* ProcessSchedule::getRunningProcess()
+{
+    return runningProcess;
+}
+
 #endif
