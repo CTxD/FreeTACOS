@@ -23,6 +23,7 @@
 
 /* Domain dependent                                                        */
 /* These values define the domain limits and are implementation dependent. */
+/* TODO: add correct values for domain limits.                             */
 
 #define SYSTEM_LIMIT_NUMBER_OF_PARTITIONS 32 /* module scope */
 
