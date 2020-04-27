@@ -25,16 +25,16 @@ private:
     std::vector<ProcessScheduleInfo*> readyQueue;
     std::vector<ProcessScheduleInfo*> blockedQueue;
 
-    static ProcessScheduleInfo* runningProcess;
+    ProcessScheduleInfo* runningProcess;
     ProcessScheduleInfo* terminatedProcess;
 
+    void iterate();
     void reReadyProcesses();
     void runNextProcess();
 
     ProcessScheduleInfo* getNextProcess(PROCESS_ID_TYPE& procId);
 
 public:
-    void iterate();
     void startScheduler();
 
     ProcessSchedule(name_t partitionType);
@@ -45,7 +45,6 @@ public:
     static void initialiseSchedules();
     static std::vector<ProcessSchedule*> scheduleList[MAX_NUMBER_OF_PARTITIONS];
     static bool isInitialised;
-    static ProcessScheduleInfo* getRunningProcess();
     static ProcessSchedule* getProcessScheduleByName(name_t& scheduleName);
 };
 
