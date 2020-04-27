@@ -194,6 +194,10 @@ void ApexBuffer::GET_BUFFER_STATUS(
     *RETURN_CODE = NOT_AVAILABLE;
 }
 
+/**
+ * @brief Initialise partition buffers. This must be done before using the buffer
+ *
+ */
 void ApexBuffer::initialiseBuffers()
 {
     auto& module = ArincModule::generatedArincModule;
