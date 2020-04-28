@@ -10,7 +10,7 @@ export APEX=$(ROOT)/src/libuser/apex/
 
 # Apex Objects
 APEXOBJS = $(APEX)/src/apex_blackboard.o \
-	$(APEX)/src/apex_time.o
+	$(APEX)/src/apex_mutex.o
 
 # App Objects
 APPOBJS = $(APPS)/test_app.o

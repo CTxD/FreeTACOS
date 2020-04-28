@@ -45,6 +45,8 @@
 
 #define SYSTEM_LIMIT_NUMBER_OF_EVENTS 256 /* partition scope */
 
+#define SYSTEM_LIMIT_NUMBER_OF_MUTEXES 256 /* partition scope */
+
 #define INFINITE_TIME_VALUE -1
 
 #define CORE_AFFINITY_NO_PREFERENCE -1
