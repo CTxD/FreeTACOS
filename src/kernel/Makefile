@@ -10,7 +10,9 @@ export APEX=$(ROOT)/src/libuser/apex/
 
 # Apex Objects
 APEXOBJS = $(APEX)/src/apex_blackboard.o \
-	$(APEX)/src/apex_mutex.o
+		$(APEX)/src/apex_mutex.o \
+		$(APEX)/src/apex_event.o \
+		$(APEX)/src/apex_buffer.o
 
 # App Objects
 APPOBJS = $(APPS)/test_app.o
@@ -53,6 +55,7 @@ INCLUDE += -I $(ROOT)/src/kernel/core/
 INCLUDE += -I $(KERNEL)/
 INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/src
+INCLUDE += -I $(ROOT)/aarch/circle-stdlib/libs/circle/include/circle/sched/
 
 
 CPPFLAGS+= $(CFLAGS) -std=c++17
