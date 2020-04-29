@@ -3,7 +3,10 @@ import ModuleGenerator.startGenerator;
 import java.io.FileNotFoundException;
 import java.io.{File, PrintWriter};
 import scala.xml._;
-import PartitionScheduleGenerator.{generateSchedule, PartitionScheduleGeneratorException};
+import PartitionScheduleGenerator.{
+  generateSchedule,
+  PartitionScheduleGeneratorException
+};
 
 object Main {
   var validator: Validator = new Validator();
@@ -14,9 +17,9 @@ object Main {
 
     // Match input parameter attributes
     for (arg <- args; id <- 1 to args.length) arg match {
-      case "-p" | "--print" => configPrint = true
+      case "-p" | "--print"    => configPrint = true
       case "--filename" | "-f" => configName = args(id - 1);
-      case _ => {}
+      case _                   => {}
     }
 
     try {
@@ -39,16 +42,21 @@ object Main {
       }
 
       // Start the schedule generator based on the valid schedule configuration
-      var generatedSchedule : String = generateSchedule(schedule._2, validator.entities);
+      var generatedSchedule: String =
+        generateSchedule(schedule._2, validator.entities);
 
       println(Console.YELLOW + "Writing to file");
-      val moduleWriter = new PrintWriter(new File("../src/kernel/generated_arinc_module.hpp"));
+      val moduleWriter = new PrintWriter(
+        new File("../src/kernel/generated_arinc_module.cpp")
+      );
       moduleWriter.write(generatedString);
       moduleWriter.close();
 
       println(Console.GREEN + "ArincModule successfully written");
 
-      val scheduleWriter = new PrintWriter(new File("../src/kernel/generated_partition_schedule.hpp"));
+      val scheduleWriter = new PrintWriter(
+        new File("../src/kernel/generated_partition_schedule.hpp")
+      );
       scheduleWriter.write(generatedSchedule);
       scheduleWriter.close();
 
@@ -58,13 +66,17 @@ object Main {
     } catch {
       // Handle exceptions, from the different modules - module_generator, partition_schedule_generator and validator
       case err: FileNotFoundException =>
-        println(Console.RED + "You need to specify input file with --filename {filename} or -f {filename}");
+        println(
+          Console.RED + "You need to specify input file with --filename {filename} or -f {filename}"
+        );
       case err: PartitionScheduleGeneratorException =>
-        println(Console.RED + f"PartitionScheduleGenerationError: ${err.getMessage()}");
+        println(
+          Console.RED + f"PartitionScheduleGenerationError: ${err.getMessage()}"
+        );
       case err: ValidationException =>
-          println(Console.RED + f"Validation error: ${err.getMessage()}");
+        println(Console.RED + f"Validation error: ${err.getMessage()}");
       case err: NoClassDefFoundError =>
-          println(Console.RED + f"Missing class: ${err.getMessage()}");
+        println(Console.RED + f"Missing class: ${err.getMessage()}");
       case err: Exception =>
         println(Console.RED + f"Generation error: ${err.getMessage()}");
       case _: Throwable => {
