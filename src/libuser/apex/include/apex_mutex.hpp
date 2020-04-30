@@ -35,6 +35,7 @@ typedef struct {
 
 typedef struct {
     MUTEX_NAME_TYPE mutexName;
+    MUTEX_ID_TYPE mutexId;
     QUEUING_DISCIPLINE_TYPE queingDiscipline;
     MUTEX_STATUS_TYPE mutex;
 } Mutex;
@@ -81,6 +82,7 @@ static void GET_MUTEX_STATUS(
     /*out*/ MUTEX_STATUS_TYPE MUTEX_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE);
 
+// TODO: Implement for health monitor
 static void GET_PROCESS_MUTEX_STATE(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ MUTEX_ID_TYPE MUTEX_ID,

@@ -47,10 +47,10 @@ void ApexMutex::CREATE_MUTEX(
         }
         
         // Create Mutex
-        partitionMutex.mutexes.push_back({MUTEX_NAME, QUEUING_DISCIPLINE, 
+        MUTEX_ID = partitionMutex.mutexes.size() - 1;
+        partitionMutex.mutexes.push_back({MUTEX_NAME, MUTEX_ID, QUEUING_DISCIPLINE, 
                                         {{}, MUTEX_STATE_TYPE::AVAILABLE, MUTEX_PRIORITY, 0, {} }});
 
-        MUTEX_ID = partitionMutex.mutexes.size() - 1;
         *RETURN_CODE = NO_ERROR;
         return;
         }
@@ -60,3 +60,56 @@ void ApexMutex::CREATE_MUTEX(
     MUTEX_ID = -1;
 }
 
+void ApexMutex::ACQUIRE_MUTEX(
+    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*in */ SYSTEM_TIME_TYPE TIME_OUT,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+
+    }
+
+void ApexMutex::RELEASE_MUTEX(
+    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+
+}
+
+void ApexMutex::RESET_MUTEX(
+    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*in */ PROCESS_ID_TYPE PROCESS_ID,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+
+}
+
+void ApexMutex::GET_MUTEX_ID(
+    /*in */ MUTEX_NAME_TYPE MUTEX_NAME,
+    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+        for (auto& partitionMutex : partitionMutexes){
+            for (auto mutex : partitionMutex.mutexes){
+                if(*MUTEX_NAME.x == *mutex.mutexName.x){
+                    *RETURN_CODE = NO_ERROR;
+                    return;
+                }
+            }
+        }
+    *RETURN_CODE = INVALID_CONFIG;
+    return;
+}
+
+void ApexMutex::GET_MUTEX_STATUS(
+    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*out*/ MUTEX_STATUS_TYPE MUTEX_STATUS,
+    /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+    for (auto& partitionMutex : partitionMutexes){
+        for (auto mutex : partitionMutex.mutexes){
+            if(mutex.mutexId = MUTEX_ID)
+            {
+                MUTEX_STATUS = mutex.mutex;
+                *RETURN_CODE = NO_ERROR;
+                return;
+            }
+        }
+    }
+    *RETURN_CODE = INVALID_PARAM;
+    return;
+}
