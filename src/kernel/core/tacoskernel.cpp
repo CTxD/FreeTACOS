@@ -5,7 +5,7 @@
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
-#include <context.h>
+#include <context.hpp>
 #include <defines.hpp>
 
 #include <dummy_part.h>
@@ -29,63 +29,42 @@ TSysRegs sysRegs;
 // Allocation of PCBS
 typedef void (*run_func)();
 
-typedef struct processControlBlock {
-    volatile u64* pTopOfStack;
-    u64* pStack;
-} PCB;
-
 const uint16_t stackDepth = 2048;
-PCB* pA_PCB = NULL;
-PCB* pB_PCB = NULL;
-PCB* pKernel_PCB = NULL;
-PCB* pCurrent_PCB = NULL;
+
+Task* pA = NULL;
+Task* pB = NULL;
+Task* pKernel = NULL;
+Task* pCurrent = NULL;
 
 CTacosKernel::CTacosKernel()
 {
 }
 
-void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopStack)
+void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopOfStack)
 {
     CLogger::Get()->Write(
         stackDescription, LogNotice,
         "R0 - %lX, R1 - %lX, ELR - %lX, SPSR - %lX, R29 - %lX, R30 - %lX",
-        *(pTopStack + 28), *(pTopStack + 29), *(pTopStack + 30),
-        *(pTopStack + 31), *(pTopStack + 32), *(pTopStack + 33));
+        *(pTopOfStack + 28), *(pTopOfStack + 29), *(pTopOfStack + 30),
+        *(pTopOfStack + 31), *(pTopOfStack + 32), *(pTopOfStack + 33));
 }
 
-static void A()
-{
-    int i = 0;
-    while (1) {
-        CLogger::Get()->Write("A running", LogNotice, " ... Iteration - %d", i++);
-        CTimer::Get()->MsDelay(1000);
-    }
-}
-static void B()
-{
-    int i = 0;
-    while (1) {
-        CLogger::Get()->Write("B running", LogNotice, " ... Iteration - %d", i++);
-        CTimer::Get()->MsDelay(1000);
-    }
-}
-
-u64* init_stack(u64* pTopOfStack, run_func pCode)
+u64* InitProcStack(u64* pTopOfStack, Task* proc)
 {
     pTopOfStack--;
     *pTopOfStack = (u64)0x30303030ULL; /* R30 - procedure call link register. */
     pTopOfStack--;
-    *pTopOfStack = (u64)0x0ULL; /* R29 */
+    *pTopOfStack = (u64)0x2929292929292929ULL; /* R29 */
     pTopOfStack--;
 
     *pTopOfStack = (u64)(0x20000304); // SPSR_EL   30
     pTopOfStack--;
-    *pTopOfStack = (u64)pCode; /// ELR_EL    31
+    *pTopOfStack = (u64)(&Task::TaskEntry); /// ELR_EL    31
     pTopOfStack--;
 
     *pTopOfStack = 0x0101010101010101ULL; /* R1 */
     pTopOfStack--;
-    *pTopOfStack = (u64)0x00; /* R0 */
+    *pTopOfStack = (u64)(proc); /* R0 */
     pTopOfStack--;
     *pTopOfStack = 0x0303030303030303ULL; /* R3 */
     pTopOfStack--;
@@ -146,86 +125,88 @@ u64* init_stack(u64* pTopOfStack, run_func pCode)
     return pTopOfStack;
 }
 
-PCB* AllocPCB(PCB* p, run_func code)
-{
-    p = (PCB*)malloc(sizeof(PCB));
-    u64* pStack = (u64*)malloc((((size_t)stackDepth) * sizeof(u64)));
-    u64* pTopOfStack = &(pStack[stackDepth - 1]);
-    p->pStack = pStack;
-    pTopOfStack = init_stack(pTopOfStack, code);
-    p->pTopOfStack = pTopOfStack;
-    return p;
-}
-TSysRegs regs;
-
 extern "C" void nextProcess()
 {
-    pCurrent_PCB->pTopOfStack = *pSavedContext;
-    if (pA_PCB->pTopOfStack == pCurrentPCBStack) {
-        pCurrentPCBStack = pB_PCB->pTopOfStack;
-        pCurrent_PCB = pB_PCB;
+    pCurrent->pTopOfStack = *pSavedContext;
+    if (pA->pTopOfStack == pCurrentPCBStack) {
+        pCurrentPCBStack = pB->pTopOfStack;
+        pCurrent = pB;
     }
     else {
-        pCurrentPCBStack = pA_PCB->pTopOfStack;
-        pCurrent_PCB = pA_PCB;
+        pCurrentPCBStack = pA->pTopOfStack;
+        pCurrent = pA;
     }
     return;
 }
 
+Task* initProcess(Task* p)
+{
+    u64* pStack = (u64*)malloc((((size_t)stackDepth) * sizeof(u64)));
+    u64* pTopOfStack = &(pStack[stackDepth - 1]);
+    p->pStack = pStack;
+    pTopOfStack = InitProcStack(pTopOfStack, p);
+    p->pTopOfStack = pTopOfStack;
+    return p;
+}
+
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    // pA_PCB = AllocPCB(pA_PCB, &A);
-    // pB_PCB = AllocPCB(pB_PCB, &B);
-    // pKernel_PCB = AllocPCB(pKernel_PCB, NULL);
+    pA = new TestApp(&mLogger, {"flightManagement"});
+    pB = new TestApp(&mLogger, {"io"});
+    pKernel = new TestApp(&mLogger, {"io"});
 
-    // pCurrentPCBStack = pKernel_PCB->pTopOfStack;
-    // pCurrent_PCB = pKernel_PCB;
+    pA = initProcess(pA);
+    pB = initProcess(pB);
+    pKernel = initProcess(pKernel);
 
-    // CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
-    // while (1) {
-    //     CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
-    //     CTimer::Get()->MsDelay(1000);
-    // }
-    // return ShutdownHalt;
+    pCurrentPCBStack = pKernel->pTopOfStack;
+    pCurrent = pKernel;
 
-    CyclicExecutiveSchedule partitionSchedule;
-#if KERNEL_DEBUG()
-    mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
-    mLogger.Write("ProcessSchedule", LogNotice,
-                  "Initialising schedules from XML");
-#endif
-
-    ProcessSchedule::initialiseSchedules();
-
-#if KERNEL_DEBUG()
-    mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
-    auto* schedule = ProcessSchedule::scheduleList->at(0);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(1);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(2);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(3);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(4);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
-#endif
-
-    // Running Entry Process
-    auto entry = new Entry(&mLogger);
-    entry->Run();
-
-    partitionSchedule.startPartitionScheduler();
-
+    CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
     while (1) {
+        CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
+        CTimer::Get()->MsDelay(1000);
     }
-
     return ShutdownHalt;
+
+    //     CyclicExecutiveSchedule partitionSchedule;
+    // #if KERNEL_DEBUG()
+    //     mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
+    //     mLogger.Write("ProcessSchedule", LogNotice,
+    //                   "Initialising schedules from XML");
+    // #endif
+
+    //     ProcessSchedule::initialiseSchedules();
+
+    // #if KERNEL_DEBUG()
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
+    //     auto* schedule = ProcessSchedule::scheduleList->at(0);
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    //                   *(schedule->getProcessScheduleName()->x.x));
+    //     schedule = ProcessSchedule::scheduleList->at(1);
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    //                   *(schedule->getProcessScheduleName()->x.x));
+    //     schedule = ProcessSchedule::scheduleList->at(2);
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    //                   *(schedule->getProcessScheduleName()->x.x));
+    //     schedule = ProcessSchedule::scheduleList->at(3);
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    //                   *(schedule->getProcessScheduleName()->x.x));
+    //     schedule = ProcessSchedule::scheduleList->at(4);
+    //     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    //                   *(schedule->getProcessScheduleName()->x.x));
+    // #endif
+
+    //     // Running Entry Process
+    //     auto entry = new Entry(&mLogger);
+    //     entry->Run();
+
+    //     partitionSchedule.startPartitionScheduler();
+
+    //     while (1) {
+    //     }
+
+    // return ShutdownHalt;
 }
 
 void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)

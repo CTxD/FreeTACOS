@@ -24,7 +24,6 @@
 	.extern pCurrentPCBStack
 	.extern switchRequired
 	.extern pSavedContext
-	.extern elrVal
 
 	.macro	vector handler
 
@@ -155,7 +154,7 @@ VectorTable:
 	LDP 	X6, X7, [SP], #0x10
 	LDP 	X4, X5, [SP], #0x10
 	LDP 	X2, X3, [SP], #0x10
-	LDP 	X0, X1, [SP], #0x10
+	LDP		X0, X1, [SP], #0x10
 
     msr	DAIFSet, #1			/* disable FIQ */
 	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */

@@ -29,38 +29,59 @@ extern "C" {
 
 // see: "Procedure Call Standard for the ARM 64-bit Architecture (AArch64)"
 struct TRegisters {
-    u64 x0; // parameter for CTask::TaskEntry()
+    u64 x28;
+    u64 xzr;
 
-    u64 x16; // unknown role (on this platform)
-    u64 x17;
-    u64 x18;
-
-    u64 x19; // callee-saved registers
-    u64 x20;
-    u64 x21;
-    u64 x22;
-    u64 x23;
-    u64 x24;
-    u64 x25;
     u64 x26;
     u64 x27;
-    u64 x28;
+
+    u64 x24; // callee-saved registers
+    u64 x25;
+
+    u64 x22;
+    u64 x23;
+
+    u64 x20;
+    u64 x21;
+
+    u64 x18;
+    u64 x19;
+
+    u64 x16;
+    u64 x17;
+
+    u64 x14;
+    u64 x15;
+
+    u64 x12;
+    u64 x13;
+
+    u64 x10;
+    u64 x11;
+
+    u64 x8;
+    u64 x9;
+
+    u64 x6;
+    u64 x7;
+
+    u64 x4; // unknown role (on this platform)
+    u64 x5;
+
+    u64 x2;
+    u64 x3;
+
+    u64 x0; // parameter for CTask::TaskEntry()
+    u64 x1;
+
+    u64 elr;  // link register
+    u64 spsr; // link register
 
     u64 x29; // frame pointer
     u64 x30; // link register
-    u64 sp;  // stack pointer
 
-    u64 d8; // SIMD and floating-point registers
-    u64 d9;
-    u64 d10;
-    u64 d11;
-    u64 d12;
-    u64 d13;
-    u64 d14;
-    u64 d15;
+    // u64 sp; // stack pointer
 
-    u64 fpcr; // floating-point control register
-    u64 fpsr; // floating-point status register
 } PACKED;
 
 struct TSysRegs {
@@ -73,6 +94,48 @@ struct TSysRegs {
     u64 far;
 
 } PACKED;
+
+typedef void (*run_func)();
+
+class CProcess {
+public:
+    volatile u64* pTopStack;
+    u64* pStack;
+    CProcess()
+    {
+    }
+    ~CProcess()
+    {
+    }
+    virtual void Run()
+    {
+        return;
+    }
+    static void TaskEntry(void* pParam)
+    {
+        CProcess* p = (CProcess*)pParam;
+        p->Run();
+    }
+};
+
+class AProc : public CProcess {
+public:
+    AProc()
+    {
+    }
+    ~AProc()
+    {
+    }
+    void Run()
+    {
+        int i = 0;
+        while (1) {
+            CLogger::Get()->Write("A running", LogNotice, " ... Iteration - %d", i++);
+            CTimer::Get()->MsDelay(1000);
+        }
+        return;
+    }
+};
 
 void StoreContext(TRegisters* pRegs);
 void LoadContext(TRegisters* pRegs);

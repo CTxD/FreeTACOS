@@ -12,6 +12,9 @@
 
 class Task : public Process {
 public:
+    volatile u64* pTopOfStack;
+    u64* pStack;
+
     Task(PROCESS_ATTRIBUTE_TYPE& attributes, name_t partitionNameRef);
     Task(SYSTEM_TIME_TYPE period,
          SYSTEM_TIME_TYPE timeCapacity,
@@ -29,9 +32,6 @@ public:
     void Terminate(void);
     void WaitForTermination(void);
 
-    void InitializeRegs(void);
-    TTaskRegisters* GetRegs(void);
-
     static void TaskEntry(void* pParam);
 
 private:
@@ -40,9 +40,6 @@ private:
     void initRegs();
 
     name_t partitionNameRef;
-
-    TTaskRegisters registers;
-    u8* pStack;
 };
 
 #endif

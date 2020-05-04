@@ -9,15 +9,6 @@
 Task::Task(PROCESS_ATTRIBUTE_TYPE& attributes, name_t partitionNameRef)
     : Process(attributes), partitionNameRef(partitionNameRef)
 {
-    nStackSize = TASK_STACK_SIZE;
-
-    if (nStackSize != 0) {
-        assert(nStackSize >= 1024);
-        pStack = new u8[nStackSize];
-        assert(pStack != 0);
-
-        InitializeRegs();
-    }
 }
 
 /**
@@ -38,8 +29,6 @@ Task::Task(SYSTEM_TIME_TYPE period,
     PROCESS_STATUS_TYPE status = PROCESS_STATUS_TYPE{deadline, priority, DORMANT, atts};
 
     setStatus(status);
-
-    initRegs();
 }
 
 /**
@@ -47,7 +36,6 @@ Task::Task(SYSTEM_TIME_TYPE period,
  */
 Task::Task(PROCESS_STATUS_TYPE& status) : Process(status)
 {
-    initRegs();
 }
 
 Task::~Task(void)
@@ -60,44 +48,9 @@ name_t& Task::getPartitionNameRef()
     return partitionNameRef;
 }
 
-void Task::initRegs()
-{
-    nStackSize = TASK_STACK_SIZE;
-
-    if (nStackSize != 0) {
-        assert(nStackSize >= 1024);
-        pStack = new u8[nStackSize];
-        assert(pStack != 0);
-
-        InitializeRegs();
-    }
-}
-
 void Task::Run(void)
 {
     // Base case Task::Run function
-}
-
-TTaskRegisters* Task::GetRegs(void)
-{
-    return &registers;
-}
-
-// Same approach as CTasks
-void Task::InitializeRegs(void)
-{
-    memset(&registers, 0, sizeof registers);
-
-    registers.x0 = (u64)this; // pParam for TaskEntry()
-
-    assert(pStack != 0);
-    registers.sp = (u64)pStack + nStackSize;
-
-    registers.x30 = (u64)&TaskEntry;
-
-    u32 nFPCR;
-    asm volatile("mrs %0, fpcr" : "=r"(nFPCR));
-    registers.fpcr = nFPCR;
 }
 
 // Same approach as CTask
