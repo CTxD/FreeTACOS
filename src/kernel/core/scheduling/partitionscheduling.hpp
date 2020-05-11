@@ -27,6 +27,7 @@ private:
 public:
     void partitionHandler();
     void startPartitionScheduler();
+    void initPartitionScheduler();
     static RunningPartition* getCurrentPartition();
 };
 #endif

@@ -5,8 +5,37 @@
 #include "generated_arinc_module.hpp"
 #include <circle/logger.h>
 #include <circle/timer.h>
+#include <task.hpp>
 
 #include <algorithm>
+
+// Preemption
+volatile u64 switchR = 0;
+volatile u64* switchRequired = &switchR;
+
+volatile u64* context = 0;
+volatile u64** pSavedContext = &context;
+
+volatile u64* pCurrentPCBStack = NULL;
+
+Task* pCurrent = NULL;
+Task* pScheduled = NULL;
+
+void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopOfStack)
+{
+    CLogger::Get()->Write(
+        stackDescription, LogNotice,
+        "R0 - %lX, R1 - %lX, ELR - %lX, SPSR - %lX, R29 - %lX, R30 - %lX",
+        *(pTopOfStack + 28), *(pTopOfStack + 29), *(pTopOfStack + 30),
+        *(pTopOfStack + 31), *(pTopOfStack + 32), *(pTopOfStack + 33));
+}
+
+extern "C" void nextProcess()
+{
+    pCurrent->pTopOfStack = *pSavedContext;
+    pCurrent = pScheduled;
+    pCurrentPCBStack = pCurrent->pTopOfStack;
+}
 
 ProcessSchedule::ProcessSchedule(name_t scheduleName)
     : scheduleName(scheduleName)
@@ -38,7 +67,7 @@ void ProcessSchedule::startScheduler()
     }
 
     // Iterate
-    iterate();
+    // iterate();
 }
 
 /**
@@ -55,8 +84,8 @@ void ProcessSchedule::iterate()
 
     reReadyProcesses();
 
-    CTimer::Get()->MsDelay(1 * HZ); // Delay for 1 hz time
-    iterate();
+    // CTimer::Get()->MsDelay(1 * HZ); // Delay for 1 hz time
+    // iterate();
 }
 
 /**
@@ -77,7 +106,10 @@ void ProcessSchedule::runNextProcess()
 
         // Run process
         runningProcess->startTime = CTimer::GetClockTicks();
-        static_cast<Task*>(nextProcess->process->ATTRIBUTES.ENTRY_POINT)->Run();
+        // static_cast<Task*>(nextProcess->process->ATTRIBUTES.ENTRY_POINT)->Run();
+        pScheduled = (Task*)nextProcess->process->ATTRIBUTES.ENTRY_POINT;
+        *switchRequired = TRUE;
+
         runningProcess->endTime = CTimer::GetClockTicks();
 
         // If process has become dormant -> terminate it

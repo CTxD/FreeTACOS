@@ -28,14 +28,14 @@ private:
     ProcessScheduleInfo* runningProcess;
     ProcessScheduleInfo* terminatedProcess;
 
-    void iterate();
-    void reReadyProcesses();
+        void reReadyProcesses();
     void runNextProcess();
 
     ProcessScheduleInfo* getNextProcess(PROCESS_ID_TYPE& procId);
 
 public:
     void startScheduler();
+    void iterate();
 
     ProcessSchedule(name_t partitionType);
 

@@ -35,9 +35,12 @@ public:
     static void TaskEntry(void* pParam);
 
 private:
+    static const uint16_t stackDepth = 2048;
+
     unsigned nStackSize;
 
     void initRegs();
+    void InitStack();
 
     name_t partitionNameRef;
 };

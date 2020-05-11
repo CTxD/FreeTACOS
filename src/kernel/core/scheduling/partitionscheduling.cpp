@@ -37,8 +37,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
             if (amountOfPartitions > 0) {
                 runningPartition[i].partitionName = partitions[0].getPartitionName();
                 runningPartition[i].startTime = currentTime + partitions[0].getOffset();
-                runningPartition[i].endTime =
-                    currentTime + partitions[0].getPeriodDuration();
+                runningPartition[i].endTime = currentTime + partitions[0].getDuration();
                 runningPartition[i].index = 0;
             }
         }
@@ -57,7 +56,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
                     runningPartition[i].startTime =
                         currentTime + partitions[0].getOffset();
                     runningPartition[i].endTime =
-                        currentTime + partitions[0].getPeriodDuration();
+                        currentTime + partitions[0].getDuration();
                     runningPartition[i].index = 0;
                 }
                 else {
@@ -68,7 +67,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
                     runningPartition[i].startTime =
                         currentTime + partitions[nextIndex].getOffset();
                     runningPartition[i].endTime =
-                        currentTime + partitions[nextIndex].getPeriodDuration();
+                        currentTime + partitions[nextIndex].getDuration();
                     runningPartition[i].index = nextIndex;
                 }
             }
@@ -128,6 +127,26 @@ void CyclicExecutiveSchedule::startPartitionScheduler()
         }
     }
 }
+
+void CyclicExecutiveSchedule::initPartitionScheduler()
+{
+    // prints debug info to the screen
+#if KERNEL_DEBUG()
+    CLogger::Get()->Write("FreeTACOS", LogNotice, "Init partition schedule");
+#endif
+    // initialize RunningPartition array
+#if KERNEL_PROCESSER(IS_MULTICORE)
+    coreSize = 4;
+    running_partition[0] = {"", 0, 0, 0, 0, "", 0, 0, 0, 0,
+                            "", 0, 0, 0, 0, "", 0, 0, 0, 0};
+#elif KERNEL_PROCESSER(IS_SINGLECORE)
+    coreSize = 1;
+    runningPartition[0] = {"", 0, 0, 0, 0};
+#else
+    assert(0); // abort
+#endif
+}
+
 /**
  * DESCRIPTION: Gets the currently running partition
  * RETURN: RunningPartition*
