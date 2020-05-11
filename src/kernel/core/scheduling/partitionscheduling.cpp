@@ -7,12 +7,17 @@
 #include <generated_partition_schedule.hpp>
 #include <partition.hpp>
 #include <partition_schedule.hpp>
+#include <apex_mutex.hpp>
+#include <apex_types.hpp>
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
 RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* runningPartition,
                                                             int size)
 {
+    MUTEX_ID_TYPE mutexId;
+    RETURN_CODE_TYPE mutexCode;
+    MUTEX_STATUS_TYPE mutexStatus;
     // Get first partitions
     if (runningPartition[0].endTime == 0) {
         auto currentTime = CTimer::Get()->GetClockTicks();
@@ -27,6 +32,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
                 runningPartition[i].endTime =
                     currentTime + partitions[0].getPeriodDuration();
                 runningPartition[i].index = 0;
+                runningPartition[i].operatingMode = OPERATING_MODE_TYPE::COLD_START;
             }
         }
     }
@@ -82,7 +88,22 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
     // TODO: preemption
     // Set currentPartition
     CyclicExecutiveSchedule::currentPartition = runningPartition;
+    
+    ApexMutex::CREATE_MUTEX({"TestMutex"},1,QUEUING_DISCIPLINE_TYPE::FIFO,mutexId,&mutexCode);
+    if (mutexCode == NO_ERROR) {
+        CLogger::Get()->Write("Tester", LogNotice, "Mutex created with id: %i returnCode: %d", mutexId, mutexCode);
+    }
+    else {
+        CLogger::Get()->Write("Tester", LogNotice, "Error creating mutex %i returnCode: %d ", mutexId, mutexCode);
+    }
 
+    ApexMutex::GET_MUTEX_STATUS(mutexId, mutexStatus, &mutexCode);
+    if (mutexCode == NO_ERROR) {
+        CLogger::Get()->Write("Tester", LogNotice, "Mutex Status");
+    }
+    else {
+        CLogger::Get()->Write("Tester", LogNotice, "Error getting mutex status %i returnCode: %d", mutexId, mutexCode);
+    }
     return runningPartition;
 }
 

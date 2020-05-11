@@ -3,6 +3,7 @@
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <partitionscheduling.hpp>
+#include <apex_mutex.hpp>
 
 CTacosKernel::CTacosKernel()
 {
@@ -26,6 +27,8 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     else {
         mLogger.Write("Tester", LogNotice, "Error creating buffer");
     }
+    CyclicExecutiveSchedule partitionSchedule;
+    partitionSchedule.partitionScheduler();
 
     while (1) {
     }

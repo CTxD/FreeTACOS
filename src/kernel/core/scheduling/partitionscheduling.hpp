@@ -10,6 +10,7 @@ struct RunningPartition {
     APEX_INTEGER endTime;
     int index;
     int partitionAmount;
+    OPERATING_MODE_TYPE operatingMode;
 };
 
 class CyclicExecutiveSchedule {
