@@ -8,11 +8,11 @@ TestApp::TestApp(CLogger* logger, name_t partitionRef)
 
 void TestApp::Run(void)
 {
-    int i = 0;
+    int i = 1;
     while (1) {
         logger->Write(*getProcessName().x, LogNotice,
                       "Test program ... "
-                      "Iteration - %d",
+                      "Iteration - %d (Seconds run)",
                       i++);
         CTimer::Get()->MsDelay(1000);
     }
