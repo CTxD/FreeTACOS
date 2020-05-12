@@ -5,7 +5,6 @@
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
-#include <context.hpp>
 #include <defines.hpp>
 
 #include <dummy_part.h>

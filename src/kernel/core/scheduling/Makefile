@@ -1,6 +1,7 @@
 ROOT=		../../../../
 
-OBJS=		context.o  \
+OBJS=		partitionscheduling.o  \
+			process_schedule.o \
 			exceptionstub64.o
 
 

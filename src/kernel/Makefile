@@ -8,7 +8,6 @@ export APEX=$(ROOT)/src/libuser
 
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
-		$(CORE)/scheduling/context.o \
 		$(CORE)/scheduling/exceptionstub64.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
