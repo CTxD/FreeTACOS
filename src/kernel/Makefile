@@ -27,7 +27,8 @@ OBJS = main.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
 		$(APPS)/entry.o \
-		$(CORE)/scheduling/process_schedule.o 
+		$(CORE)/scheduling/process_schedule.o \
+		$(CORE)/scheduling/init_worker.o 
 
 include $(CIRCLELIB)/Config.mk
 

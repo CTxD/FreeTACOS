@@ -9,4 +9,6 @@ private:
 public:
     CTacosKernel();
     CStdlibApp::TShutdownMode Run();
+
+protected:
 };

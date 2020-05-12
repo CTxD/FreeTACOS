@@ -4,8 +4,9 @@
 #include <circle/startup.h>
 #include <circle/timer.h>
 #include <errcode.h>
+#include <init_worker.hpp>
 
-CKernel::CKernel(void) : CStdlibAppStdio("FreeTACOS Kernel")
+CKernel::CKernel(void) : CStdlibAppStdio("FreeTACOS Kernel"), mWorker(&mMemory)
 {
     mActLED.Blink(5); // show we are alive
 }

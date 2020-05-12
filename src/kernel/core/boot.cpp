@@ -5,7 +5,7 @@
 ret_t boot()
 {
     CTacosKernel kernel;
-    if (!kernel.Initialize()) {
+    if (!kernel.Init()) {
         halt();
         return (ret_t)EXIT_HALT;
     }

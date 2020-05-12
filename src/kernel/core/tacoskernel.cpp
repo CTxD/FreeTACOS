@@ -1,4 +1,5 @@
 #include "tacoskernel.h"
+#include "init_worker.hpp"
 #include "partitionscheduling.hpp"
 #include "port.hpp"
 #include "process_schedule.hpp"
@@ -32,24 +33,6 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    // pA = new TestApp(&mLogger, {"flightManagement"});
-    // pB = new TestApp(&mLogger, {"io"});
-    // pKernel = new TestApp(&mLogger, {"io"});
-
-    // pA = initProcess(pA);
-    // pB = initProcess(pB);
-    // pKernel = initProcess(pKernel);
-
-    // pCurrentPCBStack = pKernel->pTopOfStack;
-    // pCurrent = pKernel;
-
-    // CTimer::Get()->StartKernelTimer(2 * HZ, TimerHandler, this);
-    // while (1) {
-    //     CLogger::Get()->Write("Inside Run", LogNotice, " ... ");
-    //     CTimer::Get()->MsDelay(1000);
-    // }
-    // return ShutdownHalt;
-
     CyclicExecutiveSchedule partitionSchedule;
 #if KERNEL_DEBUG()
     mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
@@ -83,6 +66,9 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     entry->Run();
 
     partitionSchedule.initPartitionScheduler();
+
+    mWorker.Run(0);
+
     CTimer::Get()->StartKernelTimer(0, PartitionTimerHandler, this, &partitionSchedule);
     CTimer::Get()->StartKernelTimer(100, ProcessTimerHandler, this, &partitionSchedule);
     while (1) {
@@ -100,9 +86,6 @@ void CTacosKernel::PartitionTimerHandler(TKernelTimerHandle hTimer, void* pParam
 
     pPartitionScheduler->partitionHandler();
 
-    auto runTime = CyclicExecutiveSchedule::getCurrentPartition()->endTime -
-                   CyclicExecutiveSchedule::getCurrentPartition()->startTime;
-
     name_t partitionName = {
         (*CyclicExecutiveSchedule::getCurrentPartition()[0].partitionName.x)};
 
@@ -110,15 +93,12 @@ void CTacosKernel::PartitionTimerHandler(TKernelTimerHandle hTimer, void* pParam
     processSchedule->startScheduler();
     pScheduler = processSchedule;
 
-    // CLogger::Get()->Write("PTH", LogNotice, "Run time %u, %u", runTime, runTime / HZ);
-
     CTimer::Get()->StartKernelTimer(200, PartitionTimerHandler, pParam, pSavedContext);
 }
 
 void CTacosKernel::ProcessTimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
 {
     CTacosKernel* pThis = (CTacosKernel*)pParam;
-    CyclicExecutiveSchedule* pPartitionScheduler = (CyclicExecutiveSchedule*)pSavedContext;
     assert(pThis != 0);
     pScheduler->iterate();
     CTimer::Get()->StartKernelTimer(50, ProcessTimerHandler, pParam, pSavedContext);
