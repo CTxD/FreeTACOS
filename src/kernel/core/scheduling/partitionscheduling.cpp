@@ -10,12 +10,12 @@
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
-void CyclicExecutiveSchedule::partitionHandler()
+void CyclicExecutiveSchedule::PartitionHandler()
 {
     for (int i = 0; i < coreSize; i++) {
         if (runningPartition[0].endTime == 0 ||
             CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
-            getNextPartition(runningPartition, coreSize);
+            GetNextPartition(runningPartition, coreSize);
         }
     }
 }
@@ -23,7 +23,7 @@ void CyclicExecutiveSchedule::partitionHandler()
  * DESCRIPTION: Gets the next partition to run
  * RETURN: RunningPartition*
  */
-RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* runningPartition,
+RunningPartition* CyclicExecutiveSchedule::GetNextPartition(RunningPartition* runningPartition,
                                                             int size)
 {
     // Get first partitions
@@ -98,7 +98,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
 /**
  * DESCRIPTION: Starts and runs the Cyclic Executive schedule
  */
-void CyclicExecutiveSchedule::startPartitionScheduler()
+void CyclicExecutiveSchedule::StartPartitionScheduler()
 {
     // prints debug info to the screen
 #if KERNEL_DEBUG()
@@ -118,17 +118,17 @@ void CyclicExecutiveSchedule::startPartitionScheduler()
     for (int i = 0; i < coreSize; i++) {
         if (runningPartition[0].endTime == 0 ||
             CTimer::Get()->GetClockTicks() >= runningPartition[i].endTime) {
-            getNextPartition(runningPartition, coreSize);
+            GetNextPartition(runningPartition, coreSize);
             // Run the next partition's process
             name_t partitionName = {*runningPartition[0].partitionName.x};
-            auto* processSchedule = ProcessSchedule::getProcessScheduleByName(partitionName);
-            processSchedule->startScheduler();
+            auto* processSchedule = ProcessSchedule::GetProcessScheduleByName(partitionName);
+            processSchedule->StartScheduler();
             break;
         }
     }
 }
 
-void CyclicExecutiveSchedule::initPartitionScheduler()
+void CyclicExecutiveSchedule::InitPartitionScheduler()
 {
     // prints debug info to the screen
 #if KERNEL_DEBUG()
@@ -151,7 +151,7 @@ void CyclicExecutiveSchedule::initPartitionScheduler()
  * DESCRIPTION: Gets the currently running partition
  * RETURN: RunningPartition*
  */
-RunningPartition* CyclicExecutiveSchedule::getCurrentPartition()
+RunningPartition* CyclicExecutiveSchedule::GetCurrentPartition()
 {
     return currentPartition;
 }

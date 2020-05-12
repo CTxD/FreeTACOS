@@ -32,13 +32,13 @@ void ApexKernel::addToProcessSchedule(Task* process)
     auto& partitionNameRef = process->getPartitionNameRef();
 
     // Get mathing process schedule
-    auto* schedule = ProcessSchedule::getProcessScheduleByName(partitionNameRef);
+    auto* schedule = ProcessSchedule::GetProcessScheduleByName(partitionNameRef);
 
     // Check whether one was found or not
     assert(schedule != nullptr && "The partition name of process is invalid");
 
     // Add the process to the schedules ready list
-    schedule->addProcess(&process->getStatus());
+    schedule->AddProcess(&process->getStatus());
 }
 
 PROCESS_STATUS_TYPE& ApexKernel::getProcessById(PROCESS_ID_TYPE id)

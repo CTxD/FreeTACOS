@@ -28,7 +28,7 @@ public:
     virtual void Run(void);
 
     name_t& getPartitionNameRef();
-
+    name_t partitionNameRef;
     void Terminate(void);
     void WaitForTermination(void);
 
@@ -41,8 +41,6 @@ private:
 
     void initRegs();
     void InitStack();
-
-    name_t partitionNameRef;
 };
 
 #endif

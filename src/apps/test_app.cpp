@@ -11,7 +11,9 @@ void TestApp::Run(void)
     int i = 0;
     while (1) {
         logger->Write(*getProcessName().x, LogNotice,
-                      "Test program, just logging stuff ... Iteration - %d", i++);
+                      "Test program ... "
+                      "Iteration - %d",
+                      i++);
         CTimer::Get()->MsDelay(1000);
     }
     return;

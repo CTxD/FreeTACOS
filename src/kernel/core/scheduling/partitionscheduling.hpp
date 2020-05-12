@@ -13,7 +13,7 @@ struct RunningPartition {
 };
 class CyclicExecutiveSchedule {
 private:
-    RunningPartition* getNextPartition(RunningPartition* runningPartition, int size);
+    RunningPartition* GetNextPartition(RunningPartition* runningPartition, int size);
     static RunningPartition* currentPartition;
     int coreSize;
 #if KERNEL_PROCESSER(IS_MULTICORE)
@@ -25,9 +25,9 @@ private:
 #endif
 
 public:
-    void partitionHandler();
-    void startPartitionScheduler();
-    void initPartitionScheduler();
-    static RunningPartition* getCurrentPartition();
+    void PartitionHandler();
+    void StartPartitionScheduler();
+    void InitPartitionScheduler();
+    static RunningPartition* GetCurrentPartition();
 };
 #endif
