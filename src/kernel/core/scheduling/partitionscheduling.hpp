@@ -1,7 +1,7 @@
 #ifndef __PARTITION_SCHEDULING__
 #define __PARTITION_SCHEDULING__
-
 #include <apex_types.hpp>
+#include <defines.hpp>
 #include <process_schedule.hpp>
 
 struct RunningPartition {
@@ -11,17 +11,23 @@ struct RunningPartition {
     int index;
     int partitionAmount;
 };
-
 class CyclicExecutiveSchedule {
 private:
-    RunningPartition* getNextPartition(RunningPartition* runningPartition, int size);
-
+    RunningPartition* GetNextPartition(RunningPartition* runningPartition, int size);
     static RunningPartition* currentPartition;
+    int coreSize;
+#if KERNEL_PROCESSER(IS_MULTICORE)
+    RunningPartition runningPartition[4];
+#elif KERNEL_PROCESSER(IS_SINGLECORE)
+    RunningPartition runningPartition[1];
+#else
+    assert(0); // abort
+#endif
 
 public:
-    void partitionScheduler();
-
-    static RunningPartition* getCurrentPartition();
+    void PartitionHandler();
+    void StartPartitionScheduler();
+    void InitPartitionScheduler();
+    static RunningPartition* GetCurrentPartition();
 };
-
 #endif

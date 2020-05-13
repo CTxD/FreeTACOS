@@ -25,35 +25,42 @@ void Entry::Run(void)
 
     // Define process attributes
     PROCESS_ATTRIBUTE_TYPE flightManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        150000 * HZ, 10, new TestApp(logger, {"flightManagement"}),
+        1000 * HZ,   10, new TestApp(logger, {"flightManagement"}),
         0x8000,      10, HARD,
         {"TestApp1"}};
 
     PROCESS_ATTRIBUTE_TYPE systemManagementProcess = PROCESS_ATTRIBUTE_TYPE{
-        150000 * HZ, 10, new TestApp(logger, {"systemManagement"}),
+        2000 * HZ,   10, new TestApp(logger, {"systemManagement"}),
         0x8000,      10, HARD,
         {"TestApp2"}};
 
+    PROCESS_ATTRIBUTE_TYPE flightControlsProcess = PROCESS_ATTRIBUTE_TYPE{
+        3000 * HZ, 10, new TestApp(logger, {"flightControls"}),
+        0x8000,    10, HARD,
+        {"FC APP"}};
+
+    PROCESS_ATTRIBUTE_TYPE IHVMProcess = PROCESS_ATTRIBUTE_TYPE{
+        4000 * HZ, 10,          new TestApp(logger, {"IHVM "}), 0x8000, 10,
+        HARD,      {"IHVM APP"}};
+
     PROCESS_ATTRIBUTE_TYPE IOProcessingProcess11 = PROCESS_ATTRIBUTE_TYPE{
-        200000 * HZ,  3,  new TestApp(logger, {"IOProcessing"}),
-        0x8000,       10, HARD,
-        {"TestApp31"}};
+        10000 * HZ, 3, new TestApp(logger, {"IOProcessing"}), 0x8000, 10, HARD, {"Slow Responsive App"}};
 
     PROCESS_ATTRIBUTE_TYPE IOProcessingProcess12 = PROCESS_ATTRIBUTE_TYPE{
-        5000 * HZ,    2,  new TestApp(logger, {"IOProcessing"}),
-        0x8000,       10, HARD,
-        {"TestApp32"}};
+        3000 * HZ, 2, new TestApp(logger, {"IOProcessing"}), 0x8000, 10, HARD, {"Fast Responsive App"}};
 
     PROCESS_ATTRIBUTE_TYPE IOProcessingProcess13 = PROCESS_ATTRIBUTE_TYPE{
-        10000 * HZ,   2,  new TestApp(logger, {"IOProcessing"}),
-        0x8000,       10, HARD,
-        {"TestApp33"}};
+        6000 * HZ, 2, new TestApp(logger, {"IOProcessing"}), 0x8000, 10, HARD, {"Medium Responsive App"}};
 
     // Create the process
-    PROCESS_ID_TYPE returnId1, returnId2, returnId31, returnId32, returnId33;
-    RETURN_CODE_TYPE returnCode1, returnCode2, returnCode31, returnCode32, returnCode33;
+    PROCESS_ID_TYPE returnId1, returnId2, returnId3, returnId4, returnId31,
+        returnId32, returnId33;
+    RETURN_CODE_TYPE returnCode1, returnCode2, returnCode3, returnCode4,
+        returnCode31, returnCode32, returnCode33;
     CREATE_PROCESS(&flightManagementProcess, &returnId1, &returnCode1);
     CREATE_PROCESS(&systemManagementProcess, &returnId2, &returnCode2);
+    CREATE_PROCESS(&flightControlsProcess, &returnId3, &returnCode3);
+    CREATE_PROCESS(&IHVMProcess, &returnId4, &returnCode4);
     CREATE_PROCESS(&IOProcessingProcess11, &returnId31, &returnCode31);
     CREATE_PROCESS(&IOProcessingProcess12, &returnId32, &returnCode32);
     CREATE_PROCESS(&IOProcessingProcess13, &returnId33, &returnCode33);
