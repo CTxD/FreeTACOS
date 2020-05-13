@@ -9,13 +9,10 @@
 
 class IoServiceTask : public Task {
 public:
-    IoServiceTask(CLogger* logger);
+    IoServiceTask();
     ~IoServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

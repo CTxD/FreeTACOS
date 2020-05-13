@@ -3,19 +3,14 @@
 
 #include <task.hpp>
 
-#include <circle/logger.h>
-
 #include <apex_process.hpp>
 
 class RfidReaderTask : public Task {
 public:
-    RfidReaderTask(CLogger* logger);
+    RfidReaderTask();
     ~RfidReaderTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

@@ -9,13 +9,10 @@
 
 class GpsServiceTask : public Task {
 public:
-    GpsServiceTask(CLogger* logger);
+    GpsServiceTask();
     ~GpsServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

@@ -6,6 +6,16 @@ export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 export APEX=$(ROOT)/src/libuser
 
+# Lyngsoe Case Objects
+LOBJS = $(APPS)/lyngsoe/blr_lll_host_service.o \
+				$(APPS)/lyngsoe/data_processor_service.o \
+				$(APPS)/lyngsoe/diagnosis_service.o \
+			  $(APPS)/lyngsoe/gps_service.o \
+				$(APPS)/lyngsoe/io_blr_service.o \
+				$(APPS)/lyngsoe/io_service.o \
+				$(APPS)/lyngsoe/output_service.o \
+				$(APPS)/lyngsoe/rfid_reader.o
+
 # ---  Target dependent and should be changed w.r.t architecture
 OBJS = main.o \
 		$(CORE)/scheduling/exceptionstub64.o \
@@ -26,7 +36,10 @@ OBJS = main.o \
 		$(TYPES)/src/queuing_port.o \
 		$(APPS)/test_app.o \
 		$(APPS)/entry.o \
-		$(CORE)/scheduling/process_schedule.o 
+		$(CORE)/scheduling/process_schedule.o
+
+# Append
+OBJS += $(LOBJS)
 
 include $(CIRCLELIB)/Config.mk
 

@@ -9,13 +9,10 @@
 
 class DiagnosisServiceTask : public Task {
 public:
-    DiagnosisServiceTask(CLogger* logger);
+    DiagnosisServiceTask();
     ~DiagnosisServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

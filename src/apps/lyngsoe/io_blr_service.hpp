@@ -9,13 +9,10 @@
 
 class Io2BlrServiceTask : public Task {
 public:
-    Io2BlrServiceTask(CLogger* logger);
+    Io2BlrServiceTask();
     ~Io2BlrServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

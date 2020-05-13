@@ -15,19 +15,14 @@
 
 #include <task.hpp>
 
-#include <circle/logger.h>
-
 #include <apex_process.hpp>
 
 class BlrLllHostServiceTask : public Task {
 public:
-    BlrLllHostServiceTask(CLogger* logger);
+    BlrLllHostServiceTask();
     ~BlrLllHostServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif

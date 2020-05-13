@@ -9,13 +9,10 @@
 
 class DataProcessorServiceTask : public Task {
 public:
-    DataProcessorServiceTask(CLogger* logger);
+    DataProcessorServiceTask();
     ~DataProcessorServiceTask(void);
 
     void Run(void);
-
-private:
-    CLogger* logger;
 };
 
 #endif
