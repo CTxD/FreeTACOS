@@ -2,15 +2,10 @@
 
 Partition& Partition::operator=(const Partition& rhs)
 {
-    partitionIdentifier = rhs.partitionIdentifier;
-    affinity = rhs.affinity;
     partitionName = rhs.partitionName;
-    duration = rhs.duration;
-    period = rhs.period;
     memoryRegions = rhs.memoryRegions;
     queuingPorts = rhs.queuingPorts;
     samplingPorts = rhs.samplingPorts;
-    mode = rhs.mode;
     status = rhs.status;
     processes = rhs.processes;
     criticality = rhs.criticality;
@@ -19,29 +14,9 @@ Partition& Partition::operator=(const Partition& rhs)
     return *this;
 }
 
-const identifier_t& Partition::getPartitionIdentifier() const
-{
-    return partitionIdentifier;
-}
-
-const PROCESSOR_CORE_ID_TYPE& Partition::getAffinity() const
-{
-    return affinity;
-}
-
 const name_t& Partition::getPartitionName() const
 {
     return partitionName;
-}
-
-const decOrHex_t& Partition::getDuration() const
-{
-    return duration;
-}
-
-const decOrHex_t& Partition::getPeriod() const
-{
-    return period;
 }
 
 const std::vector<MemoryRegion>& Partition::getMemoryRegions() const
@@ -59,27 +34,17 @@ const std::vector<SamplingPort>& Partition::getSamplePorts() const
     return *samplingPorts;
 }
 
-void Partition::setMode(OPERATING_MODE_TYPE mode)
-{
-    mode = std::move(mode);
-}
-
-const OPERATING_MODE_TYPE& Partition::getMode() const
-{
-    return mode;
-}
-
 void Partition::setStatus(PARTITION_STATUS_TYPE status)
 {
     status = std::move(status);
 }
 
-const PARTITION_STATUS_TYPE& Partition::getStatus() const
+const PARTITION_STATUS_TYPE* Partition::getStatus() const
 {
-    return status;
+    return &(this->status);
 }
 
-void Partition::addProcess(Process proc)
+void Partition::AddProcess(Process proc)
 {
     processes->push_back(proc);
 }

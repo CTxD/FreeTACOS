@@ -1,7 +1,7 @@
 #ifndef PORT_TYPE
 #define PORT_TYPE
 
-#include "apex_types.h"
+#include "apex_types.hpp"
 #include "port_mapping.hpp"
 
 #include <string>

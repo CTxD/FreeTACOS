@@ -2,30 +2,35 @@
 
 const bool& PartitionSchedule::getPartitionPeriodStart() const
 {
-  return partitionPeriodStart;
+    return partitionPeriodStart;
 }
 
-const decOrHex_t& PartitionSchedule::getPeriodDuration() const
+const decOrHex_t& PartitionSchedule::getDuration() const
 {
-  return periodDurationSeconds;
+    return periodDurationSeconds;
 }
 
 const NAME_TYPE& PartitionSchedule::getPartitionName() const
 {
-  return partitionName;
+    return partitionName;
 }
 
 const decOrHex_t& PartitionSchedule::getOffset() const
 {
-  return offset;
+    return offset;
 }
 
 void PartitionSchedule::setPartitionIdentifier(identifier_t id)
 {
-  partitionIdentifier = std::move(id);
+    partitionIdentifier = std::move(id);
 }
 
 const identifier_t& PartitionSchedule::getPartitionIdentifier() const
 {
-  return partitionIdentifier;
+    return partitionIdentifier;
+}
+
+const PROCESSOR_CORE_ID_TYPE& PartitionSchedule::getCoreAffinity() const
+{
+    return affinity;
 }
