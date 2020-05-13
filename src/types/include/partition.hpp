@@ -79,7 +79,7 @@ public:
 
     const PARTITION_STATUS_TYPE* getStatus() const;
 
-    void addProcess(Process proc);
+    void AddProcess(Process proc);
 
     const std::vector<Process>& getProcesses() const;
 

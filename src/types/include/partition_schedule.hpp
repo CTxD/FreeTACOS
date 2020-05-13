@@ -37,7 +37,7 @@ public:
 
     const bool& getPartitionPeriodStart() const;
 
-    const decOrHex_t& getPeriodDuration() const;
+    const decOrHex_t& getDuration() const;
 
     const NAME_TYPE& getPartitionName() const;
 

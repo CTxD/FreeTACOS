@@ -1,16 +1,19 @@
 #include "tacoskernel.h"
+#include "partitionscheduling.hpp"
 #include "port.hpp"
 #include "process_schedule.hpp"
-#include "scheduling/partitionscheduling.hpp"
 #include <apex_kernel.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
 #include <defines.hpp>
+
 #include <dummy_part.h>
 #include <entry.hpp>
 #include <errcode.h>
 #include <queuing_port.hpp>
 #include <test_app.hpp>
+
+ProcessSchedule* pCurrentProcessScheduler = NULL;
 
 CTacosKernel::CTacosKernel()
 {
@@ -25,43 +28,66 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
                   "Initialising schedules from XML");
 #endif
 
-    ProcessSchedule::initialiseSchedules();
+    ProcessSchedule::InitialiseSchedules();
 
 #if KERNEL_DEBUG()
     mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
     auto* schedule = ProcessSchedule::scheduleList->at(0);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
+                  *(schedule->GetProcessScheduleName()->x.x));
     schedule = ProcessSchedule::scheduleList->at(1);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
+                  *(schedule->GetProcessScheduleName()->x.x));
     schedule = ProcessSchedule::scheduleList->at(2);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
+                  *(schedule->GetProcessScheduleName()->x.x));
     schedule = ProcessSchedule::scheduleList->at(3);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
+                  *(schedule->GetProcessScheduleName()->x.x));
     schedule = ProcessSchedule::scheduleList->at(4);
     mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->getProcessScheduleName()->x.x));
+                  *(schedule->GetProcessScheduleName()->x.x));
 #endif
 
     // Running Entry Process
     auto entry = new Entry(&mLogger);
     entry->Run();
 
-    partitionSchedule.partitionScheduler();
-
+    partitionSchedule.InitPartitionScheduler();
+    CTimer::Get()->StartKernelTimer(0, PartitionTimerHandler, this, &partitionSchedule);
+    CTimer::Get()->StartKernelTimer(100, ProcessTimerHandler, NULL, NULL);
     while (1) {
+        CLogger::Get()->Write("Busy Looping", LogNotice, " ... ");
+        CTimer::Get()->MsDelay(1000);
     }
-
     return ShutdownHalt;
 }
-
-void CTacosKernel::TimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pContext)
+// Invokes Partition Scheduling
+void CTacosKernel::PartitionTimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
 {
-    CTacosKernel* pThis = (CTacosKernel*)pParam;
-    assert(pThis != 0);
-    CTimer::Get()->StartKernelTimer(7 * HZ, TimerHandler, pThis);
-    pThis->mEvent.Set();
+    CyclicExecutiveSchedule* pPartitionScheduler = (CyclicExecutiveSchedule*)pSavedContext;
+    assert(pPartitionScheduler != 0);
+
+    pPartitionScheduler->PartitionHandler();
+
+    unsigned int runTime = CyclicExecutiveSchedule::GetCurrentPartition()->endTime -
+                           CTimer::Get()->GetClockTicks();
+    unsigned int runTimeSecs = runTime / CLOCKHZ;
+
+    name_t partitionName = {
+        (*CyclicExecutiveSchedule::GetCurrentPartition()[0].partitionName.x)};
+
+    ProcessSchedule* ps = ProcessSchedule::GetProcessScheduleByName(partitionName);
+    ps->StartScheduler();
+    pCurrentProcessScheduler = ps;
+
+    CTimer::Get()->StartKernelTimer(runTimeSecs * HZ, PartitionTimerHandler,
+                                    pParam, pSavedContext);
+}
+
+// Invokes Process Scheduling
+void CTacosKernel::ProcessTimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
+{
+    pCurrentProcessScheduler->Iterate();
+    CTimer::Get()->StartKernelTimer(50, ProcessTimerHandler, pParam, pSavedContext);
 }

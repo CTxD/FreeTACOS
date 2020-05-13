@@ -5,7 +5,7 @@ const bool& PartitionSchedule::getPartitionPeriodStart() const
     return partitionPeriodStart;
 }
 
-const decOrHex_t& PartitionSchedule::getPeriodDuration() const
+const decOrHex_t& PartitionSchedule::getDuration() const
 {
     return periodDurationSeconds;
 }

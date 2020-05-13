@@ -44,7 +44,7 @@ const PARTITION_STATUS_TYPE* Partition::getStatus() const
     return &(this->status);
 }
 
-void Partition::addProcess(Process proc)
+void Partition::AddProcess(Process proc)
 {
     processes->push_back(proc);
 }
