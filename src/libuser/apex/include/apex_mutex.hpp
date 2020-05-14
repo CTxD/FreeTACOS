@@ -10,6 +10,7 @@
 #include "apex_process.hpp"
 #include "apex_types.hpp"
 #include <vector>
+#include <queue>
 
 #define MAX_NUMBER_OF_MUTEXES SYSTEM_LIMIT_NUMBER_OF_MUTEXES
 
@@ -33,11 +34,13 @@ typedef struct {
     WAITING_RANGE_TYPE WAITING_PROCESSES;
 } MUTEX_STATUS_TYPE;
 
+typedef std::queue<MUTEX_ID_TYPE> WaitingProcesses;
 typedef struct {
     MUTEX_NAME_TYPE mutexName;
     MUTEX_ID_TYPE mutexId;
     QUEUING_DISCIPLINE_TYPE queingDiscipline;
     MUTEX_STATUS_TYPE mutex;
+    WaitingProcesses waitingProcesses;
 } Mutex;
 
 typedef std::vector<Mutex> MutexVector;

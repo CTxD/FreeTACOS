@@ -1,8 +1,10 @@
 #include <apex_mutex.hpp>
 #include <apex_types.hpp>
 #include <partitionscheduling.hpp>
+#include <process_schedule.hpp>
 
 #include <vector>
+#include <queue>
 
 std::vector<PartitionMutex> ApexMutex::partitionMutexes{};
 
@@ -35,7 +37,7 @@ void ApexMutex::CREATE_MUTEX(
     auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
 
     if(currentPartition->operatingMode == OPERATING_MODE_TYPE::NORMAL){
-        *RETURN_CODE = INVALID_MODE;
+        *RETURN_CODE = RETURN_CODE_TYPE::INVALID_MODE;
         return;
     }
 
@@ -43,19 +45,19 @@ void ApexMutex::CREATE_MUTEX(
         if (*currentPartition->partitionName.x == partitionMutex.partitionName) {
         //TODO: add if case for operation mode
         if(MAX_NUMBER_OF_MUTEXES == getMutexAmount()){
-            *RETURN_CODE = INVALID_CONFIG;
+            *RETURN_CODE = RETURN_CODE_TYPE::INVALID_CONFIG;
             return;
         }
         else if ((MUTEX_PRIORITY > 3) || 
                 (QUEUING_DISCIPLINE != QUEUING_DISCIPLINE_TYPE::FIFO || 
                 QUEUING_DISCIPLINE_TYPE::PRIORITY)) // TODO: find out when Mutex is out of range
         {
-            *RETURN_CODE = INVALID_PARAM;
+            *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
             return;
         }
         for (auto& mutex : partitionMutex.mutexes) {
             if (*mutex.mutexName.x == *MUTEX_NAME.x) {
-                *RETURN_CODE = NO_ACTION;
+                *RETURN_CODE = RETURN_CODE_TYPE::NO_ACTION;
                 return;
             }
         }
@@ -64,12 +66,12 @@ void ApexMutex::CREATE_MUTEX(
         MUTEX_ID = partitionMutex.mutexes.size() - 1;
         partitionMutex.mutexes.push_back({MUTEX_NAME, MUTEX_ID, QUEUING_DISCIPLINE, 
                                         {{}, MUTEX_STATE_TYPE::AVAILABLE, MUTEX_PRIORITY, 0, {} }});
-        *RETURN_CODE = NO_ERROR;
+        *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
         return;
         }
     }
 
-    *RETURN_CODE = NOT_AVAILABLE;
+    *RETURN_CODE = RETURN_CODE_TYPE::NOT_AVAILABLE;
     MUTEX_ID = -1;
 }
 
@@ -95,20 +97,41 @@ void ApexMutex::ACQUIRE_MUTEX(
         for (auto& partitionMutex : partitionMutexes) {
             for (auto& mutex : partitionMutex.mutexes) {
                 if (mutex.mutexId == MUTEX_ID) {
-                    if (mutex.mutex.MUTEX_OWNER == MUTEX_STATE_TYPE::AVAILABLE){
-                        // todo: set values
-                        mutex.mutex.MUTEX_OWNER = MUTEX_STATE_TYPE::OWNED;
-                        // todo: get the current process id
-                        //currentProcess
-                        //mutex.mutex.MUTEX_OWNER = currentProcess->process->ATTRIBUTES;
+                    if (mutex.mutex.MUTEX_STATE == MUTEX_STATE_TYPE::AVAILABLE){
+
+                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::OWNED;
+                        mutex.mutex.MUTEX_OWNER = currentProcess->process->ATTRIBUTES.ID;
                         mutex.mutex.LOCK_COUNT++;
-                        // todo: retain the current priority of the current process;
-                        // raise the current priority of the process to the mutex’s priority,
-                        // positioning the process as being in the ready state for the longest
-                        // elapsed time at that priority (i.e., other processes at the same priority
-                        // will be selected to run after this process);
-                        *RETURN_CODE = NO_ERROR;
+                        currentProcess->process->CURRENT_PRIORITY = mutex.mutex.MUTEX_PRIORITY;
+                        currentProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::READY;
+
+                        *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
                         return;
+                    }
+                    else if(mutex.mutex.MUTEX_STATE == MUTEX_STATE_TYPE::OWNED && 
+                            mutex.mutex.MUTEX_OWNER == currentProcess->process->ATTRIBUTES.ID){
+                        if(mutex.mutex.LOCK_COUNT == MAX_LOCK_LEVEL){
+                            *RETURN_CODE = RETURN_CODE_TYPE::INVALID_CONFIG;
+                            return;
+                        }
+                        else{
+                            mutex.mutex.LOCK_COUNT++;
+                            *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
+                            return;
+                        }
+                    }
+                    else if (TIME_OUT == 0){
+                        *RETURN_CODE = RETURN_CODE_TYPE::NOT_AVAILABLE;
+                        return;
+                    }
+                    else if (TIME_OUT < 0){
+                        currentProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::WAITING;
+                        *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
+                        return;
+                    }
+                    else{
+                        currentProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::WAITING;
+                        mutex.waitingProcesses.push(currentProcess->process->ATTRIBUTES.ID);
                     }
                 }
             }
@@ -126,26 +149,62 @@ void ApexMutex::ACQUIRE_MUTEX(
 void ApexMutex::RELEASE_MUTEX(
     /*in */ MUTEX_ID_TYPE MUTEX_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+    
+    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+
+    name_t currentPartitionName;
+    currentPartitionName.x = currentPartition->partitionName;
+    ProcessSchedule process(currentPartitionName);
+    auto currentProcess = process.getCurrentProcess();
 
     for (auto& partitionMutex : partitionMutexes) {
         for (auto& mutex : partitionMutex.mutexes) {
             if (mutex.mutexId == MUTEX_ID) {
-            //when (MUTEX_ID is equal to PREEMPTION_LOCK_MUTEX) =>
-            // -- no direct access for using the partition’s preemption lock mutex
-            // RETURN_CODE := INVALID_PARAM;
-            // when (the current process does not own the specified mutex) =>
-            // RETURN_CODE := INVALID_MODE;
-            mutex.mutex.LOCK_COUNT--;
-            mutex.mutex.MUTEX_OWNER = MUTEX_STATE_TYPE::AVAILABLE;
-            // restore the current priority of the owning process to its retained
-            // current priority, positioning the process as being in the ready
-            // state for the longest elapsed time at this priority (i.e., other
-            // processes at the same priority will be selected to run after
-            // this process);
+                if(mutex.mutexId == PREEMPTION_LOCK_MUTEX){
+                    *RETURN_CODE = INVALID_PARAM;
+                    return;
+                }
+                else{
+                    if(currentProcess->process->ATTRIBUTES.ID != mutex.mutex.MUTEX_OWNER){
+                        *RETURN_CODE = INVALID_MODE;
+                        return;         
+                    }
+                    else{
+                        mutex.mutex.LOCK_COUNT--;
+                        if(mutex.mutex.LOCK_COUNT == 0){
+                            mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::AVAILABLE;
+                            mutex.mutex.MUTEX_OWNER = NULL;
+                            currentProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::READY;
+                            if(mutex.waitingProcesses.size() != 0){
+                                auto blockedProcesses = process.getBlockedQueue();
+                                for(auto blockedProcess : blockedProcesses){
+                                    if(blockedProcess->process->ATTRIBUTES.ID == mutex.waitingProcesses.front()){
+                                        //todo if (the removed process is waiting on the mutex with a time-out)
+                                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::OWNED;
+                                        mutex.mutex.LOCK_COUNT++;
+                                        mutex.mutex.MUTEX_OWNER = blockedProcess->process->ATTRIBUTES.ID;
+                                    }
+                                }
+                                auto readyProcesses = process.getReadyQueue();
+                                for(auto readyProcess : readyProcesses){
+                                    if(readyProcess->process->ATTRIBUTES.ID == mutex.waitingProcesses.front()){
+                                        //todo if (the removed process is waiting on the mutex with a time-out)
+                                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::OWNED;
+                                        mutex.mutex.LOCK_COUNT++;
+                                        mutex.mutex.MUTEX_OWNER = readyProcess->process->ATTRIBUTES.ID;
+                                    }
+                                }
+                                mutex.waitingProcesses.pop();
+                            }
+                        }
+                        *RETURN_CODE = NO_ERROR;
+                    }
+                }
             }
         }
     }
-    *RETURN_CODE = INVALID_PARAM;
+    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
+    return;
 }
 
 /**
@@ -159,10 +218,57 @@ void ApexMutex::RESET_MUTEX(
     /*in */ MUTEX_ID_TYPE MUTEX_ID,
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+
+    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+
+    name_t currentPartitionName;
+    currentPartitionName.x = currentPartition->partitionName;
+    ProcessSchedule process(currentPartitionName);
+    auto currentProcess = process.getCurrentProcess();
+
     for (auto& partitionMutex : partitionMutexes) {
         for (auto& mutex : partitionMutex.mutexes) {
+            if(mutex.mutexId == MUTEX_ID){
+                if(mutex.mutexId == PREEMPTION_LOCK_MUTEX){
+                    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
+                    return;
+                }
+                else {
+                    if(mutex.mutex.MUTEX_OWNER != PROCESS_ID){
+                        *RETURN_CODE = RETURN_CODE_TYPE::INVALID_MODE;
+                    }
+                    else{
+                        mutex.mutex.LOCK_COUNT = 0;
+                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::AVAILABLE;
+                        mutex.mutex.MUTEX_OWNER = NULL;
+                        if(mutex.waitingProcesses.size() != 0){
+                                auto blockedProcesses = process.getBlockedQueue();
+                                for(auto blockedProcess : blockedProcesses){
+                                    if(blockedProcess->process->ATTRIBUTES.ID == mutex.waitingProcesses.front()){
+                                        //todo if (the removed process is waiting on the mutex with a time-out)
+                                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::OWNED;
+                                        mutex.mutex.LOCK_COUNT++;
+                                        mutex.mutex.MUTEX_OWNER = blockedProcess->process->ATTRIBUTES.ID;
+                                    }
+                                }
+                                auto readyProcesses = process.getReadyQueue();
+                                for(auto readyProcess : readyProcesses){
+                                    if(readyProcess->process->ATTRIBUTES.ID == mutex.waitingProcesses.front()){
+                                        //todo if (the removed process is waiting on the mutex with a time-out)
+                                        mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::OWNED;
+                                        mutex.mutex.LOCK_COUNT++;
+                                        mutex.mutex.MUTEX_OWNER = readyProcess->process->ATTRIBUTES.ID;
+                                    }
+                                }
+                                mutex.waitingProcesses.pop();
+                            }
+                    }
+                }
+            }
         }
     }
+    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
+    return;
 }
 
 /**
@@ -179,12 +285,12 @@ void ApexMutex::GET_MUTEX_ID(
         for (auto& partitionMutex : partitionMutexes){
             for (auto mutex : partitionMutex.mutexes){
                 if(*MUTEX_NAME.x == *mutex.mutexName.x){
-                    *RETURN_CODE = NO_ERROR;
+                    *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
                     return;
                 }
             }
         }
-    *RETURN_CODE = INVALID_CONFIG;
+    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_CONFIG;
     return;
 }
 
@@ -204,11 +310,11 @@ void ApexMutex::GET_MUTEX_STATUS(
             if(mutex.mutexId = MUTEX_ID)
             {
                 MUTEX_STATUS = mutex.mutex;
-                *RETURN_CODE = NO_ERROR;
+                *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
                 return;
             }
         }
     }
-    *RETURN_CODE = INVALID_PARAM;
+    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
     return;
 }

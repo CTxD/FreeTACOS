@@ -242,4 +242,12 @@ ProcessScheduleInfo* ProcessSchedule::getCurrentProcess(){
     return ProcessSchedule::runningProcess;
 }
 
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getReadyQueue(){
+    return readyQueue;
+}
+
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getBlockedQueue(){
+    return blockedQueue;
+}
+
 #endif

@@ -48,6 +48,8 @@ public:
     static ProcessSchedule* getProcessScheduleByName(name_t& scheduleName);
 
     ProcessScheduleInfo* getCurrentProcess();
+    std::vector<ProcessScheduleInfo*> getReadyQueue();
+    std::vector<ProcessScheduleInfo*> getBlockedQueue();
 };
 
 #endif
