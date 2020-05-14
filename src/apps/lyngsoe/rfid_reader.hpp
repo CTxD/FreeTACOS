@@ -3,6 +3,7 @@
 
 #include <task.hpp>
 
+#include <apex_buffer.hpp>
 #include <apex_process.hpp>
 
 class RfidReaderTask : public Task {
@@ -11,6 +12,9 @@ public:
     ~RfidReaderTask(void);
 
     void Run(void);
+
+private:
+    void generateRfidRead();
 };
 
 #endif
