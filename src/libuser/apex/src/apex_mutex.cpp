@@ -11,11 +11,9 @@
 std::vector<PartitionMutex> ApexMutex::partitionMutexes{};
 
 int ApexMutex::getMutexAmount(){
-    int numberOfMutexes;
+    int numberOfMutexes = 0;
     for (auto& partitionMutex : partitionMutexes){
-        for (auto& mutex : partitionMutex.mutexes){
-            numberOfMutexes++;
-        }
+        numberOfMutexes += partitionMutex.mutexes.size();
     }
     return numberOfMutexes;
 }
@@ -174,7 +172,7 @@ void ApexMutex::RELEASE_MUTEX(
                         mutex.mutex.LOCK_COUNT--;
                         if(mutex.mutex.LOCK_COUNT == 0){
                             mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::AVAILABLE;
-                            mutex.mutex.MUTEX_OWNER = NULL;
+                            mutex.mutex.MUTEX_OWNER = NULL_PROCESS_ID;
                             currentProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::READY;
                             if(mutex.waitingProcesses.size() != 0){
                                 auto blockedProcesses = process.getBlockedQueue();
@@ -225,7 +223,6 @@ void ApexMutex::RESET_MUTEX(
     name_t currentPartitionName;
     currentPartitionName.x = currentPartition->partitionName;
     ProcessSchedule process(currentPartitionName);
-    auto currentProcess = process.getCurrentProcess();
 
     for (auto& partitionMutex : partitionMutexes) {
         for (auto& mutex : partitionMutex.mutexes) {
@@ -241,7 +238,7 @@ void ApexMutex::RESET_MUTEX(
                     else{
                         mutex.mutex.LOCK_COUNT = 0;
                         mutex.mutex.MUTEX_STATE = MUTEX_STATE_TYPE::AVAILABLE;
-                        mutex.mutex.MUTEX_OWNER = NULL;
+                        mutex.mutex.MUTEX_OWNER = NULL_PROCESS_ID;
                         if(mutex.waitingProcesses.size() != 0){
                                 auto blockedProcesses = process.getBlockedQueue();
                                 for(auto blockedProcess : blockedProcesses){
@@ -307,12 +304,8 @@ void ApexMutex::GET_MUTEX_STATUS(
     /*in */ MUTEX_ID_TYPE MUTEX_ID,
     /*out*/ MUTEX_STATUS_TYPE MUTEX_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
-    CLogger::Get()->Write("Tester", LogNotice, "MUTEX_ID = %d", MUTEX_ID);
     for (auto& partitionMutex : partitionMutexes){
-        CLogger::Get()->Write("Tester", LogNotice, "partitionName = %s", partitionMutex.partitionName);
         for (auto mutex : partitionMutex.mutexes){
-            CLogger::Get()->Write("Tester", LogNotice, "processName = %s", *mutex.mutexName.x);
-            CLogger::Get()->Write("Tester", LogNotice, "mutexid = %d", mutex.mutexId);
             if(mutex.mutexId = MUTEX_ID)
             {
                 MUTEX_STATUS = mutex.mutex;
