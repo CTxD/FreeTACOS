@@ -2,9 +2,11 @@
 #include <apex_types.hpp>
 #include <partitionscheduling.hpp>
 #include <process_schedule.hpp>
-
+#include <arinc_module.hpp>
+#include <arch.h>
 #include <vector>
 #include <queue>
+#include <cstdlib>
 
 std::vector<PartitionMutex> ApexMutex::partitionMutexes{};
 
@@ -31,7 +33,7 @@ void ApexMutex::CREATE_MUTEX(
     /*in */ MUTEX_NAME_TYPE MUTEX_NAME,
     /*in */ PRIORITY_TYPE MUTEX_PRIORITY,
     /*in */ QUEUING_DISCIPLINE_TYPE QUEUING_DISCIPLINE,
-    /*out*/ MUTEX_ID_TYPE MUTEX_ID,
+    /*out*/ MUTEX_ID_TYPE* MUTEX_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
 
     auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
@@ -40,7 +42,6 @@ void ApexMutex::CREATE_MUTEX(
         *RETURN_CODE = RETURN_CODE_TYPE::INVALID_MODE;
         return;
     }
-
     for (auto& partitionMutex : partitionMutexes) {
         if (*currentPartition->partitionName.x == partitionMutex.partitionName) {
         //TODO: add if case for operation mode
@@ -48,9 +49,7 @@ void ApexMutex::CREATE_MUTEX(
             *RETURN_CODE = RETURN_CODE_TYPE::INVALID_CONFIG;
             return;
         }
-        else if ((MUTEX_PRIORITY > 3) || 
-                (QUEUING_DISCIPLINE != QUEUING_DISCIPLINE_TYPE::FIFO || 
-                QUEUING_DISCIPLINE_TYPE::PRIORITY)) // TODO: find out when Mutex is out of range
+        else if (MUTEX_PRIORITY > 3)// TODO: find out when Mutex is out of range
         {
             *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
             return;
@@ -62,17 +61,19 @@ void ApexMutex::CREATE_MUTEX(
             }
         }
         
+        *MUTEX_ID = partitionMutex.mutexes.size() + rand();
+
         // Create Mutex
-        MUTEX_ID = partitionMutex.mutexes.size() - 1;
-        partitionMutex.mutexes.push_back({MUTEX_NAME, MUTEX_ID, QUEUING_DISCIPLINE, 
+        partitionMutex.mutexes.push_back({MUTEX_NAME, *MUTEX_ID, QUEUING_DISCIPLINE, 
                                         {{}, MUTEX_STATE_TYPE::AVAILABLE, MUTEX_PRIORITY, 0, {} }});
+        
+
         *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
         return;
         }
     }
 
     *RETURN_CODE = RETURN_CODE_TYPE::NOT_AVAILABLE;
-    MUTEX_ID = -1;
 }
 
 /**
@@ -136,7 +137,7 @@ void ApexMutex::ACQUIRE_MUTEX(
                 }
             }
         }
-    *RETURN_CODE = INVALID_PARAM;
+    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
     return;
 }
 
@@ -161,12 +162,12 @@ void ApexMutex::RELEASE_MUTEX(
         for (auto& mutex : partitionMutex.mutexes) {
             if (mutex.mutexId == MUTEX_ID) {
                 if(mutex.mutexId == PREEMPTION_LOCK_MUTEX){
-                    *RETURN_CODE = INVALID_PARAM;
+                    *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
                     return;
                 }
                 else{
                     if(currentProcess->process->ATTRIBUTES.ID != mutex.mutex.MUTEX_OWNER){
-                        *RETURN_CODE = INVALID_MODE;
+                        *RETURN_CODE = RETURN_CODE_TYPE::INVALID_MODE;
                         return;         
                     }
                     else{
@@ -197,7 +198,7 @@ void ApexMutex::RELEASE_MUTEX(
                                 mutex.waitingProcesses.pop();
                             }
                         }
-                        *RETURN_CODE = NO_ERROR;
+                        *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
                     }
                 }
             }
@@ -272,7 +273,7 @@ void ApexMutex::RESET_MUTEX(
 }
 
 /**
- * @brief 
+ * @brief return mutexes ID
  *
  * @param MUTEX_NAME
  * @param MUTEX_ID
@@ -280,11 +281,12 @@ void ApexMutex::RESET_MUTEX(
  */
 void ApexMutex::GET_MUTEX_ID(
     /*in */ MUTEX_NAME_TYPE MUTEX_NAME,
-    /*in */ MUTEX_ID_TYPE MUTEX_ID,
+    /*out */ MUTEX_ID_TYPE* MUTEX_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
         for (auto& partitionMutex : partitionMutexes){
             for (auto mutex : partitionMutex.mutexes){
                 if(*MUTEX_NAME.x == *mutex.mutexName.x){
+                    *MUTEX_ID = mutex.mutexId;
                     *RETURN_CODE = RETURN_CODE_TYPE::NO_ERROR;
                     return;
                 }
@@ -305,8 +307,12 @@ void ApexMutex::GET_MUTEX_STATUS(
     /*in */ MUTEX_ID_TYPE MUTEX_ID,
     /*out*/ MUTEX_STATUS_TYPE MUTEX_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE){
+    CLogger::Get()->Write("Tester", LogNotice, "MUTEX_ID = %d", MUTEX_ID);
     for (auto& partitionMutex : partitionMutexes){
+        CLogger::Get()->Write("Tester", LogNotice, "partitionName = %s", partitionMutex.partitionName);
         for (auto mutex : partitionMutex.mutexes){
+            CLogger::Get()->Write("Tester", LogNotice, "processName = %s", *mutex.mutexName.x);
+            CLogger::Get()->Write("Tester", LogNotice, "mutexid = %d", mutex.mutexId);
             if(mutex.mutexId = MUTEX_ID)
             {
                 MUTEX_STATUS = mutex.mutex;
@@ -317,4 +323,13 @@ void ApexMutex::GET_MUTEX_STATUS(
     }
     *RETURN_CODE = RETURN_CODE_TYPE::INVALID_PARAM;
     return;
+}
+
+void ApexMutex::initialiseMutex()
+{
+    auto& module = ArincModule::generatedArincModule;
+
+    for (auto& partition : module.partitions) {
+        partitionMutexes.push_back({*partition.getPartitionName().x.x, {}});
+    }
 }

@@ -89,7 +89,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
     // Set currentPartition
     CyclicExecutiveSchedule::currentPartition = runningPartition;
     
-    ApexMutex::CREATE_MUTEX({"TestMutex"},1,QUEUING_DISCIPLINE_TYPE::FIFO,mutexId,&mutexCode);
+    ApexMutex::CREATE_MUTEX({"TestMutex"},1,QUEUING_DISCIPLINE_TYPE::FIFO,&mutexId,&mutexCode);
     if (mutexCode == NO_ERROR) {
         CLogger::Get()->Write("Tester", LogNotice, "Mutex created with id: %i returnCode: %d", mutexId, mutexCode);
     }

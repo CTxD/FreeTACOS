@@ -18,6 +18,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     RETURN_CODE_TYPE code;
 
     ApexBuffer::initialiseBuffers();
+    ApexMutex::initialiseMutex();
 
     ApexBuffer::CREATE_BUFFER({"TestBuffer"}, 255, 10, FIFO, &id, &code);
 
