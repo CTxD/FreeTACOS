@@ -1,9 +1,9 @@
 #include "tacoskernel.h"
 #include <apex_buffer.hpp>
 #include <apex_kernel.hpp>
+#include <apex_mutex.hpp>
 #include <circle/time.h>
 #include <partitionscheduling.hpp>
-#include <apex_mutex.hpp>
 
 CTacosKernel::CTacosKernel()
 {
@@ -18,7 +18,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     RETURN_CODE_TYPE code;
 
     ApexBuffer::initialiseBuffers();
-    ApexMutex::initialiseMutex();
+    ApexMutex::InitializeMutex();
 
     ApexBuffer::CREATE_BUFFER({"TestBuffer"}, 255, 10, FIFO, &id, &code);
 
