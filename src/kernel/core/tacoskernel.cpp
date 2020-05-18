@@ -1,6 +1,7 @@
 #include "tacoskernel.h"
 #include <apex_buffer.hpp>
 #include <apex_kernel.hpp>
+#include <apex_mutex.hpp>
 #include <circle/time.h>
 #include <partitionscheduling.hpp>
 
@@ -17,6 +18,7 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     RETURN_CODE_TYPE code;
 
     ApexBuffer::initialiseBuffers();
+    ApexMutex::InitializeMutex();
 
     ApexBuffer::CREATE_BUFFER({"TestBuffer"}, 255, 10, FIFO, &id, &code);
 
@@ -26,6 +28,8 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
     else {
         mLogger.Write("Tester", LogNotice, "Error creating buffer");
     }
+    CyclicExecutiveSchedule partitionSchedule;
+    partitionSchedule.partitionScheduler();
 
     while (1) {
     }

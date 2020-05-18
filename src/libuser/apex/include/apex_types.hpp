@@ -23,6 +23,7 @@
 
 /* Domain dependent                                                        */
 /* These values define the domain limits and are implementation dependent. */
+/* TODO: add correct values for domain limits.                             */
 
 #define SYSTEM_LIMIT_NUMBER_OF_PARTITIONS 32 /* module scope */
 
@@ -43,6 +44,8 @@
 #define SYSTEM_LIMIT_NUMBER_OF_SEMAPHORES 256 /* partition scope */
 
 #define SYSTEM_LIMIT_NUMBER_OF_EVENTS 256 /* partition scope */
+
+#define SYSTEM_LIMIT_NUMBER_OF_MUTEXES 256 /* partition scope */
 
 #define INFINITE_TIME_VALUE -1
 

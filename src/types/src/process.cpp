@@ -57,12 +57,13 @@ void Process::CREATE_PROCESS(
     auto* proc = static_cast<Task*>(ATTRIBUTES->ENTRY_POINT);
     proc->getStatus().ATTRIBUTES = *ATTRIBUTES;
 
-    // Add the process to the apex_kernel process list
-    ApexKernel::addToProcessList(proc);
-
     // Get the process id
     PROCESS_ID_TYPE pId;
     pId = ApexKernel::numProcesses - 1;
+
+    proc->status.ATTRIBUTES.ID = pId;
+    // Add the process to the apex_kernel process list
+    ApexKernel::addToProcessList(proc);
 
     // Set id and return
     static_cast<Task*>(ATTRIBUTES->ENTRY_POINT)->setId(pId);

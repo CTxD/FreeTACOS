@@ -10,8 +10,9 @@ export APEX=$(ROOT)/src/libuser/apex/
 
 # Apex Objects
 APEXOBJS = $(APEX)/src/apex_blackboard.o \
-					 $(APEX)/src/apex_event.o \
-					 $(APEX)/src/apex_buffer.o
+		$(APEX)/src/apex_mutex.o \
+		$(APEX)/src/apex_event.o \
+		$(APEX)/src/apex_buffer.o
 
 # App Objects
 APPOBJS = $(APPS)/test_app.o
@@ -82,4 +83,4 @@ clean all:
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
-	cd $(APEX)/ clean
+	cd $(APEX)/src && $(MAKE) clean

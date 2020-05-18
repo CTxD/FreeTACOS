@@ -7,6 +7,8 @@
 #include <generated_partition_schedule.hpp>
 #include <partition.hpp>
 #include <partition_schedule.hpp>
+#include <apex_mutex.hpp>
+#include <apex_types.hpp>
 
 RunningPartition* CyclicExecutiveSchedule::currentPartition = nullptr;
 
@@ -27,6 +29,7 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
                 runningPartition[i].endTime =
                     currentTime + partitions[0].getPeriodDuration();
                 runningPartition[i].index = 0;
+                runningPartition[i].operatingMode = OPERATING_MODE_TYPE::COLD_START;
             }
         }
     }
@@ -79,10 +82,9 @@ RunningPartition* CyclicExecutiveSchedule::getNextPartition(RunningPartition* ru
     }
 #endif
 
-    // TODO: preemption
     // Set currentPartition
     CyclicExecutiveSchedule::currentPartition = runningPartition;
-
+    
     return runningPartition;
 }
 

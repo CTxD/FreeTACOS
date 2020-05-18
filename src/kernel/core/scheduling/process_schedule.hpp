@@ -46,6 +46,10 @@ public:
     static std::vector<ProcessSchedule*> scheduleList[MAX_NUMBER_OF_PARTITIONS];
     static bool isInitialised;
     static ProcessSchedule* getProcessScheduleByName(name_t& scheduleName);
+
+    ProcessScheduleInfo* getCurrentProcess();
+    std::vector<ProcessScheduleInfo*> getReadyQueue();
+    std::vector<ProcessScheduleInfo*> getBlockedQueue();
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define _PROCESS_SCHEDULE_
 
 #include "process_schedule.hpp"
-#include "generated_arinc_module.hpp"
+#include <arinc_module.hpp>
 #include <circle/logger.h>
 #include <circle/timer.h>
 
@@ -227,7 +227,7 @@ void ProcessSchedule::initialiseSchedules()
            "Schedules have already been initialised!");
 
     // Retrive all partitions from XML
-    const std::vector<Partition> partitions = arincModule.getPartitions();
+    const std::vector<Partition> partitions = ArincModule::generatedArincModule.partitions;
 
     // Create a processSchedule from each partition
     for (auto& partition : partitions) {
@@ -236,6 +236,18 @@ void ProcessSchedule::initialiseSchedules()
     }
 
     isInitialised = true; // All ok - everything was initialised
+}
+
+ProcessScheduleInfo* ProcessSchedule::getCurrentProcess(){
+    return ProcessSchedule::runningProcess;
+}
+
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getReadyQueue(){
+    return readyQueue;
+}
+
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getBlockedQueue(){
+    return blockedQueue;
 }
 
 #endif
