@@ -46,7 +46,7 @@ void Task::InitStack()
 
     *(this->pTopOfStack) = (u64)(0x20000304); // SPSR_EL   30
     this->pTopOfStack--;
-    *(this->pTopOfStack) = (u64)(&TaskEntry); /// ELR_EL    31
+    *(this->pTopOfStack) = (u64)(&TaskEntry); // ELR_EL    31
     this->pTopOfStack--;
 
     *(this->pTopOfStack) = 0x0101010101010101ULL; /* R1 */

@@ -39,7 +39,7 @@
 \name:
 	mrs	x0, esr_el1
 	mrs	x1, spsr_el1
-	mov	x2, x30				/* lr */
+	mov	x2, X30				/* lr */
 	mrs	x3, elr_el1
 	mrs	x4, sp_el0
 	mov	x5, sp
@@ -100,29 +100,29 @@ VectorTable:
 
 	MSR 	SPSEL, #0
 
-	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
+	stp	X29, X30, [sp, #-16]!		/* save X29, X30 onto stack */
 
-	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
-	mrs	x30, spsr_el1
+	mrs	X29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
+	mrs	X30, spsr_el1
 
-	stp	x29, x30, [sp, #-16]!
+	stp	X29, X30, [sp, #-16]!
 
 	/* Save the entire context. */ /* save x0-x28 onto stack */
-	STP 	X0, X1, [SP, #-0x10]!
-	STP 	X2, X3, [SP, #-0x10]!
-	STP 	X4, X5, [SP, #-0x10]!
-	STP 	X6, X7, [SP, #-0x10]!
-	STP 	X8, X9, [SP, #-0x10]!
-	STP 	X10, X11, [SP, #-0x10]!
-	STP 	X12, X13, [SP, #-0x10]!
-	STP 	X14, X15, [SP, #-0x10]!
-	STP 	X16, X17, [SP, #-0x10]!
-	STP 	X18, X19, [SP, #-0x10]!
-	STP 	X20, X21, [SP, #-0x10]!
-	STP 	X22, X23, [SP, #-0x10]!
-	STP 	X24, X25, [SP, #-0x10]!
-	STP 	X26, X27, [SP, #-0x10]!
-	STP 	X28, XZR, [SP, #-0x10]!
+	STP 	X0, X1, [SP, #-16]!
+	STP 	X2, X3, [SP, #-16]!
+	STP 	X4, X5, [SP, #-16]!
+	STP 	X6, X7, [SP, #-16]!
+	STP 	X8, X9, [SP, #-16]!
+	STP 	X10, X11, [SP, #-16]!
+	STP 	X12, X13, [SP, #-16]!
+	STP 	X14, X15, [SP, #-16]!
+	STP 	X16, X17, [SP, #-16]!
+	STP 	X18, X19, [SP, #-16]!
+	STP 	X20, X21, [SP, #-16]!
+	STP 	X22, X23, [SP, #-16]!
+	STP 	X24, X25, [SP, #-16]!
+	STP 	X26, X27, [SP, #-16]!
+	STP 	X28, XZR, [SP, #-16]!
 
     LDR 	X0, pSavedContext
 	MOV 	X1, SP
@@ -157,11 +157,11 @@ VectorTable:
 	LDP		X0, X1, [SP], #0x10
 
     msr	DAIFSet, #1			/* disable FIQ */
-	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
-	msr	elr_el1, x29
-	msr	spsr_el1, x30
+	ldp	X29, X30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
+	msr	elr_el1, X29
+	msr	spsr_el1, X30
 
-	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
+	ldp	X29, X30, [sp], #16		/* restore X29, X30 from stack */
 
 	MSR 	SPSEL, #1
 
@@ -174,12 +174,12 @@ VectorTable:
  */
 	.globl	IRQStub
 IRQStub:
-	stp	x29, x30, [sp, #-16]!		/* save x29, x30 onto stack */
+	stp	X29, X30, [sp, #-16]!		/* save X29, X30 onto stack */
 
-	mrs	x29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
-	mrs	x30, spsr_el1
+	mrs	X29, elr_el1			/* save elr_el1, spsr_el1 onto stack */
+	mrs	X30, spsr_el1
 
-	stp	x29, x30, [sp, #-16]!
+	stp	X29, X30, [sp, #-16]!
 
 	msr	DAIFClr, #1			/* enable FIQ */
 
@@ -202,21 +202,21 @@ IRQStub:
 	stp	q0, q1, [sp, #-32]!
 #endif
 
-	STP 	X0, X1, [SP, #-0x10]!	/* save x0-x28 onto stack */
-	STP 	X2, X3, [SP, #-0x10]!
-	STP 	X4, X5, [SP, #-0x10]!
-	STP 	X6, X7, [SP, #-0x10]!
-	STP 	X8, X9, [SP, #-0x10]!
-	STP 	X10, X11, [SP, #-0x10]!
-	STP 	X12, X13, [SP, #-0x10]!
-	STP 	X14, X15, [SP, #-0x10]!
-	STP 	X16, X17, [SP, #-0x10]!
-	STP 	X18, X19, [SP, #-0x10]!
-	STP 	X20, X21, [SP, #-0x10]!
-	STP 	X22, X23, [SP, #-0x10]!
-	STP 	X24, X25, [SP, #-0x10]!
-	STP 	X26, X27, [SP, #-0x10]!
-	STP 	X28, XZR, [SP, #-0x10]!
+	STP 	X0, X1, [SP, #-16]!
+	STP 	X2, X3, [SP, #-16]!
+	STP 	X4, X5, [SP, #-16]!
+	STP 	X6, X7, [SP, #-16]!
+	STP 	X8, X9, [SP, #-16]!
+	STP 	X10, X11, [SP, #-16]!
+	STP 	X12, X13, [SP, #-16]!
+	STP 	X14, X15, [SP, #-16]!
+	STP 	X16, X17, [SP, #-16]!
+	STP 	X18, X19, [SP, #-16]!
+	STP 	X20, X21, [SP, #-16]!
+	STP 	X22, X23, [SP, #-16]!
+	STP 	X24, X25, [SP, #-16]!
+	STP 	X26, X27, [SP, #-16]!
+	STP 	X28, XZR, [SP, #-16]!
 
 	bl	InterruptHandler
 
@@ -244,10 +244,10 @@ IRQStub:
 	LDP 	X2, X3, [SP], #0x10
 	LDP 	X0, X1, [SP], #0x10
 
-	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
-	msr	elr_el1, x29
-	msr	spsr_el1, x30
-	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
+	ldp	X29, X30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
+	msr	elr_el1, X29
+	msr	spsr_el1, X30
+	ldp	X29, X30, [sp], #16		/* restore X29, X30 from stack */
 
 
 	SAVE_CONTEXT
@@ -290,11 +290,11 @@ EXIT_IRQ_NO_SWITCH:
 #endif
 
 	msr	DAIFSet, #1			/* disable FIQ */
-	ldp	x29, x30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
-	msr	elr_el1, x29
-	msr	spsr_el1, x30
+	ldp	X29, X30, [sp], #16		/* restore elr_el1, spsr_el1 from stack */
+	msr	elr_el1, X29
+	msr	spsr_el1, X30
 
-	ldp	x29, x30, [sp], #16		/* restore x29, x30 from stack */
+	ldp	X29, X30, [sp], #16		/* restore X29, X30 from stack */
 
 	eret
 
@@ -321,7 +321,7 @@ FIQStub:
 	stp	q2, q3, [sp, #-32]!
 	stp	q0, q1, [sp, #-32]!
 #endif
-	stp	x29, x30, [sp, #-16]!
+	stp	X29, X30, [sp, #-16]!
 	stp	x27, x28, [sp, #-16]!
 	stp	x25, x26, [sp, #-16]!
 	stp	x23, x24, [sp, #-16]!
@@ -360,7 +360,7 @@ FIQStub:
 	ldp	x23, x24, [sp], #16
 	ldp	x25, x26, [sp], #16
 	ldp	x27, x28, [sp], #16
-	ldp	x29, x30, [sp], #16
+	ldp	X29, X30, [sp], #16
 #ifdef SAVE_VFP_REGS_ON_FIQ
 	ldp	q0, q1, [sp], #32
 	ldp	q2, q3, [sp], #32
