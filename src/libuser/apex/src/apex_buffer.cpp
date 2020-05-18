@@ -25,7 +25,7 @@ void ApexBuffer::CREATE_BUFFER(
 {
     assert(initialised && "Buffers must be initialised before use");
 
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     for (auto& partitionBuffer : partitionBuffers) {
         // Find the right partition
@@ -70,7 +70,7 @@ void ApexBuffer::SEND_BUFFER(
 {
     // TODO: CREATE TIMER FOR TIMEOUT
 
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
     for (auto& partitionBuffer : partitionBuffers) {
         // Find partitionBuffer
         if (*currentPartition->partitionName.x == partitionBuffer.partitionName) {
@@ -108,7 +108,7 @@ void ApexBuffer::RECEIVE_BUFFER(
     /*out*/ MESSAGE_SIZE_TYPE* LENGTH,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     for (auto& partitionBuffer : partitionBuffers) {
         // Find buffer
@@ -141,7 +141,7 @@ void ApexBuffer::GET_BUFFER_ID(
     /*out*/ BUFFER_ID_TYPE* BUFFER_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     for (auto& partitionBuffer : partitionBuffers) {
         // Find buffer
@@ -174,7 +174,7 @@ void ApexBuffer::GET_BUFFER_STATUS(
     /*out*/ BUFFER_STATUS_TYPE* BUFFER_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     for (auto& partitionBuffer : partitionBuffers) {
         // Find buffer

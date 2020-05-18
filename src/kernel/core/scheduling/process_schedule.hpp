@@ -28,28 +28,27 @@ private:
     ProcessScheduleInfo* runningProcess;
     ProcessScheduleInfo* terminatedProcess;
 
-    void iterate();
-    void reReadyProcesses();
-    void runNextProcess();
+    void ReReadyProcesses();
+    void RunNextProcess();
 
-    ProcessScheduleInfo* getNextProcess(PROCESS_ID_TYPE& procId);
+    ProcessScheduleInfo* GetNextProcess(PROCESS_ID_TYPE& procId);
 
 public:
-    void startScheduler();
+    void StartScheduler();
+    void Iterate();
 
     ProcessSchedule(name_t partitionType);
 
-    void addProcess(PROCESS_STATUS_TYPE* process);
-    name_t* getProcessScheduleName();
-
-    static void initialiseSchedules();
-    static std::vector<ProcessSchedule*> scheduleList[MAX_NUMBER_OF_PARTITIONS];
-    static bool isInitialised;
-    static ProcessSchedule* getProcessScheduleByName(name_t& scheduleName);
-
+    void AddProcess(PROCESS_STATUS_TYPE* process);
+    name_t* GetProcessScheduleName();
     ProcessScheduleInfo* getCurrentProcess();
     std::vector<ProcessScheduleInfo*> getReadyQueue();
     std::vector<ProcessScheduleInfo*> getBlockedQueue();
+
+    static void InitialiseSchedules();
+    static ProcessSchedule* GetProcessScheduleByName(name_t& scheduleName);
+    static std::vector<ProcessSchedule*> scheduleList[MAX_NUMBER_OF_PARTITIONS];
+    static bool isInitialised;
 };
 
 #endif

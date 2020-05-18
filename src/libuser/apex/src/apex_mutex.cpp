@@ -35,7 +35,7 @@ void ApexMutex::CREATE_MUTEX(
     /*out*/ MUTEX_ID_TYPE* MUTEX_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     if (currentPartition->operatingMode == OPERATING_MODE_TYPE::NORMAL) {
         *RETURN_CODE = RETURN_CODE_TYPE::INVALID_MODE;
@@ -89,7 +89,7 @@ void ApexMutex::ACQUIRE_MUTEX(
     /*in */ SYSTEM_TIME_TYPE TIME_OUT,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     name_t currentPartitionName;
     currentPartitionName.x = currentPartition->partitionName;
@@ -154,7 +154,7 @@ void ApexMutex::RELEASE_MUTEX(
     /*in */ MUTEX_ID_TYPE MUTEX_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     name_t currentPartitionName;
     currentPartitionName.x = currentPartition->partitionName;
@@ -228,7 +228,7 @@ void ApexMutex::RESET_MUTEX(
     /*in */ PROCESS_ID_TYPE PROCESS_ID,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     name_t currentPartitionName;
     currentPartitionName.x = currentPartition->partitionName;

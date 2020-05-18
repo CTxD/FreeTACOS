@@ -15,7 +15,8 @@ APEXOBJS = $(APEX)/src/apex_blackboard.o \
 		$(APEX)/src/apex_buffer.o
 
 # App Objects
-APPOBJS = $(APPS)/test_app.o
+APPOBJS = $(APPS)/test_app.o \
+		$(APPS)/entry.o
 
 # Type Objects
 TYPEOBJS = $(TYPES)/src/process.o \
@@ -32,14 +33,15 @@ GENERALOBJS = main.o \
 		$(CORE)/boot.o \
 		$(CORE)/tacoskernel.o \
 		$(KERNEL)/generated_arinc_module.o \
-		$(ROOT)/src/kernel/arch/rasp4/arch.o \
-		$(ROOT)/src/kernel/core/scheduling/partitionscheduling.o \
-		$(ROOT)/src/kernel/core/scheduling/process_schedule.o \
+		$(KERNEL)/arch/rasp4/arch.o \
+		$(CORE)/scheduling/partitionscheduling.o \
+		$(CORE)/scheduling/process_schedule.o \
 		$(CORE)/apex_kernel.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o
 
 OBJS += $(GENERALOBJS) $(TYPEOBJS) $(APEXOBJS) $(APPOBJS)
+
 
 include $(CIRCLELIB)/Config.mk
 
@@ -47,6 +49,9 @@ CIRCLEHOME = $(CIRCLELIB)/libs/circle
 NEWLIBDIR = $(CIRCLELIB)/install/$(NEWLIB_ARCH)
 
 INCLUDE += -I $(ROOT)/src/kernel/include
+INCLUDE += -I $(APPS)
+INCLUDE += -I $(CORE)/scheduling
+INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(APEX)/include
 INCLUDE += -I $(ROOT)/src/kernel/core/scheduling
@@ -58,7 +63,9 @@ INCLUDE += -I $(ROOT)/src
 INCLUDE += -I $(ROOT)/aarch/circle-stdlib/libs/circle/include/circle/sched/
 
 
-CPPFLAGS+= $(CFLAGS) -std=c++17
+
+
+CPPFLAGS+= $(CFLAGS) -std=c++17 -O0
 
 include $(CIRCLEHOME)/Rules.mk
 
@@ -80,7 +87,9 @@ LIBS := "$(NEWLIBDIR)/lib/libm.a" "$(NEWLIBDIR)/lib/libc.a" "$(NEWLIBDIR)/lib/li
 clean all:
 	rm -f *.o *.a *.elf *.lst *.img *.hex *.cir *.map *~ $(EXTRACLEAN)
 	cd $(CURDIR)/core && $(MAKE) clean
+	cd $(CURDIR)/core/scheduling && $(MAKE) clean
 	cd $(CURDIR)/../apps && $(MAKE) clean
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
 	cd $(APEX)/src && $(MAKE) clean
+

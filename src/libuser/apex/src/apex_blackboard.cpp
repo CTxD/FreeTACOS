@@ -47,7 +47,7 @@ void ApexBlackboard::CREATE_BLACKBOARD(
     assert(initialised && "ApexBlackboard must be initialised before use");
 
     // Create new blackboard in right partition
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
     int id = -1;
     for (auto& blackboard : partitionBlackboards) {
         if (blackboard->partitionName == *currentPartition->partitionName.x) {
@@ -88,7 +88,7 @@ void ApexBlackboard::DISPLAY_BLACKBOARD(
     /*in */ MESSAGE_SIZE_TYPE LENGTH,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto* currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
     bool exist = false;
 
     // Update status
@@ -129,7 +129,7 @@ void ApexBlackboard::READ_BLACKBOARD(
     /*out*/ MESSAGE_SIZE_TYPE* LENGTH,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
-    auto currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
+    auto currentPartition = CyclicExecutiveSchedule::GetCurrentPartition();
 
     bool exist = false;
 
@@ -173,7 +173,7 @@ void ApexBlackboard::GET_BLACKBOARD_ID(
     for (auto& blackboard : partitionBlackboards) {
         // Find blackboard we are looking for and return
         if (blackboard->partitionName ==
-            *CyclicExecutiveSchedule::getCurrentPartition()->partitionName.x) {
+            *CyclicExecutiveSchedule::GetCurrentPartition()->partitionName.x) {
             if (blackboard->blackboards.size() == 0) {
                 *RETURN_CODE = NOT_AVAILABLE;
                 return;
@@ -209,7 +209,7 @@ void ApexBlackboard::GET_BLACKBOARD_STATUS(
 {
     for (auto& status : partitionStatuses) {
         if (status->partitionName ==
-            *CyclicExecutiveSchedule::getCurrentPartition()->partitionName.x) {
+            *CyclicExecutiveSchedule::GetCurrentPartition()->partitionName.x) {
             if (status->statuses.size() == 0) {
                 *RETURN_CODE = NO_ACTION;
                 return;

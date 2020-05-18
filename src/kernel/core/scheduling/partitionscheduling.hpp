@@ -12,17 +12,18 @@ struct RunningPartition {
     int partitionAmount;
     OPERATING_MODE_TYPE operatingMode;
 };
-
 class CyclicExecutiveSchedule {
 private:
-    RunningPartition* getNextPartition(RunningPartition* runningPartition, int size);
-
+    RunningPartition* GetNextPartition(RunningPartition* runningPartition, int size);
     static RunningPartition* currentPartition;
+    int coreSize;
+
+    RunningPartition runningPartition[1];
 
 public:
-    void partitionScheduler();
-
-    static RunningPartition* getCurrentPartition();
+    void PartitionHandler();
+    void StartPartitionScheduler();
+    void InitPartitionScheduler();
+    static RunningPartition* GetCurrentPartition();
 };
-
 #endif

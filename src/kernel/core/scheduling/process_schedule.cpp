@@ -1,12 +1,44 @@
 #ifndef _PROCESS_SCHEDULE_
 #define _PROCESS_SCHEDULE_
 
+#include <task.hpp>
+
 #include "process_schedule.hpp"
 #include <arinc_module.hpp>
 #include <circle/logger.h>
 #include <circle/timer.h>
 
 #include <algorithm>
+
+// Preemption
+volatile u64 switchR = 0;
+volatile u64* switchRequired = &switchR;
+
+volatile u64* context = 0;
+volatile u64** pSavedContext = &context;
+
+volatile u64* pCurrentPCBStack = NULL;
+
+Task* pCurrent = NULL;
+Task* pScheduled = NULL;
+
+// Debugging Purposes
+void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopOfStack)
+{
+    CLogger::Get()->Write(
+        stackDescription, LogNotice,
+        "R0 - %lX, R1 - %lX, ELR - %lX, SPSR - %lX, R29 - %lX, R30 - %lX",
+        *(pTopOfStack + 28), *(pTopOfStack + 29), *(pTopOfStack + 30),
+        *(pTopOfStack + 31), *(pTopOfStack + 32), *(pTopOfStack + 33));
+}
+
+// Save current stack -> Change current stack
+extern "C" void nextProcess()
+{
+    pCurrent->pTopOfStack = *pSavedContext;
+    pCurrent = pScheduled;
+    pCurrentPCBStack = pCurrent->pTopOfStack;
+}
 
 ProcessSchedule::ProcessSchedule(name_t scheduleName)
     : scheduleName(scheduleName)
@@ -20,7 +52,8 @@ ProcessSchedule::ProcessSchedule(name_t scheduleName)
 /**
  * DESCRIPTION: Initial function for starting the scheduler
  */
-void ProcessSchedule::startScheduler()
+
+void ProcessSchedule::StartScheduler()
 {
     // Just return if there is no processes in the partition
     if (readyQueue.size() == 0 && blockedQueue.size() == 0)
@@ -38,36 +71,35 @@ void ProcessSchedule::startScheduler()
     }
 
     // Iterate
-    iterate();
+    // iterate();
 }
 
 /**
  * DESCRIPTION: Keeps iterating the ready queue.
  */
-void ProcessSchedule::iterate()
+void ProcessSchedule::Iterate()
 {
-    // TODO: Remove this when preemption works. That should solve this problem.
-    if (CyclicExecutiveSchedule::getCurrentPartition()->endTime <= CTimer::GetClockTicks()) {
+    if (CyclicExecutiveSchedule::GetCurrentPartition()->endTime <= CTimer::GetClockTicks()) {
         return;
     }
 
-    runNextProcess();
+    RunNextProcess();
 
-    reReadyProcesses();
+    ReReadyProcesses();
 
-    CTimer::Get()->MsDelay(1 * HZ); // Delay for 1 hz time
-    iterate();
+    // CTimer::Get()->MsDelay(1 * HZ); // Delay for 1 hz time
+    // iterate();
 }
 
 /**
  * DESCRIPTION: Finds the next process and runs it, if there is another process
  * in the ready queue
  */
-void ProcessSchedule::runNextProcess()
+void ProcessSchedule::RunNextProcess()
 {
     // Get next process
     PROCESS_ID_TYPE procId;
-    auto* nextProcess = getNextProcess(procId);
+    auto* nextProcess = GetNextProcess(procId);
 
     // If there is a processes in the ready queue
     if (nextProcess != nullptr) {
@@ -75,9 +107,10 @@ void ProcessSchedule::runNextProcess()
         runningProcess = nextProcess;
         runningProcess->process->PROCESS_STATE = PROCESS_STATE_TYPE::RUNNING;
 
-        // Run process
         runningProcess->startTime = CTimer::GetClockTicks();
-        static_cast<Task*>(nextProcess->process->ATTRIBUTES.ENTRY_POINT)->Run();
+        // Schedule preemption
+        pScheduled = (Task*)nextProcess->process->ATTRIBUTES.ENTRY_POINT;
+        *switchRequired = TRUE;
         runningProcess->endTime = CTimer::GetClockTicks();
 
         // If process has become dormant -> terminate it
@@ -102,14 +135,12 @@ void ProcessSchedule::runNextProcess()
  * DESCRIPTION: Check the blocked queue for processes, that has exceeded their
  * period, re-ready them by populating the readyQueue again
  */
-void ProcessSchedule::reReadyProcesses()
+
+void ProcessSchedule::ReReadyProcesses()
 {
     // Check if there is any blocked processes
     if (blockedQueue.size() < 1)
         return;
-
-    // Get current running partition
-    auto* currentPartition = CyclicExecutiveSchedule::getCurrentPartition();
 
     // Retrieve current clock ticks
     auto currentTime = abs((long double)CTimer::Get()->GetClockTicks());
@@ -139,7 +170,7 @@ void ProcessSchedule::reReadyProcesses()
  * DESCRIPTION: Get the next process with earliest deadline and highest priority
  * RETURN: nullptr || PROCESS_STATUS_TYPE*
  */
-ProcessScheduleInfo* ProcessSchedule::getNextProcess(PROCESS_ID_TYPE& procId)
+ProcessScheduleInfo* ProcessSchedule::GetNextProcess(PROCESS_ID_TYPE& procId)
 {
     // If there is no processes in the schedule
     if (readyQueue.size() < 1) {
@@ -174,7 +205,7 @@ ProcessScheduleInfo* ProcessSchedule::getNextProcess(PROCESS_ID_TYPE& procId)
 /**
  * DESCRIPTION: Add a process to the initial ready queue
  */
-void ProcessSchedule::addProcess(PROCESS_STATUS_TYPE* status)
+void ProcessSchedule::AddProcess(PROCESS_STATUS_TYPE* status)
 {
     // Push to ready queue
     readyQueue.push_back(new ProcessScheduleInfo{status->ATTRIBUTES.PERIOD, 0, 0, status});
@@ -184,7 +215,7 @@ void ProcessSchedule::addProcess(PROCESS_STATUS_TYPE* status)
  * Get the name of the processSchedule
  * RETURN: name_t
  */
-name_t* ProcessSchedule::getProcessScheduleName()
+name_t* ProcessSchedule::GetProcessScheduleName()
 {
     return &scheduleName;
 }
@@ -198,13 +229,13 @@ bool ProcessSchedule::isInitialised = false;
  * USAGE: Call with a name_t to get any process schedule by their name
  * RETURN: ProcessSchedule* || nullptr
  */
-ProcessSchedule* ProcessSchedule::getProcessScheduleByName(name_t& scheduleName)
+ProcessSchedule* ProcessSchedule::GetProcessScheduleByName(name_t& scheduleName)
 {
     ProcessSchedule* returnSchedule = nullptr;
 
     for (long unsigned int i = 0; i < scheduleList->size(); i++) {
         // Get this schedules name
-        auto& name = *(scheduleList->at(i)->getProcessScheduleName()->x.x);
+        auto& name = *(scheduleList->at(i)->GetProcessScheduleName()->x.x);
 
         // Check if this is what we are looking for
         if (strcmp(*scheduleName.x.x, name) == 0) {
@@ -218,11 +249,9 @@ ProcessSchedule* ProcessSchedule::getProcessScheduleByName(name_t& scheduleName)
 
 /**
  * DESCRIPTION: Static function to initialise process schedules from XML file
- * USAGE: ProcessSchedule::initialiseSchedules(), fom anywhere.
- */
-void ProcessSchedule::initialiseSchedules()
+ * USAGE: ProcessSchedule::InitialiseSchedules(), fom anywhere.*/
+void ProcessSchedule::InitialiseSchedules()
 {
-    // Check that we have not initialised schedules before
     assert(isInitialised == false &&
            "Schedules have already been initialised!");
 
@@ -238,15 +267,18 @@ void ProcessSchedule::initialiseSchedules()
     isInitialised = true; // All ok - everything was initialised
 }
 
-ProcessScheduleInfo* ProcessSchedule::getCurrentProcess(){
+ProcessScheduleInfo* ProcessSchedule::getCurrentProcess()
+{
     return ProcessSchedule::runningProcess;
 }
 
-std::vector<ProcessScheduleInfo*> ProcessSchedule::getReadyQueue(){
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getReadyQueue()
+{
     return readyQueue;
 }
 
-std::vector<ProcessScheduleInfo*> ProcessSchedule::getBlockedQueue(){
+std::vector<ProcessScheduleInfo*> ProcessSchedule::getBlockedQueue()
+{
     return blockedQueue;
 }
 
