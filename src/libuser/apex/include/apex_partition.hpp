@@ -66,13 +66,16 @@ enum class PARTITION_RECOVERY_ACTION_TYPE {
     WARM_RESTART = 2,
     COLD_RESTART = 3
 };
+class ApexMutex {
+private:
 
-extern void GET_PARTITION_STATUS(
+public:
+static void GET_PARTITION_STATUS(
     /*out*/ PARTITION_STATUS_TYPE* PARTITION_STATUS,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE);
 
-extern void SET_PARTITION_MODE(
+static void SET_PARTITION_MODE(
     /*in */ OPERATING_MODE_TYPE OPERATING_MODE,
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE);
-
+};
 #endif
