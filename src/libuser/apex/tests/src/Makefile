@@ -1,6 +1,7 @@
-ROOT=		../../../../
+ROOT=		../../../../../
 
-OBJS=	tacoskerneltest.o
+OBJS=	tacoskerneltest.o \
+		apex_buffer_test.o
 
 all: $(TARGET)
 
