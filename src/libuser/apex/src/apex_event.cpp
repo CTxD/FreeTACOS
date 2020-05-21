@@ -33,7 +33,7 @@ void ApexEvent::SET_EVENT(
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
     // Check if the event exist
-    if (events.size() - 1 < EVENT_ID) {
+    if (events.size() - 1 < (long unsigned int)EVENT_ID) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }
@@ -58,7 +58,7 @@ void ApexEvent::RESET_EVENT(
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
     // Check if the event exist
-    if (events.size() - 1 < EVENT_ID) {
+    if (events.size() - 1 < (long unsigned int)EVENT_ID) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }
@@ -86,7 +86,7 @@ void ApexEvent::WAIT_EVENT(
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
     // Check if the event exist
-    if (events.size() - 1 < EVENT_ID) {
+    if (events.size() - 1 < (long unsigned int)EVENT_ID) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }
@@ -143,7 +143,7 @@ void ApexEvent::GET_EVENT_STATUS(
     /*out*/ RETURN_CODE_TYPE* RETURN_CODE)
 {
     // Check if the event exist
-    if (events.size() - 1 < EVENT_ID) {
+    if (events.size() - 1 < (long unsigned int)EVENT_ID) {
         *RETURN_CODE = INVALID_PARAM;
         return;
     }

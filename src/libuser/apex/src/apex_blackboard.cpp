@@ -214,7 +214,7 @@ void ApexBlackboard::GET_BLACKBOARD_STATUS(
                 *RETURN_CODE = NO_ACTION;
                 return;
             }
-            else if (status->statuses.size() < BLACKBOARD_ID) {
+            else if (status->statuses.size() < (long unsigned int)BLACKBOARD_ID) {
                 *RETURN_CODE = INVALID_PARAM;
                 return;
             }
