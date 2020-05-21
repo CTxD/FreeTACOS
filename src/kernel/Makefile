@@ -14,7 +14,8 @@ APEXOBJS = $(APEX)/src/apex_blackboard.o \
 		$(APEX)/src/apex_event.o \
 		$(APEX)/src/apex_buffer.o \
 		$(APEX)/tests/src/tacoskerneltest.o \
-		$(APEX)/tests/src/apex_buffer_tests.o
+		$(APEX)/tests/src/apex_buffer_tests.o \
+		$(APEX)/tests/src/apex_mutex_tests.o
 
 # App Objects
 APPOBJS = $(APPS)/test_app.o \

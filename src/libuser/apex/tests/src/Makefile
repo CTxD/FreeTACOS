@@ -1,7 +1,8 @@
 ROOT=		../../../../../
 
 OBJS=	tacoskerneltest.o \
-		apex_buffer_test.o
+		apex_buffer_tests.o \
+		apex_mutex_tests.o
 
 all: $(TARGET)
 
