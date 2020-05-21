@@ -12,7 +12,8 @@ export APEX=$(ROOT)/src/libuser/apex/
 APEXOBJS = $(APEX)/src/apex_blackboard.o \
 		$(APEX)/src/apex_mutex.o \
 		$(APEX)/src/apex_event.o \
-		$(APEX)/src/apex_buffer.o
+		$(APEX)/src/apex_buffer.o \
+		$(APEX)/tests/tacoskerneltest.o
 
 # App Objects
 APPOBJS = $(APPS)/test_app.o \
@@ -54,6 +55,7 @@ INCLUDE += -I $(CORE)/scheduling
 INCLUDE += -I $(ROOT)/../boost_1_71_0
 INCLUDE += -I $(ROOT)/src/types/include
 INCLUDE += -I $(APEX)/include
+INCLUDE += -I $(APEX)/tests
 INCLUDE += -I $(ROOT)/src/kernel/core/scheduling
 INCLUDE += -I $(APPS)/
 INCLUDE += -I $(ROOT)/src/kernel/core/
@@ -92,4 +94,5 @@ clean all:
 	cd $(CURDIR)/../types/src && $(MAKE) clean
 	cd $(CURDIR)/arch/rasp4 && $(MAKE) clean
 	cd $(APEX)/src && $(MAKE) clean
+	cd $(APEX)/tests && $(MAKE) clean
 

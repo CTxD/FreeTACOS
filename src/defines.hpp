@@ -13,4 +13,7 @@
 // APEX defines
 #define APEX_DEBUG() 0
 
+// Tests
+#define APEX_TEST() 1
+
 #endif

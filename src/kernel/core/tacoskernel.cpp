@@ -9,6 +9,7 @@
 #include <circle/time.h>
 #include <consumer_part.h>
 #include <defines.hpp>
+#include <tacoskerneltest.hpp>
 
 #include <dummy_part.h>
 #include <entry.hpp>
@@ -24,6 +25,9 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
+#if APEX_TEST()
+    setup();
+#endif
     CyclicExecutiveSchedule::GetCurrentPartition()->partitionName = {
         "IOProcessing"};
 
