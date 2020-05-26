@@ -6,6 +6,12 @@ export TYPES=$(ROOT)/src/types
 export CIRCLELIB=$(ROOT)/aarch/circle-stdlib
 export APEX=$(ROOT)/src/libuser/apex/
 
+# Lyngsø System app objects
+LOBJS = $(APPS)/lyngsoe/blr_lll_host_service.o \
+				$(APPS)/lyngsoe/data_processor_service.o \
+				$(APPS)/lyngsoe/io_blr_service.o \
+				$(APPS)/lyngsoe/rfid_reader.o
+
 # ---  Target dependent and should be changed w.r.t architecture
 
 # Apex Objects
@@ -40,7 +46,7 @@ GENERALOBJS = main.o \
 		$(TYPES)/src/task.o \
 		$(TYPES)/src/queuing_port.o
 
-OBJS += $(GENERALOBJS) $(TYPEOBJS) $(APEXOBJS) $(APPOBJS)
+OBJS += $(GENERALOBJS) $(TYPEOBJS) $(APEXOBJS) $(APPOBJS) $(LOBJS)
 
 
 include $(CIRCLELIB)/Config.mk

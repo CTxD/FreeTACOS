@@ -24,9 +24,6 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    CyclicExecutiveSchedule::GetCurrentPartition()->partitionName = {
-        "IOProcessing"};
-
     BUFFER_ID_TYPE id;
     RETURN_CODE_TYPE code;
 
@@ -53,20 +50,12 @@ CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 #if KERNEL_DEBUG()
     mLogger.Write("ProcessSchedule", LogNotice, "Printing Names:");
     auto* schedule = ProcessSchedule::scheduleList->at(0);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s",
                   *(schedule->GetProcessScheduleName()->x.x));
     schedule = ProcessSchedule::scheduleList->at(1);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
+    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s",
                   *(schedule->GetProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(2);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->GetProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(3);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->GetProcessScheduleName()->x.x));
-    schedule = ProcessSchedule::scheduleList->at(4);
-    mLogger.Write("ProcessSchedule", LogNotice, "Name: %s---",
-                  *(schedule->GetProcessScheduleName()->x.x));
+
 #endif
 
     // Running Entry Process
@@ -108,6 +97,7 @@ void CTacosKernel::PartitionTimerHandler(TKernelTimerHandle hTimer, void* pParam
 // Invokes Process Scheduling
 void CTacosKernel::ProcessTimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
 {
+    CLogger::Get()->Write("DBG", LogNotice, "Iterate");
     pCurrentProcessScheduler->Iterate();
     CTimer::Get()->StartKernelTimer(50, ProcessTimerHandler, pParam, pSavedContext);
 }

@@ -59,7 +59,7 @@ void Process::CREATE_PROCESS(
 
     // Get the process id
     PROCESS_ID_TYPE pId;
-    pId = ApexKernel::numProcesses - 1;
+    pId = ApexKernel::numProcesses;
 
     proc->status.ATTRIBUTES.ID = pId;
     // Add the process to the apex_kernel process list

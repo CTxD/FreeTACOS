@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <circle/logger.h>
 #include <cstring>
 #include <process.hpp>
 #include <task.hpp>
