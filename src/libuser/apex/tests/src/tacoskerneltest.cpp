@@ -8,7 +8,8 @@
 void setup(){
     CLogger::Get()->Write("APEX TEST", LogNotice,
                               "---------- Starting apex tests ----------");
-    TestCreateBufferOutput();
+    CreateBufferFunctionalTest();
+    SendBufferFunctionalTest();
     TestCreateMutexOutput();
     
     CLogger::Get()->Write("APEX TEST", LogNotice,
