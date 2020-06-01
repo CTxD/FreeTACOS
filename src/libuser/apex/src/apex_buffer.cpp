@@ -75,7 +75,7 @@ void ApexBuffer::SEND_BUFFER(
         // Find partitionBuffer
         if (*currentPartition->partitionName.x == partitionBuffer.partitionName) {
             auto& buffers = partitionBuffer.buffers;
-            if (buffers.size() < BUFFER_ID + 1 ||
+            if (buffers.size() < (long unsigned int)(BUFFER_ID + 1) ||
                 buffers.at(BUFFER_ID).buffer.MAX_MESSAGE_SIZE < LENGTH) {
                 *RETURN_CODE = INVALID_PARAM;
                 return;
@@ -114,7 +114,7 @@ void ApexBuffer::RECEIVE_BUFFER(
         // Find buffer
         if (partitionBuffer.partitionName == *currentPartition->partitionName.x) {
             auto& buffers = partitionBuffer.buffers;
-            if (partitionBuffer.buffers.size() < BUFFER_ID + 1) {
+            if (partitionBuffer.buffers.size() < (long unsigned int)(BUFFER_ID + 1)) {
                 *RETURN_CODE = INVALID_PARAM;
                 return;
             }
@@ -180,7 +180,7 @@ void ApexBuffer::GET_BUFFER_STATUS(
         // Find buffer
         if (partitionBuffer.partitionName == *currentPartition->partitionName.x) {
             auto& buffers = partitionBuffer.buffers;
-            if (partitionBuffer.buffers.size() < BUFFER_ID + 1) {
+            if (partitionBuffer.buffers.size() < (long unsigned int)(BUFFER_ID + 1)) {
                 *RETURN_CODE = INVALID_PARAM;
                 return;
             }

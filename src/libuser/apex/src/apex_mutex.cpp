@@ -43,7 +43,6 @@ void ApexMutex::CREATE_MUTEX(
     }
     for (auto& partitionMutex : partitionMutexes) {
         if (*currentPartition->partitionName.x == partitionMutex.partitionName) {
-            // TODO: add if case for operation mode
             if (MAX_NUMBER_OF_MUTEXES == GetMutexAmount()) {
                 *RETURN_CODE = RETURN_CODE_TYPE::INVALID_CONFIG;
                 return;
