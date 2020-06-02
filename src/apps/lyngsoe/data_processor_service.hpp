@@ -6,6 +6,7 @@
 #include <circle/logger.h>
 
 #include <apex_process.hpp>
+#include <apex_queuing_port.hpp>
 
 class DataProcessorServiceTask : public Task {
 public:
@@ -14,8 +15,11 @@ public:
 
     void Run(void);
     void handleIncomming();
-    void processData();
-    void queueData();
+    void processData(MESSAGE_ADDR_TYPE msg);
+    void queueData(bool status);
+
+private:
+    QUEUING_PORT_ID_TYPE qIdRaw, qIdProcd;
 };
 
 #endif

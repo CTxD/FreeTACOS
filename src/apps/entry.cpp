@@ -29,13 +29,13 @@ void Entry::Run(void)
     // Define processes
     std::vector<PROCESS_ATTRIBUTE_TYPE> processes = {
         PROCESS_ATTRIBUTE_TYPE{
-            2000 * HZ, 10, new BlrLllHostServiceTask(), 0x8000, 10, HARD, {"BlrLllHostService"}},
+            250 * HZ, 10, new BlrLllHostServiceTask(), 0x8000, 10, HARD, {"BlrLllHostService"}},
         PROCESS_ATTRIBUTE_TYPE{
-            2000 * HZ, 10, new DataProcessorServiceTask(), 0x8000, 10, HARD, {"DataProcessorService"}},
+            100 * HZ, 10, new DataProcessorServiceTask(), 0x8000, 10, HARD, {"DataProcessorService"}},
         PROCESS_ATTRIBUTE_TYPE{
-            2000 * HZ, 10, new Io2BlrServiceTask(), 0x8000, 10, HARD, {"Io2BlrService"}},
+            550 * HZ, 10, new Io2BlrServiceTask(), 0x8000, 10, HARD, {"Io2BlrService"}},
         PROCESS_ATTRIBUTE_TYPE{
-            2000 * HZ, 10, new RfidReaderTask(), 0x8000, 10, HARD, {"RfidReaderService"}},
+            150 * HZ, 10, new RfidReaderTask(), 0x8000, 10, HARD, {"RfidReaderService"}},
     };
 
     // Create processes

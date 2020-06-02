@@ -20,7 +20,7 @@
 
 class BlrLllHostServiceTask : public Task {
 private:
-    const MESSAGE_ADDR_TYPE errorMsg = MESSAGE_ADDR_TYPE(new APEX_BYTE('error'));
+    const MESSAGE_ADDR_TYPE errorMsg = MESSAGE_ADDR_TYPE(new APEX_BYTE('n'));
 
 public:
     BlrLllHostServiceTask();

@@ -6,6 +6,7 @@
 #include <apex_buffer.hpp>
 #include <apex_kernel.hpp>
 #include <apex_mutex.hpp>
+#include <apex_queuing_port.hpp>
 #include <circle/time.h>
 #include <consumer_part.h>
 #include <defines.hpp>
@@ -24,20 +25,10 @@ CTacosKernel::CTacosKernel()
 
 CStdlibApp::TShutdownMode CTacosKernel::Run(void)
 {
-    BUFFER_ID_TYPE id;
-    RETURN_CODE_TYPE code;
-
     ApexBuffer::initialiseBuffers();
     ApexMutex::InitializeMutex();
+    ApexQueuingPort::Initialise();
 
-    ApexBuffer::CREATE_BUFFER({"TestBuffer"}, 255, 10, FIFO, &id, &code);
-
-    if (code == NO_ERROR) {
-        mLogger.Write("Tester", LogNotice, "Buffer created with id: %i", id);
-    }
-    else {
-        mLogger.Write("Tester", LogNotice, "Error creating buffer");
-    }
     CyclicExecutiveSchedule partitionSchedule;
 #if KERNEL_DEBUG()
     mLogger.Write("Tester", LogNotice, "Testing ProcessSchedules..");
@@ -97,7 +88,6 @@ void CTacosKernel::PartitionTimerHandler(TKernelTimerHandle hTimer, void* pParam
 // Invokes Process Scheduling
 void CTacosKernel::ProcessTimerHandler(TKernelTimerHandle hTimer, void* pParam, void* pSavedContext)
 {
-    CLogger::Get()->Write("DBG", LogNotice, "Iterate");
     pCurrentProcessScheduler->Iterate();
     CTimer::Get()->StartKernelTimer(50, ProcessTimerHandler, pParam, pSavedContext);
 }

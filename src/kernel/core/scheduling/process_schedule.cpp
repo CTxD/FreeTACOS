@@ -35,7 +35,6 @@ void PrintBottomOfStack(const char* stackDescription, volatile u64* pTopOfStack)
 // Save current stack -> Change current stack
 extern "C" void nextProcess()
 {
-    CLogger::Get()->Write("TEST", LogNotice, "NextProcess...");
     pCurrent->pTopOfStack = *pSavedContext;
     pCurrent = pScheduled;
     pCurrentPCBStack = pCurrent->pTopOfStack;

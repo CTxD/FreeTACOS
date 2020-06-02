@@ -3,7 +3,7 @@
    <Partitions>
       <Partition>
          <PartitionDefinition Name="BlrSystem" Identifier="1" Affinity="2" />
-         <PartitionPeriodicity Duration="5000000" Period="10000000" />
+         <PartitionPeriodicity Duration="6250000" Period="7500000"/>
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />
@@ -21,7 +21,7 @@
       </Partition>
       <Partition>
          <PartitionDefinition Name="DataProcessing" Identifier="2" Affinity="2" />
-         <PartitionPeriodicity Duration="5000000" Period="10000000" />
+         <PartitionPeriodicity Duration="1250000" Period="750000" />
          <MemoryRegions>
             <MemoryRegion Type="RAM" Size="1048576" Name="mainMemory" AccessRights="READ_WRITE" />
             <MemoryRegion Type="Flash" Size="524288" Name="Flash" AccessRights="READ_ONLY" />

@@ -4,64 +4,63 @@
 
 extern CoreSchedule coreSchedule = { // CoreSchedule
     {{                               // Core
-
       {
           // PartitionValues
           false,         // PeriodicProcessingStart
-          5000000,       // Duration
+          6250000,       // Duration
           {"BlrSystem"}, // PartitionNameRef
           0,             // Offset
-          10000000,      // Period
+          7500000,       // Period
           2              // Affinity
       },
 
       {
           // PartitionValues
           false,              // PeriodicProcessingStart
-          5000000,            // Duration
+          1250000,            // Duration
           {"DataProcessing"}, // PartitionNameRef
           10000000,           // Offset
-          10000000,           // Period
+          750000,             // Period
           2                   // Affinity
       },
 
       {
           // PartitionValues
           false,         // PeriodicProcessingStart
-          5000000,       // Duration
+          6250000,       // Duration
           {"BlrSystem"}, // PartitionNameRef
           0,             // Offset
-          10000000,      // Period
+          7500000,       // Period
           2              // Affinity
       },
 
       {
           // PartitionValues
           false,              // PeriodicProcessingStart
-          5000000,            // Duration
+          1250000,            // Duration
           {"DataProcessing"}, // PartitionNameRef
           10000000,           // Offset
-          10000000,           // Period
+          750000,             // Period
           2                   // Affinity
       },
 
       {
           // PartitionValues
           false,         // PeriodicProcessingStart
-          5000000,       // Duration
+          6250000,       // Duration
           {"BlrSystem"}, // PartitionNameRef
           0,             // Offset
-          10000000,      // Period
+          7500000,       // Period
           2              // Affinity
       },
 
       {
           // PartitionValues
           false,              // PeriodicProcessingStart
-          5000000,            // Duration
+          1250000,            // Duration
           {"DataProcessing"}, // PartitionNameRef
           10000000,           // Offset
-          10000000,           // Period
+          750000,             // Period
           2                   // Affinity
       }}}};
 #endif

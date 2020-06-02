@@ -11,8 +11,8 @@ GeneratedArincModule ArincModule::generatedArincModule = {
       {"BlrSystem"}, // Name
         1, // Identifier
         2, // Affinity
-        5000000, // Duration
-        10000000, // Period
+        6250000, // Duration
+        7500000, // Period
         { // MemoryRegion
           { // Region
             {"mainMemory"}, // Name
@@ -49,8 +49,8 @@ GeneratedArincModule ArincModule::generatedArincModule = {
       {"DataProcessing"}, // Name
         2, // Identifier
         2, // Affinity
-        5000000, // Duration
-        10000000, // Period
+        1250000, // Duration
+        750000, // Period
         { // MemoryRegion
           { // Region
             {"mainMemory"}, // Name

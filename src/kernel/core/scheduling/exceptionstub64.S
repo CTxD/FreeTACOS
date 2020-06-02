@@ -32,7 +32,7 @@
 	b	\handler
 
 	.endm
-	
+
 	.macro	stub name, exception
 
 	.globl	\name
@@ -133,7 +133,7 @@ VectorTable:
     .endm
 
 .macro RESTORE_CONTEXT
-	
+
 	MSR 	SPSEL, #0
 	/* Set the SP to point to the stack of the task being restored. */
 
@@ -404,7 +404,7 @@ HVCStub:					/* return to EL2h mode */
 
 
 	.align	3
-	
+
 
 
 	.globl	FIQData

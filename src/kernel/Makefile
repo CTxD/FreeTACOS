@@ -16,6 +16,7 @@ LOBJS = $(APPS)/lyngsoe/blr_lll_host_service.o \
 
 # Apex Objects
 APEXOBJS = $(APEX)/src/apex_blackboard.o \
+		$(APEX)/src/apex_queuing_port.o \
 		$(APEX)/src/apex_mutex.o \
 		$(APEX)/src/apex_event.o \
 		$(APEX)/src/apex_buffer.o

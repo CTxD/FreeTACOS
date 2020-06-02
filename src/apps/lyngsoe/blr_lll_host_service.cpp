@@ -1,4 +1,5 @@
 #include <apex_buffer.hpp>
+#include <apex_queuing_port.hpp>
 #include <circle/logger.h>
 #include <circle/timer.h>
 #include <lyngsoe/blr_lll_host_service.hpp>
@@ -10,13 +11,23 @@ BlrLllHostServiceTask::BlrLllHostServiceTask()
 
 void BlrLllHostServiceTask::Run(void)
 {
-    CLogger::Get()->Write(*getProcessName().x, LogNotice, "Initialised");
+    BUFFER_ID_TYPE id;
+    RETURN_CODE_TYPE code;
+
+    ApexBuffer::CREATE_BUFFER({"TestBuffer"}, 255, 10, FIFO, &id, &code);
+
+    if (code == NO_ERROR) {
+        ApexQueuingPort::CREATE_QUEUING_PORT({"rfidProcd"}, 1, 100, DESTINATION,
+                                             FIFO, &id, &code);
+    }
+    else {
+        CLogger::Get()->Write("Tester", LogNotice, "Error creating buffer");
+    }
 
     while (1) {
-        CLogger::Get()->Write(*getProcessName().x, LogNotice, "Initialised");
         handleMessage();
 
-        CTimer::Get()->MsDelay(1500);
+        CTimer::Get()->MsDelay(500);
     }
     return;
 }
@@ -28,9 +39,18 @@ BlrLllHostServiceTask::~BlrLllHostServiceTask(void)
 MESSAGE_ADDR_TYPE BlrLllHostServiceTask::fetchMessage()
 {
     // Get message from queuing port - after processed by data processor
-    MESSAGE_ADDR_TYPE addr = MESSAGE_ADDR_TYPE(new APEX_BYTE('testmsg'));
+    MESSAGE_ADDR_TYPE addr;
+    MESSAGE_SIZE_TYPE size;
+    RETURN_CODE_TYPE code;
 
-    return addr;
+    ApexQueuingPort::RECEIVE_QUEUING_MESSAGE(1, 100, &addr, &size, &code);
+
+    if (code == NO_ERROR) {
+        return addr;
+    }
+    else {
+        return NULL;
+    }
 }
 
 void BlrLllHostServiceTask::handleMessage()
@@ -39,12 +59,12 @@ void BlrLllHostServiceTask::handleMessage()
     bool status = false;
 
     // Check message API Call
-    if (msg != NULL) {
-        // Emulate api delay
-        CTimer::Get()->MsDelay(100);
-
-        status = true;
+    if (msg == NULL) {
+        return;
     }
+
+    CLogger::Get()->Write(*getProcessName().x, LogNotice,
+                          "Handling Messages...");
 
     RETURN_CODE_TYPE code;
 

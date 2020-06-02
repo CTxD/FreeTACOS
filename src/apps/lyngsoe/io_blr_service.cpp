@@ -12,7 +12,6 @@ void Io2BlrServiceTask::Run(void)
 
     // Continously check for processed data
     while (1) {
-        CLogger::Get()->Write(*getProcessName().x, LogNotice, "Initialised");
         // Check buffer for messages
         auto msg = checkBuffer();
 
@@ -22,8 +21,7 @@ void Io2BlrServiceTask::Run(void)
             ioResponse(status);
         }
 
-        // Delay by 1.5 seconds.
-        CTimer::Get()->MsDelay(1500);
+        CTimer::Get()->MsDelay(100);
     }
 
     return;
@@ -42,26 +40,32 @@ MESSAGE_ADDR_TYPE Io2BlrServiceTask::checkBuffer()
 
     // Check if there is a message in the buffer
     if (code == NO_ERROR) {
-        handleMessage(msg);
+        return msg;
     }
 
     // Else do nothing
+    return NULL;
 }
 
 bool Io2BlrServiceTask::handleMessage(MESSAGE_ADDR_TYPE msg)
 {
     // Success Message
-    if (msg == MESSAGE_ADDR_TYPE(new APEX_BYTE('testmsg'))) {
-        ioResponse(true);
+    if (*msg == '1') {
+        return true;
     }
     else {
         // Error Message
-        ioResponse(false);
+        return false;
     }
 }
 
 void Io2BlrServiceTask::ioResponse(bool status)
 {
-    status ? CLogger::Get()->Write("BLR IO", LogNotice, "Success")
-           : CLogger::Get()->Write("BLR IO", LogWarning, "Error");
+    status
+        ? CLogger::Get()->Write("BLR IO", LogNotice,
+                                "-------------------------------- Success "
+                                "--------------------------------")
+        : CLogger::Get()->Write("BLR IO", LogWarning,
+                                "-------------------------------- Redirect... "
+                                "--------------------------------");
 }
